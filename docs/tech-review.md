@@ -8,8 +8,6 @@ key/distinctive **features**; and for articles, one sentence
 highlighting the relevance to ISSA. Indicate if tool is not fully **open
 source**.*
 
-
-
 Guiding questions:
 
 - GN: identifying performance gaps in current models in
@@ -102,8 +100,6 @@ vqa](https://paperswithcode.com/task/visual-question-answering/latest)
 
 ### [ShotBench: Expert-Level Cinematic Understanding in Vision-Language Models](https://vchitect.github.io/ShotBench-project/) (Dataset (ShotQA), Benchmark (SoftBench), and model (ShotVL), June 2025)
 
-  
-
 GN: New benchmark (ShotBench) and model (ShotVL) for detection of Shot
 size, Shot framing, Camera angle, Lens size, Lighting type, Lighting
 condition, Composition and Camera movement. They also tested a lot of
@@ -149,7 +145,6 @@ coming up soon.
 
 ### [Video-STaR: Self-Training Enables Video Instruction Tuning with Any Supervision](https://orrzohar.github.io/projects/video-star/) (Training method, July 24, Google)
 
-  
 
 > Video-STaR is a self-training for video language models, allowing the
 > use of any labeled video dataset for video instruction tuning. It
@@ -169,11 +164,7 @@ adaptability to different source material is relevant to ISSA.
 Code here:
 [https://github.com/orrzohar/Video-STaR](https://github.com/orrzohar/Video-STaR)
 
-  
-
 ### [VideoAgent: Long-form Video Understanding with Large Language Model as Agent](https://wxh1996.github.io/VideoAgent-Website/) (Agent-based system, 2024)
-
-  
 
 > Long-form video understanding represents a significant challenge
 > within computer vision, demanding a model capable of reasoning over
@@ -196,8 +187,6 @@ and agent-like behaviours used to grab additional frames or info based
 on interactive querying. Code here:
 [https://github.com/wxh1996/VideoAgent](https://github.com/wxh1996/VideoAgent)
 
-  
-
 ### [Shot2Story](https://mingfei.info/shot2story/) (Benchmark, 2023-)
 
 > A short clip of video may contain progression of multiple events and
@@ -216,8 +205,6 @@ Shot-level captions and multi-shot summaries caught my eye. I invited
 the author of the paper to our technical exchange meeting on the 30th.
 Demo is broken at the moment, but the code is available here:
 [https://github.com/bytedance/Shot2Story/tree/master/code](https://github.com/bytedance/Shot2Story/tree/master/code)
-
-  
 
 ### [Eagle 2.5](https://nvlabs.github.io/EAGLE/) (VLM, April 2025)
 
@@ -253,8 +240,7 @@ here:
 
 ## Audio description
 
-- [DANTE-AD: Dual-Vision Attention Network for Long-Term Audio
-  Description](https://andrewjohngilbert.github.io/DANTE-AD/) (2025)
+### [DANTE-AD: Dual-Vision Attention Network for Long-Term Audio Description](https://andrewjohngilbert.github.io/DANTE-AD/) (2025)
 
 > Audio Description is a narrated commentary designed to aid
 > vision-impaired audiences in perceiving key visual elements in a
@@ -273,10 +259,7 @@ here:
 > DANTE-AD outperforms existing methods across traditional NLP metrics
 > and LLM-based evaluations.
 
-  
-
-- [AutoAD III: The Prequel -- Back to the
-  Pixels](https://www.robots.ox.ac.uk/~vgg/research/autoad/) (2024)
+### [AutoAD III: The Prequel -- Back to the Pixels](https://www.robots.ox.ac.uk/~vgg/research/autoad/) (2024)
 
 > Generating Audio Description (AD) for movies is a challenging task
 > that requires fine-grained visual understanding and an awareness of
@@ -295,9 +278,7 @@ here:
 
 ## Subtitling
 
-- [Look, Listen and Recognise: character-aware audio-visual
-  subtitling](https://www.robots.ox.ac.uk/~vgg/research/look-listen-recognise/)
-  (2023)
+### [Look, Listen and Recognise: character-aware audio-visual subtitling](https://www.robots.ox.ac.uk/~vgg/research/look-listen-recognise/) (2023)
 
 > The goal of this paper is automatic character-aware subtitle
 > generation. Given a video and a minimal amount of metadata, we propose
@@ -314,9 +295,7 @@ here:
 
 ## Speaker detection
 
-- [GestSync: Determining who is speaking without a talking head (also
-  works for Audio and video
-  Synchronisation)](https://www.robots.ox.ac.uk/~vgg/research/gestsync/)
+### [GestSync: Determining who is speaking without a talking head (also works for Audio and video Synchronisation)](https://www.robots.ox.ac.uk/~vgg/research/gestsync/)
 
 > Gesture-Sync: determining if a person's gestures are correlated with
 > their speech or not. In comparison to Lip-Sync, Gesture-Sync is far
@@ -336,21 +315,16 @@ Demo here:
 
 # 2. Exploration
 
-### Language Models
+## Language Models
 
 *Specify input and output modalities (e.g. image, video, sound, text),
 and model size.*
 
-  
-
-[Towards Fine-Grained Video Question
+### [Towards Fine-Grained Video Question
 Answering](https://arxiv.org/pdf/2503.06820): integrated architecture
 for video understanding (25Q1)
-\[[slack](https://kingsdigitallab.slack.com/archives/C074F6MKZB5/p1741887814221949)\]
 
-  
-
-- [Collection Space
+### [Collection Space
   Navigator](https://collection-space-navigator.github.io/) (2023)
 
 > The Collection Space Navigator (CSN) is an explorative visualization
@@ -368,11 +342,9 @@ for video understanding (25Q1)
 
 ## Semantic Search
 
-  
 
 ## RAGs and Integrated systems for Video Collection
 
-  
 
 ### [How We Built Multimodal RAG for Audio and Video](https://www.ragie.ai/blog/how-we-built-multimodal-rag-for-audio-and-video) (workflow, July 2025, Ragie.ai)
 
@@ -386,7 +358,6 @@ GN: Break down of a Video RAG workflow.
 > (VRAG) for faster video context generation in the pre-processing phase
 > and a faster response generation with no impact on response accuracy.
 
-  
 
 > **CRAG** \[9\]: We consider the CRAG flows as the ones that run an
 > exhaustive pre-processing module to get the data context from the
@@ -457,15 +428,11 @@ GN: Break down of a Video RAG workflow.
 - highlight detection
 - generate video clips automatically from long videos
 
-  
-
 # 4. Interaction & Generative
 
 ## Interfaces
 
-  
-
-- [WISE 2](https://gitlab.com/vgg/wise/wise/-/tree/wise2) (2025)
+### [WISE 2](https://gitlab.com/vgg/wise/wise/-/tree/wise2) (2025)
 
 > WISE is a search engine for images, videos, and audio powered by
 > multimodal AI, allowing you to quickly and easily search through large
@@ -475,11 +442,9 @@ GN: Break down of a Video RAG workflow.
 
 ## Visualisation
 
-  
-
 # 5. Standards
 
-## [TempCompass: Do Video LLMs Really Understand Videos?](https://llyx97.github.io/tempcompass/) (2024)
+### [TempCompass: Do Video LLMs Really Understand Videos?](https://llyx97.github.io/tempcompass/) (2024)
 
 > Recently, there is a surge in interest surrounding video large
 > language models (Video LLMs). However, existing benchmarks fail to
