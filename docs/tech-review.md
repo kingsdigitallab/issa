@@ -413,7 +413,7 @@ GN: Break down of a Video RAG workflow.
 - occurrences placed on an interactive timeline (people, place, theme,
   brand) to jump to clip, also show related keywords
 
-### [Neuravid](https://www.neuravid.io/): closed source, \[[slack\]](https://kingsdigitallab.slack.com/archives/C074F6MKZB5/p1741718687099909)
+### [Neuravid](https://www.neuravid.io/): closed source
 
 - chat to a video (e.g. list people)
 - search for moments (it returns timestamps and short sentence
