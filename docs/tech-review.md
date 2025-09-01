@@ -47,8 +47,7 @@ Guiding questions:
 
 ## Shot segmentation / shot boundary detection (SBD)
 
-[papers with
-code](https://paperswithcode.com/task/camera-shot-boundary-detection) -
+[papers with code](https://paperswithcode.com/task/camera-shot-boundary-detection) -
 [leaderboard](https://paperswithcode.com/sota/camera-shot-boundary-detection-on-clipshots)
 
 ### [AutoShot](https://github.com/wentaozhu/AutoShot) (2023)
@@ -79,6 +78,14 @@ GN: test for cuts, dissolves and fades
 > robust multi-hop retrieval and generation that account for long-range
 > dependencies.
 
+### [Automatically identifying scene boundaries in movies and TV shows](https://www.amazon.science/blog/automatically-identifying-scene-boundaries-in-movies-and-tv-shows) (algorithm, 2021, Amazon)
+
+> we present a self-supervised shot contrastive learning approach (ShotCoL) to learn a shot representation that maximizes the similarity between nearby shots compared to randomly selected shots. We show how to apply our learned shot representation for the task of scene boundary detection to offer state-of-the-art performance on the MovieNet [33] dataset while requiring only ∼25% of the training labels, using 9× fewer model parameters and offering 7× faster runtime.
+> [...]
+> To assess the effectiveness of ShotCoL on novel applications of scene boundary detection, we take on the problem of finding timestamps in movies and TV episodes where video-ads can be inserted while offering a minimally disruptive viewing experience.
+
+Closed source? 
+
 ## Visual embeddings
 
 ### [VLM2Vec-V2: Advancing Multimodal Embedding for Videos, Images, and Visual Documents](https://tiger-ai-lab.github.io/VLM2Vec/) (Benchmark and Model, July 2025, Waterloo, Santa Barbara, Tsinghua unis, Salresforce)
@@ -93,8 +100,7 @@ GN: test for cuts, dissolves and fades
 
 ## Visual Question Answering (VQA)
 
-[Papers with code /
-vqa](https://paperswithcode.com/task/visual-question-answering/latest)
+[Papers with code / vqa](https://paperswithcode.com/task/visual-question-answering/latest)
 
 ## Cinematic feature classification
 
@@ -138,8 +144,7 @@ faster processing speed, lower resource consumption and real-time
 capabilities. Q: what is practically meant by realtime here and which
 compute set up is needed to achieve that level of responsiveness?
 
-There is a [7B model on
-HuggingFace](https://huggingface.co/IVGSZ/Flash-VStream-7b) but it was
+There is a [7B model on HuggingFace](https://huggingface.co/IVGSZ/Flash-VStream-7b) but it was
 uploaded in June 2024. I believe there's a new model based on Qwen
 coming up soon.
 
@@ -317,15 +322,12 @@ Demo here:
 
 ## Language Models
 
-*Specify input and output modalities (e.g. image, video, sound, text),
-and model size.*
+*Specify input and output modalities (e.g. image, video, sound, text), and model size.*
 
-### [Towards Fine-Grained Video Question
-Answering](https://arxiv.org/pdf/2503.06820): integrated architecture
+### [Towards Fine-Grained Video Question Answering](https://arxiv.org/pdf/2503.06820): integrated architecture
 for video understanding (25Q1)
 
-### [Collection Space
-  Navigator](https://collection-space-navigator.github.io/) (2023)
+### [Collection Space Navigator](https://collection-space-navigator.github.io/) (2023)
 
 > The Collection Space Navigator (CSN) is an explorative visualization
 > tool for researching collections and their multidimensional
