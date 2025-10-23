@@ -8,13 +8,15 @@ Qwen-VL-2B with flash attention requires 8GB for a small response to a 10 mins v
 4B unable to response qst about sound & speech!
 It also repeats.
 
+8B uses 57GB
+
 '''
 import os
 from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
 from qwen_vl_utils import process_vision_info
 import torch
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # MAX_NEW_TOKENS = 128
 MAX_NEW_TOKENS = 1000
 PROMPT = '''How long is this video and what are the topics covered?'''
@@ -23,10 +25,10 @@ PROMPT = '''The video is a broadcast television recording. Analyse the video. Fi
 PROMPT = '''The video is a broadcast television recording. List all the separate programmes. If a programme contains multiple news stories, list the stories as well. For each item in the list provide the timecode and one short sentence summary.'''
 PROMPT = '''Transcribe what is being said in the video.'''
 PROMPT = '''The video is a broadcast television recording. Spot the visual separation between programmes, like a clock, a countdown, a blank screen or a title screen. List all the programmes, with their starting time and any text visible on the visual separation preceding the programme.'''
-PROMPT = '''Transcribe all that is being said in this video; ignore the images.'''
+# PROMPT = '''Transcribe all that is being said in this video; ignore the images.'''
 VIDEO_PATH = "v-10.mp4"
 # MODEL = "Qwen/Qwen3-VL-4B-Instruct"
-MODEL = "Qwen/Qwen3-VL-4B-Instruct"
+MODEL = "Qwen/Qwen3-VL-8B-Instruct"
 
 def show_vram():
     free, total = torch.cuda.mem_get_info()
@@ -62,6 +64,8 @@ messages = [
         ],
     }
 ]
+
+print(PROMPT)
 
 if 0:
     # from HF model card

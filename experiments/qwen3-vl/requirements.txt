@@ -12,11 +12,15 @@ accelerate
 # flash-attn
 
 # GN
+
+# needed for video pre-processing
+av
+# needed for qwen helpers
+qwen-utils
+qwen-vl-utils
+
 # flash attention: install from binaries: https://github.com/Dao-AILab/flash-attention/releases
 # wget https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.8cxx11abiTRUE-cp311-cp311-linux_x86_64.whl
 # pip install ^
 # that version needs
 # pip install -U 'torch<2.9' 'torchvision<0.24'
-
-# needed for video pre-processing
-av
