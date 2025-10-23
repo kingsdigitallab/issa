@@ -28,7 +28,7 @@ PROMPT = '''The video is a broadcast television recording. Spot the visual separ
 # PROMPT = '''Transcribe all that is being said in this video; ignore the images.'''
 VIDEO_PATH = "v-10.mp4"
 # MODEL = "Qwen/Qwen3-VL-4B-Instruct"
-MODEL = "Qwen/Qwen3-VL-8B-Instruct"
+MODEL = "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"
 
 def show_vram():
     free, total = torch.cuda.mem_get_info()
