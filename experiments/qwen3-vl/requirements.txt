@@ -24,3 +24,4 @@ qwen-vl-utils
 # pip install ^
 # that version needs
 # pip install -U 'torch<2.9' 'torchvision<0.24'
+

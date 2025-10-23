@@ -54,3 +54,69 @@ VRAM used: 56.26 GB
 real    2m15.812s
 user    2m8.920s
 sys     0m37.192s
+
+
+--------------------------
+
+PROMPT=
+
+The video is a broadcast television recording. Spot the visual separation between programmes, like a clock, a countdown, a blank screen or a title screen. List all the programmes, with their starting time and any text visible on the visual separation preceding the programme. Also describe the topic of each programme with a few words. Answer in JSON only.
+qwen-vl-utils using torchvision to read video.
+
+ANSWER=
+
+```json
+{
+  "programmes": [
+    {
+      "start_time": "0:06",
+      "visual_separation": "Clock screen with text 'UTV LIVE TK 3 HEADS/ALSOS RX/TX: 01/03/2017'",
+      "topic": "News broadcast introduction"
+    },
+    {
+      "start_time": "3:37",
+      "visual_separation": "Montage of images with coordinates, transitioning to 'UTV LIVE' logo",
+      "topic": "News montage and branding"
+    },
+    {
+      "start_time": "4:30",
+      "visual_separation": "Weather presenter with 'UTV WEATHER' logo",
+      "topic": "Weather report"
+    },
+    {
+      "start_time": "4:44",
+      "visual_separation": "News anchors with 'UTV LIVE' on screens",
+      "topic": "News broadcast continuation"
+    },
+    {
+      "start_time": "5:49",
+      "visual_separation": "Signage for 'Royal Courts of Justice' and reporter introduction",
+      "topic": "Legal news report"
+    },
+    {
+      "start_time": "7:10",
+      "visual_separation": "Building exterior shots with windows, transitioning to reporter",
+      "topic": "Legal news continuation"
+    },
+    {
+      "start_time": "7:36",
+      "visual_separation": "Interview setup with screen showing industrial equipment",
+      "topic": "Interview segment"
+    },
+    {
+      "start_time": "9:17",
+      "visual_separation": "Anchor with architectural renderings, transitioning to industrial site",
+      "topic": "Development and industrial news"
+    },
+    {
+      "start_time": "9:45",
+      "visual_separation": "Archive footage with 'ARCHIVE 1960S' text",
+      "topic": "Historical footage segment"
+    }
+  ]
+}
+```
+
+VRAM used: 56.26 GB
+
+real    1m49.829s

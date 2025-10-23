@@ -18,17 +18,22 @@ import torch
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # MAX_NEW_TOKENS = 128
-MAX_NEW_TOKENS = 1000
+MAX_NEW_TOKENS = 5000
 PROMPT = '''How long is this video and what are the topics covered?'''
 # original:
 PROMPT = '''The video is a broadcast television recording. Analyse the video. First, identify from the text in the title plate(s), ident(s), or transmission card(s), how many programmes are in this recording, and any relevant metadata about the programmes, including network, name, channel, and transmission date if available. Then break down each programme into meaningful segments, for example, if it is a news programme identify each of the news stories. Output an index of the segments with a timestamp and a detailed summary of each segment, focusing on subjects, places and actions, and including any relevant information from the visuals, sound, text or speech. Return this index as a valid JSON array.'''
 PROMPT = '''The video is a broadcast television recording. List all the separate programmes. If a programme contains multiple news stories, list the stories as well. For each item in the list provide the timecode and one short sentence summary.'''
 PROMPT = '''Transcribe what is being said in the video.'''
-PROMPT = '''The video is a broadcast television recording. Spot the visual separation between programmes, like a clock, a countdown, a blank screen or a title screen. List all the programmes, with their starting time and any text visible on the visual separation preceding the programme.'''
+# PROMPT = '''The video is a broadcast television recording. Spot the visual separation between programmes, like a clock, a countdown, a blank screen or a title screen. List all the programmes longer than a one minute (don't be too granular), with their starting time and any text visible on the visual separation preceding the programme. Also describe the topic of each programme with a few words. Answer in JSON only.'''
+PROMPT = '''The video is a broadcast television recording. List all the high-level segments in the video. Don't be too granular. A segment length can vary between 2 and 30 minutes. They are usually clearly separated by blank or count down screens. Answer as a JSON array with starting time, any text in the separation screen preceding the segment, and a few words describing the content of teh segment.'''
 # PROMPT = '''Transcribe all that is being said in this video; ignore the images.'''
-VIDEO_PATH = "v-10.mp4"
-# MODEL = "Qwen/Qwen3-VL-4B-Instruct"
-MODEL = "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"
+VIDEO_PATH = "v-20.mp4"
+# MODEL = "Qwen/Qwen3-VL-4B-Instruct" # unreliable
+# MODEL = "Qwen/Qwen3-VL-8B-Instruct" # 
+# MODEL = "Qwen/Qwen3-VL-8B-Thinking" # very verbose, need to increase MAX_NEW_TOKENS >> 1k to catch the actual response
+# MODEL = "Qwen/Qwen3-VL-32B-Instruct-FP8" # can't make it run
+# MODEL = "Qwen/Qwen3-VL-30B-A3B-Instruct" # total garbage! It needs vLLM, b/c transforms doesn't support it yet
+MODEL = "Qwen/Qwen3-VL-32B-Instruct"
 
 def show_vram():
     free, total = torch.cuda.mem_get_info()
@@ -43,6 +48,7 @@ def show_vram():
 # We recommend enabling flash_attention_2 for better acceleration and memory saving, especially in multi-image and video scenarios.
 model = Qwen3VLForConditionalGeneration.from_pretrained(
     MODEL,
+    # dtype=torch.bfloat16,
     dtype=torch.bfloat16,
     attn_implementation="flash_attention_2",
     device_map="auto",
@@ -67,7 +73,7 @@ messages = [
 
 print(PROMPT)
 
-if 0:
+if 1:
     # from HF model card
 
     # Preparation for inference
@@ -97,9 +103,13 @@ else:
         tokenize=False, 
         add_generation_prompt=True
     )
-    image_inputs, video_inputs, video_kwargs = process_vision_info([messages], return_video_kwargs=True, 
-                                                                   image_patch_size= 16,
-                                                                   return_video_metadata=True)
+    image_inputs, video_inputs, video_kwargs = process_vision_info(
+        [messages], 
+        return_video_kwargs=True, 
+        # image_patch_size=processor.image_processor.patch_size,
+        image_patch_size= 16,
+        return_video_metadata=True
+    )
     if video_inputs is not None:
         video_inputs, video_metadatas = zip(*video_inputs)
         video_inputs, video_metadatas = list(video_inputs), list(video_metadatas)
