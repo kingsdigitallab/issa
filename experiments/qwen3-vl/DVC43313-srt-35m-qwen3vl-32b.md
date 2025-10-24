@@ -19,11 +19,11 @@ Tried various prompts. Including:
 
 ## Experiments
 
-Time: 2025-10-24T10:52:05.849213
-Video: DVC43313-srt.mp4
-Model: Qwen/Qwen3-VL-32B-Instruct
-Device: NVIDIA H100 NVL
-VRAM used: 62.70 GB
+* Time: 2025-10-24T10:52:05.849213
+* Video: DVC43313-srt.mp4
+* Model: Qwen/Qwen3-VL-32B-Instruct
+* Device: NVIDIA H100 NVL
+* VRAM used: 62.70 GB
 
 PROMPT:
 
@@ -83,13 +83,13 @@ real    3m48.182s
 user    2m22.298s
 sys     1m27.501s
 
-========================================
+---
 
-Time: 2025-10-24T11:06:25.431085
-Video: DVC43313-srt.mp4
-Model: Qwen/Qwen3-VL-32B-Instruct
-Device: NVIDIA H100 NVL
-VRAM used: 62.70 GB
+* Time: 2025-10-24T11:06:25.431085
+* Video: DVC43313-srt.mp4
+* Model: Qwen/Qwen3-VL-32B-Instruct
+* Device: NVIDIA H100 NVL
+* VRAM used: 62.70 GB
 
 PROMPT:
 
@@ -143,11 +143,11 @@ sys     1m27.428s
 
 ========================================
 
-Time: 2025-10-24T11:24:21.978088
-Video: DVC43313-srt.mp4
-Model: Qwen/Qwen3-VL-32B-Instruct
-Device: NVIDIA H100 NVL
-VRAM used: 62.70 GB
+* Time: 2025-10-24T11:24:21.978088
+* Video: DVC43313-srt.mp4
+* Model: Qwen/Qwen3-VL-32B-Instruct
+* Device: NVIDIA H100 NVL
+* VRAM used: 62.70 GB
 
 PROMPT:
 
@@ -1009,11 +1009,11 @@ sys     1m27.412s
 
 ========================================
 
-Time: 2025-10-24T11:50:11.802618
-Video: DVC43313-srt.mp4
-Model: Qwen/Qwen3-VL-32B-Instruct
-Device: NVIDIA H100 NVL
-VRAM used: 62.70 GB
+* Time: 2025-10-24T11:50:11.802618
+* Video: DVC43313-srt.mp4
+* Model: Qwen/Qwen3-VL-32B-Instruct
+* Device: NVIDIA H100 NVL
+* VRAM used: 62.70 GB
 
 PROMPT:
 
@@ -1077,7 +1077,6 @@ ANSWER:
 ```
 
 VRAM used: 71.77 GB
-
 
 real    4m2.107s
 user    2m40.493s

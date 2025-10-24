@@ -43,7 +43,7 @@ MODEL = "Qwen/Qwen3-VL-32B-Instruct" # v. good quality for 20mins video; ~72GB V
 def show_vram():
     free, total = torch.cuda.mem_get_info()
     used = total - free
-    print(f"VRAM used: {used / 1024**3:.2f} GB")
+    print(f"* VRAM used: {used / 1024**3:.2f} GB")
 
 # default: Load the model on the available device(s)
 # model = Qwen3VLForConditionalGeneration.from_pretrained(
@@ -59,13 +59,13 @@ model = Qwen3VLForConditionalGeneration.from_pretrained(
     device_map="auto",
 )
 
-
 device_name = torch.cuda.get_device_name(torch.cuda.current_device())
 
-print(f'Time: {datetime.now().isoformat()}')
-print(f'Video: {VIDEO_PATH}')
-print(f'Model: {MODEL}')
-print(f'Device: {device_name}')
+print('')
+print(f'* Time: {datetime.now().isoformat()}')
+print(f'* Video: {VIDEO_PATH}')
+print(f'* Model: {MODEL}')
+print(f'* Device: {device_name}')
 show_vram()
 
 print(f'\nPROMPT:\n\n{PROMPT}\n')
@@ -151,5 +151,5 @@ print('\n')
 show_vram()
 
 print('\n')
-print('=' * 40)
+print('-' * 3)
 print('\n')
