@@ -104,3 +104,90 @@ VRAM used: 71.72 GB
 real    3m2.166s
 user    2m7.576s
 sys     0m57.630s
+
+
+-----
+
+Second run
+
+```json
+[
+  {
+    "start_time": "0:00",
+    "separator_text": "",
+    "segment_description": "Intro sequence with UTV Live logo and date."
+  },
+  {
+    "start_time": "0:12",
+    "separator_text": "",
+    "segment_description": "News anchors in studio, discussing current events."
+  },
+  {
+    "start_time": "2:36",
+    "separator_text": "UTV LIVE TX HEADS/ALSO5 RX/TX: 01/03/2017",
+    "segment_description": "Transition screen with UTV Live branding and date."
+  },
+  {
+    "start_time": "3:36",
+    "separator_text": "",
+    "segment_description": "Montage of various news clips and visuals, including construction, weather, and cityscapes."
+  },
+  {
+    "start_time": "3:51",
+    "separator_text": "",
+    "segment_description": "Return to studio with anchors, followed by a segment on a new building project and interviews."
+  },
+  {
+    "start_time": "4:32",
+    "separator_text": "UTV WEATHER",
+    "segment_description": "Weather segment with a presenter in front of a rainy background."
+  },
+  {
+    "start_time": "4:42",
+    "separator_text": "UTV LIVE",
+    "segment_description": "Return to studio, followed by a report on a legal case with Jane Loughrey."
+  },
+  {
+    "start_time": "7:36",
+    "separator_text": "",
+    "segment_description": "Interview with Jane Loughrey in the studio, discussing the legal case."
+  },
+  {
+    "start_time": "9:18",
+    "separator_text": "",
+    "segment_description": "Segment on urban development, including archival footage and interviews with residents."
+  },
+  {
+    "start_time": "11:51",
+    "separator_text": "",
+    "segment_description": "Report on a community project or development, featuring interviews with local residents."
+  },
+  {
+    "start_time": "12:09",
+    "separator_text": "",
+    "segment_description": "Interview with Ken Reid, discussing a Facebook post and related issues."
+  },
+  {
+    "start_time": "14:10",
+    "separator_text": "VOTE 17 UTV LIVE",
+    "segment_description": "Promotional segment for a voting event, followed by a return to the studio."
+  },
+  {
+    "start_time": "14:20",
+    "separator_text": "",
+    "segment_description": "Segment on a Royal Mail delivery driver and his family, including home footage and interviews."
+  },
+  {
+    "start_time": "16:57",
+    "separator_text": "",
+    "segment_description": "Report on a crime scene, including police activity and a photo of a victim."
+  },
+  {
+    "start_time": "18:34",
+    "separator_text": "",
+    "segment_description": "Segment on the Air Ambulance, including footage of the helicopter and an interview with a representative."
+  }
+]
+```
+
+VRAM used: 71.72 GB
