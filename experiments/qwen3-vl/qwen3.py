@@ -19,8 +19,10 @@ from datetime import datetime
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # MAX_NEW_TOKENS = 128
-MAX_NEW_TOKENS = 4000
-PROMPT = '''How long is this video and what are the topics covered?'''
+# MAX_NEW_TOKENS = 4000
+MAX_NEW_TOKENS = 5000
+
+### MVP1 - Semantic Segmentation
 # original from DC:
 PROMPT = '''The video is a broadcast television recording. Analyse the video. First, identify from the text in the title plate(s), ident(s), or transmission card(s), how many programmes are in this recording, and any relevant metadata about the programmes, including network, name, channel, and transmission date if available. Then break down each programme into meaningful segments, for example, if it is a news programme identify each of the news stories. Output an index of the segments with a timestamp and a detailed summary of each segment, focusing on subjects, places and actions, and including any relevant information from the visuals, sound, text or speech. Return this index as a valid JSON array.'''
 # original w/ request for brevity & absence of audio processing capabilities => repetitive loops
@@ -30,9 +32,15 @@ PROMPT = '''The video is a broadcast television recording. Analyse the video. Fi
 # Used to compare most qwen models
 # PROMPT = '''The video is a broadcast television recording. List all the high-level segments in the video. Don't be too granular. A segment length can vary between 2 and 30 minutes. They are usually clearly separated by blank or count down screens. Answer as a JSON array with starting time, any text in the separation screen preceding the segment, and a few words describing the content of teh segment.'''
 # Improved
-PROMPT = '''The video is a broadcast television recording from Northern Ireland. List all the high-level programmes in the video. A programme length can vary between 2 and 30 minutes. It is usually clearly preceded by a blank or count-down screen serving as a separator. Answer with a JSON array with starting time, any text in the separation screen preceding the segment, and a few words summary of the content (mentioning place(s), people and main event/action).'''
-# VIDEO_PATH = "v-20.mp4"
-VIDEO_PATH = "DVC43313-srt.mp4"
+# PROMPT = '''The video is a broadcast television recording from Northern Ireland. List all the high-level programmes in the video. A programme length can vary between 2 and 30 minutes. It is usually clearly preceded by a blank or count-down screen serving as a separator. Answer with a JSON array with starting time, any text in the separation screen preceding the segment, and a few words summary of the content (mentioning place(s), people and main event/action).'''
+
+### MVP2 - Place Names
+PROMPT = '''The video is a broadcast television recording from Northern Ireland. Transcribe all the subtitles with high accuracy. One sentence per line. Don't make things up.'''
+
+# VIDEO_PATH = "v-10-srt.mp4"
+VIDEO_PATH = "v-10-srt.mp4"
+# VIDEO_PATH = "DVC43313-srt.mp4"
+
 # MODEL = "Qwen/Qwen3-VL-4B-Instruct" # unreliable
 # MODEL = "Qwen/Qwen3-VL-8B-Instruct" # 
 # MODEL = "Qwen/Qwen3-VL-8B-Thinking" # very verbose, need to increase MAX_NEW_TOKENS >> 1k to catch the actual response
