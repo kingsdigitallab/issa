@@ -3,7 +3,7 @@ and types directly from video file using a VLM.
 
 Observations:
 * hit and miss, some location are rights, others not accurate
-* some notable hallucinations, including about teh subtitles
+* some notable hallucinations, including about the subtitles
 * promising but only if there's a way to make it more reliable
 * categorisation of place could be more consistent
 
