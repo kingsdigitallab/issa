@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Geo Search - ISSA</title>
+    <link rel="icon" href="data:," >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script> -->
+
+    <style>
+      body {
+        background-color: #111;
+        color: #eee;
+      }
+      #map { height: 80vh; }
+      /* #video-js {
+        width: 90vw;
+      } */
+    </style>
+  </head>
+  <body>
+    <section class="section" id="geosearch">
+      <div class="container">
+        <div class="columns">
+          <div class="column">
+            <div id="map"></div>
+          </div>
+          <div class="column">
+            <video id="player" controls class="video-js" preload="auto">
+              <!-- <source src="data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4#60" type="video/mp4"> -->
+              <source src="data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.webm" type="video/webm">
+            </video>
+            <p v-if="selectedFeature">
+              Mention: "{{ selectedFeature.video_place }}" in {{ selectedFeature.video_locality }}
+              <br>
+              Resolved as: {{ selectedFeature.properties.name }}
+              <br>
+              Video: {{ selectedFeature.video_path }}
+              <br>
+              Time: {{ selectedFeature.video_start }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      const { createApp } = Vue;
+
+      async function loadJson(url) {
+        let ret = {}
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            console.log(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          ret = data
+        } catch (err) {
+          console.error('Error loading JSON:', err);
+        }
+        return ret
+      }
+
+      createApp({
+        data() {
+          return {
+            message: 'Hello Vue!',
+            selectedFeature: null,
+          }
+        },
+        async mounted() {
+          let map = L.map('map').setView([54.8, -6.5], 7);
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          }).addTo(map);
+          this.map = map;
+
+          // this.player = videojs('player');
+          const mediaElement = document.querySelector('#player'); // or 'audio'          
+          // video.load();
+          // mediaElement.play();
+          mediaElement.addEventListener('canplaythrough', () => {
+            this.setVideoTime()
+          }, false);
+          this.mediaElement = mediaElement
+
+          this.index = await loadJson('tools/index.json')
+
+          let self = this
+          this.geoLayer = L.geoJSON(
+            this.index.data,
+            {
+              onEachFeature: (feature, layer) => {
+                // Highlight the marker on hover
+                layer.on('mouseover', () => {
+                    // this.setStyle({ color: 'red' });
+                    this.selectedFeature = feature
+                    console.log(feature)
+                    let videoSrc = feature.video_path.replace('../data/', 'data/').replace('.mp4', '.webm')
+                    if (!mediaElement.src.endsWith(videoSrc)) {
+                      mediaElement.src = videoSrc
+                    } else {
+                      this.setVideoTime()
+                    }
+                });
+
+                // Reset the style on hover out
+                layer.on('mouseout', () => {
+                    // this.setStyle({ color: 'black' }); // or your original style
+                    this.selectedFeature = null
+                    mediaElement.pause()
+                });
+              
+                // Reset the style on hover out
+                layer.on('click', () => {
+                    // this.setStyle({ color: 'black' }); // or your original style
+                    mediaElement.play()
+                });
+              }
+            },
+          ).addTo(this.map);
+        },
+        methods: {
+          setVideoTime() {
+            if (this.selectedFeature && this.mediaElement.paused) {
+              const [hours, minutes, seconds] = this.selectedFeature.video_start.split(':').map(Number);
+              this.mediaElement.currentTime = hours * 3600 + minutes * 60 + seconds;
+              console.log('setVideoTime')
+            }
+          }
+        }
+      }).mount('#geosearch')
+    </script>
+  </body>
+</html>
