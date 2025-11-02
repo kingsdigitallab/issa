@@ -4,6 +4,7 @@ from geocoder import GeoCoder
 
 PLACE_QUESTION_KEY = 'place_names'
 INDEX_NAME = 'index.json'
+FEATURES_QUESTION_KEY = 'features'
 
 class Index:
     def __init__(self):
@@ -23,6 +24,7 @@ class Index:
         for answers_file_path in collections_folder_path.glob("**/transcription_answers.json"):
             answers_file_content = json.loads(answers_file_path.read_text())
             place_names = answers_file_content.get('data', {}).get(PLACE_QUESTION_KEY, {}).get('answer', [])
+            features = answers_file_content.get('data', {}).get(FEATURES_QUESTION_KEY, {}).get('answer', [])
 
             if not isinstance(place_names, list):
                 print(f'WARN: {answers_file_path} doesn\'t contain a list of place names')
@@ -37,6 +39,9 @@ class Index:
                     geocode['video_place'] = place_name["place"]
                     geocode['video_locality'] = place_name["locality"]
                     geocode['video_start'] = place_name['start']
+                    geocode['video_summary'] = features['summary']
+                    geocode['video_sport'] = bool(features.get('sport', 0))
+                    geocode['video_politics'] = bool(features.get('politics', 0))
                     geocode['video_path'] = str(answers_file_path.parent / str(answers_file_path.parent.name + '.mp4'))
                     # todo: include summary of that unit
                     self.index.append(geocode)

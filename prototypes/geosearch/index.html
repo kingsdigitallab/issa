@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="theme-dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,37 +19,69 @@
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script> -->
 
     <style>
-      body {
+      /* body, .table, table.table tr td {
         background-color: #111;
         color: #eee;
-      }
-      #map { height: 80vh; }
-      /* #video-js {
-        width: 90vw;
       } */
+      #map { height: 80vh; }
+
+      .video-content table td:first {
+        width: 5em;
+      }
+
+      #player {
+        height: 33vh;
+      }
+
+      .current {
+        background-color: yellow;
+        color: black;
+      }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js"></script>
   </head>
   <body>
     <section class="section" id="geosearch">
-      <div class="container">
-        <div class="columns">
+      <div class="container is-fluid">
+        <div class="columns map-content">
           <div class="column">
             <div id="map"></div>
           </div>
-          <div class="column">
+          <div class="column video-content">
             <video id="player" controls class="video-js" preload="auto">
               <!-- <source src="data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4#60" type="video/mp4"> -->
               <source src="data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.webm" type="video/webm">
             </video>
-            <p v-if="selectedFeature">
-              Mention: "{{ selectedFeature.video_place }}" in {{ selectedFeature.video_locality }}
-              <br>
-              Resolved as: {{ selectedFeature.properties.name }}
-              <br>
-              Video: {{ selectedFeature.video_path }}
-              <br>
-              Time: {{ selectedFeature.video_start }}
-            </p>
+            <table v-if="selectedFeature" class="table">
+              <tbody>
+                <tr>
+                  <td>Place</td>
+                  <td>"{{ selectedFeature.video_place }}" in {{ selectedFeature.video_locality }} ({{ selectedFeature.video_start }})
+                    <br>=&gt; {{ selectedFeature.properties.name }} (Nominatim)
+                  </td>
+                </tr>
+                <tr>
+                  <td>In clip:</td>
+                  <td>{{ selectedFeature.video_path }}</td>
+                </tr>
+                <tr>
+                  <td>Clip summary:</td><td>{{ selectedFeature.video_summary }}</td>
+                </tr>
+                <tr>
+                  <td>Clip parts</td>
+                  <td>
+                    <ul>
+                      <li v-for="unit in clipDisplayUnits">
+                        <a @mouseenter="requestVideoJumpInTimeCode(unit.start)" @click="requestVideoJumpInTimeCode(unit.start, true)">{{ unit.start }}</a>: 
+                        <span :class="{'current': unit.current}">{{ unit.summary }}</span>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -72,14 +104,25 @@
         return ret
       }
 
+      var redSportsIcon = L.AwesomeMarkers.icon({
+        icon: 'futbol-o', // Font Awesome icon for soccer ball
+        markerColor: 'red',
+        prefix: 'fa'
+      });
+
       createApp({
         data() {
           return {
             message: 'Hello Vue!',
             selectedFeature: null,
+            clipAnswersContent: null,
+            videoCurrentTime: 0,
           }
         },
         async mounted() {
+          this.requestedVideoJumpTime = null
+          this.requestedVideoPlay = false
+
           let map = L.map('map').setView([54.8, -6.5], 7);
           L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -91,10 +134,16 @@
           const mediaElement = document.querySelector('#player'); // or 'audio'          
           // video.load();
           // mediaElement.play();
-          mediaElement.addEventListener('canplaythrough', () => {
-            this.setVideoTime()
-          }, false);
           this.mediaElement = mediaElement
+          mediaElement.addEventListener('canplaythrough', () => {
+            console.log('canplaythrough')
+            this.jumpVideoToRequestedTime()
+          }, false);
+
+          const intervalId = setInterval(() => {
+            this.videoCurrentTime = mediaElement.currentTime
+            console.log(this.videoCurrentTime)
+          }, 300);
 
           this.index = await loadJson('tools/index.json')
 
@@ -111,15 +160,15 @@
                     let videoSrc = feature.video_path.replace('../data/', 'data/').replace('.mp4', '.webm')
                     if (!mediaElement.src.endsWith(videoSrc)) {
                       mediaElement.src = videoSrc
-                    } else {
-                      this.setVideoTime()
+                      this.fetchClipAnswers()
                     }
+                    this.requestVideoJumpToSelectedFeature()
                 });
 
                 // Reset the style on hover out
                 layer.on('mouseout', () => {
                     // this.setStyle({ color: 'black' }); // or your original style
-                    this.selectedFeature = null
+                    // this.selectedFeature = null
                     mediaElement.pause()
                 });
               
@@ -128,16 +177,97 @@
                     // this.setStyle({ color: 'black' }); // or your original style
                     mediaElement.play()
                 });
+              },
+              pointToLayer: (feature, latlng) => {
+                // Check if the feature has the specific property value
+                if (feature.video_sport) {
+                  // Create a red marker using a DivIcon
+                  // var markerHtmlStyles = "background-color: grey; width: 1.3rem; height: 1.3rem; display: block;";
+                  // var customIcon = L.divIcon({
+                  //   html: `<span style="${markerHtmlStyles}" />`
+                  // });
+                  // return L.marker(latlng, { icon: customIcon });
+
+                  var newIcon = L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34]
+                  });
+                  return L.marker(latlng, {icon: newIcon});                  
+                } else {
+                  // Default marker style for other values
+                  return L.marker(latlng);
+                }
               }
             },
           ).addTo(this.map);
         },
+        computed: {
+          clipDisplayUnits() {
+            let ret = this.clipUnits
+            ret.sort((a, b) => a.start.localeCompare(b.start))
+            let pLast = null
+            for (let p of ret) {
+              p.current = (this.videoCurrentTime + 5) > this.getSecondsFromTimeCode(p.start)
+              if (pLast && p.current) {
+                pLast.current = false
+              }
+              pLast = p
+            }
+            return ret
+          },
+          clipUnits() {
+            let parts = this.clipAnswersContent?.data?.parts?.answer
+            if (parts) {
+              if (Array.isArray(parts)) {
+                return parts
+              }
+              for (let p of Object.values(parts)) {
+                if (Array.isArray(p)) {
+                  return p
+                }
+              }
+            }
+            return []
+          }
+        },
         methods: {
-          setVideoTime() {
-            if (this.selectedFeature && this.mediaElement.paused) {
-              const [hours, minutes, seconds] = this.selectedFeature.video_start.split(':').map(Number);
-              this.mediaElement.currentTime = hours * 3600 + minutes * 60 + seconds;
-              console.log('setVideoTime')
+          requestVideoJumpToSelectedFeature(play=false) {
+            if (this.selectedFeature) {
+              this.requestVideoJumpInTimeCode(this.selectedFeature.video_start, play)
+            }
+          },
+          requestVideoJumpInTimeCode(timeCode, play) {
+            this.requestVideoJumpInSeconds(this.getSecondsFromTimeCode(timeCode), play)
+          },
+          requestVideoJumpInSeconds(timeInSeconds, play) {
+            this.requestedVideoJumpTime = timeInSeconds
+            this.requestedVideoPlay = play
+            this.jumpVideoToRequestedTime()
+          },
+          getSecondsFromTimeCode(timeCode) {
+            const [hours, minutes, seconds] = timeCode.split(':').map(Number);
+            ret = hours * 3600 + minutes * 60 + seconds;
+            return ret
+          },
+          jumpVideoToRequestedTime() {
+            if (this.requestedVideoJumpTime) {
+              this.mediaElement.currentTime = this.requestedVideoJumpTime
+              if (this.requestedVideoPlay) {
+                this.mediaElement.play()
+              } else {
+                this.mediaElement.pause()
+              }
+              this.requestedVideoPlay = false
+              this.requestedVideoJumpTime = null
+            }
+          },
+          async fetchClipAnswers() {
+            if (this.selectedFeature) {
+              let url = this.selectedFeature.video_path.replace('../data/', 'data/')
+              url = url.replace(/[^/]+\.mp4/, 'transcription_answers.json')
+              this.clipAnswersContent = await loadJson(url)
             }
           }
         }
