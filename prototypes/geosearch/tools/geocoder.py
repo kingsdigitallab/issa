@@ -5,6 +5,9 @@ import urllib
 import urllib.request
 
 CACHE_NAME = 'nominatim_cache.json'
+# boost candidates within that box, 
+# see https://nominatim.org/release-docs/develop/api/Search/#result-restriction
+VIEW_BOX = "-9.602050781250002,53.44880116583745,-3.5925292968750004,56.36524486372141"
 
 class GeoCoder:
 
@@ -38,7 +41,7 @@ class GeoCoder:
 
     def _request_from_nominatim(self, query):
         print(f'REQUEST: {query}')
-        url = f'https://nominatim.openstreetmap.org/search?q={urllib.parse.quote_plus(query)}&format=geojson'
+        url = f'https://nominatim.openstreetmap.org/search?q={urllib.parse.quote_plus(query)}&viewbox={VIEW_BOX}&format=geojson'
         res = urllib.request.urlopen(url)
         # TODO: error management
         ret = res.read().decode('utf-8')

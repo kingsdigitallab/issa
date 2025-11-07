@@ -123,7 +123,17 @@
           this.requestedVideoJumpTime = null
           this.requestedVideoPlay = false
 
+          // leaflet_map.getBounds()
+          /*
+          [
+            bounds.getWest(),
+            bounds.getSouth(),
+            bounds.getEast(),
+            bounds.getNorth()
+          ].join(','); 
+          */
           let map = L.map('map').setView([54.8, -6.5], 7);
+          window.leaflet_map = map
           L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

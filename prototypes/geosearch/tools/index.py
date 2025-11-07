@@ -18,6 +18,11 @@ class Index:
         self.index = []
 
         geocoder = GeoCoder()
+        
+        stats = {
+            'found': 0,
+            'failed': 0,
+        }
 
         collections_folder_path = Path('../data/collections/')
 
@@ -32,10 +37,11 @@ class Index:
 
             print(f'{answers_file_path}: {len(place_names)} place names')
             for place_name in place_names:
-                query = f'{place_name["locality"]} {place_name["place"]}'
+                query = f'{place_name["place"]}, {place_name["locality"]}'
                 geocode = geocoder.find_first(query)
-                print(f'  {query} {'found' if geocode else 'NOT FOUND'}')
+                print(f'  {'      ' if geocode else 'FAILED'} {query} ')
                 if geocode:
+                    stats['found'] += 1
                     geocode['video_place'] = place_name["place"]
                     geocode['video_locality'] = place_name["locality"]
                     geocode['video_start'] = place_name['start']
@@ -45,6 +51,8 @@ class Index:
                     geocode['video_path'] = str(answers_file_path.parent / str(answers_file_path.parent.name + '.mp4'))
                     # todo: include summary of that unit
                     self.index.append(geocode)
+                else:
+                    stats['failed'] += 1
 
         index_content = {
             'meta': {},
@@ -52,6 +60,8 @@ class Index:
         }
 
         self.index_path.write_text(json.dumps(index_content, indent=2))
+
+        print(f'total: {stats["found"] + stats["failed"]}; found: {stats["found"]} ; not found: {stats["failed"]}')
 
 index = Index()
 
