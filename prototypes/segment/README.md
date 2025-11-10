@@ -51,6 +51,7 @@ flowchart LR
 #### Pipeline Steps
 
 - Frame Extraction: Samples frames at 0.5-1 FPS (adjustable) using OpenCV
+  - Could also use `framesense` to pickup shots in a first step to reduce the number of frames
 - Visual Analysis: Moondream2 generates detailed natural language descriptions of each frame
 - Audio Transcription: Whisper extracts speech with timestamps
 - Semantic Segmentation: LLM analyzes the frame captions + audio data to identify segment boundaries and generate summaries
@@ -61,3 +62,181 @@ flowchart LR
 - Scene detection + boundary refinement
 - Audio-only segmentation
 - Hybrid methods
+
+## Dependencies
+
+- Python 3.11+
+- [uv](https://docs.astral.sh/uv/) - Fast Python package manager
+- ffmpeg (required by Whisper for audio processing)
+- Hugging Face account and token (for downloading models)
+
+## Getting Started
+
+### 1. Install uv
+
+```bash
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Or with brew
+brew install uv
+```
+
+### 2. Clone and Setup
+
+```bash
+cd etl
+uv sync  # Install all dependencies
+```
+
+### 3. Configure Hugging Face
+
+```bash
+# Login to Hugging Face (required for model downloads)
+uv run hf auth login
+```
+
+Enter your Hugging Face token when prompted.
+
+### 4. Install ffmpeg
+
+```bash
+# macOS
+brew install ffmpeg
+
+# Ubuntu/Debian
+sudo apt install ffmpeg
+
+# Check installation
+ffmpeg -version
+```
+
+## Usage
+
+The pipeline consists of 4 steps that must be run in order:
+
+### Step 1: Extract Frames
+
+```bash
+uv run python main.py extract-frames path/to/video.mp4 \
+    --sample-rate 1.0 \
+    --output-folder ../data/1_interim
+```
+
+**Options:**
+
+- `--sample-rate`: Frames per second to extract (default: 1.0)
+- `--output-folder`: Where to save extracted frames
+
+### Step 2: Extract Audio & Transcribe
+
+```bash
+uv run python main.py extract-audio path/to/video.mp4 \
+    --language en \
+    --model-size small \
+    --output-folder ../data/1_interim
+```
+
+**Options:**
+
+- `--language`: Audio language code (default: "en")
+- `--model-size`: Whisper model size: tiny, base, small, medium, large (default: "small")
+- `--output-folder`: Where to save transcription
+
+### Step 3: Caption Frames
+
+```bash
+uv run python main.py caption-frames path/to/video.mp4 \
+    --model-name vikhyatk/moondream2 \
+    --remove-duplicates \
+    --output-folder ../data/1_interim
+```
+
+**Options:**
+
+- `--model-name`: Vision model from Hugging Face (default: "vikhyatk/moondream2")
+- `--remove-duplicates`: Remove consecutive duplicate captions (default: True)
+- `--output-folder`: Where to save captions
+
+### Step 4: Generate Segments
+
+```bash
+uv run python main.py segment path/to/video.mp4 \
+    --model-name google/gemma-3-4b-it \
+    --input-folder ../data/1_interim \
+    --prompt-path ../data/0_prompts/segmentation.md \
+    --output-folder ../data/2_final
+```
+
+**Options:**
+
+- `--model-name`: LLM model for segmentation (default: "google/gemma-3-4b-it")
+- `--input-folder`: Folder with transcription and captions from previous steps
+- `--prompt-path`: Custom system prompt for the LLM
+- `--output-folder`: Where to save final segments
+
+### Complete Pipeline Example
+
+```bash
+VIDEO="path/to/broadcast.mp4"
+
+# Run all steps in sequence
+uv run python main.py extract-frames "$VIDEO"
+uv run python main.py extract-audio "$VIDEO"
+uv run python main.py caption-frames "$VIDEO"
+uv run python main.py segment "$VIDEO"
+```
+
+## Output Structure
+
+```
+data/
+├── 1_interim/
+│   └── video.mp4/
+│       ├── frames/              # Extracted frame images
+│       ├── captions.json        # Frame captions with timestamps
+│       └── transcription.json   # Audio transcription with timestamps
+└── 2_final/
+    └── video.mp4/
+        ├── segments.json        # Final semantic segments
+        ├── segments.txt         # Raw LLM output
+        └── prompt.json          # Prompt sent to LLM
+```
+
+## Development
+
+### Running Tests
+
+```bash
+uv run pytest
+```
+
+### Code Formatting
+
+```bash
+uv run ruff check .
+uv run ruff format .
+```
+
+## Troubleshooting
+
+**ModuleNotFoundError: No module named 'components'**
+
+- Ensure you're running commands with `uv run` from the `etl/` directory
+- Check that `pyproject.toml` has the correct configuration
+
+**CUDA/MPS not detected**
+
+- Ensure PyTorch is installed with GPU support
+- Check device availability: `python -c "import torch; print(torch.cuda.is_available())"`
+
+**Whisper transcription fails**
+
+- Verify ffmpeg is installed and accessible: `ffmpeg -version`
+- Check audio track exists in video: `ffmpeg -i video.mp4`
+
+**Out of memory errors**
+
+- Reduce sample rate: `--sample-rate 0.5`
+- Use smaller models: `--model-size tiny` for Whisper
+- Process shorter video clips first
