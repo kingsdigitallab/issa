@@ -45,8 +45,8 @@ VIDEO_PATH = "v-10-srt.mp4"
 # MODEL = "Qwen/Qwen3-VL-8B-Instruct" # 
 # MODEL = "Qwen/Qwen3-VL-8B-Thinking" # very verbose, need to increase MAX_NEW_TOKENS >> 1k to catch the actual response
 # MODEL = "Qwen/Qwen3-VL-32B-Instruct-FP8" # NOT working; transforms package doesn't support it yet
-# MODEL = "Qwen/Qwen3-VL-30B-A3B-Instruct" # NOT working; Transforms doesn't support it yet
-MODEL = "Qwen/Qwen3-VL-32B-Instruct" # v. good quality for 20mins video; ~72GB VRAM!
+MODEL = "Qwen/Qwen3-VL-30B-A3B-Instruct" # NOT working; Transforms doesn't support it yet
+# MODEL = "Qwen/Qwen3-VL-32B-Instruct" # v. good quality for 20mins video; ~72GB VRAM!
 
 def show_vram():
     free, total = torch.cuda.mem_get_info()
@@ -107,7 +107,14 @@ if 1:
     inputs = inputs.to(model.device)
 
     # Inference: Generation of the output
-    generated_ids = model.generate(**inputs, max_new_tokens=MAX_NEW_TOKENS)
+    generated_ids = model.generate(
+        **inputs, 
+        max_new_tokens=MAX_NEW_TOKENS,
+        temperature=0.7,
+        top_k=20,
+        top_p=0.8,
+        seed=3407,
+    )
     generated_ids_trimmed = [
         out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
     ]

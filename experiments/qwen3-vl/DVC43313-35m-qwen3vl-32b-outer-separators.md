@@ -1,5 +1,5 @@
 
-Task: find separators in a 35 min video
+Task: find programme separators in a 35 min video
 
 Observations: 
 * with a simple prompt, Qwen3-vl 32b find all the separator but hallucinate a couple and doesn't read all the titles.
