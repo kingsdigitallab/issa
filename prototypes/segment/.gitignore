@@ -5,6 +5,8 @@
 *.orig
 *.tmp
 
-data/0_raw/*
-data/1_interim/*
-data/2_final/*
+.DS_Store
+
+data/0_raw/
+data/1_interim/
+data/2_final/
