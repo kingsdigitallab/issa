@@ -1,6 +1,6 @@
 [project]
 name = "segment"
-version = "0.1.0"
+version = "0.0.0"
 description = "Semantic video segmentation using generative vision-language models and LLM reasoning"
 readme = "README.md"
 requires-python = ">=3.11"
