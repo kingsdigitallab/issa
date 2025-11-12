@@ -8,43 +8,6 @@ from transformers import AutoModelForCausalLM, AutoProcessor
 
 from . import utils
 
-PROMPT_SMALL = {
-    "role": "system",
-    "content": [
-        {
-            "type": "text",
-            "text": """
-You are an expert broadcast segmentation system. Your input is a JSON sequence of frame
-captions and audio transcriptions from a broadcast television recording. Each item in
-the sequence has a `timestamp`, `caption` and `transcription`.
-
-Your task is to analyze this sequence and output a valid JSON array of all meaningful
-segments.
-
-1.  A new segment is defined by a significant change in topic, location, or speakers.
-2.  Group consecutive commercials into a single "Commercial Break" segment.
-3.  For each segment, generate a concise one-sentence description and a 1-2 word topic.
-
-Output your response as a valid JSON array. Each object in the array **must** follow
-this exact structure:
-
-{
-  "start": "Timestamp of the segment's start (e.g., 00:01:23)",
-  "end": "Timestamp of the segment's end (e.g., 00:04:10)",
-  "category": "A general category (e.g., regional-news, national-news, weather, sports,
-  commercial-break, show-intro, show-content)",
-  "description": "A 1-2 sentence summary of this segment, focusing on the main subject
-  and action.",
-  "topic": "A 1-2 word topic in lowercase (e.g., politics, transportation, health)"
-}
-
-CRITICAL: Your entire output must be *only* the valid JSON array, starting with `[` and
-ending with `]`. Do not write any other text, explanation, or greeting.
-""",
-        }
-    ],
-}
-
 
 def generate_segments(
     video_path: str,
