@@ -1,0 +1,12 @@
+[tool.commitizen]
+changelog_pattern = "^\\w+\\(segment\\)(!)?:"
+major_version_zero = true
+name = "cz_conventional_commits"
+tag_format = "v${version}-segment"
+update_changelog_on_bump = true
+version = "0.0.0"
+version_scheme = "semver"
+version_files = [
+    "etl/uv.lock:version",
+    "etl/pyproject.toml:version",
+]
