@@ -3,12 +3,13 @@ Try a variety of models to detect seprators, preferably:
 * with low VRAM
 * reliably
 
-1. 4B on 10mins gets all the seperators right and right metadata; but also inner seps
-1b. same with different seed find three then loops
+Experiments
 
-4B killed (OOM?) on full video (35m)
-2. 4b perfect result on 10m video with better prompt
-3. 4b perfect results on a 16m video
+1. 4B on 10mins gets all the seperators right and right metadata; but also inner seps
+    1. (same with different seed find three then loops.)
+    2. (4B killed (OOM?) on full video (35m).)
+3. 4b perfect result on 10m video with better prompt
+4. 4b perfect results on a 16m video
 
 ---
 
