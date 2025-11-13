@@ -9,7 +9,7 @@ Experiments
     1. (same with different seed find three then loops.)
     2. (4B killed (OOM?) on full video (35m).)
 3. 4b perfect result on 10m video with better prompt
-4. 4b perfect results on a 16m video
+4. 4b perfect results on a different 16m video
 
 ---
 
