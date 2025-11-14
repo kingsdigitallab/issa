@@ -178,3 +178,12 @@ cython_debug/
 *.zip
 node_modules
 data
+*.mp4
+*.wav
+*.mp3
+*.mkv
+*.bk
+*.bk2
+*.whl
+*.srt
+

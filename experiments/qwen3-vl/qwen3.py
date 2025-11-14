@@ -10,6 +10,8 @@ It also repeats.
 
 8B uses 57GB
 
+
+
 '''
 import os
 from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
@@ -18,9 +20,11 @@ import torch
 from datetime import datetime
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+# HF_HOME='/scratch/users/k1217897/prj/framesense/hf_cache'
 # MAX_NEW_TOKENS = 128
 # MAX_NEW_TOKENS = 4000
 MAX_NEW_TOKENS = 5000
+SEED = 3407
 
 ### MVP1 - Semantic Segmentation
 # original from DC:
@@ -35,23 +39,94 @@ PROMPT = '''The video is a broadcast television recording. Analyse the video. Fi
 # PROMPT = '''The video is a broadcast television recording from Northern Ireland. List all the high-level programmes in the video. A programme length can vary between 2 and 30 minutes. It is usually clearly preceded by a blank or count-down screen serving as a separator. Answer with a JSON array with starting time, any text in the separation screen preceding the segment, and a few words summary of the content (mentioning place(s), people and main event/action).'''
 
 ### MVP2 - Place Names
-PROMPT = '''The video is a broadcast television recording from Northern Ireland. Transcribe all the subtitles with high accuracy. One sentence per line. Don't make things up.'''
+# PROMPT = '''The video is a broadcast television recording from Northern Ireland. Transcribe all the subtitles with high accuracy. One sentence per line. Don't make things up.'''
+
+# outer separator
+# PROMPT = '''The video is a broadcast television recording from Northern Ireland. 
+# It contains one or more programmes visually preceded by a clear separator screen.
+# A separator screen is usually just a silent image without movement that is not part of the programme and never shown to the viewers.
+# It can last from a few seconds to a couple of minutes. 
+# It often contains a title of the upcoming programme.
+# Its visual style is normally very different from the following programme.
+# Please only mention separators before a new programme, not those within programmes.
+# Ignore all advertising.
+
+# Return a valid JSON Array with a list of all the times a separator appears.
+
+# Each entry should have those keys:
+# * start_time
+# * end_time
+# * title: all the text written on the separator screen
+# * year: if the year is visible on screen
+# * producer: if the channel name or producer is visible on screen
+# '''
+PROMPT = '''The video is a broadcast television recording from Northern Ireland. 
+It contains one or more programmes visually preceded by a clear separator screen.
+A separator screen has the following properties:
+* usually just a silent image without movement or a large count down
+* often contains the title or the producer of the upcoming programme
+* often looks like a large clock or countdown, but not always
+* it can last from a few seconds to a couple of minutes
+* it is never part of the programme itself and not meant for public viewing
+* its visual style is normally very different from the upcoming programme
+* it is never an advertisement
+
+Usually all separator screens in a video look very similar.
+
+Please only mention separators before a new programme, not those within programmes.
+
+Return a valid JSON Array with a list of all the times a separator appears.
+
+Each entry should have those keys:
+* start_time
+* end_time
+* title: all the text written on the separator screen
+* year: if the year is visible on screen
+* producer: if the channel name or producer is visible on screen
+* visual: maximum three words describing what the separator screen looks like
+'''
+
+OBS = '''
+
+Good with 4/8b:
+
+DVC43998    looks good                                              -> good
+
+Wrong separators with 8b:
+
+DVC43313    rep loop                                                -> good with 32b
+32594       rep loop, goes beyond 1h                                -> good with 32b
+90SP2284    (90mins!): reps loop; missed 27:30, 51:10, 01:10:06     ->
+90D2335_A   (36m): stops at to 8mins, catch yellow pages.           -> 32b excellent
+S1963_12    
+S1964_2     missed 20:34, 25:48, 29:23, 30:28                       -> 
+55300_A
+
+Processing error with 8b:
+
+S1963_8     processing error                                        ->
+
+'''
 
 # VIDEO_PATH = "v-10-srt.mp4"
-VIDEO_PATH = "v-10-srt.mp4"
+# VIDEO_PATH = "v-10-srt.mp4"
 # VIDEO_PATH = "DVC43313-srt.mp4"
+VIDEO_PATH = "../../../framesense/data/NI/90D2335_A/90D2335_A.mp4"
+# VIDEO_PATH = "DVC43313.mp4"
 
 # MODEL = "Qwen/Qwen3-VL-4B-Instruct" # unreliable
 # MODEL = "Qwen/Qwen3-VL-8B-Instruct" # 
 # MODEL = "Qwen/Qwen3-VL-8B-Thinking" # very verbose, need to increase MAX_NEW_TOKENS >> 1k to catch the actual response
 # MODEL = "Qwen/Qwen3-VL-32B-Instruct-FP8" # NOT working; transforms package doesn't support it yet
-MODEL = "Qwen/Qwen3-VL-30B-A3B-Instruct" # NOT working; Transforms doesn't support it yet
-# MODEL = "Qwen/Qwen3-VL-32B-Instruct" # v. good quality for 20mins video; ~72GB VRAM!
+# MODEL = "Qwen/Qwen3-VL-30B-A3B-Instruct" # NOT working; Transforms doesn't support it yet
+MODEL = "Qwen/Qwen3-VL-32B-Instruct" # v. good quality for 20mins video; ~72GB VRAM!
+
+torch.manual_seed(SEED)
 
 def show_vram():
     free, total = torch.cuda.mem_get_info()
     used = total - free
-    print(f"* VRAM used: {used / 1024**3:.2f} GB")
+    print(f"* VRAM  : {used / 1024**3:.2f} GB")
 
 # default: Load the model on the available device(s)
 # model = Qwen3VLForConditionalGeneration.from_pretrained(
@@ -70,10 +145,11 @@ model = Qwen3VLForConditionalGeneration.from_pretrained(
 device_name = torch.cuda.get_device_name(torch.cuda.current_device())
 
 print('')
-print(f'* Time: {datetime.now().isoformat()}')
-print(f'* Video: {VIDEO_PATH}')
-print(f'* Model: {MODEL}')
+print(f'* Time  : {datetime.now().isoformat()}')
+print(f'* Video : {VIDEO_PATH}')
+print(f'* Model : {MODEL}')
 print(f'* Device: {device_name}')
+print(f'* Seed  : {SEED}')
 show_vram()
 
 print(f'\nPROMPT:\n\n{PROMPT}\n')
@@ -113,7 +189,7 @@ if 1:
         temperature=0.7,
         top_k=20,
         top_p=0.8,
-        seed=3407,
+        # seed=SEED,
     )
     generated_ids_trimmed = [
         out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
