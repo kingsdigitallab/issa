@@ -1,17 +1,12 @@
 '''Observations:
 
-Qwen-VL-2B with flash attention requires 8GB for a small response to a 10 mins video.
+Qwen3-VL-2B with flash attention requires 8GB for a small response to a 10 mins video.
 1 minute.
-!!! 2B seems to only describe the action and not the sound or spoken words
+Qwen3-VL only proceses visual channel, not audio channel. 
+But it can read on screen text, including subtitles.
 
-4B, takes 43GB!
-4B unable to response qst about sound & speech!
-It also repeats.
-
+4B, takes 43GB! 
 8B uses 57GB
-
-
-
 '''
 import os
 from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
@@ -101,6 +96,11 @@ MODEL = "Qwen/Qwen3-VL-32B-Instruct" # v. good quality for 20mins video; ~72GB V
 
 torch.manual_seed(SEED)
 
+def format_time(delta):
+    hours, remainder = divmod(delta.seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{hours:02d}:{minutes:02d}:{seconds:02d}"    
+
 def show_vram():
     free, total = torch.cuda.mem_get_info()
     used = total - free
@@ -147,8 +147,11 @@ messages = [
     }
 ]
 
+duration = None
+
 if 1:
     # from HF model card
+    t0 = datetime.now()
 
     # Preparation for inference
     inputs = processor.apply_chat_template(
@@ -177,6 +180,8 @@ if 1:
         skip_special_tokens=True, 
         clean_up_tokenization_spaces=False
     )
+    t1 = datetime.now()
+    duration = t1 - t0
 else:
     # This code is much slower to load than the alternative above and often goes OOM after
     # https://github.com/QwenLM/Qwen3-VL/blob/main/cookbooks/video_understanding.ipynb
@@ -218,6 +223,9 @@ print(output_text[0])
 print('\n')
 
 show_vram()
+
+if duration:
+    print(f'Duration: {format_time(duration)} (exclude model loading)')
 
 print('\n')
 print('-' * 3)

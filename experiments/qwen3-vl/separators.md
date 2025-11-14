@@ -1,9 +1,15 @@
-Try a variety of models to detect seprators, preferably:
-* outer ones only
-* with low VRAM
-* reliably
+# 1. Experimental context
 
-Experiments
+## Objectives
+
+Try a variety of Qwen3-VL models to zero-shot detection of seperators from full-length video, preferably:
+* "outer" ones only (i.e. not title screen within a programme)
+* with low VRAM (see it can run om consumer GPU, 24GB max, instead of queueing for HPC)
+* reliably (high recall; false positive are less important than ommisions b/c we can exclude them during post-processing; e.g. detecting inner separators or adverts is ok if they can be weed out)
+
+## Experiments
+
+See all the detailed outputs in the main Experiments section below.
 
 1. 4B on 10mins gets all the seperators right and right metadata; but also inner seps
     1. (same with different seed find three then loops.)
@@ -14,35 +20,37 @@ Experiments
 6. 32b
 7. 32b 
 
+## Resource usage
+* 4b on 35mins video: 13GB VRAM (23GB with FrameSense)
+* 8b on 35mins video: ?         (40GB with FrameSense)
+* 32b on 35min video: 72GB VRAM (OOM! with FrameSense, WHY??)
 
-Resource usage:
-* 4b on 35mins video: 13GB VRAM
-* 32b on 35min video: 72GB VRAM
-
-TODO:
+## TODO
 * 30b-3ba with transformers
 * 32b-fp8 with vllm
 
-Questions:
+## Questions
 * what is the minimim model size for robust results on all videos?
 * what is the maximum video length qwen3-vl can analyse well?
+* is VRAM usage dependent on video length or output length?
+* Why is VRAM usage higher with FrameSense containers?
 
-Videos:
+## Videos
 
-Video       Results with 4b/8b models (FrameSense)                  Results with 32B model
-===========|=======================================================|======================
-DVC43998    No issues                                               looks good
-DVC43313    rep loop                                                looks good
-32594       rep loop, goes beyond 1h                                looks good
-90SP2284    (90mins!): reps loop; missed 27:30, 51:10, 01:10:06     
-90D2335_A   (36m): stops at to 8mins, catch yellow pages.           excellent
-S1963_12    
-S1964_2     missed 20:34, 25:48, 29:23, 30:28                        
-55300_A
-S1963_8     processing error with FrameSense                        
-
+| Video - mins| Results with 4b/8b models (FrameSense)         | w/ 32B model |
+|-------------|------------------------------------------------|--------------|
+| DVC43998 16 | No issues                                      | looks good   |
+| DVC43313 35 | rep loop                                       | looks good   |
+| 32594    33 | rep loop, goes beyond 1h                       | looks good   |
+| 90SP2284 90 | reps loop; missed 27:30, 51:10, 01:10:06       | excellent    |
+| S1963_8  28 | processing error with FrameSense               |              |
+| S1963_12 37 |                                                |              |
+| S1964_2  32 | missed 20:34, 25:48, 29:23, 30:28              |              |
+| 55300_A  25 |                                                |              |
 
 ---
+
+# 2. Experimental results
 
 1.
 
@@ -114,8 +122,6 @@ ANSWER:
 ---
 
 2.
-
-Loading checkpoint shards: 100%|██████████████████████████████████████████████████████| 2/2 [00:05<00:00,  2.67s/it]
 
 * Time: 2025-11-08T13:58:00.660850
 * Video: v-10.mp4
