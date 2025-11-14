@@ -23,6 +23,24 @@ TODO:
 * 30b-3ba with transformers
 * 32b-fp8 with vllm
 
+Questions:
+* what is the minimim model size for robust results on all videos?
+* what is the maximum video length qwen3-vl can analyse well?
+
+Videos:
+
+Video       Results with 4b/8b models (FrameSense)                  Results with 32B model
+===========|=======================================================|======================
+DVC43998    No issues                                               looks good
+DVC43313    rep loop                                                looks good
+32594       rep loop, goes beyond 1h                                looks good
+90SP2284    (90mins!): reps loop; missed 27:30, 51:10, 01:10:06     
+90D2335_A   (36m): stops at to 8mins, catch yellow pages.           excellent
+S1963_12    
+S1964_2     missed 20:34, 25:48, 29:23, 30:28                        
+55300_A
+S1963_8     processing error with FrameSense                        
+
 
 ---
 

@@ -86,28 +86,6 @@ Each entry should have those keys:
 * visual: maximum three words describing what the separator screen looks like
 '''
 
-OBS = '''
-
-Good with 4/8b:
-
-DVC43998    looks good                                              -> good
-
-Wrong separators with 8b:
-
-DVC43313    rep loop                                                -> good with 32b
-32594       rep loop, goes beyond 1h                                -> good with 32b
-90SP2284    (90mins!): reps loop; missed 27:30, 51:10, 01:10:06     ->
-90D2335_A   (36m): stops at to 8mins, catch yellow pages.           -> 32b excellent
-S1963_12    
-S1964_2     missed 20:34, 25:48, 29:23, 30:28                       -> 
-55300_A
-
-Processing error with 8b:
-
-S1963_8     processing error                                        ->
-
-'''
-
 # VIDEO_PATH = "v-10-srt.mp4"
 # VIDEO_PATH = "v-10-srt.mp4"
 # VIDEO_PATH = "DVC43313-srt.mp4"
