@@ -9,7 +9,7 @@ But it can read on screen text, including subtitles.
 8B uses 57GB
 '''
 import os
-from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
+from transformers import Qwen3VLForConditionalGeneration, Qwen3VLMoeForConditionalGeneration, AutoProcessor
 from qwen_vl_utils import process_vision_info
 import torch
 from datetime import datetime
@@ -94,6 +94,10 @@ VIDEO_PATH = "../../../framesense/data/NI/90D2335_A/90D2335_A.mp4"
 # MODEL = "Qwen/Qwen3-VL-30B-A3B-Instruct" # NOT working; Transforms doesn't support it yet
 MODEL = "Qwen/Qwen3-VL-32B-Instruct" # v. good quality for 20mins video; ~72GB VRAM!
 
+MODEL_FOR_GENERATION = Qwen3VLForConditionalGeneration
+if '-A' in MODEL:
+    MODEL_FOR_GENERATION = Qwen3VLMoeForConditionalGeneration
+
 torch.manual_seed(SEED)
 
 def format_time(delta):
@@ -112,7 +116,7 @@ def show_vram():
 # )
 
 # We recommend enabling flash_attention_2 for better acceleration and memory saving, especially in multi-image and video scenarios.
-model = Qwen3VLForConditionalGeneration.from_pretrained(
+model = MODEL_FOR_GENERATION.from_pretrained(
     MODEL,
     dtype=torch.bfloat16,
     # dtype="auto",

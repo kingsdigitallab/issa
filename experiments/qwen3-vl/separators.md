@@ -25,6 +25,8 @@ See all the detailed outputs in the main Experiments section below.
 * 8b on 35mins video: ?         (40GB with FrameSense)
 * 32b on 35min video: 72GB VRAM (OOM! with FrameSense, WHY??)
 
+On our 4090 GPU loading 32b models only takes 19GB instead of 62GB on HPC, why?
+
 ## TODO
 * 30b-3ba with transformers
 * 32b-fp8 with vllm
@@ -37,16 +39,17 @@ See all the detailed outputs in the main Experiments section below.
 
 ## Videos
 
-| Video - mins| Results with 4b/8b models (FrameSense)         | w/ 32B model |
-|-------------|------------------------------------------------|--------------|
-| DVC43998 16 | No issues                                      | looks good   |
-| DVC43313 35 | rep loop                                       | looks good   |
-| 32594    33 | rep loop, goes beyond 1h                       | looks good   |
-| 90SP2284 90 | reps loop; missed 27:30, 51:10, 01:10:06       | excellent    |
-| S1963_8  28 | processing error with FrameSense               |              |
-| S1963_12 37 |                                                |              |
-| S1964_2  32 | missed 20:34, 25:48, 29:23, 30:28              |              |
-| 55300_A  25 |                                                |              |
+| Video -  mins| Results with 4b/8b models (FrameSense)         | w/ 32B model |
+|--------------|------------------------------------------------|--------------|
+| DVC43998  16 | No issues                                      | looks good   |
+| DVC43313  35 | rep loop                                       | looks good   |
+| 32594     33 | rep loop, goes beyond 1h                       | looks good   |
+| 90SP2284  90 | reps loop; missed 27:30, 51:10, 01:10:06       | excellent    |
+| 90D2335_A 36 |                                                |              |
+| S1963_8   28 | processing error with FrameSense               |              |
+| S1963_12  37 |                                                |              |
+| S1964_2   32 | missed 20:34, 25:48, 29:23, 30:28              |              |
+| 55300_A   25 |                                                |              |
 
 ---
 
