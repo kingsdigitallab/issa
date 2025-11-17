@@ -36,8 +36,9 @@ flowchart LR
     A[Video] --> B[Frame Extraction<br/>eg. OpenCV]
     A --> C[Audio Extraction<br/>eg. Whisper]
     B --> D[Frame Captioning<br/>eg. Moondream2]
-    C --> E[LLM Reasoning<br/>eg. Gemma]
-    D --> E
+    C --> G[Align Captions & Transcripts]
+    D --> G
+    G --> E[LLM Reasoning<br/>eg. Gemma]
     E --> F[Segments + Metadata]
 
     style A fill:#FABC2A
@@ -46,6 +47,7 @@ flowchart LR
     style D fill:#6290C3
     style E fill:#FCB0B3
     style F fill:#F9A620
+    style G fill:#9FBBCC
 ```
 
 #### Pipeline Steps
@@ -54,6 +56,7 @@ flowchart LR
   - Could also use `framesense` to pickup shots in a first step to reduce the number of frames
 - Visual Analysis: Moondream2 generates detailed natural language descriptions of each frame
 - Audio Transcription: Whisper extracts speech with timestamps
+- Alignment: Aligns frame captions and audio transcripts to ensure accurate timing
 - Semantic Segmentation: LLM analyzes the frame captions + audio data to identify segment boundaries and generate summaries
 
 ## Other Approaches
@@ -158,7 +161,22 @@ uv run python main.py caption-frames path/to/video.mp4 \
 - `--remove-duplicates`: Remove consecutive duplicate captions (default: True)
 - `--output-folder`: Where to save captions
 
-### Step 4: Generate Segments
+### Step 4: Align Captions and Audio
+
+```bash
+uv run python main.py align path/to/video.mp4 \
+    --input-folder ../data/1_interim \
+    --merge-duplicates \
+    --output-folder ../data/1_interim
+```
+
+**Options:**
+
+- `--input-folder`: Folder with transcription and captions from previous steps
+- `--merge-duplicates`: Merge consecutive duplicate transcriptions (default: True)
+- `--output-folder`: Where to save aligned captions
+
+### Step 5: Generate Segments
 
 ```bash
 uv run python main.py segment path/to/video.mp4 \
@@ -220,23 +238,32 @@ uv run ruff format .
 
 ## Troubleshooting
 
-**ModuleNotFoundError: No module named 'components'**
+### ModuleNotFoundError: No module named 'components'
 
 - Ensure you're running commands with `uv run` from the `etl/` directory
 - Check that `pyproject.toml` has the correct configuration
 
-**CUDA/MPS not detected**
+### CUDA/MPS not detected
 
 - Ensure PyTorch is installed with GPU support
 - Check device availability: `python -c "import torch; print(torch.cuda.is_available())"`
 
-**Whisper transcription fails**
+### Whisper transcription fails
 
 - Verify ffmpeg is installed and accessible: `ffmpeg -version`
 - Check audio track exists in video: `ffmpeg -i video.mp4`
 
-**Out of memory errors**
+### Out of memory errors
 
 - Reduce sample rate: `--sample-rate 0.5`
 - Use smaller models: `--model-size tiny` for Whisper
 - Process shorter video clips first
+
+## Results
+
+### 13 Nov 2025
+
+- A small modle like Gemma 3 is not very good at semantically segmenting the video, it
+  returns a lot of false positives.
+  - Processing time for 50 frames: 2m.
+- On the other hand, the exact same prompt on Gemini Pro and Qwen 3 20B provide quite good results.
