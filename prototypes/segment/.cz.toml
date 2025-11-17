@@ -1,5 +1,5 @@
 [tool.commitizen]
-changelog_pattern = "^\\w+\\(segment\\)(!)?:"
+changelog_incremental = true
 major_version_zero = true
 name = "cz_conventional_commits"
 tag_format = "v${version}-segment"
@@ -10,3 +10,6 @@ version_files = [
     "etl/uv.lock:version",
     "etl/pyproject.toml:version",
 ]
+
+[tool.commitizen.customize]
+changelog_pattern = "^(feat|fix|refactor|docs|test|perf|ci)\\(segment\\)(!)?:"
