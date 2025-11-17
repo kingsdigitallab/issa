@@ -1,6 +1,7 @@
 import typer
 
 from components import (
+    aligning,
     audio_extraction,
     frame_captioning,
     frame_extraction,
@@ -66,6 +67,29 @@ def caption_frames(
 
 
 @app.command()
+def align(
+    video_path: str = typer.Argument(..., help="The path to the input video file"),
+    input_folder: str = typer.Option(
+        "../data/1_interim",
+        help="Path to the input folder that contains the transcription and captioned frames",
+    ),
+    merge_duplicate_transcriptions: bool = typer.Option(
+        True, help="Merge consecutive duplicate captions"
+    ),
+    output_folder: str = typer.Option(
+        "../data/1_interim", help="Path to the output folder"
+    ),
+):
+    """Aligns captions with transcriptions"""
+    try:
+        aligning.align(
+            video_path, input_folder, merge_duplicate_transcriptions, output_folder
+        )
+    except Exception as e:
+        typer.echo(f"Error: {e}")
+
+
+@app.command()
 def segment(
     video_path: str = typer.Argument(..., help="The path to the input video file"),
     model_name: str = typer.Option("google/gemma-3-4b-it", help="LLM model to use"),
@@ -75,7 +99,10 @@ def segment(
     ),
     prompt_path: str = typer.Option(
         "../data/0_prompts/segmentation.md",
-        help="Path to the systemprompt file for the LLM",
+        help="Path to the system prompt file for the LLM",
+    ),
+    prompt_only: bool = typer.Option(
+        False, help="Only generate the prompt, don't run the segmentation"
     ),
     output_folder: str = typer.Option(
         "../data/2_final", help="Path to the output folder"
@@ -84,7 +111,12 @@ def segment(
     """Generate semantic segments for a video"""
     try:
         segmentation.generate_segments(
-            video_path, input_folder, model_name, prompt_path, output_folder
+            video_path,
+            input_folder,
+            model_name,
+            prompt_path,
+            prompt_only,
+            output_folder,
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
