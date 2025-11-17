@@ -3,7 +3,6 @@ import os
 from pathlib import Path
 
 import torch
-from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoProcessor
 
 from . import utils
@@ -14,6 +13,7 @@ def generate_segments(
     input_folder: str,
     model_name: str,
     prompt_path: str,
+    prompt_only: bool,
     output_folder: str,
 ):
     """
@@ -23,22 +23,18 @@ def generate_segments(
         video_path (str): Path to the input video file.
         input_folder (str): Path to the input folder containing captions and audio data.
         model_name (str): Name of the model to use for segment generation.
-        prompt_path (str): Path to the prompt file.
+        prompt_path (str): Path to the system prompt file.
+        prompt_only (bool): Whether to generate only the prompt without generating segments.
         output_folder (str): Path to the output folder where segments will be saved.
     """
     video_name = Path(video_path).name
-    captions_path = Path(input_folder) / video_name / "captions.json"
-    transcription_path = Path(input_folder) / video_name / "transcription.json"
+    aligned_data_path = Path(input_folder) / video_name / "aligned_data.json"
     output_path = utils.create_output_path(video_path, output_folder)
 
-    with open(captions_path, "r") as f:
-        captions = json.load(f)
-    with open(transcription_path, "r") as f:
-        transcriptions = json.load(f)
+    with open(aligned_data_path, "r") as f:
+        aligned_data = json.load(f)
     with open(prompt_path, "r") as f:
         system_prompt = f.read()
-
-    aligned_data = align_captions_with_transcription(captions, transcriptions)
 
     messages = [
         {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
@@ -53,6 +49,9 @@ def generate_segments(
         json.dump(messages, f, indent=4)
 
     print(f"Prompt saved to {prompt_filepath}")
+
+    if prompt_only:
+        return
 
     device = utils.get_torch_device()
 
@@ -92,40 +91,3 @@ def generate_segments(
         json.dump(response_json, f, indent=4)
 
     print(f"Segments saved to {output_filepath}")
-
-
-def align_captions_with_transcription(captions: list, transcriptions: dict) -> list:
-    """
-    Align frame captions with audio transcription segments.
-
-    Args:
-        captions (list): List of caption dictionaries with 'timestamp' and 'caption' keys.
-        transcriptions (dict): Transcription dictionary with 'segments' list containing
-                              'start', 'end', and 'text' keys.
-
-    Returns:
-        list: List of aligned data dictionaries with 'timestamp', 'caption', and
-              'transcription' keys.
-    """
-    aligned_data = []
-
-    for caption in tqdm(captions, desc="Aligning captions with audio transcription"):
-        timestamp = caption["timestamp"]
-        transcription = []
-
-        segments = filter(
-            lambda x: x["start"] <= timestamp < x["end"], transcriptions["segments"]
-        )
-
-        for segment in segments:
-            transcription.append(segment["text"])
-
-        aligned_data.append(
-            {
-                "timestamp": timestamp,
-                "caption": caption["caption"],
-                "transcription": " ".join(transcription),
-            }
-        )
-
-    return aligned_data
