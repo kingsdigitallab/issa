@@ -3,7 +3,6 @@ import os
 from pathlib import Path
 
 import torch
-from transformers import AutoModelForCausalLM, AutoProcessor
 
 from . import utils
 
@@ -12,7 +11,7 @@ def generate_segments(
     video_path: str,
     input_folder: str,
     model_name: str,
-    prompt_path: str,
+    prompt_folder: str,
     prompt_only: bool,
     output_folder: str,
 ):
@@ -23,17 +22,18 @@ def generate_segments(
         video_path (str): Path to the input video file.
         input_folder (str): Path to the input folder containing captions and audio data.
         model_name (str): Name of the model to use for segment generation.
-        prompt_path (str): Path to the system prompt file.
+        prompt_folder (str): Path to the folder containing system prompt files.
         prompt_only (bool): Whether to generate only the prompt without generating segments.
         output_folder (str): Path to the output folder where segments will be saved.
     """
     video_name = Path(video_path).name
     aligned_data_path = Path(input_folder) / video_name / "aligned_data.json"
+    segmentation_prompt = Path(prompt_folder) / "segmentation.md"
     output_path = utils.create_output_path(video_path, output_folder)
 
     with open(aligned_data_path, "r") as f:
         aligned_data = json.load(f)
-    with open(prompt_path, "r") as f:
+    with open(segmentation_prompt, "r") as f:
         system_prompt = f.read()
 
     messages = [
@@ -44,7 +44,7 @@ def generate_segments(
         },
     ]
 
-    prompt_filepath = os.path.join(output_path, "prompt.json")
+    prompt_filepath = os.path.join(output_path, "segmentation_prompt.json")
     with open(prompt_filepath, "w") as f:
         json.dump(messages, f, indent=4)
 
@@ -53,15 +53,7 @@ def generate_segments(
     if prompt_only:
         return
 
-    device = utils.get_torch_device()
-
-    model = AutoModelForCausalLM.from_pretrained(model_name)
-    model.to(device)
-    model.eval()
-
-    processor = AutoProcessor.from_pretrained(model_name, use_fast=True)
-
-    print(f"Model {model_name} loaded")
+    model, processor, device = utils.get_llm_model(model_name)
 
     inputs = processor.apply_chat_template(
         messages,
