@@ -1,7 +1,7 @@
-import os
 from pathlib import Path
 
 import torch
+from transformers import AutoModelForCausalLM, AutoProcessor
 
 
 def create_output_path(video_path: str, base_folder: str, *subfolder: str) -> str:
@@ -45,6 +45,29 @@ def get_torch_device():
     print(f"Using device: {device}")
 
     return device
+
+
+def get_llm_model(model_name: str):
+    """
+    Load a Hugging Face causal language model and its processor.
+
+    Args:
+        model_name (str): The name of the model to load.
+
+    Returns:
+        tuple: A tuple containing the loaded model, processor, and device.
+    """
+    device = get_torch_device()
+
+    model = AutoModelForCausalLM.from_pretrained(model_name)
+    model.to(device)
+    model.eval()
+
+    processor = AutoProcessor.from_pretrained(model_name, use_fast=True)
+
+    print(f"Model {model_name} loaded on {device}")
+
+    return model, processor, device
 
 
 def get_timestamp(frame_path: str) -> float:
