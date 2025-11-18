@@ -47,6 +47,19 @@ def get_torch_device():
     return device
 
 
+def get_timestamp(frame_path: str) -> float:
+    """
+    Extract the timestamp from a frame path.
+
+    Args:
+        frame_path (str): The path to the frame file.
+
+    Returns:
+        flota: The extracted timestamp.
+    """
+    return float(frame_path.split("_")[2].replace(".png", ""))
+
+
 def get_llm_model(model_name: str):
     """
     Load a Hugging Face causal language model and its processor.
@@ -70,14 +83,31 @@ def get_llm_model(model_name: str):
     return model, processor, device
 
 
-def get_timestamp(frame_path: str) -> float:
+def generate_text_from_messages(model, processor, device, messages):
     """
-    Extract the timestamp from a frame path.
+    Generates text from a list of messages using a causal language model.
 
     Args:
-        frame_path (str): The path to the frame file.
+        model: The causal language model.
+        processor: The processor for the model.
+        device: The device to run the model on.
+        messages (list): A list of messages in the chat template format.
 
     Returns:
-        flota: The extracted timestamp.
+        str: The generated and decoded text.
     """
-    return float(frame_path.split("_")[2].replace(".png", ""))
+    inputs = processor.apply_chat_template(
+        messages,
+        add_generation_prompt=True,
+        tokenize=True,
+        return_dict=True,
+        return_tensors="pt",
+    ).to(device)
+    input_len = inputs["input_ids"].shape[-1]
+
+    with torch.inference_mode():
+        generation = model.generate(**inputs, max_new_tokens=4096, do_sample=False)
+        generation = generation[0][input_len:]
+
+    decoded = processor.decode(generation, skip_special_tokens=True)
+    return decoded
