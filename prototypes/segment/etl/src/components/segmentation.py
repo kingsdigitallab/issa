@@ -40,7 +40,7 @@ def generate_segments(
         {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
         {
             "role": "user",
-            "content": [{"type": "text", "text": aligned_data}],
+            "content": [{"type": "text", "text": aligned_data[:5]}],
         },
     ]
 
@@ -55,20 +55,7 @@ def generate_segments(
 
     model, processor, device = utils.get_llm_model(model_name)
 
-    inputs = processor.apply_chat_template(
-        messages,
-        add_generation_prompt=True,
-        tokenize=True,
-        return_dict=True,
-        return_tensors="pt",
-    ).to(device)
-    input_len = inputs["input_ids"].shape[-1]
-
-    with torch.inference_mode():
-        generation = model.generate(**inputs, max_new_tokens=4096, do_sample=False)
-        generation = generation[0][input_len:]
-
-    decoded = processor.decode(generation, skip_special_tokens=True)
+    decoded = utils.generate_text_from_messages(model, processor, device, messages)
 
     output_filepath = os.path.join(output_path, "segments.txt")
     with open(output_filepath, "w") as f:
