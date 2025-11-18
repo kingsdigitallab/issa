@@ -97,9 +97,9 @@ def segment(
         "../data/1_interim",
         help="Path to the input folder that contains the transcription and captioned frames",
     ),
-    prompt_path: str = typer.Option(
-        "../data/0_prompts/segmentation.md",
-        help="Path to the system prompt file for the LLM",
+    prompt_folder: str = typer.Option(
+        "../data/0_prompts",
+        help="Path to the folder containing the system prompt files for the LLM",
     ),
     prompt_only: bool = typer.Option(
         False, help="Only generate the prompt, don't run the segmentation"
@@ -114,7 +114,7 @@ def segment(
             video_path,
             input_folder,
             model_name,
-            prompt_path,
+            prompt_folder,
             prompt_only,
             output_folder,
         )
