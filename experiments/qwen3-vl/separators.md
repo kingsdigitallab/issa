@@ -17,8 +17,8 @@ See all the detailed outputs in the main Experiments section below.
 3. 4b perfect result on 10m video with better prompt
 4. 4b perfect results on a different 16m video
 5. 32b and better prompt
-6. 32b
-7. 32b 
+...
+see Video section below for reference to experiment number for each video.
 
 ## Resource usage
 * 4b on 35mins video: 13GB VRAM (23GB with FrameSense)
@@ -39,17 +39,17 @@ On our 4090 GPU loading 32b models only takes 19GB instead of 62GB on HPC, why?
 
 ## Videos
 
-| Video -  mins| Results with 4b/8b models (FrameSense)         | w/ 32B model |
-|--------------|------------------------------------------------|--------------|
-| DVC43998  16 | No issues                                      | looks good   |
-| DVC43313  35 | rep loop                                       | looks good   |
-| 32594     33 | rep loop, goes beyond 1h                       | looks good   |
-| 90SP2284  90 | reps loop; Missed 27:30, 51:10, 01:10:06       |              |
-| 90D2335_A 36 |                                                | excellent    |
-| S1963_8   28 | processing error with FrameSense               |              |
-| S1963_12  37 | M 1:13,12:46; H 2:30,4:55,7:46; G 34:39,...    | better       |
-| S1964_2   32 | missed 20:34, 25:48, 29:23, 30:28              | only 1st     |
-| 55300_A   25 | finds opening and closing title                |              |
+| Video -  mins| Results with 4b/8b models (FrameSense)         | w/ 32B model | Exp.|
+|--------------|------------------------------------------------|--------------|-----|
+| DVC43998  16 | No issues                                      | looks good   |  3  |
+| DVC43313  35 | rep loop                                       | looks good   |  4  |
+| 32594     33 | rep loop, goes beyond 1h                       | looks good   |  5  |
+| 90SP2284  90 | reps loop; Missed 27:30, 51:10, 01:10:06       |              |     |
+| 90D2335_A 36 |                                                | excellent    |  6  |
+| S1963_8   28 | processing error with FrameSense               |              |     |
+| S1963_12  37 | M 1:13,12:46; H 2:30,4:55,7:46; G 34:39,...    | better       |  8  |
+| S1964_2   32 | missed 20:34, 25:48, 29:23, 30:28              | only 1st     |  7  |
+| 55300_A   25 | finds opening and closing title                |              |     |
 
 ---
 
@@ -589,6 +589,7 @@ Each entry should have those keys:
 
 ANSWER:
 
+```json
 [
   {
     "start_time": "00:00",
@@ -599,7 +600,7 @@ ANSWER:
     "visual": "countdown number"
   }
 ]
-
+```
 
 * VRAM  : 70.53 GB
 Duration: 00:03:34 (exclude model loading)
@@ -645,6 +646,7 @@ Each entry should have those keys:
 
 ANSWER:
 
+```json
 [
   {
     "start_time": "0:00",
@@ -743,7 +745,7 @@ ANSWER:
     "visual": "crosshair target"
   }
 ]
-
+```
 
 * VRAM  : 70.71 GB
 Duration: 00:05:19 (exclude model loading)
