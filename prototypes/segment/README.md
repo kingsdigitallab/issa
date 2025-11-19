@@ -58,6 +58,7 @@ flowchart LR
 - Audio Transcription: Whisper extracts speech with timestamps
 - Alignment: Aligns frame captions and audio transcripts to ensure accurate timing
 - Semantic Segmentation: LLM analyzes the frame captions + audio data to identify segment boundaries and generate summaries
+  1. Detect boundaries between the segments, by looking at changes in the captions and transcriptions
 
 ## Other Approaches
 
@@ -178,8 +179,10 @@ uv run python main.py align path/to/video.mp4 \
 
 ### Step 5: Generate Segments
 
+#### Step 5.1: Detect Boundaries
+
 ```bash
-uv run python main.py segment path/to/video.mp4 \
+uv run python main.py detect-boundaries path/to/video.mp4 \
     --model-name google/gemma-3-4b-it \
     --input-folder ../data/1_interim \
     --prompt-path ../data/0_prompts/segmentation.md \
@@ -202,7 +205,8 @@ VIDEO="path/to/broadcast.mp4"
 uv run python main.py extract-frames "$VIDEO"
 uv run python main.py extract-audio "$VIDEO"
 uv run python main.py caption-frames "$VIDEO"
-uv run python main.py segment "$VIDEO"
+uv run python main.py align-data "$VIDEO"
+uv run python main.py detect-boundaties "$VIDEO"
 ```
 
 ## Output Structure
