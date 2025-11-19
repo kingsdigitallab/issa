@@ -58,7 +58,7 @@ PROMPT = '''The video is a broadcast television recording. Analyse the video. Fi
 PROMPT = '''The video is a broadcast television recording from Northern Ireland. 
 It contains one or more programmes visually preceded by a clear separator screen.
 A separator screen has the following properties:
-* usually just a silent image without movement or a large count down
+* usually just a silent image without movement or a large (flickering) count down
 * often contains the title or the producer of the upcoming programme
 * often looks like a large clock or countdown, but not always
 * it can last from a few seconds to a couple of minutes
@@ -84,7 +84,7 @@ Each entry should have those keys:
 # VIDEO_PATH = "v-10-srt.mp4"
 # VIDEO_PATH = "v-10-srt.mp4"
 # VIDEO_PATH = "DVC43313-srt.mp4"
-VIDEO_PATH = "../../../framesense/data/NI/90D2335_A/90D2335_A.mp4"
+VIDEO_PATH = "../../../framesense/data/NI/S1963_12/S1963_12.mp4"
 # VIDEO_PATH = "DVC43313.mp4"
 
 # MODEL = "Qwen/Qwen3-VL-4B-Instruct" # unreliable

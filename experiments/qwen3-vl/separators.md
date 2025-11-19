@@ -44,12 +44,12 @@ On our 4090 GPU loading 32b models only takes 19GB instead of 62GB on HPC, why?
 | DVC43998  16 | No issues                                      | looks good   |
 | DVC43313  35 | rep loop                                       | looks good   |
 | 32594     33 | rep loop, goes beyond 1h                       | looks good   |
-| 90SP2284  90 | reps loop; missed 27:30, 51:10, 01:10:06       | excellent    |
-| 90D2335_A 36 |                                                |              |
+| 90SP2284  90 | reps loop; Missed 27:30, 51:10, 01:10:06       |              |
+| 90D2335_A 36 |                                                | excellent    |
 | S1963_8   28 | processing error with FrameSense               |              |
-| S1963_12  37 |                                                |              |
-| S1964_2   32 | missed 20:34, 25:48, 29:23, 30:28              |              |
-| 55300_A   25 |                                                |              |
+| S1963_12  37 | M 1:13,12:46; H 2:30,4:55,7:46; G 34:39,...    | better       |
+| S1964_2   32 | missed 20:34, 25:48, 29:23, 30:28              | only 1st     |
+| 55300_A   25 | finds opening and closing title                |              |
 
 ---
 
@@ -549,6 +549,204 @@ ANSWER:
 
 * VRAM  : 72.36 GB
 
+---
+
+7.
+
+* Time  : 2025-11-17T11:02:52.483131
+* Video : ../../../framesense/data/NI/S1964_2/S1964_2.mp4
+* Model : Qwen/Qwen3-VL-32B-Instruct
+* Device: NVIDIA A100 80GB PCIe
+* Seed  : 3407
+* VRAM  : 62.60 GB
+
+PROMPT:
+
+The video is a broadcast television recording from Northern Ireland. 
+It contains one or more programmes visually preceded by a clear separator screen.
+A separator screen has the following properties:
+* usually just a silent image without movement or a large count down
+* often contains the title or the producer of the upcoming programme
+* often looks like a large clock or countdown, but not always
+* it can last from a few seconds to a couple of minutes
+* it is never part of the programme itself and not meant for public viewing
+* its visual style is normally very different from the upcoming programme
+* it is never an advertisement
+
+Usually all separator screens in a video look very similar.
+
+Please only mention separators before a new programme, not those within programmes.
+
+Return a valid JSON Array with a list of all the times a separator appears.
+
+Each entry should have those keys:
+* start_time
+* end_time
+* title: all the text written on the separator screen
+* year: if the year is visible on screen
+* producer: if the channel name or producer is visible on screen
+* visual: maximum three words describing what the separator screen looks like
+
+ANSWER:
+
+[
+  {
+    "start_time": "00:00",
+    "end_time": "00:04",
+    "title": "4",
+    "year": null,
+    "producer": null,
+    "visual": "countdown number"
+  }
+]
+
+
+* VRAM  : 70.53 GB
+Duration: 00:03:34 (exclude model loading)
+
 
 ---
 
+8.
+
+* Time  : 2025-11-18T17:10:53.514817
+* Video : ../../../framesense/data/NI/S1963_12/S1963_12.mp4
+* Model : Qwen/Qwen3-VL-32B-Instruct
+* Device: NVIDIA H100 NVL
+* Seed  : 3407
+* VRAM  : 62.70 GB
+
+PROMPT:
+
+The video is a broadcast television recording from Northern Ireland. 
+It contains one or more programmes visually preceded by a clear separator screen.
+A separator screen has the following properties:
+* usually just a silent image without movement or a large (flickering) count down
+* often contains the title or the producer of the upcoming programme
+* often looks like a large clock or countdown, but not always
+* it can last from a few seconds to a couple of minutes
+* it is never part of the programme itself and not meant for public viewing
+* its visual style is normally very different from the upcoming programme
+* it is never an advertisement
+
+Usually all separator screens in a video look very similar.
+
+Please only mention separators before a new programme, not those within programmes.
+
+Return a valid JSON Array with a list of all the times a separator appears.
+
+Each entry should have those keys:
+* start_time
+* end_time
+* title: all the text written on the separator screen
+* year: if the year is visible on screen
+* producer: if the channel name or producer is visible on screen
+* visual: maximum three words describing what the separator screen looks like
+
+ANSWER:
+
+[
+  {
+    "start_time": "0:00",
+    "end_time": "0:07",
+    "title": "5",
+    "year": null,
+    "producer": null,
+    "visual": "countdown number"
+  },
+  {
+    "start_time": "0:36",
+    "end_time": "0:45",
+    "title": null,
+    "year": null,
+    "producer": null,
+    "visual": "crosshair target"
+  },
+  {
+    "start_time": "1:12",
+    "end_time": "1:18",
+    "title": null,
+    "year": null,
+    "producer": null,
+    "visual": "crosshair target"
+  },
+  {
+    "start_time": "1:51",
+    "end_time": "2:02",
+    "title": null,
+    "year": null,
+    "producer": null,
+    "visual": "crosshair target"
+  },
+  {
+    "start_time": "3:11",
+    "end_time": "3:18",
+    "title": "3",
+    "year": null,
+    "producer": null,
+    "visual": "countdown number"
+  },
+  {
+    "start_time": "13:08",
+    "end_time": "13:14",
+    "title": null,
+    "year": null,
+    "producer": null,
+    "visual": "crosshair target"
+  },
+  {
+    "start_time": "15:20",
+    "end_time": "15:26",
+    "title": null,
+    "year": null,
+    "producer": null,
+    "visual": "crosshair target"
+  },
+  {
+    "start_time": "22:34",
+    "end_time": "22:40",
+    "title": "3",
+    "year": null,
+    "producer": null,
+    "visual": "countdown number"
+  },
+  {
+    "start_time": "27:47",
+    "end_time": "27:53",
+    "title": "11",
+    "year": null,
+    "producer": null,
+    "visual": "countdown number"
+  },
+  {
+    "start_time": "30:41",
+    "end_time": "30:47",
+    "title": null,
+    "year": null,
+    "producer": null,
+    "visual": "crosshair target"
+  },
+  {
+    "start_time": "35:45",
+    "end_time": "35:51",
+    "title": "3",
+    "year": null,
+    "producer": null,
+    "visual": "countdown number"
+  },
+  {
+    "start_time": "37:35",
+    "end_time": "37:41",
+    "title": null,
+    "year": null,
+    "producer": null,
+    "visual": "crosshair target"
+  }
+]
+
+
+* VRAM  : 70.71 GB
+Duration: 00:05:19 (exclude model loading)
+
+
+---
