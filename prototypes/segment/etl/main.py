@@ -90,32 +90,28 @@ def align(
 
 
 @app.command()
-def segment(
+def detect_boundaries(
     video_path: str = typer.Argument(..., help="The path to the input video file"),
     model_name: str = typer.Option("google/gemma-3-4b-it", help="LLM model to use"),
     input_folder: str = typer.Option(
         "../data/1_interim",
-        help="Path to the input folder that contains the transcription and captioned frames",
+        help="Path to the input folder that contains the aligned data",
     ),
     prompt_folder: str = typer.Option(
         "../data/0_prompts",
         help="Path to the folder containing the system prompt files for the LLM",
     ),
-    prompt_only: bool = typer.Option(
-        False, help="Only generate the prompt, don't run the segmentation"
-    ),
     output_folder: str = typer.Option(
         "../data/2_final", help="Path to the output folder"
     ),
 ):
-    """Generate semantic segments for a video"""
+    """Detect boundaries between the segments in the aligned data."""
     try:
-        segmentation.generate_segments(
+        segmentation.detect_boundaries(
             video_path,
             input_folder,
             model_name,
             prompt_folder,
-            prompt_only,
             output_folder,
         )
     except Exception as e:
