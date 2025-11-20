@@ -39,17 +39,17 @@ On our 4090 GPU loading 32b models only takes 19GB instead of 62GB on HPC, why?
 
 ## Videos
 
-| Video     | mins| Results with 4b/8b models (FrameSense)         | w/ 32B model   | Exp.|
-|-----------|-----|------------------------------------------------|----------------|-----|
-| DVC43998  | 16  | No issues                                      | looks good     |  3  |
-| DVC43313  | 35  | rep loop                                       | looks good     |  4  |
-| 32594     | 33  | rep loop, goes beyond 1h                       | looks good     |  5  |
-| 90SP2284  | 90  | reps loop; Missed 27:30, 51:10, 01:10:06       | TO BE CHECKED  | 10  |
-| 90D2335_A | 36  |                                                | excellent      |  6  |
-| S1963_8   | 28  | processing error with FrameSense               | TO BE CHECKED  |  9  |
-| S1963_12  | 37  | M 1:13,12:46; H 2:30,4:55,7:46; G 34:39,...    | better         |  8  |
-| S1964_2   | 32  | missed 20:34, 25:48, 29:23, 30:28              | only 1st       |  7  |
-| 55300_A   | 25  | finds opening and closing title                | title, credits | 11  |
+| Video     | mins| Results with 4b/8b models (FrameSense)         | w/ 32B model     | Exp.|
+|-----------|-----|------------------------------------------------|------------------|-----|
+| DVC43998  | 16  | No issues                                      | looks good       |  3  |
+| DVC43313  | 35  | rep loop                                       | looks good       |  4  |
+| 32594     | 33  | rep loop, goes beyond 1h                       | looks good       |  5  |
+| 90SP2284  | 90  | reps loop; Missed 27:30, 51:10, 01:10:06       | 👎 worse than 8b!| 10  |
+| 90D2335_A | 36  |                                                | excellent        |  6  |
+| S1963_8   | 28  | processing error with FrameSense               | very good        |  9  |
+| S1963_12  | 37  | M 1:13,12:46; H 2:30,4:55,7:46; G 34:39,...    | better           |  8  |
+| S1964_2   | 32  | missed 20:34, 25:48, 29:23, 30:28              | 👎 only 1st      |  7  |
+| 55300_A   | 25  | finds opening and closing title                | title, credits   | 11  |
 
 Why did the processing of S1963_8 take 1h20m ! 
 
