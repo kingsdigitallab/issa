@@ -39,17 +39,19 @@ On our 4090 GPU loading 32b models only takes 19GB instead of 62GB on HPC, why?
 
 ## Videos
 
-| Video -  mins| Results with 4b/8b models (FrameSense)         | w/ 32B model | Exp.|
-|--------------|------------------------------------------------|--------------|-----|
-| DVC43998  16 | No issues                                      | looks good   |  3  |
-| DVC43313  35 | rep loop                                       | looks good   |  4  |
-| 32594     33 | rep loop, goes beyond 1h                       | looks good   |  5  |
-| 90SP2284  90 | reps loop; Missed 27:30, 51:10, 01:10:06       |              |     |
-| 90D2335_A 36 |                                                | excellent    |  6  |
-| S1963_8   28 | processing error with FrameSense               |              |     |
-| S1963_12  37 | M 1:13,12:46; H 2:30,4:55,7:46; G 34:39,...    | better       |  8  |
-| S1964_2   32 | missed 20:34, 25:48, 29:23, 30:28              | only 1st     |  7  |
-| 55300_A   25 | finds opening and closing title                |              |     |
+| Video     | mins| Results with 4b/8b models (FrameSense)         | w/ 32B model   | Exp.|
+|-----------|-----|------------------------------------------------|----------------|-----|
+| DVC43998  | 16  | No issues                                      | looks good     |  3  |
+| DVC43313  | 35  | rep loop                                       | looks good     |  4  |
+| 32594     | 33  | rep loop, goes beyond 1h                       | looks good     |  5  |
+| 90SP2284  | 90  | reps loop; Missed 27:30, 51:10, 01:10:06       | TO BE CHECKED  | 10  |
+| 90D2335_A | 36  |                                                | excellent      |  6  |
+| S1963_8   | 28  | processing error with FrameSense               | TO BE CHECKED  |  9  |
+| S1963_12  | 37  | M 1:13,12:46; H 2:30,4:55,7:46; G 34:39,...    | better         |  8  |
+| S1964_2   | 32  | missed 20:34, 25:48, 29:23, 30:28              | only 1st       |  7  |
+| 55300_A   | 25  | finds opening and closing title                | title, credits | 11  |
+
+Why did the processing of S1963_8 take 1h20m ! 
 
 ---
 
@@ -752,3 +754,323 @@ Duration: 00:05:19 (exclude model loading)
 
 
 ---
+
+9.
+
+* Time  : 2025-11-20T08:40:04.259785
+* Video : ../../../framesense/data/NI/S1963_8/S1963_8.mp4
+* Model : Qwen/Qwen3-VL-32B-Instruct
+* Device: NVIDIA H100 NVL
+* Seed  : 3407
+* VRAM  : 62.70 GB
+
+PROMPT:
+
+The video is a broadcast television recording from Northern Ireland. 
+It contains one or more programmes visually preceded by a clear separator screen.
+A separator screen has the following properties:
+* usually just a silent image without movement or a large (flickering) count down
+* often contains the title or the producer of the upcoming programme
+* often looks like a large clock or countdown, but not always
+* it can last from a few seconds to a couple of minutes
+* it is never part of the programme itself and not meant for public viewing
+* its visual style is normally very different from the upcoming programme
+* it is never an advertisement
+
+Usually all separator screens in a video look very similar.
+
+Please only mention separators before a new programme, not those within programmes.
+
+Return a valid JSON Array with a list of all the times a separator appears.
+
+Each entry should have those keys:
+* start_time
+* end_time
+* title: all the text written on the separator screen
+* year: if the year is visible on screen
+* producer: if the channel name or producer is visible on screen
+* visual: maximum three words describing what the separator screen looks like
+
+
+ANSWER:
+
+```json
+[
+  {
+    "start_time": "0:00",
+    "end_time": "0:09",
+    "title": "1000 MILES 91 CIRCUIT OF IRELAND TRIAL",
+    "year": null,
+    "producer": null,
+    "visual": "black and white sign"
+  },
+  {
+    "start_time": "0:11",
+    "end_time": "0:29",
+    "title": "Ulster Automobile Club 1000 MILES CIRCUIT OF IRELAND TRIAL",
+    "year": null,
+    "producer": null,
+    "visual": "hand-drawn map"
+  },
+  {
+    "start_time": "0:31",
+    "end_time": "0:43",
+    "title": "1951",
+    "year": "1951",
+    "producer": null,
+    "visual": "black screen with white text"
+  },
+  {
+    "start_time": "5:26",
+    "end_time": "5:32",
+    "title": "Ulster Trophy Races 1952 Preliminary events for the Small Fry",
+    "year": "1952",
+    "producer": null,
+    "visual": "chalkboard"
+  },
+  {
+    "start_time": "7:41",
+    "end_time": "7:47",
+    "title": "Ulster Trophy Races 1952 The Big Stuff Winner: Fartace in an Alfa",
+    "year": "1952",
+    "producer": null,
+    "visual": "chalkboard"
+  },
+  {
+    "start_time": "11:30",
+    "end_time": "11:36",
+    "title": "PRACTICE AT CRAIGANTLET SEPT. 1951",
+    "year": "1951",
+    "producer": null,
+    "visual": "black screen with white text"
+  },
+  {
+    "start_time": "12:01",
+    "end_time": "12:09",
+    "title": "R.A.C. TOURIST TROPHY RACE SEPT. 1951 JAGUAR FIRST MOSS DRIVING",
+    "year": "1951",
+    "producer": null,
+    "visual": "black screen with white text"
+  },
+  {
+    "start_time": "13:55",
+    "end_time": "14:03",
+    "title": "CIRCUIT OF IRELAND TRIAL EASTER 1952",
+    "year": "1952",
+    "producer": null,
+    "visual": "chalkboard"
+  },
+  {
+    "start_time": "14:51",
+    "end_time": "14:58",
+    "title": "1000 MILES 96 CIRCUIT OF IRELAND TRIAL",
+    "year": null,
+    "producer": null,
+    "visual": "black and white sign"
+  },
+  {
+    "start_time": "22:49",
+    "end_time": "22:55",
+    "title": "ASCENDING TIM HEALY PASS",
+    "year": null,
+    "producer": null,
+    "visual": "black screen with white text"
+  },
+  {
+    "start_time": "26:10",
+    "end_time": "26:17",
+    "title": "LEAVING KILLARNEY",
+    "year": null,
+    "producer": null,
+    "visual": "black screen with white text"
+  }
+]
+```
+
+* VRAM  : 70.69 GB
+
+Duration: 01:20:27 (exclude model loading)
+
+---
+
+10.
+
+* Time  : 2025-11-20T10:14:10.599941
+* Video : ../../../framesense/data/NI/90SP2284/90SP2284.mp4
+* Model : Qwen/Qwen3-VL-32B-Instruct
+* Device: NVIDIA H100 NVL
+* Seed  : 3407
+* VRAM  : 62.70 GB
+
+PROMPT:
+
+The video is a broadcast television recording from Northern Ireland. 
+It contains one or more programmes visually preceded by a clear separator screen.
+A separator screen has the following properties:
+* usually just a silent image without movement or a large (flickering) count down
+* often contains the title or the producer of the upcoming programme
+* often looks like a large clock or countdown, but not always
+* it can last from a few seconds to a couple of minutes
+* it is never part of the programme itself and not meant for public viewing
+* its visual style is normally very different from the upcoming programme
+* it is never an advertisement
+
+Usually all separator screens in a video look very similar.
+
+Please only mention separators before a new programme, not those within programmes.
+
+Return a valid JSON Array with a list of all the times a separator appears.
+
+Each entry should have those keys:
+* start_time
+* end_time
+* title: all the text written on the separator screen
+* year: if the year is visible on screen
+* producer: if the channel name or producer is visible on screen
+* visual: maximum three words describing what the separator screen looks like
+
+
+ANSWER:
+
+```json
+[
+  {
+    "start_time": "00:00",
+    "end_time": "00:04",
+    "title": "KELLY\nTX 17 9 99\n99/0 516",
+    "year": "1999",
+    "producer": "KELLY",
+    "visual": "clock, black, white"
+  },
+  {
+    "start_time": "00:13",
+    "end_time": "00:16",
+    "title": "KELLY TITLES\nGOF4",
+    "year": null,
+    "producer": "KELLY",
+    "visual": "clock, black, white"
+  },
+  {
+    "start_time": "01:00",
+    "end_time": "01:03",
+    "title": "FRIDAY NIGHT\nwith\nGaltee",
+    "year": null,
+    "producer": "Galtee",
+    "visual": "text, colorful, logo"
+  },
+  {
+    "start_time": "02:00",
+    "end_time": "02:03",
+    "title": "KELLY BREAKS\nOUT OF BREAK -\nFREEDOM!",
+    "year": null,
+    "producer": "KELLY",
+    "visual": "clock, silver, logo"
+  },
+  {
+    "start_time": "03:56",
+    "end_time": "03:59",
+    "title": "KELLY BREAKS\nOUT OF BREAK -\nAUSTIN IN",
+    "year": null,
+    "producer": "KELLY",
+    "visual": "clock, silver, logo"
+  },
+  {
+    "start_time": "05:36",
+    "end_time": "05:39",
+    "title": "KELLY BREAKS\nINTO BREAK -\nTARTAN - UNFINISHED",
+    "year": null,
+    "producer": "KELLY",
+    "visual": "clock, silver, logo"
+  },
+  {
+    "start_time": "06:56",
+    "end_time": "06:59",
+    "title": "The Mugs Game\nUVF\nOrmeau Road\nBelfast BT7 1EB",
+    "year": null,
+    "producer": "UVF",
+    "visual": "text, red, logo"
+  }
+]
+```
+
+* VRAM  : 72.39 GB
+Duration: 00:10:43 (exclude model loading)
+
+
+---
+
+11.
+
+* Time  : 2025-11-20T11:13:09.130525
+* Video : ../../../framesense/data/NI/55300_A/55300_A.mp4
+* Model : Qwen/Qwen3-VL-32B-Instruct
+* Device: NVIDIA H100 NVL
+* Seed  : 3407
+* VRAM  : 62.70 GB
+
+PROMPT:
+
+The video is a broadcast television recording from Northern Ireland. 
+It contains one or more programmes visually preceded by a clear separator screen.
+A separator screen has the following properties:
+* usually just a silent image without movement or a large (flickering) count down
+* often contains the title or the producer of the upcoming programme
+* often looks like a large clock or countdown, but not always
+* it can last from a few seconds to a couple of minutes
+* it is never part of the programme itself and not meant for public viewing
+* its visual style is normally very different from the upcoming programme
+* it is never an advertisement
+
+Usually all separator screens in a video look very similar.
+
+Please only mention separators before a new programme, not those within programmes.
+
+Return a valid JSON Array with a list of all the times a separator appears.
+
+Each entry should have those keys:
+* start_time
+* end_time
+* title: all the text written on the separator screen
+* year: if the year is visible on screen
+* producer: if the channel name or producer is visible on screen
+* visual: maximum three words describing what the separator screen looks like
+
+
+ANSWER:
+
+```json
+[
+  {
+    "start_time": "0.0",
+    "end_time": "8.0",
+    "title": "LESSER SPOTTED ULSTER",
+    "year": null,
+    "producer": null,
+    "visual": "black background, white text, title"
+  },
+  {
+    "start_time": "1512.0",
+    "end_time": "1525.0",
+    "title": "Thanks to: RITA MEWALL JEFFEREY CUPPLES BERTIE MCKAY PHILLIP WATSON MICHAEL FERGUSON LORNA FERGUSON JULIAN FRIERS JILL FRIERS and the people of Ballintoy",
+    "year": null,
+    "producer": null,
+    "visual": "black background, white text, credits"
+  },
+  {
+    "start_time": "1526.0",
+    "end_time": "1531.0",
+    "title": "A NORTHLAND Production for UTV",
+    "year": null,
+    "producer": "UTV",
+    "visual": "black background, white and colored text, logo"
+  }
+]
+```
+
+
+* VRAM  : 70.68 GB
+
+Duration: 00:03:10 (exclude model loading)
+
+---
+

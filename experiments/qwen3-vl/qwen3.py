@@ -84,7 +84,7 @@ Each entry should have those keys:
 # VIDEO_PATH = "v-10-srt.mp4"
 # VIDEO_PATH = "v-10-srt.mp4"
 # VIDEO_PATH = "DVC43313-srt.mp4"
-VIDEO_PATH = "../../../framesense/data/NI/S1963_12/S1963_12.mp4"
+VIDEO_PATH = "../../../framesense/data/NI/55300_A/55300_A.mp4"
 # VIDEO_PATH = "DVC43313.mp4"
 
 # MODEL = "Qwen/Qwen3-VL-4B-Instruct" # unreliable
