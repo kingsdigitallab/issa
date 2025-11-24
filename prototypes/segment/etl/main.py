@@ -106,8 +106,96 @@ def detect_boundaries(
     ),
 ):
     """Detect boundaries between the segments in the aligned data."""
+
     try:
         segmentation.detect_boundaries(
+            video_path,
+            input_folder,
+            model_name,
+            prompt_folder,
+            output_folder,
+        )
+    except Exception as e:
+        typer.echo(f"Error: {e}")
+
+
+@app.command()
+def merge_segments(
+    video_path: str = typer.Argument(..., help="The path to the input video file"),
+    input_folder: str = typer.Option(
+        "../data/2_final",
+        help="Path to the input folder that contains the boundaries data",
+    ),
+    output_folder: str = typer.Option(
+        "../data/2_final", help="Path to the output folder"
+    ),
+):
+    """Merge segments based on boundary detection."""
+
+    try:
+        segmentation.merge_segments(
+            video_path,
+            input_folder,
+            output_folder,
+        )
+    except Exception as e:
+        typer.echo(f"Error: {e}")
+
+
+@app.command()
+def summarise_segments(
+    video_path: str = typer.Argument(..., help="The path to the input video file"),
+    input_folder: str = typer.Option(
+        "../data/2_final",
+        help="Path to the input folder that contains the boundaries data",
+    ),
+    model_name: str = typer.Option(
+        "google/gemma-3-4b-it", help="Name of the model to use for summarisation"
+    ),
+    prompt_folder: str = typer.Option(
+        "../data/0_prompts",
+        help="Path to the input folder that contains the prompts",
+    ),
+    output_folder: str = typer.Option(
+        "../data/2_final", help="Path to the output folder"
+    ),
+):
+    """Summarise merged segments."""
+
+    try:
+        segmentation.summarise_segments(
+            video_path,
+            input_folder,
+            model_name,
+            prompt_folder,
+            output_folder,
+        )
+    except Exception as e:
+        typer.echo(f"Error: {e}")
+
+
+@app.command()
+def classify_segments(
+    video_path: str = typer.Argument(..., help="The path to the input video file"),
+    input_folder: str = typer.Option(
+        "../data/2_final",
+        help="Path to the input folder that contains the boundaries data",
+    ),
+    model_name: str = typer.Option(
+        "google/gemma-3-4b-it", help="Name of the model to use for classification"
+    ),
+    prompt_folder: str = typer.Option(
+        "../data/0_prompts",
+        help="Path to the input folder that contains the prompts",
+    ),
+    output_folder: str = typer.Option(
+        "../data/2_final", help="Path to the output folder"
+    ),
+):
+    """Classify merged segments."""
+
+    try:
+        segmentation.classify_segments(
             video_path,
             input_folder,
             model_name,
