@@ -8,6 +8,7 @@ A "New Segment" occurs if:
 
 If it is just a different camera angle of the same conversation, it is NOT a new segment.
 If the transcription does not end with final punctuation, it is NOT a new segment.
+If the transcription is the same as the previous one, it is NOT a new segment.
 
 QUESTION:
 Is next the start of a NEW segment? Answer only YES or NO.
