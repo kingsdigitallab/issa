@@ -106,7 +106,7 @@ def generate_text_from_messages(model, processor, device, messages):
     input_len = inputs["input_ids"].shape[-1]
 
     with torch.inference_mode():
-        generation = model.generate(**inputs, max_new_tokens=4096, do_sample=False)
+        generation = model.generate(**inputs, max_new_tokens=128000, do_sample=False)
         generation = generation[0][input_len:]
 
     decoded = processor.decode(generation, skip_special_tokens=True)
