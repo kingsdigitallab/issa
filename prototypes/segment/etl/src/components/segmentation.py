@@ -138,3 +138,174 @@ def generate_segments(
         json.dump(response_json, f, indent=4)
 
     print(f"Segments saved to {output_filepath}")
+
+
+def merge_segments(
+    video_path: str,
+    input_folder: str,
+    output_folder: str,
+):
+    """
+    Merges segments based on boundary detection data.
+
+    Args:
+        video_path (str): Path to the input video file.
+        input_folder (str): Path to the folder containing boundaries.json.
+        output_folder (str): Path to the output folder where merged_segments.json will be saved.
+    """
+    video_name = Path(video_path).name
+    boundaries_path = Path(input_folder) / video_name / "boundaries.json"
+    output_path = utils.create_output_path(video_path, output_folder)
+
+    with open(boundaries_path, "r") as f:
+        segments = json.load(f)
+
+    if not segments:
+        print("No segments found to merge.")
+        return
+
+    boundary_indices = [i for i, seg in enumerate(segments) if seg.get("is_boundary")]
+
+    if not boundary_indices:
+        print("No boundaries found in segments.")
+        return
+
+    merged_segments = []
+    for i in tqdm(range(len(boundary_indices)), desc="Merging segments"):
+        start_index = boundary_indices[i]
+
+        segment_group = []
+        end_timestamp = 0.0
+
+        if i + 1 < len(boundary_indices):
+            end_index = boundary_indices[i + 1]
+            segment_group = segments[start_index:end_index]
+            end_timestamp = segments[end_index]["timestamp"]
+        else:
+            segment_group = segments[start_index:]
+            end_timestamp = segments[-1]["timestamp"]
+
+        if not segment_group:
+            continue
+
+        start_timestamp = segment_group[0]["timestamp"]
+        captions = [s["caption"] for s in segment_group if "caption" in s]
+        transcriptions = [
+            s["transcription"] for s in segment_group if "transcription" in s
+        ]
+
+        merged_segments.append(
+            {
+                "start_timestamp": start_timestamp,
+                "end_timestamp": end_timestamp,
+                "captions": captions,
+                "transcriptions": list(dict.fromkeys(transcriptions)),
+            }
+        )
+
+    output_filepath = os.path.join(output_path, "merged_segments.json")
+    with open(output_filepath, "w") as f:
+        json.dump(merged_segments, f, indent=4)
+
+    print(f"Merged segments saved to {output_filepath}")
+
+
+def summarise_segments(
+    video_path: str,
+    input_folder: str,
+    model_name: str,
+    prompt_folder: str,
+    output_folder: str,
+):
+    """
+    Generates summaries for each merged segment using an LLM.
+
+    Args:
+        video_path (str): Path to the input video file.
+        input_folder (str): Path to the folder containing merged_segments.json.
+        model_name (str): Name of the model to use for summarisation.
+        prompt_folder (str): Path to the folder containing the summarisation prompt.
+        output_folder (str): Path to the output folder where summaries.json will be saved.
+    """
+    video_name = Path(video_path).name
+    merged_segments_path = Path(input_folder) / video_name / "merged_segments.json"
+    summarisation_prompt_path = Path(prompt_folder) / "summarisation.md"
+    output_path = utils.create_output_path(video_path, output_folder)
+
+    with open(merged_segments_path, "r") as f:
+        merged_segments = json.load(f)
+
+    with open(summarisation_prompt_path, "r") as f:
+        system_prompt = f.read()
+
+    model, processor, device = utils.get_llm_model(model_name)
+
+    for segment in tqdm(merged_segments, desc="Summarising segments"):
+        user_content = json.dumps(segment)
+        messages = [
+            {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
+            {"role": "user", "content": [{"type": "text", "text": user_content}]},
+        ]
+
+        summary = utils.generate_text_from_messages(model, processor, device, messages)
+        segment["summary"] = summary
+
+    output_filepath = os.path.join(output_path, "summaries.json")
+    with open(output_filepath, "w") as f:
+        json.dump(merged_segments, f, indent=4)
+
+    print(f"Segments with summaries saved to {output_filepath}")
+
+
+def classify_segments(
+    video_path: str,
+    input_folder: str,
+    model_name: str,
+    prompt_folder: str,
+    output_folder: str,
+):
+    """
+    Classify summaries for each merged segment using an LLM.
+
+    Args:
+        video_path (str): Path to the input video file.
+        input_folder (str): Path to the folder containing merged_segments.json.
+        model_name (str): Name of the model to use for classification.
+        prompt_folder (str): Path to the folder containing the classification prompt.
+        output_folder (str): Path to the output folder where summaries.json will be saved.
+    """
+    video_name = Path(video_path).name
+    merged_segments_path = Path(input_folder) / video_name / "summaries.json"
+    classification_prompt_path = Path(prompt_folder) / "classification.md"
+    output_path = utils.create_output_path(video_path, output_folder)
+
+    with open(merged_segments_path, "r") as f:
+        merged_segments = json.load(f)
+
+    with open(classification_prompt_path, "r") as f:
+        system_prompt = f.read()
+
+    model, processor, device = utils.get_llm_model(model_name)
+
+    for segment in tqdm(merged_segments, desc="Classifying segments"):
+        user_content = json.dumps(segment)
+        messages = [
+            {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
+            {"role": "user", "content": [{"type": "text", "text": user_content}]},
+        ]
+
+        generated = utils.generate_text_from_messages(
+            model, processor, device, messages
+        )
+        classification = json.loads(generated.replace("```json", "").replace("```", ""))
+
+        segment["topic"] = classification["topic"]
+        segment["channel"] = classification["channel"]
+        segment["program_name"] = classification["program_name"]
+        segment["transmission_date"] = classification["transmission_date"]
+
+    output_filepath = os.path.join(output_path, "classifications.json")
+    with open(output_filepath, "w") as f:
+        json.dump(merged_segments, f, indent=4)
+
+    print(f"Segments with classification saved to {output_filepath}")
