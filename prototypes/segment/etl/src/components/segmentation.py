@@ -254,50 +254,10 @@ def summarise_segments(
     model, processor, device = utils.get_llm_model(model_name)
 
     for segment in tqdm(merged_segments, desc="Summarising segments"):
-        # Merge duplicate captions and transcriptions
-        segment["captions"] = list(dict.fromkeys(segment["captions"]))
-        segment["transcriptions"] = list(dict.fromkeys(segment["transcriptions"]))
-
-        # Check the number of captions if greater than 50, summarise in chunks
-        if len(segment["captions"]) > 50:
-            segment["original_captions"] = segment["captions"]
-
-            captions_chunks = [
-                segment["captions"][i : i + 50]
-                for i in range(0, len(segment["captions"]), 50)
-            ]
-            captions_summaries = []
-            for i, captions_chunk in enumerate(captions_chunks):
-                messages = [
-                    {
-                        "role": "system",
-                        "content": [
-                            {"type": "text", "text": "Summarise this list of captions"}
-                        ],
-                    },
-                    {
-                        "role": "user",
-                        "content": [
-                            {"type": "text", "text": json.dumps(captions_chunk)}
-                        ],
-                    },
-                ]
-                summary = utils.generate_text_from_messages(
-                    model, processor, device, messages
-                )
-                captions_summaries.append(summary)
-
-            segment["captions"] = captions_summaries
-
+        user_content = json.dumps(segment)
         messages = [
-            {
-                "role": "system",
-                "content": [{"type": "text", "text": system_prompt}],
-            },
-            {
-                "role": "user",
-                "content": [{"type": "text", "text": json.dumps(segment)}],
-            },
+            {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
+            {"role": "user", "content": [{"type": "text", "text": user_content}]},
         ]
 
         summary = utils.generate_text_from_messages(model, processor, device, messages)
