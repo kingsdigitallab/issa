@@ -36,15 +36,24 @@ def detect_boundaries(
 
     model, processor, device = utils.get_llm_model(model_name)
 
+    full_prompt = system_prompt
+
     boundaries = []
     for i in tqdm(range(len(segments) - 1), desc="Detecting boundaries"):
+        previous_segment = segments[i - 1] if i > 0 else segments[i]
         current_segment = segments[i]
         next_segment = segments[i + 1]
 
         user_content = (
-            f"Current:\n{json.dumps(current_segment, indent=2)}\n\n"
-            f"Next:\n{json.dumps(next_segment, indent=2)}"
+            "[Previous Frame Context (T-1)]\n"
+            f"{json.dumps(previous_segment, indent=2)}\n\n"
+            "[Current Frame Context (T)]\n"
+            f"{json.dumps(current_segment, indent=2)}\n\n"
+            "[Next Frame Context (T+1)]\n"
+            f"{json.dumps(next_segment, indent=2)}"
         )
+
+        full_prompt += "\n\n" + user_content
 
         messages = [
             {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
@@ -65,6 +74,10 @@ def detect_boundaries(
             segment["is_boundary"] = final_boundaries[i]
         else:
             segment["is_boundary"] = False
+
+    output_filepath = os.path.join(output_path, "boundaries_prompt.txt")
+    with open(output_filepath, "w") as f:
+        f.write(full_prompt)
 
     output_filepath = os.path.join(output_path, "boundaries.json")
     with open(output_filepath, "w") as f:
@@ -241,10 +254,50 @@ def summarise_segments(
     model, processor, device = utils.get_llm_model(model_name)
 
     for segment in tqdm(merged_segments, desc="Summarising segments"):
-        user_content = json.dumps(segment)
+        # Merge duplicate captions and transcriptions
+        segment["captions"] = list(dict.fromkeys(segment["captions"]))
+        segment["transcriptions"] = list(dict.fromkeys(segment["transcriptions"]))
+
+        # Check the number of captions if greater than 50, summarise in chunks
+        if len(segment["captions"]) > 50:
+            segment["original_captions"] = segment["captions"]
+
+            captions_chunks = [
+                segment["captions"][i : i + 50]
+                for i in range(0, len(segment["captions"]), 50)
+            ]
+            captions_summaries = []
+            for i, captions_chunk in enumerate(captions_chunks):
+                messages = [
+                    {
+                        "role": "system",
+                        "content": [
+                            {"type": "text", "text": "Summarise this list of captions"}
+                        ],
+                    },
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": json.dumps(captions_chunk)}
+                        ],
+                    },
+                ]
+                summary = utils.generate_text_from_messages(
+                    model, processor, device, messages
+                )
+                captions_summaries.append(summary)
+
+            segment["captions"] = captions_summaries
+
         messages = [
-            {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
-            {"role": "user", "content": [{"type": "text", "text": user_content}]},
+            {
+                "role": "system",
+                "content": [{"type": "text", "text": system_prompt}],
+            },
+            {
+                "role": "user",
+                "content": [{"type": "text", "text": json.dumps(segment)}],
+            },
         ]
 
         summary = utils.generate_text_from_messages(model, processor, device, messages)
