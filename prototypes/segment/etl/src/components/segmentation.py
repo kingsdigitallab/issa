@@ -227,6 +227,7 @@ def summarise_segments(
     video_path: str,
     input_folder: str,
     model_name: str,
+    caption_chunk_size: int,
     prompt_folder: str,
     output_folder: str,
 ):
@@ -237,6 +238,7 @@ def summarise_segments(
         video_path (str): Path to the input video file.
         input_folder (str): Path to the folder containing merged_segments.json.
         model_name (str): Name of the model to use for summarisation.
+        caption_chunk_size (int): Number of captions to include in each chunk.
         prompt_folder (str): Path to the folder containing the summarisation prompt.
         output_folder (str): Path to the output folder where summaries.json will be saved.
     """
@@ -254,6 +256,33 @@ def summarise_segments(
     model, processor, device = utils.get_llm_model(model_name)
 
     for segment in tqdm(merged_segments, desc="Summarising segments"):
+        captions = segment.get("captions", [])
+
+        if len(captions) > caption_chunk_size:
+            caption_summaries = []
+            for i in range(0, len(captions), caption_chunk_size):
+                chunk = captions[i : i + caption_chunk_size]
+                chunk_payload = {"captions": chunk, "transcriptions": []}
+
+                messages = [
+                    {
+                        "role": "system",
+                        "content": [{"type": "text", "text": system_prompt}],
+                    },
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": json.dumps(chunk_payload)}
+                        ],
+                    },
+                ]
+                chunk_summary = utils.generate_text_from_messages(
+                    model, processor, device, messages
+                )
+                caption_summaries.append(chunk_summary)
+
+            segment["captions"] = caption_summaries
+
         user_content = json.dumps(segment)
         messages = [
             {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
