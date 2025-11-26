@@ -152,6 +152,9 @@ def summarise_segments(
     model_name: str = typer.Option(
         "google/gemma-3-4b-it", help="Name of the model to use for summarisation"
     ),
+    caption_chunk_size: int = typer.Option(
+        25, help="Number of captions to include in each chunk"
+    ),
     prompt_folder: str = typer.Option(
         "../data/0_prompts",
         help="Path to the input folder that contains the prompts",
@@ -167,6 +170,7 @@ def summarise_segments(
             video_path,
             input_folder,
             model_name,
+            caption_chunk_size,
             prompt_folder,
             output_folder,
         )
