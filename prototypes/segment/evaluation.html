@@ -1,228 +1,218 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="color-scheme" content="light dark" />
-        <title>Video Segmentation Verification</title>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fuchsia.min.css"
-        />
-        <style>
-            .grid {
-                grid-template-columns: 1fr 1fr;
-            }
 
-            video {
-                max-height: 50vh;
-                width: 100%;
-            }
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Video Segmentation Verification</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fuchsia.min.css" />
+    <style>
+        .grid {
+            grid-template-columns: 1fr 1fr;
+        }
 
-            .data-container {
-                max-height: 70vh;
-                overflow-y: auto;
-            }
+        video {
+            max-height: 50vh;
+            width: 100%;
+        }
 
-            .data-container article.active {
-                background-color: var(--pico-primary-focus);
-            }
-        </style>
-    </head>
-    <body>
-        <header class="container">
-            <hgroup>
-                <h1>Video Segmentation Verification</h1>
-                <p>
-                    Load a video file and JSON segmentation data to verify
-                    segmentation timestamps.
-                </p>
-            </hgroup>
-        </header>
-        <main class="container" x-data="videoPlayer()" x-init="init()">
-            <section>
-                <form class="grid">
-                    <label for="video-file">
-                        Load video
-                        <input
-                            type="file"
-                            id="video-file"
-                            accept="video/*"
-                            @change="loadVideo"
-                        />
-                    </label>
-                    <label for="json-file">
-                        Load segment data
-                        <input
-                            type="file"
-                            id="json-file"
-                            accept=".json,application/json"
-                            @change="loadJson"
-                        />
-                    </label>
-                </form>
-            </section>
+        .data-container {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
 
-            <div class="grid">
-                <article>
-                    <header>
-                        <hgroup>
-                            <h2>Video</h2>
-                            <p>
-                                Duration:
-                                <code
-                                    x-text="formatTime(videoDuration) || '00:00'"
-                                ></code>
-                                / Current time:
-                                <code
-                                    x-text="formatTime(videoCurrentTime) || '00:00'"
-                                ></code>
-                            </p>
-                        </hgroup>
-                    </header>
-                    <video x-ref="video" controls width="50%"></video>
-                </article>
+        .data-container article.active {
+            background-color: var(--pico-primary-focus);
+        }
+    </style>
+</head>
 
-                <article>
-                    <header>
-                        <hgroup>
-                            <h2>Data</h2>
-                            <p>
-                                Items:
-                                <code x-text="`${segments.length}`"></code>
-                            </p>
-                        </hgroup>
-                    </header>
-                    <div class="data-container">
-                        <template
-                            x-for="(segment, index) in segments"
-                            :key="index"
-                        >
-                            <article
-                                :id="`segment-${index}`"
-                                :class="videoCurrentTime >= segment.start_timestamp && videoCurrentTime < segment.end_timestamp ? 'active' : ''"
-                            >
-                                <h3>
-                                    Segment <span x-text="index + 1"></span>
-                                </h3>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>Start</strong></td>
-                                            <td
-                                                x-text="segment.start_timestamp"
-                                            ></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>End</strong></td>
-                                            <td
-                                                x-text="segment.end_timestamp"
-                                            ></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Topic</strong></td>
-                                            <td x-text="segment.topic"></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Summary</strong></td>
-                                            <td x-text="segment.summary"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <footer>
-                                    <button
-                                        @click="jumpTo(segment.start_timestamp)"
-                                        x-text="`Jump to ${segment.start_timestamp}s`"
-                                    ></button>
-                                </footer>
-                            </article>
-                        </template>
-                    </div>
-                </article>
+<body>
+    <header class="container">
+        <hgroup>
+            <h1>Video Segmentation Verification</h1>
+            <p>
+                Load a video file and JSON segmentation data to verify
+                segmentation timestamps.
+            </p>
+        </hgroup>
+    </header>
+    <main class="container" x-data="videoPlayer()" x-init="init()">
+        <section>
+            <form class="grid">
+                <label for="video-file">
+                    Load video
+                    <input type="file" id="video-file" accept="video/*" @change="loadVideo" />
+                </label>
+                <label for="json-file">
+                    Load segment data
+                    <input type="file" id="json-file" accept=".json,application/json" @change="loadJson" />
+                </label>
+            </form>
+        </section>
 
-                <article>
-                    <header>
-                        <hgroup>
-                            <h2>Meta</h2>
-                        </hgroup>
-                    </header>
-                </article>
-            </div>
-        </main>
+        <div class="grid">
+            <article id="video">
+                <header>
+                    <hgroup>
+                        <h2>Video</h2>
+                        <p>
+                            Duration:
+                            <code x-text="formatTime(videoDuration) || '00:00'"></code>
+                            / Current time:
+                            <code x-text="formatTime(videoCurrentTime) || '00:00'"></code>
+                        </p>
+                    </hgroup>
+                </header>
+                <video x-ref="video" controls width="50%"></video>
+            </article>
 
-        <script
-            defer
-            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-        ></script>
-        <script>
-            function videoPlayer() {
-                return {
-                    videoDuration: 0,
-                    videoCurrentTime: 0,
-                    segments: [],
-                    init() {
-                        this.$watch("videoCurrentTime", (value) => {
-                            const activeSegment = this.segments.findIndex(
-                                (segment) =>
-                                    value >= segment.start_timestamp &&
-                                    value < segment.end_timestamp,
+            <article id="data">
+                <header>
+                    <hgroup>
+                        <h2>Data</h2>
+                        <p>
+                            Items:
+                            <code x-text="`${segments.length}`"></code>
+                        </p>
+                    </hgroup>
+                </header>
+                <div class="data-container">
+                    <template x-for="(segment, index) in segments" :key="index">
+                        <article :id="`segment-${index}`"
+                            :class="videoCurrentTime >= segment.start_timestamp && videoCurrentTime < segment.end_timestamp ? 'active' : ''">
+
+                            <header>
+                                <hgroup>
+                                    <h3>
+                                        <span x-text="`Segment ${index + 1}`"></span>:
+                                        <code
+                                            x-text="formatTime(segment.end_timestamp - segment.start_timestamp)"></code>
+                                    </h3>
+                                    <small>
+                                        <code>
+                                            <a href="#video" x-text="formatTime(segment.start_timestamp)"
+                                                @click="jumpTo(segment.start_timestamp)"></a>
+                                        </code>
+                                        →
+                                        <code>
+                                            <a href="#video" x-text="formatTime(segment.end_timestamp)"
+                                                @click="jumpTo(segment.end_timestamp)"></a>
+                                        </code>
+                                    </small>
+                                </hgroup>
+                                <div class="grid">
+                                    <img :src="getFramePath(segment.start_timestamp)"
+                                        :alt="`Image of frame at timestamp ${segment.start_timestamp}`">
+                                    <img :src="getFramePath(segment.end_timestamp)"
+                                        :alt="`Image of frame at timestamp ${segment.end_timestamp}`">
+                                </div>
+                            </header>
+                            <blockquote x-text="segment.summary"></blockquote>
+                            <dl>
+                                <dt>Topic</dt>
+                                <dd x-text="segment.topic"></dd>
+                                <dt>Channel</dt>
+                                <dd x-text="segment.channel"></dd>
+                                <dt>Program name</dt>
+                                <dd x-text="segment.program_name"></dd>
+                                <dt>Transmission date</dt>
+                                <dd x-text="segment.transmission_date"></dd>
+                            </dl>
+                        </article>
+                    </template>
+                </div>
+            </article>
+
+            <article>
+                <header>
+                    <hgroup>
+                        <h2>Meta</h2>
+                    </hgroup>
+                </header>
+            </article>
+        </div>
+    </main>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        function videoPlayer() {
+            return {
+                videoDuration: 0,
+                videoCurrentTime: 0,
+                videoFileName: "",
+                segments: [],
+                init() {
+                    this.$watch("videoCurrentTime", (value) => {
+                        const activeSegment = this.segments.findIndex(
+                            (segment) =>
+                                value >= segment.start_timestamp &&
+                                value < segment.end_timestamp,
+                        );
+                        if (activeSegment !== -1) {
+                            const element = this.$root.querySelector(
+                                `#segment-${activeSegment}`,
                             );
-                            if (activeSegment !== -1) {
-                                const element = this.$root.querySelector(
-                                    `#segment-${activeSegment}`,
-                                );
-                                if (element) {
-                                    element.scrollIntoView({
-                                        behavior: "smooth",
-                                        block: "nearest",
-                                    });
-                                }
+                            if (element) {
+                                element.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "nearest",
+                                });
                             }
-                        });
-                    },
-                    loadVideo(event) {
-                        const file = event.target.files[0];
-                        if (file) {
-                            const videoURL = URL.createObjectURL(file);
-                            this.$refs.video.src = videoURL;
-                            this.$refs.video.onloadedmetadata = () => {
-                                this.videoDuration = this.$refs.video.duration;
-                            };
-                            this.$refs.video.ontimeupdate = () => {
-                                this.videoCurrentTime =
-                                    this.$refs.video.currentTime;
-                            };
                         }
-                    },
-                    loadJson(event) {
-                        const file = event.target.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = (e) => {
-                                this.segments = JSON.parse(e.target.result);
-                            };
-                            reader.readAsText(file);
-                        }
-                    },
-                    jumpTo(timestamp) {
-                        this.$refs.video.currentTime = timestamp;
-                    },
-                };
-            }
-
-            function formatTime(seconds) {
-                const hours = Math.floor(seconds / 3600);
-                const mins = Math.floor((seconds % 3600) / 60);
-                const secs = Math.floor(seconds % 60);
-
-                if (hours > 0) {
-                    return `${hours}:${mins.toString().padStart(2, "0")}:${secs
-                        .toString()
-                        .padStart(2, "0")}`;
+                    });
+                },
+                loadVideo(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.videoFileName = file.name;
+                        const videoURL = URL.createObjectURL(file);
+                        this.$refs.video.src = videoURL;
+                        this.$refs.video.onloadedmetadata = () => {
+                            this.videoDuration = this.$refs.video.duration;
+                        };
+                        this.$refs.video.ontimeupdate = () => {
+                            this.videoCurrentTime =
+                                this.$refs.video.currentTime;
+                        };
+                    }
+                },
+                loadJson(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            this.segments = JSON.parse(e.target.result);
+                        };
+                        reader.readAsText(file);
+                    }
+                },
+                jumpTo(timestamp) {
+                    this.$refs.video.currentTime = timestamp;
+                },
+                getFramePath(timestamp) {
+                    const frameNumber = (25 * timestamp).toString().padStart(4, "0");
+                    const frameFileName = parseFloat(timestamp).toFixed(2);
+                    return `./data/1_interim/${this.videoFileName}/frames/frame_${frameNumber}_${frameFileName}.png`;
                 }
+            };
+        }
 
-                return `${mins}:${secs.toString().padStart(2, "0")}`;
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = Math.floor(seconds % 60);
+
+            if (hours > 0) {
+                return `${hours}:${mins.toString().padStart(2, "0")}:${secs
+                    .toString()
+                    .padStart(2, "0")}`;
             }
-        </script>
-    </body>
+
+            return `${mins}:${secs.toString().padStart(2, "0")}`;
+        }
+    </script>
+</body>
+
 </html>
