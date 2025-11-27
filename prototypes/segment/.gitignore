@@ -1,0 +1,14 @@
+*.bak
+*.bck
+*.gho
+*.ori
+*.orig
+*.tmp
+
+.DS_Store
+
+data/0_raw/
+data/1_interim/
+data/2_final/
+
+tmp/
