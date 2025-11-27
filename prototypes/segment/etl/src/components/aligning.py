@@ -97,21 +97,17 @@ def merge_duplicate_transcriptions(aligned_data: list) -> list:
         list: List of merged aligned data dictionaries.
     """
     merged_data = []
-    current_transcription = ""
 
     for data in aligned_data:
-        if data["transcription"] == current_transcription:
+        if merged_data and data["transcription"] == merged_data[-1]["transcription"]:
             merged_data[-1]["caption"].append(data["caption"])
-            continue
-
-        merged_data.append(
-            {
-                "timestamp": data["timestamp"],
-                "caption": [data["caption"]],
-                "transcription": current_transcription,
-            }
-        )
-
-        current_transcription = data["transcription"]
+        else:
+            merged_data.append(
+                {
+                    "timestamp": data["timestamp"],
+                    "caption": [data["caption"]],
+                    "transcription": data["transcription"],
+                }
+            )
 
     return merged_data
