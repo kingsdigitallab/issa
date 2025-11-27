@@ -73,7 +73,7 @@ def caption_frames(
         None
     """
     frames_path = utils.create_output_path(video_path, output_folder, "frames")
-    frames = sorted(os.listdir(frames_path))
+    frames = sorted(os.listdir(frames_path), key=utils.get_timestamp)
 
     if not frames:
         print(f"No frames found for {video_path}")
