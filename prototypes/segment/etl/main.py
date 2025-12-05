@@ -56,11 +56,12 @@ def caption_frames(
     output_folder: str = typer.Option(
         "../data/1_interim", help="Path to the output folder"
     ),
+    backend: str = typer.Option("local", help="The backend to use ('local' or 'api')"),
 ):
     """Caption frames from a video"""
     try:
         frame_captioning.caption_frames(
-            video_path, model_name, remove_duplicates, output_folder
+            video_path, model_name, remove_duplicates, output_folder, backend
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
@@ -104,6 +105,7 @@ def detect_boundaries(
     output_folder: str = typer.Option(
         "../data/2_final", help="Path to the output folder"
     ),
+    backend: str = typer.Option("local", help="The backend to use ('local' or 'api')"),
 ):
     """Detect boundaries between the segments in the aligned data."""
 
@@ -114,6 +116,7 @@ def detect_boundaries(
             model_name,
             prompt_folder,
             output_folder,
+            backend,
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
@@ -162,6 +165,7 @@ def summarise_segments(
     output_folder: str = typer.Option(
         "../data/2_final", help="Path to the output folder"
     ),
+    backend: str = typer.Option("local", help="The backend to use ('local' or 'api')"),
 ):
     """Summarise merged segments."""
 
@@ -173,6 +177,7 @@ def summarise_segments(
             caption_chunk_size,
             prompt_folder,
             output_folder,
+            backend,
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
@@ -195,6 +200,7 @@ def classify_segments(
     output_folder: str = typer.Option(
         "../data/2_final", help="Path to the output folder"
     ),
+    backend: str = typer.Option("local", help="The backend to use ('local' or 'api')"),
 ):
     """Classify merged segments."""
 
@@ -205,6 +211,7 @@ def classify_segments(
             model_name,
             prompt_folder,
             output_folder,
+            backend,
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
