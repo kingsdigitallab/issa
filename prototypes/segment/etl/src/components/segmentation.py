@@ -13,6 +13,7 @@ def detect_boundaries(
     model_name: str,
     prompt_folder: str,
     output_folder: str,
+    backend: str = "local",
 ):
     """
     Detects boundaries between segments using a language model.
@@ -23,6 +24,7 @@ def detect_boundaries(
     model_name (str): Name of the model to use for boundary detection.
     prompt_folder (str): Path to the folder containing system prompt files.
     output_folder (str): Path to the output folder where segments will be saved.
+    backend (str): The backend to use ("local" or "api").
     """
     video_name = Path(video_path).name
     aligned_data_path = Path(input_folder) / video_name / "aligned_data.json"
@@ -34,7 +36,7 @@ def detect_boundaries(
     with open(boundary_detection_prompt_path, "r") as f:
         system_prompt = f.read()
 
-    model, processor, device = utils.get_llm_model(model_name)
+    model, processor, device = utils.get_model_client(model_name, backend=backend)
 
     full_prompt = system_prompt
 
@@ -60,7 +62,9 @@ def detect_boundaries(
             {"role": "user", "content": [{"type": "text", "text": user_content}]},
         ]
 
-        response = utils.generate_text_from_messages(model, processor, device, messages)
+        response = utils.generate_text_from_messages(
+            model, processor, device, messages, model_name=model_name
+        )
 
         is_boundary = "YES" in response.upper()
         boundaries.append(is_boundary)
@@ -95,6 +99,7 @@ def generate_segments(
     prompt_folder: str,
     prompt_only: bool,
     output_folder: str,
+    backend: str = "local",
 ):
     """
     Generate semantic segments for a video using frame captions and audio transcription.
@@ -106,6 +111,7 @@ def generate_segments(
         prompt_folder (str): Path to the folder containing system prompt files.
         prompt_only (bool): Whether to generate only the prompt without generating segments.
         output_folder (str): Path to the output folder where segments will be saved.
+        backend (str): The backend to use ("local" or "api").
     """
     video_name = Path(video_path).name
     aligned_data_path = Path(input_folder) / video_name / "aligned_data.json"
@@ -134,9 +140,11 @@ def generate_segments(
     if prompt_only:
         return
 
-    model, processor, device = utils.get_llm_model(model_name)
+    model, processor, device = utils.get_model_client(model_name, backend=backend)
 
-    decoded = utils.generate_text_from_messages(model, processor, device, messages)
+    decoded = utils.generate_text_from_messages(
+        model, processor, device, messages, model_name=model_name
+    )
 
     output_filepath = os.path.join(output_path, "segments.txt")
     with open(output_filepath, "w") as f:
@@ -230,6 +238,7 @@ def summarise_segments(
     caption_chunk_size: int,
     prompt_folder: str,
     output_folder: str,
+    backend: str = "local",
 ):
     """
     Generates summaries for each merged segment using an LLM.
@@ -241,6 +250,7 @@ def summarise_segments(
         caption_chunk_size (int): Number of captions to include in each chunk.
         prompt_folder (str): Path to the folder containing the summarisation prompt.
         output_folder (str): Path to the output folder where summaries.json will be saved.
+        backend (str): The backend to use ("local" or "api").
     """
     video_name = Path(video_path).name
     merged_segments_path = Path(input_folder) / video_name / "merged_segments.json"
@@ -253,7 +263,7 @@ def summarise_segments(
     with open(summarisation_prompt_path, "r") as f:
         system_prompt = f.read()
 
-    model, processor, device = utils.get_llm_model(model_name)
+    model, processor, device = utils.get_model_client(model_name, backend=backend)
 
     for segment in tqdm(merged_segments, desc="Summarising segments"):
         captions = segment.get("captions", [])
@@ -277,7 +287,7 @@ def summarise_segments(
                     },
                 ]
                 chunk_summary = utils.generate_text_from_messages(
-                    model, processor, device, messages
+                    model, processor, device, messages, model_name=model_name
                 )
                 caption_summaries.append(chunk_summary)
 
@@ -289,7 +299,9 @@ def summarise_segments(
             {"role": "user", "content": [{"type": "text", "text": user_content}]},
         ]
 
-        summary = utils.generate_text_from_messages(model, processor, device, messages)
+        summary = utils.generate_text_from_messages(
+            model, processor, device, messages, model_name=model_name
+        )
         segment["summary"] = summary
 
     output_filepath = os.path.join(output_path, "summaries.json")
@@ -305,6 +317,7 @@ def classify_segments(
     model_name: str,
     prompt_folder: str,
     output_folder: str,
+    backend: str = "local",
 ):
     """
     Classify summaries for each merged segment using an LLM.
@@ -315,6 +328,7 @@ def classify_segments(
         model_name (str): Name of the model to use for classification.
         prompt_folder (str): Path to the folder containing the classification prompt.
         output_folder (str): Path to the output folder where summaries.json will be saved.
+        backend (str): The backend to use ("local" or "api").
     """
     video_name = Path(video_path).name
     merged_segments_path = Path(input_folder) / video_name / "summaries.json"
@@ -327,7 +341,7 @@ def classify_segments(
     with open(classification_prompt_path, "r") as f:
         system_prompt = f.read()
 
-    model, processor, device = utils.get_llm_model(model_name)
+    model, processor, device = utils.get_model_client(model_name, backend=backend)
 
     for segment in tqdm(merged_segments, desc="Classifying segments"):
         user_content = json.dumps(segment)
@@ -337,7 +351,7 @@ def classify_segments(
         ]
 
         generated = utils.generate_text_from_messages(
-            model, processor, device, messages
+            model, processor, device, messages, model_name=model_name
         )
         classification = json.loads(generated.replace("```json", "").replace("```", ""))
 
