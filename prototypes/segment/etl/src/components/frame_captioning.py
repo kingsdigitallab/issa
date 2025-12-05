@@ -4,8 +4,6 @@ from itertools import groupby
 
 import torch
 import tqdm
-from PIL import Image
-from transformers import AutoModelForCausalLM
 
 from . import utils
 
@@ -59,6 +57,7 @@ def caption_frames(
     model_name: str,
     remove_duplicates: bool,
     output_folder: str,
+    backend: str = "local",
 ):
     """
     Generate captions for frames of a video using a pre-trained vision model.
@@ -68,6 +67,7 @@ def caption_frames(
         model_name (str): Name of the pre-trained model vision model.
         remove_duplicates (bool): Whether to remove consecutive duplicate captions.
         output_folder (str): Path to the output folder.
+        backend (str): The backend to use ("local" or "api").
 
     Returns:
         None
@@ -79,34 +79,28 @@ def caption_frames(
         print(f"No frames found for {video_path}")
         return
 
-    device = utils.get_torch_device()
-
-    model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True)
-    model.to(device)
-    model.eval()
-    print(f"Model {model_name} loaded")
-
-    if device == "cuda":
-        model.compile()
+    model, _, _ = utils.get_model_client(model_name, backend=backend)
 
     captions = []
     captions_path = utils.create_output_path(video_path, output_folder)
 
+    prompt = PROMPT_SMALL
+
     with torch.inference_mode():
         for frame_path in tqdm.tqdm(frames, desc="Captioning frames"):
-            image = Image.open(os.path.join(frames_path, frame_path))
-            caption = model.caption(image)
+            full_frame_path = os.path.join(frames_path, frame_path)
+            caption_text = utils.generate_caption(
+                model, full_frame_path, prompt, model_name=model_name
+            )
             timestamp = utils.get_timestamp(frame_path)
 
             captions.append(
                 {
                     "frame_path": frame_path,
                     "timestamp": timestamp,
-                    "caption": caption["caption"],
+                    "caption": caption_text,
                 }
             )
-
-            image.close()
 
     if remove_duplicates:
         unique_captions = [
