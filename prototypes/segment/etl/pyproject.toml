@@ -16,6 +16,8 @@ dependencies = [
     "tqdm>=4.67.1",
     "transformers>=4.57.1",
     "typer>=0.20.0",
+    "openai>=2.9.0",
+    "python-dotenv>=1.2.0",
 ]
 
 [dependency-groups]
