@@ -73,7 +73,20 @@ flowchart LR
 - Python 3.11+
 - [uv](https://docs.astral.sh/uv/) - Fast Python package manager
 - ffmpeg (required by Whisper for audio processing)
-- Hugging Face account and token (for downloading models)
+- Hugging Face account and token (for downloading local models)
+- OpenAI-compatible API key (optional, for using API backend)
+
+## Configuration
+
+For API usage, create a `.env` file in the `etl/` directory or set environment variables:
+
+```bash
+# Required for API backend
+API_KEY=your_api_key_here
+
+# Optional: Override default OpenAI URL (e.g. for local LLMs via Ollama/vLLM)
+API_BASE_URL=https://api.openai.com/v1
+```
 
 ## Getting Started
 
@@ -160,9 +173,18 @@ uv run python main.py caption-frames path/to/video.mp4 \
 
 **Options:**
 
-- `--model-name`: Vision model from Hugging Face (default: "vikhyatk/moondream2")
+- `--model-name`: Vision model to use. For local: "vikhyatk/moondream2" (default). For API: e.g. "gpt-4o", "gemini-pro-vision".
 - `--remove-duplicates`: Remove consecutive duplicate captions (default: True)
 - `--output-folder`: Where to save captions
+- `--backend`: "local" (default) or "api"
+
+**Example (API):**
+
+```bash
+uv run python main.py caption-frames path/to/video.mp4 \
+    --backend api \
+    --model-name gpt-4o
+```
 
 ### Step 4: Align Captions and Audio
 
@@ -193,10 +215,11 @@ uv run python main.py detect-boundaries path/to/video.mp4 \
 
 **Options:**
 
-- `--model-name`: LLM model for segmentation (default: "google/gemma-3-4b-it")
+- `--model-name`: LLM model for segmentation (default: "google/gemma-3-4b-it"). For API: e.g. "gpt-4o".
 - `--input-folder`: Folder with transcription and captions from previous steps
 - `--prompt-path`: Custom system prompt for the LLM
 - `--output-folder`: Where to save segments with boundary data
+- `--backend`: "local" (default) or "api"
 
 #### Step 5.2: Merge Segments
 
@@ -224,11 +247,12 @@ uv run python main.py summarise-segments path/to/video.mp4 \
 
 **Options:**
 
-- `--model-name`: LLM model for segmentation (default: "google/gemma-3-4b-it")
+- `--model-name`: LLM model for segmentation (default: "google/gemma-3-4b-it"). For API: e.g. "gpt-4o".
 - `--caption-chunk-size`: Number of captions to include in each chunk (default: 25)
 - `--input-folder`: Folder with merged segments from previous step
 - `--prompt-path`: Custom system prompt for the LLM
 - `--output-folder`: Where to save segments with summaries
+- `--backend`: "local" (default) or "api"
 
 #### Step 5.4: Classify Segments
 
@@ -242,10 +266,11 @@ uv run python main.py classify-segment path/to/video.mp4 \
 
 **Options:**
 
-- `--model-name`: LLM model for classification (default: "google/gemma-3-4b-it")
+- `--model-name`: LLM model for classification (default: "google/gemma-3-4b-it"). For API: e.g. "gpt-4o".
 - `--input-folder`: Folder with segments with summaries from previous step
 - `--prompt-path`: Custom system prompt for the LLM
 - `--output-folder`: Where to save segments with topics and metadata
+- `--backend`: "local" (default) or "api"
 
 ### Complete Pipeline Example
 
