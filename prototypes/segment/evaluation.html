@@ -30,19 +30,13 @@
             font-size: 0.85rem;
         }
 
-        .meta-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.5rem;
-        }
-
-        .meta-grid dt {
+        dt {
             font-weight: bold;
             font-size: 0.85rem;
             color: var(--pico-muted-color);
         }
 
-        .meta-grid dd {
+        dd {
             margin: 0 0 0.5rem 0;
         }
     </style>
@@ -134,7 +128,7 @@
                                 </div>
                             </header>
                             <blockquote x-text="segment.summary"></blockquote>
-                            <dl class="meta-grid">
+                            <dl class="grid">
                                 <div>
                                     <dt>Topic</dt>
                                     <dd x-text="segment.topic"></dd>
@@ -177,7 +171,7 @@
                             <progress :value="stepData.processing_time_seconds"
                                 :max="meta?.total_processing_time_seconds"></progress>
                         </summary>
-                        <dl class="meta-grid">
+                        <dl class="grid">
                             <div>
                                 <dt>Model</dt>
                                 <dd x-text="stepData.model_name || '-'"></dd>
