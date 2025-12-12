@@ -25,6 +25,22 @@
         .data-container article.active {
             background-color: var(--pico-primary-focus);
         }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .meta-grid dt {
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--pico-muted-color);
+        }
+
+        .meta-grid dd {
+            margin: 0 0 0.5rem 0;
+        }
     </style>
 </head>
 
@@ -33,8 +49,7 @@
         <hgroup>
             <h1>Video Segmentation Verification</h1>
             <p>
-                Load a video file and JSON segmentation data to verify
-                segmentation timestamps.
+                Load a video file and output folder to verify segmentation timestamps.
             </p>
         </hgroup>
     </header>
@@ -45,9 +60,9 @@
                     Load video
                     <input type="file" id="video-file" accept="video/*" @change="loadVideo" />
                 </label>
-                <label for="json-file">
-                    Load segment data
-                    <input type="file" id="json-file" accept=".json,application/json" @change="loadJson" />
+                <label for="folder">
+                    Load output folder
+                    <input type="file" id="folder" webkitdirectory directory @change="loadFolder" />
                 </label>
             </form>
         </section>
@@ -71,7 +86,7 @@
             <article id="data">
                 <header>
                     <hgroup>
-                        <h2>Data</h2>
+                        <h2>Segments</h2>
                         <p>
                             Items:
                             <code x-text="`${segments.length}`"></code>
@@ -82,7 +97,6 @@
                     <template x-for="(segment, index) in segments" :key="index">
                         <article :id="`segment-${index}`"
                             :class="videoCurrentTime >= segment.start_timestamp && videoCurrentTime < segment.end_timestamp ? 'active' : ''">
-
                             <header>
                                 <hgroup>
                                     <h3>
@@ -92,21 +106,27 @@
                                     </h3>
                                     <small>
                                         <code>
-                                            <a href="#video" x-text="formatTime(segment.start_timestamp)"
-                                                @click="jumpTo(segment.start_timestamp)"></a>
-                                        </code>
+                                                <a
+                                                    href="#video"
+                                                    x-text="formatTime(segment.start_timestamp)"
+                                                    @click="jumpTo(segment.start_timestamp)"
+                                                ></a>
+                                            </code>
                                         →
                                         <code>
-                                            <a href="#video" x-text="formatTime(segment.end_timestamp)"
-                                                @click="jumpTo(segment.end_timestamp)"></a>
-                                        </code>
+                                                <a
+                                                    href="#video"
+                                                    x-text="formatTime(segment.end_timestamp)"
+                                                    @click="jumpTo(segment.end_timestamp)"
+                                                ></a>
+                                            </code>
                                     </small>
                                 </hgroup>
                                 <div class="grid">
                                     <img :src="getFramePath(segment.start_timestamp)"
-                                        :alt="`Image of frame at timestamp ${segment.start_timestamp}`">
+                                        :alt="`Image of frame at timestamp ${segment.start_timestamp}`" />
                                     <img :src="getFramePath(segment.end_timestamp)"
-                                        :alt="`Image of frame at timestamp ${segment.end_timestamp}`">
+                                        :alt="`Image of frame at timestamp ${segment.end_timestamp}`" />
                                 </div>
                             </header>
                             <blockquote x-text="segment.summary"></blockquote>
@@ -125,12 +145,50 @@
                 </div>
             </article>
 
-            <article>
+            <article id="meta" x-show="meta">
                 <header>
                     <hgroup>
-                        <h2>Meta</h2>
+                        <h2>Processing Metadata</h2>
+                        <p>
+                            Video: <code x-text="meta?.video || '-'"></code>
+                            / Total time: <code x-text="formatTime(meta?.total_processing_time_seconds || 0)"></code>
+                        </p>
                     </hgroup>
                 </header>
+                <template x-for="(stepData, stepName) in meta?.steps || {}" :key="stepName">
+                    <details>
+                        <summary>
+                            <strong x-text="stepName"></strong>
+                            <small x-text="`${stepData.processing_time_seconds}s`"></small>
+                        </summary>
+                        <dl class="meta-grid">
+                            <div>
+                                <dt>Model</dt>
+                                <dd x-text="stepData.model_name || '-'"></dd>
+                            </div>
+                            <div>
+                                <dt>Backend</dt>
+                                <dd x-text="stepData.backend || '-'"></dd>
+                            </div>
+                            <div>
+                                <dt>Device</dt>
+                                <dd x-text="stepData.device || '-'"></dd>
+                            </div>
+                            <div>
+                                <dt>Items</dt>
+                                <dd x-text="stepData.items_processed"></dd>
+                            </div>
+                            <div>
+                                <dt>Processed at</dt>
+                                <dd x-text="stepData.processed_at"></dd>
+                            </div>
+                            <div>
+                                <dt>Version</dt>
+                                <dd x-text="`${stepData.package_version} (${stepData.git_hash})`"></dd>
+                            </div>
+                        </dl>
+                    </details>
+                </template>
             </article>
         </div>
     </main>
@@ -143,6 +201,7 @@
                 videoCurrentTime: 0,
                 videoFileName: "",
                 segments: [],
+                meta: null,
                 init() {
                     this.$watch("videoCurrentTime", (value) => {
                         const activeSegment = this.segments.findIndex(
@@ -178,24 +237,38 @@
                         };
                     }
                 },
-                loadJson(event) {
-                    const file = event.target.files[0];
-                    if (file) {
+                loadFolder(event) {
+                    const files = Array.from(event.target.files);
+
+                    const metadataFile = files.find(f => f.name === "metadata.json");
+                    if (metadataFile) {
                         const reader = new FileReader();
                         reader.onload = (e) => {
-                            this.segments = JSON.parse(e.target.result);
+                            this.meta = JSON.parse(e.target.result);
                         };
-                        reader.readAsText(file);
+                        reader.readAsText(metadataFile);
+                    }
+
+                    const classificationsFile = files.find(f => f.name === "classifications.json");
+                    if (classificationsFile) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const result = JSON.parse(e.target.result);
+                            this.segments = result.data || result;
+                        };
+                        reader.readAsText(classificationsFile);
                     }
                 },
                 jumpTo(timestamp) {
                     this.$refs.video.currentTime = timestamp;
                 },
                 getFramePath(timestamp) {
-                    const frameNumber = (25 * timestamp).toString().padStart(4, "0");
+                    const frameNumber = (25 * timestamp)
+                        .toString()
+                        .padStart(4, "0");
                     const frameFileName = parseFloat(timestamp).toFixed(2);
                     return `./data/1_interim/${this.videoFileName}/frames/frame_${frameNumber}_${frameFileName}.png`;
-                }
+                },
             };
         }
 
