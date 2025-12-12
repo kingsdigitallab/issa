@@ -72,8 +72,10 @@
             </form>
         </section>
 
+        <hr />
+
         <div class="grid">
-            <article id="video">
+            <article id="video" x-show="videoDuration">
                 <header>
                     <hgroup>
                         <h2>Video</h2>
@@ -88,7 +90,7 @@
                 <video x-ref="video" controls width="50%"></video>
             </article>
 
-            <article id="data">
+            <article id="data" x-show="segments.length">
                 <header>
                     <hgroup>
                         <h2>Segments</h2>
