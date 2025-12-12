@@ -1,9 +1,10 @@
 import json
+import time
 from pathlib import Path
 
 from tqdm import tqdm
 
-from . import utils
+from . import metadata, utils
 
 
 def align(
@@ -21,23 +22,41 @@ def align(
         merge_duplicates (bool): Whether to merge duplicate transcriptions.
         output_folder (str): Path to the folder where aligned_data.json will be saved.
     """
+    start_time = time.time()
+
     video_name = Path(video_path).name
     captions_path = Path(input_folder) / video_name / "captions.json"
     transcription_path = Path(input_folder) / video_name / "transcription.json"
     output_path = utils.create_output_path(video_path, output_folder)
 
     with open(captions_path, "r") as f:
-        captions = json.load(f)
+        captions_file = json.load(f)
     with open(transcription_path, "r") as f:
-        transcriptions = json.load(f)
+        transcriptions_file = json.load(f)
+
+    captions = captions_file.get("data", captions_file)
+    transcriptions = transcriptions_file.get("data", transcriptions_file)
 
     aligned_data = align_captions_with_transcription(
         captions, transcriptions, merge_duplicates
     )
 
+    processing_time = time.time() - start_time
+
+    output = {
+        "_meta": metadata.create_metadata(
+            component="aligning",
+            input_file=video_path,
+            items_processed=len(aligned_data),
+            processing_time_seconds=processing_time,
+            parameters={"merge_duplicate_transcriptions": merge_duplicates},
+        ),
+        "data": aligned_data,
+    }
+
     output_filepath = Path(output_path) / "aligned_data.json"
     with open(output_filepath, "w") as f:
-        json.dump(aligned_data, f, indent=4)
+        json.dump(output, f, indent=4)
 
     print(f"Aligned data saved to {output_filepath}")
 

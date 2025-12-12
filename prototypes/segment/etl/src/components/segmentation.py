@@ -1,10 +1,11 @@
 import json
 import os
+import time
 from pathlib import Path
 
 from tqdm import tqdm
 
-from . import utils
+from . import metadata, utils
 
 
 def detect_boundaries(
@@ -26,19 +27,24 @@ def detect_boundaries(
     output_folder (str): Path to the output folder where segments will be saved.
     backend (str): The backend to use ("local" or "api").
     """
+    start_time = time.time()
+
     video_name = Path(video_path).name
     aligned_data_path = Path(input_folder) / video_name / "aligned_data.json"
     boundary_detection_prompt_path = Path(prompt_folder) / "boundary_detection.md"
     output_path = utils.create_output_path(video_path, output_folder)
 
     with open(aligned_data_path, "r") as f:
-        segments = json.load(f)
+        aligned_file = json.load(f)
     with open(boundary_detection_prompt_path, "r") as f:
         system_prompt = f.read()
+
+    segments = aligned_file.get("data", aligned_file)
 
     model, processor, device = utils.get_model_client(model_name, backend=backend)
 
     full_prompt = system_prompt
+    api_calls = 0
 
     boundaries = []
     for i in tqdm(range(len(segments) - 1), desc="Detecting boundaries"):
@@ -65,6 +71,7 @@ def detect_boundaries(
         response = utils.generate_text_from_messages(
             model, processor, device, messages, model_name=model_name
         )
+        api_calls += 1
 
         is_boundary = "YES" in response.upper()
         boundaries.append(is_boundary)
@@ -83,9 +90,26 @@ def detect_boundaries(
     with open(output_filepath, "w") as f:
         f.write(full_prompt)
 
+    processing_time = time.time() - start_time
+
+    output = {
+        "_meta": metadata.create_metadata(
+            component="detect_boundaries",
+            input_file=video_path,
+            items_processed=len(segments),
+            processing_time_seconds=processing_time,
+            parameters={},
+            model_name=model_name,
+            backend=backend,
+            device=device,
+            api_calls=api_calls if backend == "api" else None,
+        ),
+        "data": segments,
+    }
+
     output_filepath = os.path.join(output_path, "boundaries.json")
     with open(output_filepath, "w") as f:
-        json.dump(segments, f, indent=4)
+        json.dump(output, f, indent=4)
 
     print(f"Segments with boundaries saved to {output_filepath}")
 
@@ -119,7 +143,7 @@ def generate_segments(
     output_path = utils.create_output_path(video_path, output_folder)
 
     with open(aligned_data_path, "r") as f:
-        aligned_data = json.load(f)
+        aligned_file = json.load(f)
     with open(segmentation_prompt, "r") as f:
         system_prompt = f.read()
 
@@ -127,7 +151,7 @@ def generate_segments(
         {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
         {
             "role": "user",
-            "content": [{"type": "text", "text": aligned_data[:5]}],
+            "content": [{"type": "text", "text": aligned_file["data"][:5]}],
         },
     ]
 
@@ -174,12 +198,16 @@ def merge_segments(
         input_folder (str): Path to the folder containing boundaries.json.
         output_folder (str): Path to the output folder where merged_segments.json will be saved.
     """
+    start_time = time.time()
+
     video_name = Path(video_path).name
     boundaries_path = Path(input_folder) / video_name / "boundaries.json"
     output_path = utils.create_output_path(video_path, output_folder)
 
     with open(boundaries_path, "r") as f:
-        segments = json.load(f)
+        boundaries = json.load(f)
+
+    segments = boundaries.get("data", boundaries)
 
     if not segments:
         print("No segments found to merge.")
@@ -224,9 +252,22 @@ def merge_segments(
             }
         )
 
+    processing_time = time.time() - start_time
+
+    output = {
+        "_meta": metadata.create_metadata(
+            component="merge_segments",
+            input_file=video_path,
+            items_processed=len(merged_segments),
+            processing_time_seconds=processing_time,
+            parameters={},
+        ),
+        "data": merged_segments,
+    }
+
     output_filepath = os.path.join(output_path, "merged_segments.json")
     with open(output_filepath, "w") as f:
-        json.dump(merged_segments, f, indent=4)
+        json.dump(output, f, indent=4)
 
     print(f"Merged segments saved to {output_filepath}")
 
@@ -252,18 +293,23 @@ def summarise_segments(
         output_folder (str): Path to the output folder where summaries.json will be saved.
         backend (str): The backend to use ("local" or "api").
     """
+    start_time = time.time()
+
     video_name = Path(video_path).name
     merged_segments_path = Path(input_folder) / video_name / "merged_segments.json"
     summarisation_prompt_path = Path(prompt_folder) / "summarisation.md"
     output_path = utils.create_output_path(video_path, output_folder)
 
     with open(merged_segments_path, "r") as f:
-        merged_segments = json.load(f)
+        merged_segments_file = json.load(f)
 
     with open(summarisation_prompt_path, "r") as f:
         system_prompt = f.read()
 
+    merged_segments = merged_segments_file.get("data", merged_segments_file)
+
     model, processor, device = utils.get_model_client(model_name, backend=backend)
+    api_calls = 0
 
     for segment in tqdm(merged_segments, desc="Summarising segments"):
         captions = segment.get("captions", [])
@@ -289,6 +335,7 @@ def summarise_segments(
                 chunk_summary = utils.generate_text_from_messages(
                     model, processor, device, messages, model_name=model_name
                 )
+                api_calls += 1
                 caption_summaries.append(chunk_summary)
 
             segment["captions"] = caption_summaries
@@ -302,11 +349,29 @@ def summarise_segments(
         summary = utils.generate_text_from_messages(
             model, processor, device, messages, model_name=model_name
         )
+        api_calls += 1
         segment["summary"] = summary
+
+    processing_time = time.time() - start_time
+
+    output = {
+        "_meta": metadata.create_metadata(
+            component="summarise_segments",
+            input_file=video_path,
+            items_processed=len(merged_segments),
+            processing_time_seconds=processing_time,
+            parameters={"caption_chunk_size": caption_chunk_size},
+            model_name=model_name,
+            backend=backend,
+            device=device,
+            api_calls=api_calls if backend == "api" else None,
+        ),
+        "data": merged_segments,
+    }
 
     output_filepath = os.path.join(output_path, "summaries.json")
     with open(output_filepath, "w") as f:
-        json.dump(merged_segments, f, indent=4)
+        json.dump(output, f, indent=4)
 
     print(f"Segments with summaries saved to {output_filepath}")
 
@@ -330,20 +395,25 @@ def classify_segments(
         output_folder (str): Path to the output folder where summaries.json will be saved.
         backend (str): The backend to use ("local" or "api").
     """
+    start_time = time.time()
+
     video_name = Path(video_path).name
     merged_segments_path = Path(input_folder) / video_name / "summaries.json"
     classification_prompt_path = Path(prompt_folder) / "classification.md"
     output_path = utils.create_output_path(video_path, output_folder)
 
     with open(merged_segments_path, "r") as f:
-        merged_segments = json.load(f)
+        summaries_file = json.load(f)
 
     with open(classification_prompt_path, "r") as f:
         system_prompt = f.read()
 
-    model, processor, device = utils.get_model_client(model_name, backend=backend)
+    summaries = summaries_file.get("data", summaries_file)
 
-    for segment in tqdm(merged_segments, desc="Classifying segments"):
+    model, processor, device = utils.get_model_client(model_name, backend=backend)
+    api_calls = 0
+
+    for segment in tqdm(summaries, desc="Classifying segments"):
         user_content = json.dumps(segment)
         messages = [
             {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
@@ -353,6 +423,7 @@ def classify_segments(
         generated = utils.generate_text_from_messages(
             model, processor, device, messages, model_name=model_name
         )
+        api_calls += 1
         classification = json.loads(generated.replace("```json", "").replace("```", ""))
 
         segment["topic"] = classification["topic"]
@@ -360,8 +431,25 @@ def classify_segments(
         segment["program_name"] = classification["program_name"]
         segment["transmission_date"] = classification["transmission_date"]
 
+    processing_time = time.time() - start_time
+
+    output = {
+        "_meta": metadata.create_metadata(
+            component="classify_segments",
+            input_file=video_path,
+            items_processed=len(summaries),
+            processing_time_seconds=processing_time,
+            parameters={},
+            model_name=model_name,
+            backend=backend,
+            device=device,
+            api_calls=api_calls if backend == "api" else None,
+        ),
+        "data": summaries,
+    }
+
     output_filepath = os.path.join(output_path, "classifications.json")
     with open(output_filepath, "w") as f:
-        json.dump(merged_segments, f, indent=4)
+        json.dump(output, f, indent=4)
 
     print(f"Segments with classification saved to {output_filepath}")

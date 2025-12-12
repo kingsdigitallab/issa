@@ -1,11 +1,12 @@
 import json
 import os
+import time
 from itertools import groupby
 
 import torch
 import tqdm
 
-from . import utils
+from . import metadata, utils
 
 PROMPT_LARGE = """
 You are an expert broadcast analyst. Your task is to analyze this frame from a broadcast
@@ -72,6 +73,8 @@ def caption_frames(
     Returns:
         None
     """
+    start_time = time.time()
+
     frames_path = utils.create_output_path(video_path, output_folder, "frames")
     frames = sorted(os.listdir(frames_path), key=utils.get_timestamp)
 
@@ -79,10 +82,11 @@ def caption_frames(
         print(f"No frames found for {video_path}")
         return
 
-    model, _, _ = utils.get_model_client(model_name, backend=backend)
+    model, _, device = utils.get_model_client(model_name, backend=backend)
 
     captions = []
     captions_path = utils.create_output_path(video_path, output_folder)
+    api_calls = 0
 
     prompt = PROMPT_SMALL
 
@@ -101,7 +105,9 @@ def caption_frames(
                     "caption": caption_text,
                 }
             )
+            api_calls += 1
 
+    unique_captions = captions
     if remove_duplicates:
         unique_captions = [
             next(group) for _, group in groupby(captions, key=lambda x: x["caption"])
@@ -111,5 +117,22 @@ def caption_frames(
             f"Reduced {len(captions)} captions to {len(unique_captions)} unique captions"
         )
 
+    processing_time = time.time() - start_time
+
+    output = {
+        "_meta": metadata.create_metadata(
+            component="frame_captioning",
+            input_file=video_path,
+            items_processed=len(captions),
+            processing_time_seconds=processing_time,
+            parameters={"remove_duplicates": remove_duplicates},
+            model_name=model_name,
+            backend=backend,
+            device=device,
+            api_calls=api_calls if backend == "api" else None,
+        ),
+        "data": unique_captions,
+    }
+
     with open(os.path.join(captions_path, "captions.json"), "w") as f:
-        json.dump(unique_captions, f, indent=4)
+        json.dump(output, f, indent=4)
