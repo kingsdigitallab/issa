@@ -26,6 +26,10 @@
             background-color: var(--pico-primary-focus);
         }
 
+        blockquote {
+            font-size: 0.85rem;
+        }
+
         .meta-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -130,15 +134,23 @@
                                 </div>
                             </header>
                             <blockquote x-text="segment.summary"></blockquote>
-                            <dl>
-                                <dt>Topic</dt>
-                                <dd x-text="segment.topic"></dd>
-                                <dt>Channel</dt>
-                                <dd x-text="segment.channel"></dd>
-                                <dt>Program name</dt>
-                                <dd x-text="segment.program_name"></dd>
-                                <dt>Transmission date</dt>
-                                <dd x-text="segment.transmission_date"></dd>
+                            <dl class="meta-grid">
+                                <div>
+                                    <dt>Topic</dt>
+                                    <dd x-text="segment.topic"></dd>
+                                </div>
+                                <div>
+                                    <dt>Channel</dt>
+                                    <dd x-text="segment.channel"></dd>
+                                </div>
+                                <div>
+                                    <dt>Program name</dt>
+                                    <dd x-text="segment.program_name"></dd>
+                                </div>
+                                <div>
+                                    <dt>Transmission date</dt>
+                                    <dd x-text="segment.transmission_date"></dd>
+                                </div>
                             </dl>
                         </article>
                     </template>
@@ -148,7 +160,7 @@
             <article id="meta" x-show="meta">
                 <header>
                     <hgroup>
-                        <h2>Processing Metadata</h2>
+                        <h2>Processing metadata</h2>
                         <p>
                             Video: <code x-text="meta?.video || '-'"></code>
                             / Total time: <code x-text="formatTime(meta?.total_processing_time_seconds || 0)"></code>
@@ -158,8 +170,12 @@
                 <template x-for="(stepData, stepName) in meta?.steps || {}" :key="stepName">
                     <details>
                         <summary>
-                            <strong x-text="stepName"></strong>
-                            <small x-text="`${stepData.processing_time_seconds}s`"></small>
+                            <hgroup>
+                                <h6 x-text="formatStepName(stepName)"></h6>
+                                <small x-text="formatTime(stepData.processing_time_seconds)"></small>
+                            </hgroup>
+                            <progress :value="stepData.processing_time_seconds"
+                                :max="meta?.total_processing_time_seconds"></progress>
                         </summary>
                         <dl class="meta-grid">
                             <div>
@@ -268,6 +284,9 @@
                         .padStart(4, "0");
                     const frameFileName = parseFloat(timestamp).toFixed(2);
                     return `./data/1_interim/${this.videoFileName}/frames/frame_${frameNumber}_${frameFileName}.png`;
+                },
+                formatStepName(stepName) {
+                    return stepName.replace(/_/g, " ").replace(/^\w/g, (c) => c.toUpperCase());
                 },
             };
         }
