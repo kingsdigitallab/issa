@@ -100,7 +100,9 @@ def get_model_client(model_name: str, backend: str = "local"):
         model.compile()
 
     try:
-        processor = AutoProcessor.from_pretrained(model_name, use_fast=True)
+        processor = AutoProcessor.from_pretrained(
+            model_name, use_fast=True, trust_remote_code=True
+        )
     except Exception:
         processor = None
 
