@@ -190,7 +190,7 @@
                             </div>
                             <div>
                                 <dt>Processed at</dt>
-                                <dd x-text="stepData.processed_at"></dd>
+                                <dd x-text="new Date(stepData.processed_at).toLocaleDateString()"></dd>
                             </div>
                             <div>
                                 <dt>Version</dt>
