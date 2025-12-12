@@ -4,6 +4,7 @@ Metadata utility functions for auditing information.
 Provides functions to collect and generate metadata for pipeline component outputs.
 """
 
+import json
 import os
 import platform
 import socket
@@ -11,6 +12,8 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+from . import utils
 
 
 def get_git_hash() -> str | None:
@@ -134,4 +137,84 @@ def create_metadata(
         "python_version": env_info["python_version"],
         "platform": env_info["platform"],
         "hostname": env_info["hostname"],
+    }
+
+
+METADATA_SOURCES = [
+    ("interim", "transcription.json", "audio_extraction"),
+    ("interim", "captions.json", "frame_captioning"),
+    ("interim", "aligned_data.json", "aligning"),
+    ("final", "boundaries.json", "detect_boundaries"),
+    ("final", "merged_segments.json", "merge_segments"),
+    ("final", "summaries.json", "summarise_segments"),
+    ("final", "classifications.json", "classify_segments"),
+]
+
+
+def aggregate_metadata(
+    video_path: str,
+    interim_folder: str,
+    final_folder: str,
+    output_folder: str,
+) -> dict[str, Any]:
+    """
+    Aggregate metadata from all processing steps into a single file.
+
+    Args:
+        video_path: Path to the input video file.
+        interim_folder: Path to the interim folder containing intermediate outputs.
+        final_folder: Path to the final folder containing segmentation outputs.
+        output_folder: Path to the output folder for metadata.json.
+
+    Returns:
+        dict: Aggregated metadata dictionary.
+    """
+
+    video_name = Path(video_path).name
+    output_path = utils.create_output_path(video_path, output_folder)
+
+    folders = {
+        "interim": interim_folder,
+        "final": final_folder,
+    }
+
+    aggregated: dict[str, Any] = {
+        "video": video_name,
+        "steps": {},
+    }
+
+    collected = []
+    skipped = []
+
+    for folder_key, filename, step_name in METADATA_SOURCES:
+        folder = folders[folder_key]
+        filepath = Path(folder) / video_name / filename
+
+        if filepath.exists():
+            try:
+                with open(filepath, "r") as f:
+                    data = json.load(f)
+                if "_meta" in data:
+                    aggregated["steps"][step_name] = data["_meta"]
+                    collected.append(filename)
+                else:
+                    skipped.append((filename, "no _meta found"))
+            except Exception as e:
+                skipped.append((filename, str(e)))
+        else:
+            skipped.append((filename, "not found"))
+
+    total_time = sum(
+        step.get("processing_time_seconds", 0) for step in aggregated["steps"].values()
+    )
+    aggregated["total_processing_time_seconds"] = round(total_time, 2)
+
+    output_filepath = output_path / "metadata.json"
+    with open(output_filepath, "w") as f:
+        json.dump(aggregated, f, indent=4)
+
+    return {
+        "output_path": str(output_filepath),
+        "collected": collected,
+        "skipped": skipped,
     }

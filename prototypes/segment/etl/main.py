@@ -217,5 +217,39 @@ def classify_segments(
         typer.echo(f"Error: {e}")
 
 
+@app.command()
+def aggregate_metadata(
+    video_path: str = typer.Argument(..., help="The path to the input video file"),
+    interim_folder: str = typer.Option(
+        "../data/1_interim",
+        help="Path to the interim folder containing intermediate outputs",
+    ),
+    final_folder: str = typer.Option(
+        "../data/2_final",
+        help="Path to the final folder containing segmentation outputs",
+    ),
+    output_folder: str = typer.Option(
+        "../data/2_final", help="Path to the output folder"
+    ),
+):
+    """Aggregate metadata from all processing steps into a single file."""
+    from components import metadata
+
+    try:
+        result = metadata.aggregate_metadata(
+            video_path, interim_folder, final_folder, output_folder
+        )
+
+        for filename in result["collected"]:
+            typer.echo(f"✓ Collected metadata from {filename}")
+
+        for filename, reason in result["skipped"]:
+            typer.echo(f"- Skipped {filename} ({reason})")
+
+        typer.echo(f"\nAggregated metadata saved to {result['output_path']}")
+    except Exception as e:
+        typer.echo(f"Error: {e}")
+
+
 if __name__ == "__main__":
     app()
