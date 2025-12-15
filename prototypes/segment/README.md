@@ -33,21 +33,21 @@ need for intensive resources.
 
 ```mermaid
 flowchart LR
-    A[Video] --> B[Frame Extraction<br/>eg. OpenCV]
-    A --> C[Audio Extraction<br/>eg. Whisper]
-    B --> D[Frame Captioning<br/>eg. Moondream2]
-    C --> G[Align Captions & Transcripts]
+    A[Video] --> B[Frame Extraction<br/>OpenCV]
+    A --> C[Audio Transcription<br/>Whisper]
+    B --> D[Frame Captioning<br/>Moondream2]
+    C --> G[Align Captions<br/>& Transcripts]
     D --> G
-    G --> E[LLM Reasoning<br/>eg. Gemma]
-    E --> F[Segments + Metadata]
+    G --> H[Boundary Detection<br/>Gemma / Qwen]
+    H --> I[Segmentation<br/>& Metadata]
 
     style A fill:#FABC2A
     style B fill:#FDFFFC
     style C fill:#6290C3
     style D fill:#6290C3
-    style E fill:#FCB0B3
-    style F fill:#F9A620
     style G fill:#9FBBCC
+    style H fill:#FCB0B3
+    style I fill:#F9A620
 ```
 
 #### Pipeline Steps
