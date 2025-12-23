@@ -33,6 +33,11 @@
         display: block;
       }
 
+      img.thumb {
+        width: 10em;
+        display: block;
+      }
+
       .shot {
         margin-top: 1em;
         margin-bottom: 1em;
@@ -74,11 +79,23 @@
           <div class="column is-3">
             <div id="facets" class="panel">
               <p class="panel-heading">
-                Keywords
+                Keywords 
+                <template v-if="isQuerySemantic">(over visual embedding)</template>
+                <template v-else>(over image description)</template>
               </p>
               <div class="panel-block">
                 <input class="input" type="search" v-model="query" @change="search()">
               </div>
+              <template v-if="selectedItem">
+                <p class="panel-heading">
+                  Similar images
+                </p>
+                <div class="panel-block">
+                  <img class="thumb" :src="getImageSrcFromShot(this.selectedItem)">
+                  <br>
+                  <a @click="onClickRemoveSelectedItem(this.selectedItem)">Remove</a>
+                </div>
+              </template>
               <template v-for="(facet, b) in results?.data?.facets" class="facet">
                 <p class="panel-heading">
                   {{ facet.title }}
@@ -105,6 +122,7 @@
                       <p>{{ item.video }} &gt; {{ item.clip }} &gt; {{ item.shot }}</p>
                       <p>{{ item.short_description }}</p>
                       <p>{{ Math.floor(item?.sim * 100) }} % similar to query</p>
+                      <p><a v-if="isQuerySemantic" class="button" @click="onClickFindSimilarImages(item)">Find similar images</a></p>
                     </div>
                   </div>
                 </li>
@@ -176,6 +194,8 @@
             results: [],
             filters: {},
             query: "castle",
+            isQuerySemantic: false,
+            selectedItem: null,
           }
         },
         async mounted() {
@@ -319,38 +339,51 @@
             await this.search()
           },
           async search() {
+            let queryVector = null
+
+            let query = (this.query ?? '').trim()
+            
+            if (this.selectedItem) {
+              queryVector = this.getVectorFromItem(this.selectedItem)
+            } else {
+              this.isQuerySemantic = false
+              if (query) {
+                let res = await loadJson(`http://localhost:5000/process?input_path=${query}`)
+                queryVector = res?.result
+              }
+            }
+
             this.results = this.itemsjs.search({
               per_page: 1000000,
               filters: this.filters,
-              // query: this.query,
+              query: queryVector ? null : query,
               sort: 'shot_asc',
             })
             
-            let query = (this.query ?? '').trim()
-            if (query) {
-              let res = await loadJson(`http://localhost:5000/process?input_path=${query}`)
-              let queryVector = res?.result
-              if (queryVector) {
-                queryVector = this.normaliseVector(queryVector)
-                console.log(queryVector)
-                for (let item of this.results.data.items) {
-                  item.sim = this.getSimilarity(item, queryVector)
-                }
-
-                this.results.data.items.sort((a, b) => b.sim - a.sim)
+            if (queryVector) {
+              this.isQuerySemantic = true
+              queryVector = this.normaliseVector(queryVector)
+              // console.log(queryVector)
+              for (let item of this.results.data.items) {
+                item.sim = this.getSimilarity(item, queryVector)
               }
-            }
+
+              this.results.data.items.sort((a, b) => b.sim - a.sim)
+            }              
           },
           getSimilarity(item, queryVector) {
             let ret = 0
             
-            let v = this.shotsVectors[`${item.video}+${item.clip}+${item.shot}`]
+            let v = this.getVectorFromItem(item)
 
             for (let i = v.length - 1; i >= 0; i--) {
               ret += v[i] * queryVector[i]
             }
 
             return ret
+          },
+          getVectorFromItem(item) {
+            return this.shotsVectors[`${item.video}+${item.clip}+${item.shot}`]
           },
           normaliseVector(v) {
             let l = 0
@@ -407,6 +440,15 @@
               this.requestedVideoJumpTime = null
             }
           },
+          onClickFindSimilarImages(item) {
+            this.selectedItem = item
+            this.query = ''
+            this.search()
+          },
+          onClickRemoveSelectedItem(item) {
+            this.selectedItem = null
+            this.search()
+          }
         }
       }).mount('#geosearch')
     </script>
