@@ -1,0 +1,985 @@
+{
+  "meta": {},
+  "data": [
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 253826719,
+        "osm_type": "way",
+        "osm_id": 440735711,
+        "place_rank": 30,
+        "category": "tourism",
+        "type": "hotel",
+        "importance": 7.500343327988125e-05,
+        "addresstype": "tourism",
+        "name": "Hampton by Hilton Belfast City Centre",
+        "display_name": "Hampton by Hilton Belfast City Centre, 15, Hope Street, Linen Quarter, Sandy Row, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT12 5EE, United Kingdom"
+      },
+      "bbox": [
+        -5.9355236,
+        54.593427,
+        -5.9352078,
+        54.5938704
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9353713,
+          54.5937116
+        ]
+      },
+      "video_place": "Belfast City Centre",
+      "video_locality": "Belfast",
+      "video_start": "00:06:04",
+      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255511139,
+        "osm_type": "way",
+        "osm_id": 685353967,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "parking",
+        "importance": 7.500343327988125e-05,
+        "addresstype": "amenity",
+        "name": "Waterfront Hall",
+        "display_name": "Waterfront Hall, Lanyon Place, The Waterfront, Cathedral Quarter, Markets, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT1 3BT, United Kingdom"
+      },
+      "bbox": [
+        -5.9199987,
+        54.5965241,
+        -5.919284,
+        54.5969276
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.919647299999999,
+          54.5967498
+        ]
+      },
+      "video_place": "Waterfront Hall",
+      "video_locality": "Belfast",
+      "video_start": "00:07:18",
+      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254262319,
+        "osm_type": "way",
+        "osm_id": 146343354,
+        "place_rank": 24,
+        "category": "leisure",
+        "type": "park",
+        "importance": 0.08007500343327989,
+        "addresstype": "park",
+        "name": "Musgrave Park",
+        "display_name": "Musgrave Park, Andersonstown, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -5.9815713,
+        54.5671427,
+        -5.97082,
+        54.5726775
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9744164,
+          54.5700005
+        ]
+      },
+      "video_place": "Musgrave Park",
+      "video_locality": "Belfast",
+      "video_start": "00:15:57",
+      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255688784,
+        "osm_type": "way",
+        "osm_id": 189332192,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "hospital",
+        "importance": 0.3420207525496084,
+        "addresstype": "amenity",
+        "name": "Royal Victoria Hospital",
+        "display_name": "Royal Victoria Hospital, Cavendish Street, Whiterock, Clonard, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT12 6AE, United Kingdom"
+      },
+      "bbox": [
+        -5.9566162,
+        54.593845,
+        -5.9521476,
+        54.5956887
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9537702999999995,
+          54.5947533
+        ]
+      },
+      "video_place": "Royal Victoria Hospital",
+      "video_locality": "Belfast",
+      "video_start": "00:15:44",
+      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254869337,
+        "osm_type": "node",
+        "osm_id": 1654332115,
+        "place_rank": 30,
+        "category": "railway",
+        "type": "station",
+        "importance": 0.2956937333713118,
+        "addresstype": "railway",
+        "name": "Coleraine",
+        "display_name": "Coleraine, Railway Place, Coleraine, Causeway Coast and Glens District, County Londonderry, Northern Ireland / Tuaisceart \u00c9ireann, BT52 1PQ, United Kingdom"
+      },
+      "bbox": [
+        -6.6676658,
+        55.1289557,
+        -6.6576658,
+        55.1389557
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.6626658,
+          55.1339557
+        ]
+      },
+      "video_place": "Coleraine",
+      "video_locality": "Coleraine",
+      "video_start": "00:10:41",
+      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 353655678,
+        "osm_type": "way",
+        "osm_id": 1005958640,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "doctors",
+        "importance": 9.307927061870783e-05,
+        "addresstype": "amenity",
+        "name": "Derry Downs Surgery",
+        "display_name": "Derry Downs Surgery, Derry Downs, Poverest, St Mary Cray, London Borough of Bromley, London, Greater London, England, BR5 4DU, United Kingdom"
+      },
+      "bbox": [
+        0.1164612,
+        51.3856603,
+        0.1166848,
+        51.3858244
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.1165690363250266,
+          51.3857424
+        ]
+      },
+      "video_place": "London Derry",
+      "video_locality": "Derry",
+      "video_start": "00:13:42",
+      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 34281257,
+        "osm_type": "relation",
+        "osm_id": 171496,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.7176867725398934,
+        "addresstype": "country",
+        "name": "Rwanda",
+        "display_name": "Rwanda"
+      },
+      "bbox": [
+        28.861696,
+        -2.8397643,
+        30.8990738,
+        -1.0474083
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.0644358,
+          -1.9646631
+        ]
+      },
+      "video_place": "Rwanda",
+      "video_locality": "Rwanda",
+      "video_start": "00:17:00",
+      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 339226637,
+        "osm_type": "node",
+        "osm_id": 153601842,
+        "place_rank": 19,
+        "category": "place",
+        "type": "village",
+        "importance": 0.2730660066097438,
+        "addresstype": "village",
+        "name": "Brussels",
+        "display_name": "Brussels, Town of Brussels, Door County, Wisconsin, 54204, United States of America"
+      },
+      "bbox": [
+        -87.6409298,
+        44.7161071,
+        -87.6009298,
+        44.7561071
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6209298,
+          44.7361071
+        ]
+      },
+      "video_place": "Brussels",
+      "video_locality": "Brussels",
+      "video_start": "00:10:04",
+      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255164013,
+        "osm_type": "way",
+        "osm_id": 539787113,
+        "place_rank": 30,
+        "category": "tourism",
+        "type": "attraction",
+        "importance": 0.39298651587942324,
+        "addresstype": "tourism",
+        "name": "Belfast City Hall",
+        "display_name": "Belfast City Hall, Donegall Square South, Linen Quarter, Markets, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT1 5GS, United Kingdom"
+      },
+      "bbox": [
+        -5.9307832,
+        54.5960887,
+        -5.929203,
+        54.596776
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9295067999999995,
+          54.5964356
+        ]
+      },
+      "video_place": "South Belfast",
+      "video_locality": "Belfast",
+      "video_start": "00:00:01",
+      "video_summary": "Michael Smith, a dangerous man charged with murder, is on the run after being mistakenly released from prison, with police appealing for public assistance in locating him.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.06.42-95/00.06.42-95.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 297287837,
+        "osm_type": "relation",
+        "osm_id": 2730965,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "census",
+        "importance": 0.41319251906495164,
+        "addresstype": "village",
+        "name": "London",
+        "display_name": "London, Tulare County, California, United States of America"
+      },
+      "bbox": [
+        -119.4497699,
+        36.4734452,
+        -119.4385395,
+        36.4884367
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.44405977174983,
+          36.4846239
+        ]
+      },
+      "video_place": "London",
+      "video_locality": "London",
+      "video_start": "00:00:12",
+      "video_summary": "The article discusses the potential captaincy choices and squad selections for the British and Irish Lions tour, highlighting players from Ireland and England, with the squad to be announced tomorrow.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.08.24-129/00.08.24-129.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 395446914,
+        "osm_type": "relation",
+        "osm_id": 253832,
+        "place_rank": 16,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.72404667881174,
+        "addresstype": "city",
+        "name": "San Diego",
+        "display_name": "San Diego, San Diego County, California, United States of America"
+      },
+      "bbox": [
+        -117.3098161,
+        32.5347979,
+        -116.9057417,
+        33.114194
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.162772,
+          32.7174202
+        ]
+      },
+      "video_place": "San Diego",
+      "video_locality": "USA",
+      "video_start": "00:00:18",
+      "video_summary": "An anti-drug awareness campaign uses a shocking film to illustrate the deadly consequences of drug use and encourage community change.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.00.22-130/00.00.22-130.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 346277167,
+        "osm_type": "relation",
+        "osm_id": 1428125,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.9110642342490372,
+        "addresstype": "country",
+        "name": "Canada",
+        "display_name": "Canada"
+      },
+      "bbox": [
+        -141.00275,
+        41.6765597,
+        -52.3237664,
+        83.3362128
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -107.991707,
+          61.0666922
+        ]
+      },
+      "video_place": "Canada",
+      "video_locality": "Canada",
+      "video_start": "00:00:18",
+      "video_summary": "An anti-drug awareness campaign uses a shocking film to illustrate the deadly consequences of drug use and encourage community change.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.00.22-130/00.00.22-130.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 29294220,
+        "osm_type": "relation",
+        "osm_id": 80500,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.9037703386664665,
+        "addresstype": "country",
+        "name": "Australia",
+        "display_name": "Australia"
+      },
+      "bbox": [
+        72.2461932,
+        -55.3228175,
+        168.2261259,
+        -9.0880125
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          134.755,
+          -24.7761086
+        ]
+      },
+      "video_place": "Australia",
+      "video_locality": "Australia",
+      "video_start": "00:00:18",
+      "video_summary": "An anti-drug awareness campaign uses a shocking film to illustrate the deadly consequences of drug use and encourage community change.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.00.22-130/00.00.22-130.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 256442622,
+        "osm_type": "way",
+        "osm_id": 440486085,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "school",
+        "importance": 0.3770485431719739,
+        "addresstype": "amenity",
+        "name": "Archbishop Temple Church of England High School",
+        "display_name": "Archbishop Temple Church of England High School, St Vincents Road, Nooklands, Fulwood, Preston, Lancashire, England, PR2 8RA, United Kingdom"
+      },
+      "bbox": [
+        -2.7080609,
+        53.7816315,
+        -2.6991292,
+        53.7857447
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.703299,
+          53.783743799999996
+        ]
+      },
+      "video_place": "England",
+      "video_locality": "England",
+      "video_start": "00:00:18",
+      "video_summary": "An anti-drug awareness campaign uses a shocking film to illustrate the deadly consequences of drug use and encourage community change.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.00.22-130/00.00.22-130.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 253826719,
+        "osm_type": "way",
+        "osm_id": 440735711,
+        "place_rank": 30,
+        "category": "tourism",
+        "type": "hotel",
+        "importance": 7.500343327988125e-05,
+        "addresstype": "tourism",
+        "name": "Hampton by Hilton Belfast City Centre",
+        "display_name": "Hampton by Hilton Belfast City Centre, 15, Hope Street, Linen Quarter, Sandy Row, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT12 5EE, United Kingdom"
+      },
+      "bbox": [
+        -5.9355236,
+        54.593427,
+        -5.9352078,
+        54.5938704
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9353713,
+          54.5937116
+        ]
+      },
+      "video_place": "Belfast City Centre",
+      "video_locality": "Belfast",
+      "video_start": "00:00:01",
+      "video_summary": "The Sirocco Works site in Belfast is set for redevelopment with a \u00a3400 million investment, including a hotel, offices, homes, and a footbridge, aiming to integrate East Belfast into the city center by 2035.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.04.18-138/00.04.18-138.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255051859,
+        "osm_type": "node",
+        "osm_id": 456206541,
+        "place_rank": 19,
+        "category": "place",
+        "type": "suburb",
+        "importance": 0.14674167009994654,
+        "addresstype": "suburb",
+        "name": "Short Strand",
+        "display_name": "Short Strand, Ballymacarret, Belfast, Belfast City District, County Down, Northern Ireland / Tuaisceart \u00c9ireann, BT5 4EW, United Kingdom"
+      },
+      "bbox": [
+        -5.9287389,
+        54.5777869,
+        -5.8887389,
+        54.6177869
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9087389,
+          54.5977869
+        ]
+      },
+      "video_place": "Short Strand",
+      "video_locality": "Belfast",
+      "video_start": "00:00:40",
+      "video_summary": "The Sirocco Works site in Belfast is set for redevelopment with a \u00a3400 million investment, including a hotel, offices, homes, and a footbridge, aiming to integrate East Belfast into the city center by 2035.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.04.18-138/00.04.18-138.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255511139,
+        "osm_type": "way",
+        "osm_id": 685353967,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "parking",
+        "importance": 7.500343327988125e-05,
+        "addresstype": "amenity",
+        "name": "Waterfront Hall",
+        "display_name": "Waterfront Hall, Lanyon Place, The Waterfront, Cathedral Quarter, Markets, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT1 3BT, United Kingdom"
+      },
+      "bbox": [
+        -5.9199987,
+        54.5965241,
+        -5.919284,
+        54.5969276
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.919647299999999,
+          54.5967498
+        ]
+      },
+      "video_place": "Waterfront Hall",
+      "video_locality": "Belfast",
+      "video_start": "00:01:15",
+      "video_summary": "The Sirocco Works site in Belfast is set for redevelopment with a \u00a3400 million investment, including a hotel, offices, homes, and a footbridge, aiming to integrate East Belfast into the city center by 2035.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.04.18-138/00.04.18-138.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254932643,
+        "osm_type": "way",
+        "osm_id": 458264542,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "school",
+        "importance": 0.3852629434778953,
+        "addresstype": "amenity",
+        "name": "Royal Belfast Academical Institution",
+        "display_name": "Royal Belfast Academical Institution, College Square East, Linen Quarter, Sandy Row, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT1 6DL, United Kingdom"
+      },
+      "bbox": [
+        -5.9385893,
+        54.5963517,
+        -5.9348951,
+        54.5977339
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9365844,
+          54.596834099999995
+        ]
+      },
+      "video_place": "East Belfast",
+      "video_locality": "Belfast",
+      "video_start": "00:01:29",
+      "video_summary": "The Sirocco Works site in Belfast is set for redevelopment with a \u00a3400 million investment, including a hotel, offices, homes, and a footbridge, aiming to integrate East Belfast into the city center by 2035.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.04.18-138/00.04.18-138.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255303188,
+        "osm_type": "way",
+        "osm_id": 564099741,
+        "place_rank": 30,
+        "category": "leisure",
+        "type": "stadium",
+        "importance": 0.54771094193149,
+        "addresstype": "leisure",
+        "name": "Croke Park",
+        "display_name": "Croke Park, Jones's Road, Ballybough, Ballybough B ED, Dublin, County Dublin, Leinster, D03 A095, \u00c9ire / Ireland"
+      },
+      "bbox": [
+        -6.2537629,
+        53.3588248,
+        -6.2483031,
+        53.3618111
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2509812,
+          53.3603576
+        ]
+      },
+      "video_place": "Croke Park",
+      "video_locality": "Dublin",
+      "video_start": "00:00:01",
+      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254063422,
+        "osm_type": "relation",
+        "osm_id": 14583179,
+        "place_rank": 18,
+        "category": "place",
+        "type": "town",
+        "importance": 0.48925543920617154,
+        "addresstype": "town",
+        "name": "Kildare",
+        "display_name": "Kildare, The Municipal District of Kildare \u2014 Newbridge, County Kildare, Leinster, \u00c9ire / Ireland"
+      },
+      "bbox": [
+        -6.9269565,
+        53.1514234,
+        -6.8843764,
+        53.1720358
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.9117199,
+          53.1568465
+        ]
+      },
+      "video_place": "Kildare",
+      "video_locality": "County Kildare",
+      "video_start": "00:00:01",
+      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255649323,
+        "osm_type": "relation",
+        "osm_id": 6432625,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "barony",
+        "importance": 0.5461997071506968,
+        "addresstype": "barony",
+        "name": "Armagh",
+        "display_name": "Armagh, Armagh City, Banbridge and Craigavon District Council, County Armagh, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -6.8259403,
+        54.1792766,
+        -6.6080706,
+        54.452909
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.7189182,
+          54.3161086
+        ]
+      },
+      "video_place": "Armagh",
+      "video_locality": "County Armagh",
+      "video_start": "00:00:01",
+      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255820805,
+        "osm_type": "way",
+        "osm_id": 181282759,
+        "place_rank": 24,
+        "category": "landuse",
+        "type": "construction",
+        "importance": 0.2560520753862706,
+        "addresstype": "construction",
+        "name": "Former Tyrone County Hospital",
+        "display_name": "Former Tyrone County Hospital, Omagh, Fermanagh and Omagh District, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -7.286144,
+        54.599486,
+        -7.2799011,
+        54.6023847
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.283036999999999,
+          54.6008742
+        ]
+      },
+      "video_place": "Tyrone",
+      "video_locality": "County Tyrone",
+      "video_start": "00:00:25",
+      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254612527,
+        "osm_type": "way",
+        "osm_id": 311466843,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "university",
+        "importance": 0.596417209288927,
+        "addresstype": "amenity",
+        "name": "Trinity College Dublin",
+        "display_name": "Trinity College Dublin, College Green, Mansion House A ED, Dublin, County Dublin, Leinster, D02 VR66, \u00c9ire / Ireland"
+      },
+      "bbox": [
+        -6.2593238,
+        53.3419413,
+        -6.2495999,
+        53.3455336
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2543853,
+          53.3438434
+        ]
+      },
+      "video_place": "Dublin",
+      "video_locality": "Dublin",
+      "video_start": "00:00:34",
+      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255719855,
+        "osm_type": "relation",
+        "osm_id": 14571828,
+        "place_rank": 18,
+        "category": "place",
+        "type": "town",
+        "importance": 0.4595237738234052,
+        "addresstype": "town",
+        "name": "Monaghan",
+        "display_name": "Monaghan, Monaghan Municipal District, County Monaghan, Ulster, \u00c9ire / Ireland"
+      },
+      "bbox": [
+        -6.9983496,
+        54.2293517,
+        -6.9415493,
+        54.2660634
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.9688855,
+          54.2485576
+        ]
+      },
+      "video_place": "Monaghan",
+      "video_locality": "County Monaghan",
+      "video_start": "00:00:48",
+      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 419901153,
+        "osm_type": "relation",
+        "osm_id": 6453035,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "civil_parish",
+        "importance": 0.12549564188972803,
+        "addresstype": "civil_parish",
+        "name": "Down",
+        "display_name": "Down, Downpatrick, Newry, Mourne and Down District Council, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -5.8081594,
+        54.2706705,
+        -5.6621901,
+        54.3538773
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7319754,
+          54.3122372
+        ]
+      },
+      "video_place": "Down",
+      "video_locality": "County Down",
+      "video_start": "00:00:48",
+      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255303188,
+        "osm_type": "way",
+        "osm_id": 564099741,
+        "place_rank": 30,
+        "category": "leisure",
+        "type": "stadium",
+        "importance": 0.54771094193149,
+        "addresstype": "leisure",
+        "name": "Croke Park",
+        "display_name": "Croke Park, Jones's Road, Ballybough, Ballybough B ED, Dublin, County Dublin, Leinster, D03 A095, \u00c9ire / Ireland"
+      },
+      "bbox": [
+        -6.2537629,
+        53.3588248,
+        -6.2483031,
+        53.3618111
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2509812,
+          53.3603576
+        ]
+      },
+      "video_place": "Croke Park",
+      "video_locality": "Dublin",
+      "video_start": "00:01:27",
+      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 397133304,
+        "osm_type": "relation",
+        "osm_id": 1429005,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "protected_area",
+        "importance": 0.06667666666666666,
+        "addresstype": "protected_area",
+        "name": "Sperrins AONB",
+        "display_name": "Sperrins AONB, County Tyrone, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -7.437183,
+        54.6228752,
+        -6.6748153,
+        54.9644439
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.1226069999999995,
+          54.7935497
+        ]
+      },
+      "video_place": "Sperrins",
+      "video_locality": "County Tyrone",
+      "video_start": "00:00:44",
+      "video_summary": "Slockneal, a small rural area, is highlighted for its multiple sports teams competing in All-Ireland finals and the challenges of managing dual participation in hurling and football on St. Patrick's Day.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.02.37-95/00.02.37-95.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254612527,
+        "osm_type": "way",
+        "osm_id": 311466843,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "university",
+        "importance": 0.596417209288927,
+        "addresstype": "amenity",
+        "name": "Trinity College Dublin",
+        "display_name": "Trinity College Dublin, College Green, Mansion House A ED, Dublin, County Dublin, Leinster, D02 VR66, \u00c9ire / Ireland"
+      },
+      "bbox": [
+        -6.2593238,
+        53.3419413,
+        -6.2495999,
+        53.3455336
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2543853,
+          53.3438434
+        ]
+      },
+      "video_place": "Dublin",
+      "video_locality": "Dublin",
+      "video_start": "00:01:16",
+      "video_summary": "Slockneal, a small rural area, is highlighted for its multiple sports teams competing in All-Ireland finals and the challenges of managing dual participation in hurling and football on St. Patrick's Day.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_path": "../data/collections/NI/DVC43998/00.02.37-95/00.02.37-95.mp4"
+    }
+  ]
+}

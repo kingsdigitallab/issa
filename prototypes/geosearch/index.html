@@ -155,7 +155,7 @@
             console.log(this.videoCurrentTime)
           }, 300);
 
-          this.index = await loadJson('tools/index.json')
+          this.index = await loadJson('tools/index_places.json')
 
           let self = this
           this.geoLayer = L.geoJSON(
@@ -262,7 +262,7 @@
             return ret
           },
           jumpVideoToRequestedTime() {
-            if (this.requestedVideoJumpTime) {
+            if (this.requestedVideoJumpTime !== null) {
               this.mediaElement.currentTime = this.requestedVideoJumpTime
               if (this.requestedVideoPlay) {
                 this.mediaElement.play()

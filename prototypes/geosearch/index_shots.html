@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="theme-dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Geo Search - ISSA</title>
+    <link rel="icon" href="data:," >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/itemsjs@latest/dist/index.umd.js"></script>
+    <style>
+      /* body, .table, table.table tr td {
+        background-color: #111;
+        color: #eee;
+      } */
+      #shots { height: 80vh; }
+
+      .video-content table td:first {
+        width: 5em;
+      }
+
+      #player {
+        /* height: 33vh; */
+      }
+
+      .current {
+        background-color: yellow;
+        color: black;
+      }
+
+      .shot img {
+        width: 20em;
+        display: block;
+      }
+
+      .shot {
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+
+      .options {
+        width: 100%;
+      }
+
+      .option a {
+        display: block;
+      }
+
+      .option:hover {
+        text-decoration: underline;
+      }
+
+      .selected {
+        background-color: yellow;
+        color: black;
+      }
+
+      .panel-heading {
+        padding: 0.5em;
+      }
+
+      #player {
+        position: fixed;
+        /* position: sticky; */
+        top: 4em;
+        width: 20%;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="section" id="geosearch">
+      <div class="container is-fluid">
+        <div class="columns map-content">
+          <div class="column is-3">
+            <div id="facets" class="panel">
+              <p class="panel-heading">
+                Keywords
+              </p>
+              <div class="panel-block">
+                <input class="input" type="search" v-model="query" @change="search()">
+              </div>
+              <template v-for="(facet, b) in results?.data?.facets" class="facet">
+                <p class="panel-heading">
+                  {{ facet.title }}
+                </p>
+                <div class="panel-block">
+                  <ul class="options">
+                    <li class="option" v-for="option in facet.buckets">
+                      <a :class="{selected: option.selected}" @click="onClickOption(facet, option)">{{option.key}} ({{option.doc_count}})</a>
+                    </li>
+                  </ul>
+                </div>
+              </template>
+            </div>
+          </div>
+          <div class="column is-6">
+            <div id="shots">
+              <ul>
+                <li v-for="item in filteredShots" class="shot">
+                  <div class="columns">
+                    <div class="column">
+                      <a @click="onClickFrame(item)"><img :src="getImageSrcFromShot(item)"></a>
+                    </div>
+                    <div class="column">
+                      <p>{{ item.video }} &gt; {{ item.clip }} &gt; {{ item.shot }}</p>
+                      <p>{{ item.short_description }}</p>
+                      <p>{{ Math.floor(item?.sim * 100) }} % similar to query</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="column video-content is-3">
+            <video id="player" controls class="video-js" preload="auto">
+              <!-- <source src="data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4#60" type="video/mp4"> -->
+              <source src="data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.webm" type="video/webm">
+            </video>
+            <table v-if="selectedFeature" class="table">
+              <tbody>
+                <tr>
+                  <td>Place</td>
+                  <td>"{{ selectedFeature.video_place }}" in {{ selectedFeature.video_locality }} ({{ selectedFeature.video_start }})
+                    <br>=&gt; {{ selectedFeature.properties.name }} (Nominatim)
+                  </td>
+                </tr>
+                <tr>
+                  <td>In clip:</td>
+                  <td>{{ selectedFeature.video_path }}</td>
+                </tr>
+                <tr>
+                  <td>Clip summary:</td><td>{{ selectedFeature.video_summary }}</td>
+                </tr>
+                <tr>
+                  <td>Clip parts</td>
+                  <td>
+                    <ul>
+                      <li v-for="unit in clipDisplayUnits">
+                        <a @mouseenter="requestVideoJumpInTimeCode(unit.start)" @click="requestVideoJumpInTimeCode(unit.start, true)">{{ unit.start }}</a>: 
+                        <span :class="{'current': unit.current}">{{ unit.summary }}</span>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      const { createApp } = Vue;
+
+      async function loadJson(url) {
+        let ret = {}
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            console.log(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          ret = data
+        } catch (err) {
+          console.error('Error loading JSON:', err);
+        }
+        return ret
+      }
+
+      createApp({
+        data() {
+          return {
+            message: 'Hello Vue!',
+            selectedFeature: null,
+            clipAnswersContent: null,
+            videoCurrentTime: 0,
+            results: [],
+            filters: {},
+            query: "castle",
+          }
+        },
+        async mounted() {
+          this.requestedVideoJumpTime = null
+          this.requestedVideoPlay = false
+
+          const mediaElement = document.querySelector('#player'); // or 'audio'          
+          this.mediaElement = mediaElement
+
+          const intervalId = setInterval(() => {
+            this.videoCurrentTime = mediaElement.currentTime
+            this.jumpVideoToRequestedTime()
+          }, 300);
+
+          this.index = await loadJson('tools/index_shots.json')
+
+          for (let item of this.index.data) {
+            item.sortKey = `${item.video}>${item.clip}>${item.shot}`
+          }
+
+          await this.loadShotsVectors()
+
+          let config = {
+            sortings: {
+              shot_asc: {
+                field: 'sortKey',
+                order: 'asc'
+              }
+            },
+            aggregations: {
+              video: {
+                title: 'Video',
+                size: 10,
+                conjunction: false
+              },
+              subject_type: {
+                title: 'Subject type',
+                size: 10,
+              },
+              colour: {
+                title: 'Colour',
+                size: 10
+              },
+              indoor: {
+                title: 'Indoor',
+                size: 10,
+              },
+              above: {
+                title: 'Above',
+                size: 10,
+              },
+              has_title: {
+                title: 'Is title',
+              },
+              background: {
+                title: 'Background',
+                size: 10,
+              },
+              subject: {
+                title: 'Subject',
+                size: 30,
+              },
+              productionCompany: {
+                title: 'Production',
+              },
+              year: {
+                title: 'Year',
+                size: 20
+              },
+              clip: {
+                title: 'Clips',
+                size: 10
+              },
+            },
+            searchableFields: ['video', 'short_description']
+          }
+
+          this.itemsjs = itemsjs(this.index.data, config);
+          await this.search()
+        },
+        computed: {
+          filteredShots() {
+            return (this.results?.data?.items ?? []).slice(0, 100);
+          },
+          clipDisplayUnits() {
+            let ret = this.clipUnits
+            ret.sort((a, b) => a.start.localeCompare(b.start))
+            let pLast = null
+            for (let p of ret) {
+              p.current = (this.videoCurrentTime + 5) > this.getSecondsFromTimeCode(p.start)
+              if (pLast && p.current) {
+                pLast.current = false
+              }
+              pLast = p
+            }
+            return ret
+          },
+          clipUnits() {
+            let parts = this.clipAnswersContent?.data?.parts?.answer
+            if (parts) {
+              if (Array.isArray(parts)) {
+                return parts
+              }
+              for (let p of Object.values(parts)) {
+                if (Array.isArray(p)) {
+                  return p
+                }
+              }
+            }
+            return []
+          }
+        },
+        methods: {
+          async loadShotsVectors() {
+            let vectors = await loadJson('tools/index_shots_vectors.json')
+            /*
+            {
+              video: "55300_A",
+              clip: "00.00.00-1530",
+              shot: "161",
+              vector: Array(1024) [ -0.009502490982413292, 0.0645708218216896, -0.03585502877831459, … ]
+            }
+            */
+            this.shotsVectors = {}
+            for (let v of vectors.data) {
+              this.shotsVectors[`${v.video}+${v.clip}+${v.shot}`] = this.normaliseVector(v.vector)
+            }
+            console.log(this.shotsVectors)
+          },
+          async onClickOption(facet, option) {
+            let facetName = facet.name
+            let optionKey = option.key
+            if (!this.filters[facetName]) {
+              this.filters[facetName] = []
+            }
+            if (this.filters[facetName].includes(optionKey)) {
+              this.filters[facetName] = this.filters[facetName].filter(ok => ok != optionKey)
+            } else {
+              this.filters[facetName].push(optionKey)
+            }
+            await this.search()
+          },
+          async search() {
+            this.results = this.itemsjs.search({
+              per_page: 1000000,
+              filters: this.filters,
+              // query: this.query,
+              sort: 'shot_asc',
+            })
+            
+            let query = (this.query ?? '').trim()
+            if (query) {
+              let res = await loadJson(`http://localhost:5000/process?input_path=${query}`)
+              let queryVector = res?.result
+              if (queryVector) {
+                queryVector = this.normaliseVector(queryVector)
+                console.log(queryVector)
+                for (let item of this.results.data.items) {
+                  item.sim = this.getSimilarity(item, queryVector)
+                }
+
+                this.results.data.items.sort((a, b) => b.sim - a.sim)
+              }
+            }
+          },
+          getSimilarity(item, queryVector) {
+            let ret = 0
+            
+            let v = this.shotsVectors[`${item.video}+${item.clip}+${item.shot}`]
+
+            for (let i = v.length - 1; i >= 0; i--) {
+              ret += v[i] * queryVector[i]
+            }
+
+            return ret
+          },
+          normaliseVector(v) {
+            let l = 0
+            for (c of v) {
+              l += c * c
+            }
+            l = Math.sqrt(l)
+            return v.map(c => c / l)
+          },
+          getImageSrcFromShot(item) {
+            return `data/collections/NI/${item.video}/${item.clip}/shots/${item.shot}/middle.jpg`;
+          },
+          loadVideo(path) {
+            if (this?.videoPath != path) {
+              this.mediaElement.src = path
+              this.videoPath = path
+            }
+          },
+          onClickFrame(item) {
+            let clipPath = `data/collections/NI/${item.video}/${item.clip}/${item.clip}.webm`
+            this.loadVideo(clipPath)
+            this.requestVideoJumpInTimeCode(item.start, true)
+          },
+          requestVideoJumpToSelectedFeature(play=false) {
+            if (this.selectedFeature) {
+              this.requestVideoJumpInTimeCode(this.selectedFeature.video_start, play)
+            }
+          },
+          requestVideoJumpInTimeCode(timeCode, play) {
+            this.requestVideoJumpInSeconds(this.getSecondsFromTimeCode(timeCode), play)
+          },
+          requestVideoJumpInSeconds(timeInSeconds, play) {
+            this.requestedVideoJumpTime = timeInSeconds
+            this.requestedVideoPlay = play
+          },
+          getSecondsFromTimeCode(timeCode) {
+            const [hours, minutes, seconds] = timeCode.split(':').map(Number);
+            ret = hours * 3600 + minutes * 60 + seconds;
+            return ret
+          },
+          jumpVideoToRequestedTime() {
+            if (this.requestedVideoJumpTime === null) return;
+            // is the video sufficiently buffered?
+            if (this.mediaElement.readyState !== 4) return;
+
+            this.mediaElement.currentTime = this.requestedVideoJumpTime
+            if (this.mediaElement.currentTime >= this.requestedVideoJumpTime) {
+              if (this.requestedVideoPlay) {
+                this.mediaElement.play()
+              } else {
+                this.mediaElement.pause()
+              }            
+              this.requestedVideoPlay = false
+              this.requestedVideoJumpTime = null
+            }
+          },
+        }
+      }).mount('#geosearch')
+    </script>
+  </body>
+</html>
