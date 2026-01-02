@@ -122,7 +122,7 @@
                       <p>{{ item.video }} &gt; {{ item.clip }} &gt; {{ item.shot }}</p>
                       <p>{{ item.short_description }}</p>
                       <p>{{ Math.floor(item?.sim * 100) }} % similar to query</p>
-                      <p><a v-if="isQuerySemantic" class="button" @click="onClickFindSimilarImages(item)">Find similar images</a></p>
+                      <p><a class="button" @click="onClickFindSimilarImages(item)">Find similar images</a></p>
                     </div>
                   </div>
                 </li>
@@ -342,7 +342,7 @@
             let queryVector = null
 
             let query = (this.query ?? '').trim()
-            
+
             if (this.selectedItem) {
               queryVector = this.getVectorFromItem(this.selectedItem)
             } else {
