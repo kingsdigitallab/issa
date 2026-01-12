@@ -1,3 +1,29 @@
+## v0.2.0-segment (2026-01-12)
+
+### Feat
+
+- **segment**: Add thumbnail grid view
+- **segment**: Add Inter font and set it as the default font family for Pico CSS
+- **segment**: Add metadata aggregation command
+- **segment**: Add processing metadata to ETL components
+- **segment**: Add metadata utilities and tests
+- **segment**: Add backend option for processing methods
+- **segment**: Add support for API inference
+- **segment**: Add support for API inference
+- **segment**: Add support for API inference
+- **segment**: Add example environment configuration for API settings
+
+### Refactor
+
+- **segment**: Move the frames thumbnails to the same section as the video
+- **segment**: Change evaluation page layout and styles
+- **segment**: Conditionally display video and data sections
+- **segment**: Render dates with locale
+- **segment**: Refine summary prompt and add content priority
+- **segment**: Remove redundant classes
+- **segment**: Improve metadata layout and step display
+- **segment**: Enable trust_remote_code when loading processor
+
 ## v0.1.0-segment (2025-11-27)
 
 ### Feat
