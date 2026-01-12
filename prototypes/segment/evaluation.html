@@ -157,7 +157,7 @@
             <article id="video" x-show="videoDuration">
                 <header>
                     <hgroup>
-                        <h2 x-text="viewMode === 'video' ? 'Video' : 'Thumbnails'"></h2>
+                        <h2 x-text="viewMode === 'video' ? 'Video' : 'Frames'"></h2>
                         <p>
                             Duration:
                             <code x-text="formatTime(videoDuration) || '00:00'"></code>
@@ -165,17 +165,16 @@
                             <code x-text="formatTime(videoCurrentTime) || '00:00'"></code>
                         </p>
                     </hgroup>
-                    <div class="grid" x-show="segments.length">
-                        <button type="button" :class="viewMode === 'video' ? 'secondary' : ''"
-                            @click="viewMode = 'video'">
-                            Video
-                        </button>
-                        <button type="button" :class="viewMode === 'grid' ? 'secondary' : ''"
-                            @click="viewMode = 'grid'">
-                            Thumbnails
-                        </button>
-                    </div>
                 </header>
+
+                <div class="grid" x-show="segments.length">
+                    <button type="button" :class="viewMode === 'video' ? 'secondary' : ''" @click="viewMode = 'video'">
+                        Video
+                    </button>
+                    <button type="button" :class="viewMode === 'grid' ? 'secondary' : ''" @click="viewMode = 'grid'">
+                        Frames
+                    </button>
+                </div>
 
                 <!-- Video Player -->
                 <video x-ref="video" controls width="100%" x-show="viewMode === 'video'"></video>
