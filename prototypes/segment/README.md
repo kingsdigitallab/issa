@@ -59,7 +59,8 @@ flowchart LR
 - Alignment: Aligns frame captions and audio transcripts to ensure accurate timing
 - Semantic Segmentation: LLM analyzes the frame captions + audio data to identify segment boundaries and generate summaries
   1. Detect boundaries between the segments, by looking at changes in the captions and transcriptions
-  1.
+  2. Merge the segments based on the detected boundaries
+  3. Summarise and classify the merged segments
 
 ## Other Approaches
 
@@ -209,15 +210,15 @@ uv run python main.py align path/to/video.mp4 \
 uv run python main.py detect-boundaries path/to/video.mp4 \
     --model-name google/gemma-3-4b-it \
     --input-folder ../data/1_interim \
-    --prompt-path ../data/0_prompts/segmentation.md \
+    --prompt-folder ../data/0_prompts \
     --output-folder ../data/2_final
 ```
 
 **Options:**
 
 - `--model-name`: LLM model for segmentation (default: "google/gemma-3-4b-it"). For API: e.g. "gpt-4o".
-- `--input-folder`: Folder with transcription and captions from previous steps
-- `--prompt-path`: Custom system prompt for the LLM
+- `--input-folder`: Folder with aligned data from previous steps
+- `--prompt-folder`: Folder containing system prompt files for the LLM
 - `--output-folder`: Where to save segments with boundary data
 - `--backend`: "local" (default) or "api"
 
@@ -225,7 +226,7 @@ uv run python main.py detect-boundaries path/to/video.mp4 \
 
 ```bash
 uv run python main.py merge-segments path/to/video.mp4 \
-    --input-folder ../data/1_interim \
+    --input-folder ../data/2_final \
     --output-folder ../data/2_final
 ```
 
@@ -240,8 +241,8 @@ uv run python main.py merge-segments path/to/video.mp4 \
 uv run python main.py summarise-segments path/to/video.mp4 \
     --model-name google/gemma-3-4b-it \
     --caption-chunk-size 25 \
-    --input-folder ../data/1_interim \
-    --prompt-path ../data/0_prompts/segmentation.md \
+    --input-folder ../data/2_final \
+    --prompt-folder ../data/0_prompts \
     --output-folder ../data/2_final
 ```
 
@@ -250,17 +251,17 @@ uv run python main.py summarise-segments path/to/video.mp4 \
 - `--model-name`: LLM model for segmentation (default: "google/gemma-3-4b-it"). For API: e.g. "gpt-4o".
 - `--caption-chunk-size`: Number of captions to include in each chunk (default: 25)
 - `--input-folder`: Folder with merged segments from previous step
-- `--prompt-path`: Custom system prompt for the LLM
+- `--prompt-folder`: Folder containing system prompt files for the LLM
 - `--output-folder`: Where to save segments with summaries
 - `--backend`: "local" (default) or "api"
 
 #### Step 5.4: Classify Segments
 
 ```bash
-uv run python main.py classify-segment path/to/video.mp4 \
+uv run python main.py classify-segments path/to/video.mp4 \
     --model-name google/gemma-3-4b-it \
-    --input-folder ../data/1_interim \
-    --prompt-path ../data/0_prompts/segmentation.md \
+    --input-folder ../data/2_final \
+    --prompt-folder ../data/0_prompts \
     --output-folder ../data/2_final
 ```
 
@@ -268,7 +269,7 @@ uv run python main.py classify-segment path/to/video.mp4 \
 
 - `--model-name`: LLM model for classification (default: "google/gemma-3-4b-it"). For API: e.g. "gpt-4o".
 - `--input-folder`: Folder with segments with summaries from previous step
-- `--prompt-path`: Custom system prompt for the LLM
+- `--prompt-folder`: Folder containing system prompt files for the LLM
 - `--output-folder`: Where to save segments with topics and metadata
 - `--backend`: "local" (default) or "api"
 
@@ -403,23 +404,23 @@ uv run ruff format .
 
 - **Added Boundary Detection**: Implemented a sliding window approach (Previous, Current, Next) which significantly reduces fragmentation and improves context awareness compared to the pairwise comparison.
 - **Metadata Extraction**: The pipeline now automatically generates:
-    - **Summaries**:  Descriptions of segment content, but they need improvement because at the moment it is more of a visual description than a content description.
-    - **Classifications**: Structured fields including Topic, Channel, Program Name, and Transmission Date.
+  - **Summaries**: Descriptions of segment content, but they need improvement because at the moment it is more of a visual description than a content description.
+  - **Classifications**: Structured fields including Topic, Channel, Program Name, and Transmission Date.
 - **Verification Tooling**: Added `evaluation.html`, a standalone dashboard to visualize segments, play the corresponding video ranges, and verify metadata accuracy in real-time.
 
 #### Processing time for a 30m video on an RTX 4090/24GB.
 
-| Step | Items | Time (m) |
-| --- | --- | --- |
-| Extracting frames | 2102 | 01 |
-| Transcribing audio | 1 | 04 |
-| Captioning frames | 2102 | 55 |
-| Aligning frames with transcriptions | 2084 | 00 |
-| Detecting boundaries | 2084 | 10 |
-| Merging segments | 60 | 00 |
-| Summarising segments | 60 | 7 |
-| Classifying segments | 60 | 3 |
-| Total | - | ~120m  |
+| Step                                | Items | Time (m) |
+| ----------------------------------- | ----- | -------- |
+| Extracting frames                   | 2102  | 01       |
+| Transcribing audio                  | 1     | 04       |
+| Captioning frames                   | 2102  | 55       |
+| Aligning frames with transcriptions | 2084  | 00       |
+| Detecting boundaries                | 2084  | 10       |
+| Merging segments                    | 60    | 00       |
+| Summarising segments                | 60    | 7        |
+| Classifying segments                | 60    | 3        |
+| Total                               | -     | ~120m    |
 
 ### 13 Nov 2025
 
