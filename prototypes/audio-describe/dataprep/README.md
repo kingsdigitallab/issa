@@ -5,13 +5,14 @@ Instead of cloning the DANTE-AD repo in here, I paste the whole files where I ch
 
 There are also data and checkpoint files needed, and it is described in the step-by-step list below how to get them:
 DANTE-AD/data_preparation/ckpt/k400_vitb16_f8_82.5.pt
-DANTE-AD/data_preparation/clip_pretrain/ViT-B-16.pt
 DANTE-AD/data_preparation/CMD-AD/data/WAVES.mkv (only KDL has this)
 
 
 1. go to the `scratch` first.
 1. Clone the [DANTE-AD git repo from GitHub](https://github.com/AdrienneDeganutti/DANTE-AD/tree/main)
-1. Get the files as described in the DANTE-AD readme (better description comes in the next commit).
+1. Get the files:
+    - [vitb-16-f8](https://1drv.ms/u/c/fd682d23eb414404/IQCmi5jaupr8TLrHObCtSycYAdbdBLY1OHEPLCijgD2JIPI)
+    - [the mkv video](https://emckclac-my.sharepoint.com/:v:/g/personal/k2366861_kcl_ac_uk/IQB5uyq2zP0KSab2KaI3czyfAb3MiCLe7jTl8-RmwB-EMys?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=ROFypI)
 1. Run the following commands:
 
 ```bash
