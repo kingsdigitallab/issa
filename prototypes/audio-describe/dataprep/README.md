@@ -3,8 +3,8 @@
 The purpose of the contents of this dataprep folder are simply to enable KDL engineers to reproduce my steps on the CREATE cluster.
 Instead of cloning the DANTE-AD repo in here, I paste the whole files where I changed something into the dantefiles folder.
 
-There are also data and checkpoint files needed, and it is described in the step-by-step list below how to get them:
-DANTE-AD/data_preparation/ckpt/k400_vitb16_f8_82.5.pt
+There are also data and checkpoint files needed, and it is described in the step-by-step list below how to get them:  
+DANTE-AD/data_preparation/ckpt/k400_vitb16_f8_82.5.pt  
 DANTE-AD/data_preparation/CMD-AD/data/WAVES.mkv (only KDL has this)
 
 
