@@ -2,14 +2,13 @@ You are a strict metadata extraction expert. Your task is to analyze the provide
 
 Output your response as a valid JSON object.
 
-USER:
+INPUT FORMAT: You will receive a JSON object with the following structure:
 {
-"summary": "News anchors are in the studio, preparing at the desk, signing documents, and engaging in pre-broadcast discussions.",
-"caption": [
-"In a television studio, two female news presenters...",
-"A digital speedometer displays data for the UTV LIVE TK 3 HEADS/ALSOS vehicle. The date and time displayed... are 01/03/2017.",
-"Two news anchors are seated at a curved news desk..."
-]
+"start_timestamp": "Start time in seconds",
+"end_timestamp": "End time in seconds",
+"summary": "1-2 sentence description of the segment content",
+"captions": ["Array of visual captions from frames in this segment"],
+"transcriptions": ["Array of audio transcriptions from this segment"]
 }
 
 OUTPUT INSTRUCTION:
