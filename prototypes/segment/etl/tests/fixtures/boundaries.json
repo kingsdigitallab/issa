@@ -1,0 +1,42 @@
+{
+    "_meta": {
+        "component": "detect_boundaries",
+        "processed_at": "2026-03-09T11:42:00.000Z",
+        "processing_time_seconds": 1.23,
+        "input_file": "/path/to/dummy_video.mp4",
+        "items_processed": 5,
+        "package_version": "0.1.0"
+    },
+    "data": [
+        {
+            "timestamp": 0.0,
+            "caption": "A person is standing in a room.",
+            "transcription": "Hello",
+            "is_boundary": true
+        },
+        {
+            "timestamp": 2.0,
+            "caption": "A person is standing in a room.",
+            "transcription": "Hello",
+            "is_boundary": false
+        },
+        {
+            "timestamp": 4.0,
+            "caption": "The person walks towards the door.",
+            "transcription": "I am leaving now.",
+            "is_boundary": true
+        },
+        {
+            "timestamp": 6.0,
+            "caption": "The person opens the door and exits.",
+            "transcription": "Goodbye.",
+            "is_boundary": false
+        },
+        {
+            "timestamp": 8.0,
+            "caption": "The room is empty.",
+            "transcription": "",
+            "is_boundary": true
+        }
+    ]
+}

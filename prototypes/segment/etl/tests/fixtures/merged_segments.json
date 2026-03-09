@@ -1,0 +1,43 @@
+{
+    "_meta": {
+        "component": "merge_segments",
+        "processed_at": "2026-03-09T11:42:00.000Z",
+        "processing_time_seconds": 1.23,
+        "input_file": "/path/to/dummy_video.mp4",
+        "items_processed": 3,
+        "package_version": "0.1.0"
+    },
+    "data": [
+        {
+            "start_timestamp": 0.0,
+            "end_timestamp": 4.0,
+            "captions": [
+                "A person is standing in a room.",
+                "A person is standing in a room."
+            ],
+            "transcriptions": [
+                "Hello"
+            ]
+        },
+        {
+            "start_timestamp": 4.0,
+            "end_timestamp": 8.0,
+            "captions": [
+                "The person walks towards the door.",
+                "The person opens the door and exits."
+            ],
+            "transcriptions": [
+                "I am leaving now.",
+                "Goodbye."
+            ]
+        },
+        {
+            "start_timestamp": 8.0,
+            "end_timestamp": 8.0,
+            "captions": [
+                "The room is empty."
+            ],
+            "transcriptions": []
+        }
+    ]
+}
