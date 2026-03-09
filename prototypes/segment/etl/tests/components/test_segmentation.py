@@ -194,3 +194,114 @@ def test_classify_segments(mocker, setup_segmentation_environment):
     assert mock_generate.call_count == 2
     output_path = env["video_output_dir"] / "classifications.json"
     assert output_path.exists()
+
+
+def test_detect_boundaries_malformed_response(mocker, setup_segmentation_environment):
+    env = setup_segmentation_environment
+
+    mocker.patch(
+        "components.utils.get_model_client",
+        return_value=("mock_model", "mock_processor", "mock_device"),
+    )
+    # LLM might return conversational junk, but we only check for "YES" in response.upper()
+    mocker.patch(
+        "components.utils.generate_text_from_messages",
+        side_effect=[
+            "I am sorry, I cannot answer that.",
+            "YES",
+            "No, this is a continuation",
+            "garbage...yes...more garbage",
+        ],
+    )
+
+    result_segments = segmentation.detect_boundaries(
+        video_path=env["video_path"],
+        input_folder=env["input_folder"],
+        model_name="mock-model",
+        prompt_folder=env["prompt_folder"],
+        output_folder=env["output_folder"],
+        backend="local",
+    )
+
+    # The first boundary is always forced to True in the code
+    assert result_segments[0]["is_boundary"] is True
+    # "I am sorry, I cannot answer that." -> False
+    assert result_segments[1]["is_boundary"] is False
+    # "YES" -> True
+    assert result_segments[2]["is_boundary"] is True
+    # "No, this is a continuation" -> False (NO yes in it)
+    assert result_segments[3]["is_boundary"] is False
+    # "garbage...yes...more garbage" -> True ("YES" is in upper)
+    assert result_segments[4]["is_boundary"] is True
+
+
+def test_merge_segments_empty(tmp_path):
+    video_path = str(tmp_path / "dummy_empty.mp4")
+    (tmp_path / "dummy_empty.mp4").touch()
+    input_folder = str(tmp_path / "in")
+    output_folder = str(tmp_path / "out")
+
+    video_input_dir = tmp_path / "in" / "dummy_empty.mp4"
+    video_input_dir.mkdir(parents=True)
+
+    with open(video_input_dir / "boundaries.json", "w") as f:
+        json.dump({"data": []}, f)
+
+    segmentation.merge_segments(video_path, input_folder, output_folder)
+
+    assert not (tmp_path / "out" / "dummy_empty.mp4" / "merged_segments.json").exists()
+
+
+def test_merge_segments_no_boundaries(tmp_path):
+    video_path = str(tmp_path / "dummy_no_bound.mp4")
+    (tmp_path / "dummy_no_bound.mp4").touch()
+    input_folder = str(tmp_path / "in")
+    output_folder = str(tmp_path / "out")
+
+    video_input_dir = tmp_path / "in" / "dummy_no_bound.mp4"
+    video_input_dir.mkdir(parents=True)
+
+    data = [
+        {"timestamp": 0.0, "is_boundary": False},
+        {"timestamp": 2.0, "is_boundary": False},
+    ]
+    with open(video_input_dir / "boundaries.json", "w") as f:
+        json.dump({"data": data}, f)
+
+    segmentation.merge_segments(video_path, input_folder, output_folder)
+
+    assert not (
+        tmp_path / "out" / "dummy_no_bound.mp4" / "merged_segments.json"
+    ).exists()
+
+
+def test_merge_segments_single_boundary_entire_video(tmp_path):
+    video_path = str(tmp_path / "dummy_single.mp4")
+    (tmp_path / "dummy_single.mp4").touch()
+    input_folder = str(tmp_path / "in")
+    output_folder = str(tmp_path / "out")
+
+    video_input_dir = tmp_path / "in" / "dummy_single.mp4"
+    video_input_dir.mkdir(parents=True)
+
+    data = [
+        {"timestamp": 0.0, "caption": "A", "transcription": "B", "is_boundary": True},
+        {"timestamp": 2.0, "caption": "C", "transcription": "D", "is_boundary": False},
+        {"timestamp": 4.0, "caption": "E", "transcription": "F", "is_boundary": False},
+    ]
+    with open(video_input_dir / "boundaries.json", "w") as f:
+        json.dump({"data": data}, f)
+
+    segmentation.merge_segments(video_path, input_folder, output_folder)
+
+    output_path = tmp_path / "out" / "dummy_single.mp4" / "merged_segments.json"
+    assert output_path.exists()
+
+    with open(output_path, "r") as f:
+        result = json.load(f)["data"]
+
+    assert len(result) == 1
+    assert result[0]["start_timestamp"] == 0.0
+    assert result[0]["end_timestamp"] == 4.0
+    assert len(result[0]["captions"]) == 3
+    assert len(result[0]["transcriptions"]) == 3
