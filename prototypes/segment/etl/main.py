@@ -26,6 +26,7 @@ def extract_frames(
         frame_extraction.extract_frames(video_path, sample_rate, output_folder)
     except Exception as e:
         typer.echo(f"Error: {e}")
+        raise typer.Exit(code=1)
 
 
 @app.command()
@@ -44,6 +45,7 @@ def extract_audio(
         audio_extraction.extract_audio(video_path, language, model_size, output_folder)
     except Exception as e:
         typer.echo(f"Error: {e}")
+        raise typer.Exit(code=1)
 
 
 @app.command()
@@ -65,6 +67,7 @@ def caption_frames(
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
+        raise typer.Exit(code=1)
 
 
 @app.command()
@@ -88,6 +91,7 @@ def align(
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
+        raise typer.Exit(code=1)
 
 
 @app.command()
@@ -120,6 +124,7 @@ def detect_boundaries(
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
+        raise typer.Exit(code=1)
 
 
 @app.command()
@@ -143,6 +148,7 @@ def merge_segments(
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
+        raise typer.Exit(code=1)
 
 
 @app.command()
@@ -181,6 +187,7 @@ def summarise_segments(
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
+        raise typer.Exit(code=1)
 
 
 @app.command()
@@ -215,6 +222,7 @@ def classify_segments(
         )
     except Exception as e:
         typer.echo(f"Error: {e}")
+        raise typer.Exit(code=1)
 
 
 @app.command()
@@ -249,6 +257,7 @@ def aggregate_metadata(
         typer.echo(f"\nAggregated metadata saved to {result['output_path']}")
     except Exception as e:
         typer.echo(f"Error: {e}")
+        raise typer.Exit(code=1)
 
 
 if __name__ == "__main__":

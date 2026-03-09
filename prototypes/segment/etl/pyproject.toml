@@ -34,6 +34,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+markers = [
+    "e2e: End-to-end tests that require actual models/APIs and take a long time to run."
+]
 
 [tool.ruff.lint]
 extend-select = ["I"]

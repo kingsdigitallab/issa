@@ -32,7 +32,15 @@ def extract_audio(
     is_fp16 = device not in ["mps", "cpu"]
 
     model = whisper.load_model(model_size, device=device)
-    result = model.transcribe(video_path, fp16=is_fp16, language=language, verbose=True)
+    try:
+        result = model.transcribe(
+            video_path, fp16=is_fp16, language=language, verbose=True
+        )
+    except RuntimeError as e:
+        print(
+            f"Warning: Could not transcribe audio (file may contain no audio stream). Proceeding with empty transcription. Error: {e}"
+        )
+        result = {"text": "", "segments": []}
 
     processing_time = time.time() - start_time
 
