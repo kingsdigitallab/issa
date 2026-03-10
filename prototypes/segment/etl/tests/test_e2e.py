@@ -164,4 +164,4 @@ def test_full_pipeline_e2e(tmp_path):
     # Final assertions
     final_video_dir = tmp_path / "2_final" / "tiny_sample.mp4"
     assert (final_video_dir / "classifications.json").exists()
-    assert (final_video_dir / "metadata_aggregated.json").exists()
+    assert (final_video_dir / "metadata.json").exists()
