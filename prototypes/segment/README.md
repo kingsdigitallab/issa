@@ -364,8 +364,19 @@ All JSON output files include auditing metadata:
 
 ### Running Tests
 
+The test suite is divided into fast unit/integration tests and slower End-to-End tests that actually load ML models.
+
+Run the standard suite (Unit + Edge Cases + Integration) with mocking:
+
 ```bash
 uv run pytest
+```
+
+To run the full E2E pipeline (Requires API keys or heavy local GPU computing):
+
+```bash
+# Important: Requires a 'tiny_sample.mp4' file placed inside tests/fixtures/
+uv run pytest -m e2e
 ```
 
 ### Code Formatting
