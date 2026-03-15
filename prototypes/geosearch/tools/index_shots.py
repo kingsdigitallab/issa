@@ -3,6 +3,7 @@ import json
 import csv
 import re
 from functools import lru_cache
+import utils
 
 PLACE_QUESTION_KEY = 'place_names'
 INDEX_NAME = 'index_shots.json'
@@ -121,7 +122,8 @@ class Index:
         }
 
         # Path(INDEX_NAME_VECTORS).write_text(json.dumps(index_content, indent=2))
-        Path(INDEX_NAME_VECTORS).write_text(json.dumps(index_content))
+        # Path(INDEX_NAME_VECTORS).write_text(json.dumps(index_content))
+        utils.write_json(index_content, INDEX_NAME_VECTORS)
 
         print(f'total: {stats["found"] + stats["failed"]}; found: {stats["found"]} ; not found: {stats["failed"]}')
 
