@@ -15,24 +15,34 @@ class Comparer:
         # self.compare_place_names()
 
     def group_files(self):
-        clips_models_answer = {}
+        '''
+        Returns a dictionary of paths to all transcription_answers.json files
+        grouped by clip then by model key:
+        
+        [clip_folder_path][LLM_key] => path to transcription_answers.json
+
+        Sets self.clips_models_answer with that dictionary
+        '''
+        ret = {}
 
         if not SOURCE_PATH.exists():
             print(f'ERROR: {SOURCE_PATH} not found')
             exit()
             return
 
-        for path in SOURCE_PATH.glob('**/*.json'):
+        for path in SOURCE_PATH.glob('**/transcription_answers.json'):
             model = path.parts[1]
-            clip_path = '/'.join(path.parts[2:])
+            clip_path = '/'.join(path.parts[2:-1])
 
-            if clip_path not in clips_models_answer:
-                clips_models_answer[clip_path] = {}
+            if clip_path not in ret:
+                ret[clip_path] = {}
 
-            if model not in clips_models_answer[clip_path]:
-                clips_models_answer[clip_path][model] = path
+            if model not in ret[clip_path]:
+                ret[clip_path][model] = path
         
-        self.clips_models_answer = clips_models_answer
+        self.clips_models_answer = ret
+
+        return ret
 
     def compare_partitions(self):
         stats = {}
@@ -81,7 +91,13 @@ class Comparer:
         for clip in clips_models_answer:
             print(clip)
 
-            transcription_path = (Path('data/input/NI') / Path(clip)).parent / 'transcription.json'
+            transcription_path = (Path('data/collections/NI') / Path(clip)) / 'transcription.json'
+            if not transcription_path.exists():
+                print(f'WARN: {transcription_path} not found')
+                continue
+
+            print(f'  {transcription_path}')
+
             trans_content = transcription_path.read_text().lower()
 
             for model in clips_models_answer[clip]:
@@ -121,7 +137,7 @@ class Comparer:
                 stats[model]['avg'] = stats[model]['sum'] / len(clips_models_answer)
                 stats[model]['hal'].extend(hallucinations)
 
-                print(f'  {model:>15}: {parts_count} parts {'   ' if parts_valid else 'ERR '} {hallucinations}')
+                print(f'  {model:>15}: {parts_count:4d} places {'   ' if parts_valid else 'ERR '} hal: {hallucinations}')
         
         self.show_stats(stats)
 
