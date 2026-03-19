@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 from geocoder import GeoCoder
+import utils
 
 PLACE_QUESTION_KEY = 'place_names'
 INDEX_NAME = 'index_places.json'
@@ -25,6 +26,8 @@ class Index:
         }
 
         collections_folder_path = Path('../data/collections/')
+        # collections_folder_path = Path('../source.ml/qwen3-30b/')
+        # collections_folder_path = Path('../source.ml/gpt-oss-20b-2/')
 
         for answers_file_path in collections_folder_path.glob("**/transcription_answers.json"):
             answers_file_content = json.loads(answers_file_path.read_text())
@@ -46,8 +49,9 @@ class Index:
                     geocode['video_locality'] = place_name["locality"]
                     geocode['video_start'] = place_name['start']
                     geocode['video_summary'] = features['summary']
-                    geocode['video_sport'] = bool(features.get('sport', 0))
-                    geocode['video_politics'] = bool(features.get('politics', 0))
+                    geocode['video_sport'] = utils.to_bool(features.get('sport', 0))
+                    geocode['video_politics'] = utils.to_bool(features.get('politics', 0))
+                    geocode['video_places'] = utils.to_bool(features.get('places', 0))
                     geocode['video_path'] = str(answers_file_path.parent / str(answers_file_path.parent.name + '.mp4'))
                     # todo: include summary of that unit
                     self.index.append(geocode)
@@ -59,7 +63,9 @@ class Index:
             'data': self.index,
         }
 
-        self.index_path.write_text(json.dumps(index_content, indent=2))
+        # self.index_path.write_text(json.dumps(index_content, indent=2))
+        utils.write_json(index_content, self.index_path)
+
 
         print(f'total: {stats["found"] + stats["failed"]}; found: {stats["found"]} ; not found: {stats["failed"]}')
 
