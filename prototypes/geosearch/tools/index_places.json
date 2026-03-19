@@ -4,282 +4,722 @@
     {
       "type": "Feature",
       "properties": {
-        "place_id": 253826719,
+        "place_id": 253310782,
         "osm_type": "way",
-        "osm_id": 440735711,
-        "place_rank": 30,
-        "category": "tourism",
-        "type": "hotel",
-        "importance": 7.500343327988125e-05,
-        "addresstype": "tourism",
-        "name": "Hampton by Hilton Belfast City Centre",
-        "display_name": "Hampton by Hilton Belfast City Centre, 15, Hope Street, Linen Quarter, Sandy Row, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT12 5EE, United Kingdom"
+        "osm_id": 4558822,
+        "place_rank": 20,
+        "category": "place",
+        "type": "islet",
+        "importance": 0.13338263447013043,
+        "addresstype": "islet",
+        "name": "Sheep Island",
+        "display_name": "Sheep Island, Ballintoy, Causeway Coast and Glens District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
       },
       "bbox": [
-        -5.9355236,
-        54.593427,
-        -5.9352078,
-        54.5938704
+        -6.3544084,
+        55.2471457,
+        -6.3498787,
+        55.2499801
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -5.9353713,
-          54.5937116
+          -6.3519336,
+          55.2485612
         ]
       },
-      "video_place": "Belfast City Centre",
-      "video_locality": "Belfast",
-      "video_start": "00:06:04",
-      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_place": "Sheep Island",
+      "video_locality": "Ballintoy",
+      "video_start": "00:10:25",
+      "video_summary": "A documentary explores the rugged North Antrim coastline in Northern Ireland, highlighting its geological features, fishing traditions, local wildlife challenges, and unique cultural heritage.",
       "video_sport": false,
-      "video_politics": true,
-      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/55300_A/00.00.00-1530/00.00.00-1530.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 255511139,
+        "place_id": 253310782,
         "osm_type": "way",
-        "osm_id": 685353967,
-        "place_rank": 30,
-        "category": "amenity",
-        "type": "parking",
-        "importance": 7.500343327988125e-05,
-        "addresstype": "amenity",
-        "name": "Waterfront Hall",
-        "display_name": "Waterfront Hall, Lanyon Place, The Waterfront, Cathedral Quarter, Markets, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT1 3BT, United Kingdom"
+        "osm_id": 4558822,
+        "place_rank": 20,
+        "category": "place",
+        "type": "islet",
+        "importance": 0.13338263447013043,
+        "addresstype": "islet",
+        "name": "Sheep Island",
+        "display_name": "Sheep Island, Ballintoy, Causeway Coast and Glens District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
       },
       "bbox": [
-        -5.9199987,
-        54.5965241,
-        -5.919284,
-        54.5969276
+        -6.3544084,
+        55.2471457,
+        -6.3498787,
+        55.2499801
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -5.919647299999999,
-          54.5967498
+          -6.3519336,
+          55.2485612
         ]
       },
-      "video_place": "Waterfront Hall",
-      "video_locality": "Belfast",
-      "video_start": "00:07:18",
-      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_place": "Sheep Island",
+      "video_locality": "Ballintoy",
+      "video_start": "00:11:45",
+      "video_summary": "A documentary explores the rugged North Antrim coastline in Northern Ireland, highlighting its geological features, fishing traditions, local wildlife challenges, and unique cultural heritage.",
       "video_sport": false,
-      "video_politics": true,
-      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/55300_A/00.00.00-1530/00.00.00-1530.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 254262319,
+        "place_id": 253310782,
         "osm_type": "way",
-        "osm_id": 146343354,
-        "place_rank": 24,
-        "category": "leisure",
-        "type": "park",
-        "importance": 0.08007500343327989,
-        "addresstype": "park",
-        "name": "Musgrave Park",
-        "display_name": "Musgrave Park, Andersonstown, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+        "osm_id": 4558822,
+        "place_rank": 20,
+        "category": "place",
+        "type": "islet",
+        "importance": 0.13338263447013043,
+        "addresstype": "islet",
+        "name": "Sheep Island",
+        "display_name": "Sheep Island, Ballintoy, Causeway Coast and Glens District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
       },
       "bbox": [
-        -5.9815713,
-        54.5671427,
-        -5.97082,
-        54.5726775
+        -6.3544084,
+        55.2471457,
+        -6.3498787,
+        55.2499801
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -5.9744164,
-          54.5700005
+          -6.3519336,
+          55.2485612
         ]
       },
-      "video_place": "Musgrave Park",
-      "video_locality": "Belfast",
-      "video_start": "00:15:57",
-      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_place": "Sheep Island",
+      "video_locality": "Ballintoy",
+      "video_start": "00:12:28",
+      "video_summary": "A documentary explores the rugged North Antrim coastline in Northern Ireland, highlighting its geological features, fishing traditions, local wildlife challenges, and unique cultural heritage.",
       "video_sport": false,
-      "video_politics": true,
-      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/55300_A/00.00.00-1530/00.00.00-1530.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 255688784,
+        "place_id": 259634703,
         "osm_type": "way",
-        "osm_id": 189332192,
-        "place_rank": 30,
-        "category": "amenity",
-        "type": "hospital",
-        "importance": 0.3420207525496084,
-        "addresstype": "amenity",
-        "name": "Royal Victoria Hospital",
-        "display_name": "Royal Victoria Hospital, Cavendish Street, Whiterock, Clonard, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT12 6AE, United Kingdom"
+        "osm_id": 4244999,
+        "place_rank": 26,
+        "category": "highway",
+        "type": "residential",
+        "importance": 0.4735808484695838,
+        "addresstype": "road",
+        "name": "Downing Street",
+        "display_name": "Downing Street, Westminster, Covent Garden, City of Westminster, Greater London, England, SW1A 2AS, United Kingdom"
       },
       "bbox": [
-        -5.9566162,
-        54.593845,
-        -5.9521476,
-        54.5956887
+        -0.127828,
+        51.5031794,
+        -0.1264272,
+        51.5032637
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -5.9537702999999995,
-          54.5947533
+          -0.1271283,
+          51.503208799999996
         ]
       },
-      "video_place": "Royal Victoria Hospital",
-      "video_locality": "Belfast",
-      "video_start": "00:15:44",
-      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_place": "Downing Street",
+      "video_locality": "London",
+      "video_start": "00:19:40",
+      "video_summary": "A documentary explores the rugged North Antrim coastline in Northern Ireland, highlighting its geological features, fishing traditions, local wildlife challenges, and unique cultural heritage.",
       "video_sport": false,
-      "video_politics": true,
-      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/55300_A/00.00.00-1530/00.00.00-1530.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 254869337,
-        "osm_type": "node",
-        "osm_id": 1654332115,
-        "place_rank": 30,
-        "category": "railway",
-        "type": "station",
-        "importance": 0.2956937333713118,
-        "addresstype": "railway",
-        "name": "Coleraine",
-        "display_name": "Coleraine, Railway Place, Coleraine, Causeway Coast and Glens District, County Londonderry, Northern Ireland / Tuaisceart \u00c9ireann, BT52 1PQ, United Kingdom"
-      },
-      "bbox": [
-        -6.6676658,
-        55.1289557,
-        -6.6576658,
-        55.1389557
-      ],
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -6.6626658,
-          55.1339557
-        ]
-      },
-      "video_place": "Coleraine",
-      "video_locality": "Coleraine",
-      "video_start": "00:10:41",
-      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
-      "video_sport": false,
-      "video_politics": true,
-      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "place_id": 353655678,
+        "place_id": 147691770,
         "osm_type": "way",
-        "osm_id": 1005958640,
+        "osm_id": 3993119,
         "place_rank": 30,
         "category": "amenity",
-        "type": "doctors",
-        "importance": 9.307927061870783e-05,
+        "type": "university",
+        "importance": 0.48296839332828273,
         "addresstype": "amenity",
-        "name": "Derry Downs Surgery",
-        "display_name": "Derry Downs Surgery, Derry Downs, Poverest, St Mary Cray, London Borough of Bromley, London, Greater London, England, BR5 4DU, United Kingdom"
+        "name": "Downing College (University of Cambridge)",
+        "display_name": "Downing College (University of Cambridge), Regent Street, Petersfield, Cambridge, Cambridgeshire, Cambridgeshire and Peterborough, England, CB2 1DQ, United Kingdom"
       },
       "bbox": [
-        0.1164612,
-        51.3856603,
-        0.1166848,
-        51.3858244
+        0.1218325,
+        52.1981778,
+        0.12685,
+        52.2020188
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          0.1165690363250266,
-          51.3857424
+          0.1242224,
+          52.2001582
         ]
       },
-      "video_place": "London Derry",
-      "video_locality": "Derry",
-      "video_start": "00:13:42",
-      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_place": "Downing College",
+      "video_locality": "Cambridge",
+      "video_start": "00:19:40",
+      "video_summary": "A documentary explores the rugged North Antrim coastline in Northern Ireland, highlighting its geological features, fishing traditions, local wildlife challenges, and unique cultural heritage.",
       "video_sport": false,
-      "video_politics": true,
-      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/55300_A/00.00.00-1530/00.00.00-1530.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 34281257,
+        "place_id": 255547768,
+        "osm_type": "way",
+        "osm_id": 102858816,
+        "place_rank": 26,
+        "category": "highway",
+        "type": "secondary",
+        "importance": 0.053390241092545934,
+        "addresstype": "road",
+        "name": "Hamilton Road",
+        "display_name": "Hamilton Road, Bangor, Ards and North Down District Council, County Down, Northern Ireland / Tuaisceart \u00c9ireann, BT20 4LH, United Kingdom"
+      },
+      "bbox": [
+        -5.6643266,
+        54.6607904,
+        -5.6593034,
+        54.6628978
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.6615389,
+          54.661262199999996
+        ]
+      },
+      "video_place": "Hamilton Road",
+      "video_locality": "Bangor",
+      "video_start": "00:22:00",
+      "video_summary": "A documentary explores the rugged North Antrim coastline in Northern Ireland, highlighting its geological features, fishing traditions, local wildlife challenges, and unique cultural heritage.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/55300_A/00.00.00-1530/00.00.00-1530.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 256442622,
+        "osm_type": "way",
+        "osm_id": 440486085,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "school",
+        "importance": 0.3770485431719739,
+        "addresstype": "amenity",
+        "name": "Archbishop Temple Church of England High School",
+        "display_name": "Archbishop Temple Church of England High School, St Vincents Road, Nooklands, Fulwood, Preston, Lancashire, England, PR2 8RA, United Kingdom"
+      },
+      "bbox": [
+        -2.7080609,
+        53.7816315,
+        -2.6991292,
+        53.7857447
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.703299,
+          53.783743799999996
+        ]
+      },
+      "video_place": "England",
+      "video_locality": "England",
+      "video_start": "00:00:46",
+      "video_summary": "This video discusses the discovery of the Spanish Armada ship Girona off the Irish coast and the significance of its artifacts in understanding the Spanish Empire.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/90D2335_A/00.31.42-263/00.31.42-263.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 95920172,
         "osm_type": "relation",
-        "osm_id": 171496,
+        "osm_id": 52411,
         "place_rank": 4,
         "category": "boundary",
         "type": "administrative",
-        "importance": 0.7176867725398934,
+        "importance": 0.884311887538747,
         "addresstype": "country",
-        "name": "Rwanda",
-        "display_name": "Rwanda"
+        "name": "Belgi\u00eb / Belgique / Belgien",
+        "display_name": "Belgi\u00eb / Belgique / Belgien"
       },
       "bbox": [
-        28.861696,
-        -2.8397643,
-        30.8990738,
-        -1.0474083
+        2.3889137,
+        49.4969821,
+        6.408097,
+        51.550781
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          30.0644358,
-          -1.9646631
+          4.6667145,
+          50.6402809
         ]
       },
-      "video_place": "Rwanda",
-      "video_locality": "Rwanda",
-      "video_start": "00:17:00",
-      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_place": "Belgium",
+      "video_locality": "Belgium",
+      "video_start": "00:01:09",
+      "video_summary": "This video discusses the discovery of the Spanish Armada ship Girona off the Irish coast and the significance of its artifacts in understanding the Spanish Empire.",
       "video_sport": false,
-      "video_politics": true,
-      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/90D2335_A/00.31.42-263/00.31.42-263.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 339226637,
-        "osm_type": "node",
-        "osm_id": 153601842,
-        "place_rank": 19,
-        "category": "place",
-        "type": "village",
-        "importance": 0.2730660066097438,
-        "addresstype": "village",
-        "name": "Brussels",
-        "display_name": "Brussels, Town of Brussels, Door County, Wisconsin, 54204, United States of America"
+        "place_id": 253766946,
+        "osm_type": "way",
+        "osm_id": 177043247,
+        "place_rank": 22,
+        "category": "natural",
+        "type": "bare_rock",
+        "importance": 0.5173703799928427,
+        "addresstype": "bare_rock",
+        "name": "Giant's Causeway",
+        "display_name": "Giant's Causeway, Causeway Coast and Glens District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
       },
       "bbox": [
-        -87.6409298,
-        44.7161071,
-        -87.6009298,
-        44.7561071
+        -6.5125765,
+        55.2397001,
+        -6.5105185,
+        55.2418565
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -87.6209298,
-          44.7361071
+          -6.5115492,
+          55.240747799999994
         ]
       },
-      "video_place": "Brussels",
-      "video_locality": "Brussels",
-      "video_start": "00:10:04",
-      "video_summary": "The news segment covers political developments including a court ruling on the RHI scheme, Northern Ireland elections, and legal cases, alongside sports events and community initiatives.",
+      "video_place": "Giant's Causeway",
+      "video_locality": "Northern Ireland, UK",
+      "video_start": "00:01:14",
+      "video_summary": "This video discusses the discovery of the Spanish Armada ship Girona off the Irish coast and the significance of its artifacts in understanding the Spanish Empire.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/90D2335_A/00.31.42-263/00.31.42-263.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 262931893,
+        "osm_type": "relation",
+        "osm_id": 62273,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.8368970368823774,
+        "addresstype": "country",
+        "name": "\u00c9ire / Ireland",
+        "display_name": "\u00c9ire / Ireland"
+      },
+      "bbox": [
+        -11.0133788,
+        51.222,
+        -5.6582363,
+        55.636
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.9794599,
+          52.865196
+        ]
+      },
+      "video_place": "Ireland",
+      "video_locality": "Ireland",
+      "video_start": "00:01:29",
+      "video_summary": "This video discusses the discovery of the Spanish Armada ship Girona off the Irish coast and the significance of its artifacts in understanding the Spanish Empire.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/90D2335_A/00.31.42-263/00.31.42-263.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 222259490,
+        "osm_type": "relation",
+        "osm_id": 50371,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.7661970236986265,
+        "addresstype": "country",
+        "name": "\u1019\u103c\u1014\u103a\u1019\u102c",
+        "display_name": "\u1019\u103c\u1014\u103a\u1019\u102c"
+      },
+      "bbox": [
+        92.1729181,
+        9.526084,
+        101.1700796,
+        28.547835
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          95.9999652,
+          17.1750495
+        ]
+      },
+      "video_place": "Burma",
+      "video_locality": "Myanmar (Burma)",
+      "video_start": "00:03:01",
+      "video_summary": "This video discusses the discovery of the Spanish Armada ship Girona off the Irish coast and the significance of its artifacts in understanding the Spanish Empire.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/90D2335_A/00.31.42-263/00.31.42-263.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 285543225,
+        "osm_type": "way",
+        "osm_id": 653471521,
+        "place_rank": 26,
+        "category": "highway",
+        "type": "secondary",
+        "importance": 0.05340226825360491,
+        "addresstype": "road",
+        "name": "Avenida de Las Am\u00e9ricas",
+        "display_name": "Avenida de Las Am\u00e9ricas, Am\u00e9ricas, Mata Redonda, San Jos\u00e9, \u00c1rea Metropolitana de San Jos\u00e9, San Jos\u00e9, 10108, Costa Rica"
+      },
+      "bbox": [
+        -84.106329,
+        9.9381897,
+        -84.1021066,
+        9.9383998
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.1042179,
+          9.9382932
+        ]
+      },
+      "video_place": "Americas",
+      "video_locality": "Americas",
+      "video_start": "00:03:01",
+      "video_summary": "This video discusses the discovery of the Spanish Armada ship Girona off the Irish coast and the significance of its artifacts in understanding the Spanish Empire.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NI/90D2335_A/00.31.42-263/00.31.42-263.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255067753,
+        "osm_type": "node",
+        "osm_id": 5525053199,
+        "place_rank": 30,
+        "category": "railway",
+        "type": "station",
+        "importance": 0.3245597611328047,
+        "addresstype": "railway",
+        "name": "Derry~Londonderry",
+        "display_name": "Derry~Londonderry, Railway Road, Waterside, Clooney, Derry/Londonderry, Derry and Strabane District, County Londonderry, Northern Ireland / Tuaisceart \u00c9ireann, BT47 1DH, United Kingdom"
+      },
+      "bbox": [
+        -7.3178166,
+        54.9880871,
+        -7.3078166,
+        54.9980871
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.3128166,
+          54.9930871
+        ]
+      },
+      "video_place": "Derry",
+      "video_locality": "Derry",
+      "video_start": "00:00:43",
+      "video_summary": "The video describes the deplorable housing conditions in Derry during the early 1960s and explains how these social issues were rooted in political corruption and gerrymandering.",
       "video_sport": false,
       "video_politics": true,
-      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+      "video_places": false,
+      "video_path": "../data/collections/NI/90D2335_A/00.16.42-300/00.16.42-300.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 429268011,
+        "osm_type": "node",
+        "osm_id": 13520454645,
+        "place_rank": 19,
+        "category": "place",
+        "type": "suburb",
+        "importance": 0.14673208438239105,
+        "addresstype": "suburb",
+        "name": "The Fountain",
+        "display_name": "The Fountain, Derry/Londonderry, Derry and Strabane District, County Londonderry, Northern Ireland / Tuaisceart \u00c9ireann, BT48 6QH, United Kingdom"
+      },
+      "bbox": [
+        -7.3441453,
+        54.9724516,
+        -7.3041453,
+        55.0124516
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.3241453,
+          54.9924516
+        ]
+      },
+      "video_place": "the fountain",
+      "video_locality": "Derry",
+      "video_start": "00:00:48",
+      "video_summary": "The video describes the deplorable housing conditions in Derry during the early 1960s and explains how these social issues were rooted in political corruption and gerrymandering.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/90D2335_A/00.16.42-300/00.16.42-300.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255186278,
+        "osm_type": "node",
+        "osm_id": 336657331,
+        "place_rank": 30,
+        "category": "historic",
+        "type": "monument",
+        "importance": 0.33113623856093605,
+        "addresstype": "historic",
+        "name": "Free Derry Corner",
+        "display_name": "Free Derry Corner, Lecky Road, Waterside, Bogside, Derry/Londonderry, Derry and Strabane District, County Londonderry, Northern Ireland / Tuaisceart \u00c9ireann, BT48 9DR, United Kingdom"
+      },
+      "bbox": [
+        -7.3268467,
+        54.9956825,
+        -7.3267467,
+        54.9957825
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.3267967,
+          54.9957325
+        ]
+      },
+      "video_place": "the Bogside",
+      "video_locality": "Derry",
+      "video_start": "00:01:57",
+      "video_summary": "The video describes the deplorable housing conditions in Derry during the early 1960s and explains how these social issues were rooted in political corruption and gerrymandering.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/90D2335_A/00.16.42-300/00.16.42-300.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255663698,
+        "osm_type": "node",
+        "osm_id": 865168935,
+        "place_rank": 19,
+        "category": "place",
+        "type": "suburb",
+        "importance": 0.3352614827140233,
+        "addresstype": "suburb",
+        "name": "Brandywell",
+        "display_name": "Brandywell, Derry/Londonderry, Derry and Strabane District, County Londonderry, Northern Ireland / Tuaisceart \u00c9ireann, BT48 6NP, United Kingdom"
+      },
+      "bbox": [
+        -7.3536063,
+        54.971384,
+        -7.3136063,
+        55.011384
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.3336063,
+          54.991384
+        ]
+      },
+      "video_place": "Brandywell",
+      "video_locality": "Derry",
+      "video_start": "00:01:57",
+      "video_summary": "The video describes the deplorable housing conditions in Derry during the early 1960s and explains how these social issues were rooted in political corruption and gerrymandering.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/90D2335_A/00.16.42-300/00.16.42-300.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254818543,
+        "osm_type": "way",
+        "osm_id": 531704460,
+        "place_rank": 30,
+        "category": "leisure",
+        "type": "stadium",
+        "importance": 0.5536735704162704,
+        "addresstype": "leisure",
+        "name": "National Football Stadium",
+        "display_name": "National Football Stadium, Olympia Drive, Upper Falls, The Village, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT9 7DJ, United Kingdom"
+      },
+      "bbox": [
+        -5.9570364,
+        54.5817787,
+        -5.9535045,
+        54.5835236
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9553063,
+          54.582653099999995
+        ]
+      },
+      "video_place": "Windsor Park",
+      "video_locality": "Belfast",
+      "video_start": "00:00:23",
+      "video_summary": "The video celebrates the legendary career and extraordinary talent of football superstar George Best.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NI/90D2335_A/00.11.42-300/00.11.42-300.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254818543,
+        "osm_type": "way",
+        "osm_id": 531704460,
+        "place_rank": 30,
+        "category": "leisure",
+        "type": "stadium",
+        "importance": 0.5536735704162704,
+        "addresstype": "leisure",
+        "name": "National Football Stadium",
+        "display_name": "National Football Stadium, Olympia Drive, Upper Falls, The Village, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT9 7DJ, United Kingdom"
+      },
+      "bbox": [
+        -5.9570364,
+        54.5817787,
+        -5.9535045,
+        54.5835236
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9553063,
+          54.582653099999995
+        ]
+      },
+      "video_place": "Windsor Park",
+      "video_locality": "Belfast",
+      "video_start": "00:00:58",
+      "video_summary": "The video celebrates the legendary career and extraordinary talent of football superstar George Best.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NI/90D2335_A/00.11.42-300/00.11.42-300.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 426409300,
+        "osm_type": "node",
+        "osm_id": 13410170038,
+        "place_rank": 30,
+        "category": "leisure",
+        "type": "stadium",
+        "importance": 0.5868678467637894,
+        "addresstype": "leisure",
+        "name": "Estadio Santiago Bernab\u00e9u",
+        "display_name": "Estadio Santiago Bernab\u00e9u, Avenida de Concha Espina, Hispanoam\u00e9rica, Chamart\u00edn, Madrid, Comunidad de Madrid, 28020, Espa\u00f1a"
+      },
+      "bbox": [
+        -3.6884031,
+        40.453007,
+        -3.6883031,
+        40.453107
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6883531,
+          40.453057
+        ]
+      },
+      "video_place": "Estadio Santiago Bernab\u00e9u",
+      "video_locality": "Madrid",
+      "video_start": "00:02:37",
+      "video_summary": "The video celebrates the legendary career and extraordinary talent of football superstar George Best.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NI/90D2335_A/00.11.42-300/00.11.42-300.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 256590800,
+        "osm_type": "way",
+        "osm_id": 99403577,
+        "place_rank": 30,
+        "category": "leisure",
+        "type": "stadium",
+        "importance": 0.6243450629064528,
+        "addresstype": "leisure",
+        "name": "Old Trafford",
+        "display_name": "Old Trafford, Sir Matt Busby Way, Wharfside, Stretford, Trafford, Greater Manchester, England, M16 0RA, United Kingdom"
+      },
+      "bbox": [
+        -2.2933575,
+        53.4621149,
+        -2.289427,
+        53.4641501
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.2913864850545362,
+          53.46310955
+        ]
+      },
+      "video_place": "Old Trafford",
+      "video_locality": "Manchester",
+      "video_start": "00:03:01",
+      "video_summary": "The video celebrates the legendary career and extraordinary talent of football superstar George Best.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NI/90D2335_A/00.11.42-300/00.11.42-300.mp4"
     },
     {
       "type": "Feature",
@@ -311,44 +751,82 @@
       "video_place": "South Belfast",
       "video_locality": "Belfast",
       "video_start": "00:00:01",
-      "video_summary": "Michael Smith, a dangerous man charged with murder, is on the run after being mistakenly released from prison, with police appealing for public assistance in locating him.",
+      "video_summary": "Police are searching for dangerous murder suspect Michael Smith after he was accidentally released from prison.",
       "video_sport": false,
       "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.06.42-95/00.06.42-95.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 297287837,
+        "place_id": 259398780,
         "osm_type": "relation",
-        "osm_id": 2730965,
-        "place_rank": 25,
+        "osm_id": 175342,
+        "place_rank": 10,
         "category": "boundary",
-        "type": "census",
-        "importance": 0.41319251906495164,
-        "addresstype": "village",
-        "name": "London",
-        "display_name": "London, Tulare County, California, United States of America"
+        "type": "administrative",
+        "importance": 0.8920997258748663,
+        "addresstype": "city",
+        "name": "Greater London",
+        "display_name": "Greater London, England, United Kingdom"
       },
       "bbox": [
-        -119.4497699,
-        36.4734452,
-        -119.4385395,
-        36.4884367
+        -0.5103751,
+        51.2867601,
+        0.3340155,
+        51.6918741
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -119.44405977174983,
-          36.4846239
+          -0.1277653,
+          51.5074456
         ]
       },
       "video_place": "London",
-      "video_locality": "London",
+      "video_locality": "England",
       "video_start": "00:00:12",
-      "video_summary": "The article discusses the potential captaincy choices and squad selections for the British and Irish Lions tour, highlighting players from Ireland and England, with the squad to be announced tomorrow.",
+      "video_summary": "Warren Gatland is expected to name Sam Warburton as the British and Irish Lions captain again despite his injury, while discussing player selections, financial incentives, and comparisons to past tours.",
       "video_sport": true,
       "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43998/00.08.24-129/00.08.24-129.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 252862838,
+        "osm_type": "relation",
+        "osm_id": 1919950,
+        "place_rank": 12,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.560250669771187,
+        "addresstype": "county",
+        "name": "Scottish Borders",
+        "display_name": "Scottish Borders, Alba / Scotland, United Kingdom"
+      },
+      "bbox": [
+        -3.5398032,
+        55.1083444,
+        -2.0332074,
+        55.9466224
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.833333,
+          55.583333
+        ]
+      },
+      "video_place": "Scottish",
+      "video_locality": "Scotland",
+      "video_start": "00:01:13",
+      "video_summary": "Warren Gatland is expected to name Sam Warburton as the British and Irish Lions captain again despite his injury, while discussing player selections, financial incentives, and comparisons to past tours.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.08.24-129/00.08.24-129.mp4"
     },
     {
@@ -381,9 +859,10 @@
       "video_place": "San Diego",
       "video_locality": "USA",
       "video_start": "00:00:18",
-      "video_summary": "An anti-drug awareness campaign uses a shocking film to illustrate the deadly consequences of drug use and encourage community change.",
+      "video_summary": "A community group produced a shocking anti-drug film to educate youth and save lives.",
       "video_sport": false,
       "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.00.22-130/00.00.22-130.mp4"
     },
     {
@@ -416,9 +895,10 @@
       "video_place": "Canada",
       "video_locality": "Canada",
       "video_start": "00:00:18",
-      "video_summary": "An anti-drug awareness campaign uses a shocking film to illustrate the deadly consequences of drug use and encourage community change.",
+      "video_summary": "A community group produced a shocking anti-drug film to educate youth and save lives.",
       "video_sport": false,
       "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.00.22-130/00.00.22-130.mp4"
     },
     {
@@ -451,44 +931,46 @@
       "video_place": "Australia",
       "video_locality": "Australia",
       "video_start": "00:00:18",
-      "video_summary": "An anti-drug awareness campaign uses a shocking film to illustrate the deadly consequences of drug use and encourage community change.",
+      "video_summary": "A community group produced a shocking anti-drug film to educate youth and save lives.",
       "video_sport": false,
       "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.00.22-130/00.00.22-130.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 256442622,
-        "osm_type": "way",
-        "osm_id": 440486085,
-        "place_rank": 30,
-        "category": "amenity",
-        "type": "school",
-        "importance": 0.3770485431719739,
-        "addresstype": "amenity",
-        "name": "Archbishop Temple Church of England High School",
-        "display_name": "Archbishop Temple Church of England High School, St Vincents Road, Nooklands, Fulwood, Preston, Lancashire, England, PR2 8RA, United Kingdom"
+        "place_id": 256550452,
+        "osm_type": "relation",
+        "osm_id": 58447,
+        "place_rank": 8,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.8954187298341272,
+        "addresstype": "state",
+        "name": "England",
+        "display_name": "England, United Kingdom"
       },
       "bbox": [
-        -2.7080609,
-        53.7816315,
-        -2.6991292,
-        53.7857447
+        -6.7047494,
+        49.674,
+        2.0919117,
+        55.917
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -2.703299,
-          53.783743799999996
+          -1.2649062,
+          52.5310214
         ]
       },
       "video_place": "England",
-      "video_locality": "England",
+      "video_locality": "UK",
       "video_start": "00:00:18",
-      "video_summary": "An anti-drug awareness campaign uses a shocking film to illustrate the deadly consequences of drug use and encourage community change.",
+      "video_summary": "A community group produced a shocking anti-drug film to educate youth and save lives.",
       "video_sport": false,
       "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.00.22-130/00.00.22-130.mp4"
     },
     {
@@ -521,9 +1003,10 @@
       "video_place": "Belfast City Centre",
       "video_locality": "Belfast",
       "video_start": "00:00:01",
-      "video_summary": "The Sirocco Works site in Belfast is set for redevelopment with a \u00a3400 million investment, including a hotel, offices, homes, and a footbridge, aiming to integrate East Belfast into the city center by 2035.",
+      "video_summary": "A new \u00a3400 million plan aims to regenerate the Sirocco Works site in East Belfast with housing, commercial spaces, and a footbridge.",
       "video_sport": false,
       "video_politics": false,
+      "video_places": true,
       "video_path": "../data/collections/NI/DVC43998/00.04.18-138/00.04.18-138.mp4"
     },
     {
@@ -556,79 +1039,10 @@
       "video_place": "Short Strand",
       "video_locality": "Belfast",
       "video_start": "00:00:40",
-      "video_summary": "The Sirocco Works site in Belfast is set for redevelopment with a \u00a3400 million investment, including a hotel, offices, homes, and a footbridge, aiming to integrate East Belfast into the city center by 2035.",
+      "video_summary": "A new \u00a3400 million plan aims to regenerate the Sirocco Works site in East Belfast with housing, commercial spaces, and a footbridge.",
       "video_sport": false,
       "video_politics": false,
-      "video_path": "../data/collections/NI/DVC43998/00.04.18-138/00.04.18-138.mp4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "place_id": 255511139,
-        "osm_type": "way",
-        "osm_id": 685353967,
-        "place_rank": 30,
-        "category": "amenity",
-        "type": "parking",
-        "importance": 7.500343327988125e-05,
-        "addresstype": "amenity",
-        "name": "Waterfront Hall",
-        "display_name": "Waterfront Hall, Lanyon Place, The Waterfront, Cathedral Quarter, Markets, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT1 3BT, United Kingdom"
-      },
-      "bbox": [
-        -5.9199987,
-        54.5965241,
-        -5.919284,
-        54.5969276
-      ],
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -5.919647299999999,
-          54.5967498
-        ]
-      },
-      "video_place": "Waterfront Hall",
-      "video_locality": "Belfast",
-      "video_start": "00:01:15",
-      "video_summary": "The Sirocco Works site in Belfast is set for redevelopment with a \u00a3400 million investment, including a hotel, offices, homes, and a footbridge, aiming to integrate East Belfast into the city center by 2035.",
-      "video_sport": false,
-      "video_politics": false,
-      "video_path": "../data/collections/NI/DVC43998/00.04.18-138/00.04.18-138.mp4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "place_id": 254932643,
-        "osm_type": "way",
-        "osm_id": 458264542,
-        "place_rank": 30,
-        "category": "amenity",
-        "type": "school",
-        "importance": 0.3852629434778953,
-        "addresstype": "amenity",
-        "name": "Royal Belfast Academical Institution",
-        "display_name": "Royal Belfast Academical Institution, College Square East, Linen Quarter, Sandy Row, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT1 6DL, United Kingdom"
-      },
-      "bbox": [
-        -5.9385893,
-        54.5963517,
-        -5.9348951,
-        54.5977339
-      ],
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -5.9365844,
-          54.596834099999995
-        ]
-      },
-      "video_place": "East Belfast",
-      "video_locality": "Belfast",
-      "video_start": "00:01:29",
-      "video_summary": "The Sirocco Works site in Belfast is set for redevelopment with a \u00a3400 million investment, including a hotel, offices, homes, and a footbridge, aiming to integrate East Belfast into the city center by 2035.",
-      "video_sport": false,
-      "video_politics": false,
+      "video_places": true,
       "video_path": "../data/collections/NI/DVC43998/00.04.18-138/00.04.18-138.mp4"
     },
     {
@@ -661,219 +1075,10 @@
       "video_place": "Croke Park",
       "video_locality": "Dublin",
       "video_start": "00:00:01",
-      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_summary": "Armagh and Monaghan advance to the All Ireland quarter-finals after defeating Kildare and Down respectively, setting up upcoming matches against Tyrone and Dublin at Croke Park.",
       "video_sport": true,
       "video_politics": false,
-      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "place_id": 254063422,
-        "osm_type": "relation",
-        "osm_id": 14583179,
-        "place_rank": 18,
-        "category": "place",
-        "type": "town",
-        "importance": 0.48925543920617154,
-        "addresstype": "town",
-        "name": "Kildare",
-        "display_name": "Kildare, The Municipal District of Kildare \u2014 Newbridge, County Kildare, Leinster, \u00c9ire / Ireland"
-      },
-      "bbox": [
-        -6.9269565,
-        53.1514234,
-        -6.8843764,
-        53.1720358
-      ],
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -6.9117199,
-          53.1568465
-        ]
-      },
-      "video_place": "Kildare",
-      "video_locality": "County Kildare",
-      "video_start": "00:00:01",
-      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
-      "video_sport": true,
-      "video_politics": false,
-      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "place_id": 255649323,
-        "osm_type": "relation",
-        "osm_id": 6432625,
-        "place_rank": 25,
-        "category": "boundary",
-        "type": "barony",
-        "importance": 0.5461997071506968,
-        "addresstype": "barony",
-        "name": "Armagh",
-        "display_name": "Armagh, Armagh City, Banbridge and Craigavon District Council, County Armagh, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
-      },
-      "bbox": [
-        -6.8259403,
-        54.1792766,
-        -6.6080706,
-        54.452909
-      ],
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -6.7189182,
-          54.3161086
-        ]
-      },
-      "video_place": "Armagh",
-      "video_locality": "County Armagh",
-      "video_start": "00:00:01",
-      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
-      "video_sport": true,
-      "video_politics": false,
-      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "place_id": 255820805,
-        "osm_type": "way",
-        "osm_id": 181282759,
-        "place_rank": 24,
-        "category": "landuse",
-        "type": "construction",
-        "importance": 0.2560520753862706,
-        "addresstype": "construction",
-        "name": "Former Tyrone County Hospital",
-        "display_name": "Former Tyrone County Hospital, Omagh, Fermanagh and Omagh District, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
-      },
-      "bbox": [
-        -7.286144,
-        54.599486,
-        -7.2799011,
-        54.6023847
-      ],
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -7.283036999999999,
-          54.6008742
-        ]
-      },
-      "video_place": "Tyrone",
-      "video_locality": "County Tyrone",
-      "video_start": "00:00:25",
-      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
-      "video_sport": true,
-      "video_politics": false,
-      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "place_id": 254612527,
-        "osm_type": "way",
-        "osm_id": 311466843,
-        "place_rank": 30,
-        "category": "amenity",
-        "type": "university",
-        "importance": 0.596417209288927,
-        "addresstype": "amenity",
-        "name": "Trinity College Dublin",
-        "display_name": "Trinity College Dublin, College Green, Mansion House A ED, Dublin, County Dublin, Leinster, D02 VR66, \u00c9ire / Ireland"
-      },
-      "bbox": [
-        -6.2593238,
-        53.3419413,
-        -6.2495999,
-        53.3455336
-      ],
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -6.2543853,
-          53.3438434
-        ]
-      },
-      "video_place": "Dublin",
-      "video_locality": "Dublin",
-      "video_start": "00:00:34",
-      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
-      "video_sport": true,
-      "video_politics": false,
-      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "place_id": 255719855,
-        "osm_type": "relation",
-        "osm_id": 14571828,
-        "place_rank": 18,
-        "category": "place",
-        "type": "town",
-        "importance": 0.4595237738234052,
-        "addresstype": "town",
-        "name": "Monaghan",
-        "display_name": "Monaghan, Monaghan Municipal District, County Monaghan, Ulster, \u00c9ire / Ireland"
-      },
-      "bbox": [
-        -6.9983496,
-        54.2293517,
-        -6.9415493,
-        54.2660634
-      ],
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -6.9688855,
-          54.2485576
-        ]
-      },
-      "video_place": "Monaghan",
-      "video_locality": "County Monaghan",
-      "video_start": "00:00:48",
-      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
-      "video_sport": true,
-      "video_politics": false,
-      "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "place_id": 419901153,
-        "osm_type": "relation",
-        "osm_id": 6453035,
-        "place_rank": 25,
-        "category": "boundary",
-        "type": "civil_parish",
-        "importance": 0.12549564188972803,
-        "addresstype": "civil_parish",
-        "name": "Down",
-        "display_name": "Down, Downpatrick, Newry, Mourne and Down District Council, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
-      },
-      "bbox": [
-        -5.8081594,
-        54.2706705,
-        -5.6621901,
-        54.3538773
-      ],
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -5.7319754,
-          54.3122372
-        ]
-      },
-      "video_place": "Down",
-      "video_locality": "County Down",
-      "video_start": "00:00:48",
-      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
-      "video_sport": true,
-      "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
     },
     {
@@ -906,80 +1111,2315 @@
       "video_place": "Croke Park",
       "video_locality": "Dublin",
       "video_start": "00:01:27",
-      "video_summary": "Arma advances to the All Ireland quarter finals after defeating Kildare, set to face Tyrone in the last eight, while Monaghan prepares to challenge Dublin in a highly anticipated match at Croke Park.",
+      "video_summary": "Armagh and Monaghan advance to the All Ireland quarter-finals after defeating Kildare and Down respectively, setting up upcoming matches against Tyrone and Dublin at Croke Park.",
       "video_sport": true,
       "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.10.44-101/00.10.44-101.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 397133304,
+        "place_id": 255973251,
         "osm_type": "relation",
-        "osm_id": 1429005,
-        "place_rank": 25,
+        "osm_id": 1109531,
+        "place_rank": 13,
         "category": "boundary",
-        "type": "protected_area",
-        "importance": 0.06667666666666666,
-        "addresstype": "protected_area",
-        "name": "Sperrins AONB",
-        "display_name": "Sperrins AONB, County Tyrone, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+        "type": "administrative",
+        "importance": 0.7590181549453134,
+        "addresstype": "city",
+        "name": "Dublin",
+        "display_name": "Dublin, County Dublin, Leinster, \u00c9ire / Ireland"
       },
       "bbox": [
-        -7.437183,
-        54.6228752,
-        -6.6748153,
-        54.9644439
+        -6.3870259,
+        53.2987342,
+        -6.1148829,
+        53.4105416
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -7.1226069999999995,
-          54.7935497
+          -6.2605593,
+          53.3493795
         ]
       },
-      "video_place": "Sperrins",
-      "video_locality": "County Tyrone",
-      "video_start": "00:00:44",
-      "video_summary": "Slockneal, a small rural area, is highlighted for its multiple sports teams competing in All-Ireland finals and the challenges of managing dual participation in hurling and football on St. Patrick's Day.",
+      "video_place": "Dublin",
+      "video_locality": "Ireland",
+      "video_start": "00:00:15",
+      "video_summary": "The tiny townland of Slockneal is poised to potentially have three teams in All-Ireland finals, creating a scheduling conflict for the Gaelic Athletic Association.",
       "video_sport": true,
       "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.02.37-95/00.02.37-95.mp4"
     },
     {
       "type": "Feature",
       "properties": {
-        "place_id": 254612527,
+        "place_id": 255143109,
         "osm_type": "way",
-        "osm_id": 311466843,
-        "place_rank": 30,
-        "category": "amenity",
-        "type": "university",
-        "importance": 0.596417209288927,
-        "addresstype": "amenity",
-        "name": "Trinity College Dublin",
-        "display_name": "Trinity College Dublin, College Green, Mansion House A ED, Dublin, County Dublin, Leinster, D02 VR66, \u00c9ire / Ireland"
+        "osm_id": 111768188,
+        "place_rank": 26,
+        "category": "highway",
+        "type": "track",
+        "importance": 0.0533433333333333,
+        "addresstype": "road",
+        "name": "Central Sperrins Way (abandoned)",
+        "display_name": "Central Sperrins Way (abandoned), Derry and Strabane District, County Tyrone, Northern Ireland / Tuaisceart \u00c9ireann, BT79 7RW, United Kingdom"
       },
       "bbox": [
-        -6.2593238,
-        53.3419413,
-        -6.2495999,
-        53.3455336
+        -7.1926729,
+        54.7509374,
+        -7.1741022,
+        54.7580372
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -6.2543853,
-          53.3438434
+          -7.184142,
+          54.7528012
         ]
       },
-      "video_place": "Dublin",
-      "video_locality": "Dublin",
-      "video_start": "00:01:16",
-      "video_summary": "Slockneal, a small rural area, is highlighted for its multiple sports teams competing in All-Ireland finals and the challenges of managing dual participation in hurling and football on St. Patrick's Day.",
+      "video_place": "Sperrins",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:00:44",
+      "video_summary": "The tiny townland of Slockneal is poised to potentially have three teams in All-Ireland finals, creating a scheduling conflict for the Gaelic Athletic Association.",
       "video_sport": true,
       "video_politics": false,
+      "video_places": false,
       "video_path": "../data/collections/NI/DVC43998/00.02.37-95/00.02.37-95.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255303188,
+        "osm_type": "way",
+        "osm_id": 564099741,
+        "place_rank": 30,
+        "category": "leisure",
+        "type": "stadium",
+        "importance": 0.5567125821035981,
+        "addresstype": "leisure",
+        "name": "Croke Park",
+        "display_name": "Croke Park, Jones's Road, Ballybough, Ballybough B ED, Dublin, County Dublin, Leinster, D03 A095, \u00c9ire / Ireland"
+      },
+      "bbox": [
+        -6.2537629,
+        53.3588248,
+        -6.2483031,
+        53.3618111
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2509812,
+          53.3603576
+        ]
+      },
+      "video_place": "Croke Park",
+      "video_locality": "Dublin, Ireland",
+      "video_start": "00:01:20",
+      "video_summary": "The tiny townland of Slockneal is poised to potentially have three teams in All-Ireland finals, creating a scheduling conflict for the Gaelic Athletic Association.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43998/00.02.37-95/00.02.37-95.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 411291784,
+        "osm_type": "way",
+        "osm_id": 1376570967,
+        "place_rank": 12,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.7047258684940816,
+        "addresstype": "city",
+        "name": "Belfast",
+        "display_name": "Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -6.0601981,
+        54.5307382,
+        -5.8076989,
+        54.665003
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.927709699999999,
+          54.5975805
+        ]
+      },
+      "video_place": "Belfast",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:00:24",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255383064,
+        "osm_type": "way",
+        "osm_id": 455286794,
+        "place_rank": 24,
+        "category": "landuse",
+        "type": "commercial",
+        "importance": 0.08007500343327989,
+        "addresstype": "commercial",
+        "name": "East Belfast Enterprise Park",
+        "display_name": "East Belfast Enterprise Park, Woodstock, Ballymacarret, Belfast, Belfast City District, County Down, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -5.8959123,
+        54.5972845,
+        -5.8934086,
+        54.5982332
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8950809,
+          54.5977677
+        ]
+      },
+      "video_place": "East Belfast",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:00:36",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 411291784,
+        "osm_type": "way",
+        "osm_id": 1376570967,
+        "place_rank": 12,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.7047258684940816,
+        "addresstype": "city",
+        "name": "Belfast",
+        "display_name": "Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -6.0601981,
+        54.5307382,
+        -5.8076989,
+        54.665003
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.927709699999999,
+          54.5975805
+        ]
+      },
+      "video_place": "Belfast",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:00:40",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 421711057,
+        "osm_type": "relation",
+        "osm_id": 19178452,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "fire",
+        "importance": 0.39447880025774196,
+        "addresstype": "fire",
+        "name": "Northern Ireland",
+        "display_name": "Northern Ireland, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -8.1775099,
+        53.8701701,
+        -5.0777816,
+        55.4435849
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5634426,
+          54.6568876
+        ]
+      },
+      "video_place": "Northern Ireland",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:00:45",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254116960,
+        "osm_type": "way",
+        "osm_id": 88540896,
+        "place_rank": 19,
+        "category": "waterway",
+        "type": "river",
+        "importance": 0.14672080643930718,
+        "addresstype": "river",
+        "name": "River Rha",
+        "display_name": "River Rha, Cille Mhoire, \u00d9ige, Highland, Alba / Scotland, United Kingdom"
+      },
+      "bbox": [
+        -6.3638463,
+        57.5904384,
+        -6.3354468,
+        57.6189145
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.346768,
+          57.603926699999995
+        ]
+      },
+      "video_place": "RHA",
+      "video_locality": "United Kingdom",
+      "video_start": "00:04:56",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255383064,
+        "osm_type": "way",
+        "osm_id": 455286794,
+        "place_rank": 24,
+        "category": "landuse",
+        "type": "commercial",
+        "importance": 0.08007500343327989,
+        "addresstype": "commercial",
+        "name": "East Belfast Enterprise Park",
+        "display_name": "East Belfast Enterprise Park, Woodstock, Ballymacarret, Belfast, Belfast City District, County Down, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -5.8959123,
+        54.5972845,
+        -5.8934086,
+        54.5982332
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8950809,
+          54.5977677
+        ]
+      },
+      "video_place": "East Belfast",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:05:44",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 253826719,
+        "osm_type": "way",
+        "osm_id": 440735711,
+        "place_rank": 30,
+        "category": "tourism",
+        "type": "hotel",
+        "importance": 7.500343327988125e-05,
+        "addresstype": "tourism",
+        "name": "Hampton by Hilton Belfast City Centre",
+        "display_name": "Hampton by Hilton Belfast City Centre, 15, Hope Street, Linen Quarter, Sandy Row, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT12 5EE, United Kingdom"
+      },
+      "bbox": [
+        -5.9355236,
+        54.593427,
+        -5.9352078,
+        54.5938704
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9353713,
+          54.5937116
+        ]
+      },
+      "video_place": "Belfast City Centre",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:06:04",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 421711057,
+        "osm_type": "relation",
+        "osm_id": 19178452,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "fire",
+        "importance": 0.39447880025774196,
+        "addresstype": "fire",
+        "name": "Northern Ireland",
+        "display_name": "Northern Ireland, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -8.1775099,
+        53.8701701,
+        -5.0777816,
+        55.4435849
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5634426,
+          54.6568876
+        ]
+      },
+      "video_place": "Northern Ireland",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:06:10",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255656717,
+        "osm_type": "node",
+        "osm_id": 456206541,
+        "place_rank": 19,
+        "category": "place",
+        "type": "suburb",
+        "importance": 0.14674167009994654,
+        "addresstype": "suburb",
+        "name": "Short Strand",
+        "display_name": "Short Strand, Ballymacarret, Belfast, Belfast City District, County Down, Northern Ireland / Tuaisceart \u00c9ireann, BT5 4EW, United Kingdom"
+      },
+      "bbox": [
+        -5.9287389,
+        54.5777869,
+        -5.8887389,
+        54.6177869
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9087389,
+          54.5977869
+        ]
+      },
+      "video_place": "Short Strand",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:06:43",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254896327,
+        "osm_type": "way",
+        "osm_id": 685353967,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "parking",
+        "importance": 7.500343327988125e-05,
+        "addresstype": "amenity",
+        "name": "Waterfront Hall",
+        "display_name": "Waterfront Hall, Lanyon Place, The Waterfront, Cathedral Quarter, Markets, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT1 3BT, United Kingdom"
+      },
+      "bbox": [
+        -5.9199987,
+        54.5965241,
+        -5.919284,
+        54.5969276
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.919647299999999,
+          54.5967498
+        ]
+      },
+      "video_place": "Waterfront Hall",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:07:18",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255383064,
+        "osm_type": "way",
+        "osm_id": 455286794,
+        "place_rank": 24,
+        "category": "landuse",
+        "type": "commercial",
+        "importance": 0.08007500343327989,
+        "addresstype": "commercial",
+        "name": "East Belfast Enterprise Park",
+        "display_name": "East Belfast Enterprise Park, Woodstock, Ballymacarret, Belfast, Belfast City District, County Down, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -5.8959123,
+        54.5972845,
+        -5.8934086,
+        54.5982332
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8950809,
+          54.5977677
+        ]
+      },
+      "video_place": "East Belfast",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:07:32",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 253996697,
+        "osm_type": "way",
+        "osm_id": 41661457,
+        "place_rank": 24,
+        "category": "landuse",
+        "type": "brownfield",
+        "importance": 0.08007500343327989,
+        "addresstype": "brownfield",
+        "name": "Sirocco Works",
+        "display_name": "Sirocco Works, Short Strand, Ballymacarret, Belfast, Belfast City District, County Down, Northern Ireland / Tuaisceart \u00c9ireann, BT5 4AE, United Kingdom"
+      },
+      "bbox": [
+        -5.9169265,
+        54.5972237,
+        -5.9120408,
+        54.59992
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9146298,
+          54.5986147
+        ]
+      },
+      "video_place": "Sirocco",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:08:14",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 421711057,
+        "osm_type": "relation",
+        "osm_id": 19178452,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "fire",
+        "importance": 0.39447880025774196,
+        "addresstype": "fire",
+        "name": "Northern Ireland",
+        "display_name": "Northern Ireland, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -8.1775099,
+        53.8701701,
+        -5.0777816,
+        55.4435849
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5634426,
+          54.6568876
+        ]
+      },
+      "video_place": "Northern Ireland",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:08:18",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255218425,
+        "osm_type": "node",
+        "osm_id": 267763060,
+        "place_rank": 18,
+        "category": "place",
+        "type": "town",
+        "importance": 0.504329908328819,
+        "addresstype": "town",
+        "name": "Coleraine",
+        "display_name": "Coleraine, Causeway Coast and Glens District, County Londonderry, Northern Ireland / Tuaisceart \u00c9ireann, BT52 1DP, United Kingdom"
+      },
+      "bbox": [
+        -6.711861,
+        55.0915912,
+        -6.631861,
+        55.1715912
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.671861,
+          55.1315912
+        ]
+      },
+      "video_place": "Coleraine",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:10:43",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255218425,
+        "osm_type": "node",
+        "osm_id": 267763060,
+        "place_rank": 18,
+        "category": "place",
+        "type": "town",
+        "importance": 0.504329908328819,
+        "addresstype": "town",
+        "name": "Coleraine",
+        "display_name": "Coleraine, Causeway Coast and Glens District, County Londonderry, Northern Ireland / Tuaisceart \u00c9ireann, BT52 1DP, United Kingdom"
+      },
+      "bbox": [
+        -6.711861,
+        55.0915912,
+        -6.631861,
+        55.1715912
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.671861,
+          55.1315912
+        ]
+      },
+      "video_place": "Coleraine",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:10:51",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255053097,
+        "osm_type": "way",
+        "osm_id": 668505113,
+        "place_rank": 30,
+        "category": "tourism",
+        "type": "hotel",
+        "importance": 7.500343327988125e-05,
+        "addresstype": "tourism",
+        "name": "Malone Lodge Hotel Belfast",
+        "display_name": "Malone Lodge Hotel Belfast, 60, Eglantine Avenue, Lower Malone, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT9 6DN, United Kingdom"
+      },
+      "bbox": [
+        -5.9428312,
+        54.5815129,
+        -5.9421003,
+        54.5819154
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9424489,
+          54.581730799999995
+        ]
+      },
+      "video_place": "Lodge Hotel",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:12:43",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254937498,
+        "osm_type": "way",
+        "osm_id": 49982506,
+        "place_rank": 26,
+        "category": "highway",
+        "type": "residential",
+        "importance": 0.05339875104905772,
+        "addresstype": "road",
+        "name": "London Street",
+        "display_name": "London Street, Waterside, The Fountain, Derry/Londonderry, Derry and Strabane District, County Londonderry, Northern Ireland / Tuaisceart \u00c9ireann, BT48 6RQ, United Kingdom"
+      },
+      "bbox": [
+        -7.3231145,
+        54.9939666,
+        -7.3215973,
+        54.9948684
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.3223237999999995,
+          54.9944589
+        ]
+      },
+      "video_place": "London Derry",
+      "video_locality": "United Kingdom",
+      "video_start": "00:13:37",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254453318,
+        "osm_type": "relation",
+        "osm_id": 5125836,
+        "place_rank": 20,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.13337882734416723,
+        "addresstype": "locality",
+        "name": "Cregan",
+        "display_name": "Cregan, Causeway Coast and Glens District, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -7.149325,
+        55.0305381,
+        -7.1358987,
+        55.044666
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.1464668,
+          55.0322319
+        ]
+      },
+      "video_place": "Cregan",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:13:46",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 259358731,
+        "osm_type": "way",
+        "osm_id": 222181772,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "place_of_worship",
+        "importance": 0.32442301420651465,
+        "addresstype": "amenity",
+        "name": "Lithuanian R.C. Church of St Casimir",
+        "display_name": "Lithuanian R.C. Church of St Casimir, 21, The Oval, Bethnal Green, London Borough of Tower Hamlets, Greater London, England, E2 9DT, United Kingdom"
+      },
+      "bbox": [
+        -0.0596208,
+        51.5326623,
+        -0.0593043,
+        51.5328491
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.059479155348124216,
+          51.53274405
+        ]
+      },
+      "video_place": "Lithuanian",
+      "video_locality": "United Kingdom",
+      "video_start": "00:14:23",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254157943,
+        "osm_type": "relation",
+        "osm_id": 14025853,
+        "place_rank": 22,
+        "category": "natural",
+        "type": "bay",
+        "importance": 0.4428190122896114,
+        "addresstype": "bay",
+        "name": "Belfast Lough",
+        "display_name": "Belfast Lough, Bangor, Belfast City District, County Down, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -5.9208443,
+        54.6024727,
+        -5.5839218,
+        54.7670718
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7330755,
+          54.684840699999995
+        ]
+      },
+      "video_place": "Belfast Loch",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:14:34",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255374391,
+        "osm_type": "relation",
+        "osm_id": 2621367,
+        "place_rank": 30,
+        "category": "aeroway",
+        "type": "aerodrome",
+        "importance": 0.40442860063254954,
+        "addresstype": "aeroway",
+        "name": "Enniskillen Airport",
+        "display_name": "Enniskillen Airport, Killadeas Road, Cloghbally, Fermanagh and Omagh District, Northern Ireland / Tuaisceart \u00c9ireann, BT94 2FP, United Kingdom"
+      },
+      "bbox": [
+        -7.6592866,
+        54.3914955,
+        -7.6429843,
+        54.4034777
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.6496895,
+          54.397286799999996
+        ]
+      },
+      "video_place": "St Angelo Airport",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:15:25",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254865900,
+        "osm_type": "node",
+        "osm_id": 267763152,
+        "place_rank": 18,
+        "category": "place",
+        "type": "town",
+        "importance": 0.5031902111242689,
+        "addresstype": "town",
+        "name": "Enniskillen",
+        "display_name": "Enniskillen, Fermanagh and Omagh District, Northern Ireland / Tuaisceart \u00c9ireann, BT74 7BA, United Kingdom"
+      },
+      "bbox": [
+        -7.678907,
+        54.3048171,
+        -7.598907,
+        54.3848171
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.638907,
+          54.3448171
+        ]
+      },
+      "video_place": "Enniskillen",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:15:25",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254819656,
+        "osm_type": "way",
+        "osm_id": 146343354,
+        "place_rank": 24,
+        "category": "leisure",
+        "type": "park",
+        "importance": 0.08007500343327989,
+        "addresstype": "park",
+        "name": "Musgrave Park",
+        "display_name": "Musgrave Park, Andersonstown, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -5.9815713,
+        54.5671567,
+        -5.97082,
+        54.5726775
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9744164,
+          54.5700005
+        ]
+      },
+      "video_place": "Musgrave Park",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:15:57",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255148843,
+        "osm_type": "relation",
+        "osm_id": 62149,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.9388533772580386,
+        "addresstype": "country",
+        "name": "United Kingdom",
+        "display_name": "United Kingdom"
+      },
+      "bbox": [
+        -14.015517,
+        49.674,
+        2.0919117,
+        61.061
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.2765753,
+          54.7023545
+        ]
+      },
+      "video_place": "UK",
+      "video_locality": "United Kingdom",
+      "video_start": "00:16:25",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 262931893,
+        "osm_type": "relation",
+        "osm_id": 62273,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.8368970368823774,
+        "addresstype": "country",
+        "name": "\u00c9ire / Ireland",
+        "display_name": "\u00c9ire / Ireland"
+      },
+      "bbox": [
+        -11.0133788,
+        51.222,
+        -5.6582363,
+        55.636
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.9794599,
+          52.865196
+        ]
+      },
+      "video_place": "Ireland",
+      "video_locality": "Ireland",
+      "video_start": "00:16:25",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 38796576,
+        "osm_type": "way",
+        "osm_id": 1098307221,
+        "place_rank": 26,
+        "category": "highway",
+        "type": "primary",
+        "importance": 0.05340483482108793,
+        "addresstype": "road",
+        "name": "Africa Avenue / Bole Road",
+        "display_name": "Africa Avenue / Bole Road, \u1229\u12cb\u1295\u12f3 / Rwanda, Bole, \u12a0\u12f2\u1235 \u12a0\u1260\u1263 Addis Ababa \u0623\u062f\u064a\u0633 \u0623\u0628\u0627\u0628\u0627, \u12a0\u12f2\u1235 \u12a0\u1260\u1263 \u0623\u062f\u064a\u0633 \u0623\u0628\u0627\u0628\u0627, 1044, \u12a2\u1275\u12ee\u1335\u12eb"
+      },
+      "bbox": [
+        38.7835142,
+        8.9895661,
+        38.7877175,
+        8.9912231
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          38.785607737990325,
+          8.990373204992169
+        ]
+      },
+      "video_place": "Rwanda",
+      "video_locality": "Africa",
+      "video_start": "00:17:00",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 38796576,
+        "osm_type": "way",
+        "osm_id": 1098307221,
+        "place_rank": 26,
+        "category": "highway",
+        "type": "primary",
+        "importance": 0.05340483482108793,
+        "addresstype": "road",
+        "name": "Africa Avenue / Bole Road",
+        "display_name": "Africa Avenue / Bole Road, \u1229\u12cb\u1295\u12f3 / Rwanda, Bole, \u12a0\u12f2\u1235 \u12a0\u1260\u1263 Addis Ababa \u0623\u062f\u064a\u0633 \u0623\u0628\u0627\u0628\u0627, \u12a0\u12f2\u1235 \u12a0\u1260\u1263 \u0623\u062f\u064a\u0633 \u0623\u0628\u0627\u0628\u0627, 1044, \u12a2\u1275\u12ee\u1335\u12eb"
+      },
+      "bbox": [
+        38.7835142,
+        8.9895661,
+        38.7877175,
+        8.9912231
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          38.785607737990325,
+          8.990373204992169
+        ]
+      },
+      "video_place": "Rwanda",
+      "video_locality": "Africa",
+      "video_start": "00:19:39",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 421711057,
+        "osm_type": "relation",
+        "osm_id": 19178452,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "fire",
+        "importance": 0.39447880025774196,
+        "addresstype": "fire",
+        "name": "Northern Ireland",
+        "display_name": "Northern Ireland, Northern Ireland / Tuaisceart \u00c9ireann, United Kingdom"
+      },
+      "bbox": [
+        -8.1775099,
+        53.8701701,
+        -5.0777816,
+        55.4435849
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5634426,
+          54.6568876
+        ]
+      },
+      "video_place": "Northern Ireland",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:19:46",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 291474750,
+        "osm_type": "relation",
+        "osm_id": 114686,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.8936823669554844,
+        "addresstype": "country",
+        "name": "M\u00e9xico",
+        "display_name": "M\u00e9xico"
+      },
+      "bbox": [
+        -118.599188,
+        14.3811832,
+        -86.493266,
+        32.7187133
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -102.0077097,
+          23.6585116
+        ]
+      },
+      "video_place": "Mexico",
+      "video_locality": "Mexico",
+      "video_start": "00:21:58",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 291474750,
+        "osm_type": "relation",
+        "osm_id": 114686,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.8936823669554844,
+        "addresstype": "country",
+        "name": "M\u00e9xico",
+        "display_name": "M\u00e9xico"
+      },
+      "bbox": [
+        -118.599188,
+        14.3811832,
+        -86.493266,
+        32.7187133
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -102.0077097,
+          23.6585116
+        ]
+      },
+      "video_place": "Mexico",
+      "video_locality": "Mexico",
+      "video_start": "00:22:43",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 342108174,
+        "osm_type": "way",
+        "osm_id": 64594680,
+        "place_rank": 30,
+        "category": "tourism",
+        "type": "hotel",
+        "importance": 0.5031801014943037,
+        "addresstype": "tourism",
+        "name": "Trump International Hotel & Tower Chicago",
+        "display_name": "Trump International Hotel & Tower Chicago, 401, North Wabash Avenue, River North, Near North Side, Chicago, North Chicago Township, Cook County, Illinois, 60611, United States"
+      },
+      "bbox": [
+        -87.6269223,
+        41.888442,
+        -87.6259925,
+        41.8893036
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6264748,
+          41.888863199999996
+        ]
+      },
+      "video_place": "Trump International",
+      "video_locality": "United States",
+      "video_start": "00:22:46",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 280400042,
+        "osm_type": "relation",
+        "osm_id": 162050,
+        "place_rank": 8,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.8085777143682812,
+        "addresstype": "state",
+        "name": "Florida",
+        "display_name": "Florida, United States"
+      },
+      "bbox": [
+        -87.634896,
+        24.396308,
+        -79.974306,
+        31.000762
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.4639835,
+          27.7567667
+        ]
+      },
+      "video_place": "Florida",
+      "video_locality": "United States",
+      "video_start": "00:22:46",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 256442622,
+        "osm_type": "way",
+        "osm_id": 440486085,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "school",
+        "importance": 0.3770485431719739,
+        "addresstype": "amenity",
+        "name": "Archbishop Temple Church of England High School",
+        "display_name": "Archbishop Temple Church of England High School, St Vincents Road, Nooklands, Fulwood, Preston, Lancashire, England, PR2 8RA, United Kingdom"
+      },
+      "bbox": [
+        -2.7080609,
+        53.7816315,
+        -2.6991292,
+        53.7857447
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.703299,
+          53.783743799999996
+        ]
+      },
+      "video_place": "England",
+      "video_locality": "England",
+      "video_start": "00:24:33",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254458131,
+        "osm_type": "way",
+        "osm_id": 10289074,
+        "place_rank": 30,
+        "category": "tourism",
+        "type": "museum",
+        "importance": 0.4156939097669075,
+        "addresstype": "tourism",
+        "name": "Ulster Museum",
+        "display_name": "Ulster Museum, Stranmillis Road, Crescent, Queen's Quarter, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT9 5AB, United Kingdom"
+      },
+      "bbox": [
+        -5.9360457,
+        54.5820297,
+        -5.9347276,
+        54.5825961
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9353558,
+          54.582245099999994
+        ]
+      },
+      "video_place": "Ulster",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:24:40",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 409705350,
+        "osm_type": "relation",
+        "osm_id": 394021,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "historic",
+        "importance": 0.6017064428324712,
+        "addresstype": "historic",
+        "name": "Northampton",
+        "display_name": "Northampton, West Northamptonshire, England, United Kingdom"
+      },
+      "bbox": [
+        -0.9710267,
+        52.1860899,
+        -0.7913699,
+        52.2826966
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9028043,
+          52.234329699999996
+        ]
+      },
+      "video_place": "Northampton",
+      "video_locality": "England",
+      "video_start": "00:24:48",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 261277538,
+        "osm_type": "relation",
+        "osm_id": 5746665,
+        "place_rank": 16,
+        "category": "place",
+        "type": "city",
+        "importance": 0.7042167330140456,
+        "addresstype": "city",
+        "name": "Bristol",
+        "display_name": "Bristol, City of Bristol, West of England, England, United Kingdom"
+      },
+      "bbox": [
+        -2.7183704,
+        51.3972838,
+        -2.5104192,
+        51.5444317
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.5972985,
+          51.4538022
+        ]
+      },
+      "video_place": "Bristol",
+      "video_locality": "England",
+      "video_start": "00:24:48",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 262931893,
+        "osm_type": "relation",
+        "osm_id": 62273,
+        "place_rank": 4,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.8368970368823774,
+        "addresstype": "country",
+        "name": "\u00c9ire / Ireland",
+        "display_name": "\u00c9ire / Ireland"
+      },
+      "bbox": [
+        -11.0133788,
+        51.222,
+        -5.6582363,
+        55.636
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.9794599,
+          52.865196
+        ]
+      },
+      "video_place": "Ireland",
+      "video_locality": "Ireland",
+      "video_start": "00:24:52",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 261307668,
+        "osm_type": "node",
+        "osm_id": 738885245,
+        "place_rank": 16,
+        "category": "place",
+        "type": "city",
+        "importance": 0.6972041826939046,
+        "addresstype": "city",
+        "name": "Cardiff",
+        "display_name": "Cardiff, Cymru / Wales, CF10 2AF, United Kingdom"
+      },
+      "bbox": [
+        -3.3391934,
+        51.3216546,
+        -3.0191934,
+        51.6416546
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.1791934,
+          51.4816546
+        ]
+      },
+      "video_place": "Cardiff",
+      "video_locality": "Wales",
+      "video_start": "00:24:52",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254806945,
+        "osm_type": "way",
+        "osm_id": 134680130,
+        "place_rank": 30,
+        "category": "leisure",
+        "type": "pitch",
+        "importance": 7.500343327988125e-05,
+        "addresstype": "leisure",
+        "name": "Crusaders F.C.",
+        "display_name": "Crusaders F.C., Shore Road, Northwood, Fortwilliam, Belfast, Belfast City District, County Antrim, Northern Ireland / Tuaisceart \u00c9ireann, BT15 3PG, United Kingdom"
+      },
+      "bbox": [
+        -5.9227661,
+        54.6239281,
+        -5.921074,
+        54.6246433
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9219200999999995,
+          54.624285699999994
+        ]
+      },
+      "video_place": "Crusaders",
+      "video_locality": "Northern Ireland",
+      "video_start": "00:25:35",
+      "video_summary": "The UTV Live broadcast covers a court ruling on the RHI scandal, an election eve political update, local regeneration plans, a heroic postman, sports results, and weather forecasts.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NI/DVC43313/00.03.33-1887/00.03.33-1887.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255315329,
+        "osm_type": "way",
+        "osm_id": 124435818,
+        "place_rank": 30,
+        "category": "building",
+        "type": "yes",
+        "importance": 5.715037766074643e-05,
+        "addresstype": "building",
+        "name": "North Stack",
+        "display_name": "North Stack, Top Road, Pentre Pella, Holyhead, Llaingoch, Ynys M\u00f4n / Isle of Anglesey, Cymru / Wales, LL65 1YG, United Kingdom"
+      },
+      "bbox": [
+        -4.6806553,
+        53.3224581,
+        -4.6802697,
+        53.3226875
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.6805221999999995,
+          53.3225693
+        ]
+      },
+      "video_place": "North Stack",
+      "video_locality": "Anglesey",
+      "video_start": "00:00:13",
+      "video_summary": "Divers discovered remnants of a Liberator bomber that crashed near North Stack in 1944 after failing to land due to bad weather while on a mission jamming German communications.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.22.53-103/00.22.53-103.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 396832277,
+        "osm_type": "way",
+        "osm_id": 1351229390,
+        "place_rank": 22,
+        "category": "waterway",
+        "type": "stream",
+        "importance": 0.10672878843366138,
+        "addresstype": "stream",
+        "name": "Riez de France",
+        "display_name": "Riez de France, Signy-le-Petit, Charleville-M\u00e9zi\u00e8res, Ardennes, Grand Est, France m\u00e9tropolitaine, 08380, France"
+      },
+      "bbox": [
+        4.3374022,
+        49.9527291,
+        4.3471095,
+        49.9532803
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.3422743725898805,
+          49.95302652780746
+        ]
+      },
+      "video_place": "France",
+      "video_locality": "Ardennes, France",
+      "video_start": "00:00:24",
+      "video_summary": "Divers discovered remnants of a Liberator bomber that crashed near North Stack in 1944 after failing to land due to bad weather while on a mission jamming German communications.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.22.53-103/00.22.53-103.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 262771192,
+        "osm_type": "node",
+        "osm_id": 1583337170,
+        "place_rank": 30,
+        "category": "man_made",
+        "type": "lighthouse",
+        "importance": 0.3498658892313366,
+        "addresstype": "man_made",
+        "name": "South Stack Lighthouse",
+        "display_name": "South Stack Lighthouse, South Stack Road, Trearddur, Ynys M\u00f4n / Isle of Anglesey, Cymru / Wales, LL65 1YH, United Kingdom"
+      },
+      "bbox": [
+        -4.6996055,
+        53.3066958,
+        -4.6995055,
+        53.3067958
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.6995555,
+          53.3067458
+        ]
+      },
+      "video_place": "South Stack",
+      "video_locality": "Anglesey",
+      "video_start": "00:00:37",
+      "video_summary": "Divers discovered remnants of a Liberator bomber that crashed near North Stack in 1944 after failing to land due to bad weather while on a mission jamming German communications.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.22.53-103/00.22.53-103.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 259350544,
+        "osm_type": "relation",
+        "osm_id": 51800,
+        "place_rank": 12,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.6623892775866359,
+        "addresstype": "city",
+        "name": "City of London",
+        "display_name": "City of London, Greater London, England, United Kingdom"
+      },
+      "bbox": [
+        -0.1138295,
+        51.5068709,
+        -0.0727619,
+        51.5233122
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.0919983,
+          51.5156177
+        ]
+      },
+      "video_place": "London",
+      "video_locality": "Greater London, England",
+      "video_start": "00:00:42",
+      "video_summary": "Divers discovered remnants of a Liberator bomber that crashed near North Stack in 1944 after failing to land due to bad weather while on a mission jamming German communications.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.22.53-103/00.22.53-103.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 329863523,
+        "osm_type": "node",
+        "osm_id": 7004749571,
+        "place_rank": 30,
+        "category": "railway",
+        "type": "station",
+        "importance": 0.34725686819858415,
+        "addresstype": "railway",
+        "name": "North Wales",
+        "display_name": "North Wales, School Street, North Wales, Montgomery County, Pennsylvania, 19454, United States"
+      },
+      "bbox": [
+        -75.2824194,
+        40.2093282,
+        -75.2724194,
+        40.2193282
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.2774194,
+          40.2143282
+        ]
+      },
+      "video_place": "North Wales",
+      "video_locality": "North Wales",
+      "video_start": "00:00:24",
+      "video_summary": "British transport police are encouraging the public to report vandalism and dangerous acts on railway lines in North Wales.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.17.42-89/00.17.42-89.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 88834496,
+        "osm_type": "node",
+        "osm_id": 1981222779,
+        "place_rank": 30,
+        "category": "railway",
+        "type": "station",
+        "importance": 0.43843044507974105,
+        "addresstype": "railway",
+        "name": "Europe",
+        "display_name": "Europe, Rue de Madrid, Quartier de l'Europe, Paris 8e Arrondissement, Paris, \u00cele-de-France, France m\u00e9tropolitaine, 75008, France"
+      },
+      "bbox": [
+        2.3172823,
+        48.8737706,
+        2.3272823,
+        48.8837706
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.3222823,
+          48.8787706
+        ]
+      },
+      "video_place": "Europe",
+      "video_locality": "Europe",
+      "video_start": "00:00:29",
+      "video_summary": "British rally champion Mike Williams is selling his prize-winning car due to financial constraints.",
+      "video_sport": true,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.14.50-80/00.14.50-80.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 259287623,
+        "osm_type": "way",
+        "osm_id": 794485853,
+        "place_rank": 30,
+        "category": "building",
+        "type": "ruins",
+        "importance": 0.07194870560319186,
+        "addresstype": "building",
+        "name": "Battle of Britain House",
+        "display_name": "Battle of Britain House, Battle of Britain House garden steps, Northwood, London Borough of Hillingdon, Greater London, England, HA4 7TS, United Kingdom"
+      },
+      "bbox": [
+        -0.4375119,
+        51.5941089,
+        -0.4371122,
+        51.5943329
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.4373118,
+          51.5942217
+        ]
+      },
+      "video_place": "Britain",
+      "video_locality": "Britain",
+      "video_start": "00:00:14",
+      "video_summary": "Castle Cement faces resident opposition over a new tar-based fuel trial despite claims of safety and cost savings.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.32.05-85/00.32.05-85.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 319200263,
+        "osm_type": "way",
+        "osm_id": 1298631719,
+        "place_rank": 22,
+        "category": "landuse",
+        "type": "construction",
+        "importance": 0.10669536659800104,
+        "addresstype": "construction",
+        "name": "Unknown",
+        "display_name": "Unknown, Guilford County, North Carolina, United States"
+      },
+      "bbox": [
+        -79.9331886,
+        36.1073943,
+        -79.9287659,
+        36.1105188
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.93135227595738,
+          36.108945750000004
+        ]
+      },
+      "video_place": "America",
+      "video_locality": "Unknown",
+      "video_start": "00:00:55",
+      "video_summary": "Castle Cement faces resident opposition over a new tar-based fuel trial despite claims of safety and cost savings.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.32.05-85/00.32.05-85.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 17580502,
+        "osm_type": "way",
+        "osm_id": 258397176,
+        "place_rank": 30,
+        "category": "building",
+        "type": "industrial",
+        "importance": 7.489051651784569e-05,
+        "addresstype": "building",
+        "name": "amcor",
+        "display_name": "amcor, Port River Bikeway, Dry Creek, Adelaide, City of Port Adelaide Enfield, South Australia, 5012, Australia"
+      },
+      "bbox": [
+        138.5474697,
+        -34.8324906,
+        138.5483106,
+        -34.8318262
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.54789019999998,
+          -34.832158299999996
+        ]
+      },
+      "video_place": "Amcor",
+      "video_locality": "Australia",
+      "video_start": "00:00:13",
+      "video_summary": "Amcor has selected Mold in Wales to build a new environmentally friendly packaging factory, creating jobs for the local community.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.04.56-120/00.04.56-120.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254414068,
+        "osm_type": "node",
+        "osm_id": 25417393,
+        "place_rank": 18,
+        "category": "place",
+        "type": "town",
+        "importance": 0.43561794340183313,
+        "addresstype": "town",
+        "name": "Mold",
+        "display_name": "Mold, Flintshire, Cymru / Wales, CH7 1ER, United Kingdom"
+      },
+      "bbox": [
+        -3.1814228,
+        53.1266274,
+        -3.1014228,
+        53.2066274
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.1414228,
+          53.1666274
+        ]
+      },
+      "video_place": "Mold",
+      "video_locality": "Wales, UK",
+      "video_start": "00:00:13",
+      "video_summary": "Amcor has selected Mold in Wales to build a new environmentally friendly packaging factory, creating jobs for the local community.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.04.56-120/00.04.56-120.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 254750133,
+        "osm_type": "relation",
+        "osm_id": 57512,
+        "place_rank": 25,
+        "category": "boundary",
+        "type": "ceremonial",
+        "importance": 0.6711329937061913,
+        "addresstype": "ceremonial",
+        "name": "Cheshire",
+        "display_name": "Cheshire, England, United Kingdom"
+      },
+      "bbox": [
+        -3.128278,
+        52.9472122,
+        -1.9747864,
+        53.4809294
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.4717701,
+          53.2141028
+        ]
+      },
+      "video_place": "Cheshire",
+      "video_locality": "England, UK",
+      "video_start": "00:00:26",
+      "video_summary": "Amcor has selected Mold in Wales to build a new environmentally friendly packaging factory, creating jobs for the local community.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.04.56-120/00.04.56-120.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 257829376,
+        "osm_type": "node",
+        "osm_id": 6133180117,
+        "place_rank": 30,
+        "category": "place",
+        "type": "house",
+        "importance": 7.288090333405077e-05,
+        "addresstype": "place",
+        "name": "Spanish Market Trader UK",
+        "display_name": "Spanish Market Trader UK, Berking Avenue, Burmantofts, Leeds, West Yorkshire, England, LS9 9LF, United Kingdom"
+      },
+      "bbox": [
+        -1.5184002,
+        53.7973977,
+        -1.5183002,
+        53.7974977
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.5183502,
+          53.7974477
+        ]
+      },
+      "video_place": "UK market",
+      "video_locality": "UK",
+      "video_start": "00:00:43",
+      "video_summary": "Amcor has selected Mold in Wales to build a new environmentally friendly packaging factory, creating jobs for the local community.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.04.56-120/00.04.56-120.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 146842930,
+        "osm_type": "relation",
+        "osm_id": 295355,
+        "place_rank": 16,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.6990058432201166,
+        "addresstype": "city",
+        "name": "Cambridge",
+        "display_name": "Cambridge, Cambridgeshire, Cambridgeshire and Peterborough, England, United Kingdom"
+      },
+      "bbox": [
+        0.0686389,
+        52.1579417,
+        0.184552,
+        52.2372296
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.1186637,
+          52.2055314
+        ]
+      },
+      "video_place": "Cambridge",
+      "video_locality": "England, UK",
+      "video_start": "00:00:51",
+      "video_summary": "Amcor has selected Mold in Wales to build a new environmentally friendly packaging factory, creating jobs for the local community.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.04.56-120/00.04.56-120.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 90942967,
+        "osm_type": "node",
+        "osm_id": 11414577557,
+        "place_rank": 30,
+        "category": "shop",
+        "type": "supermarket",
+        "importance": 9.307927061870783e-05,
+        "addresstype": "shop",
+        "name": "Northwest",
+        "display_name": "Northwest, High Street North, Plashet, East Ham, Greater London, England, E6 2HT, United Kingdom"
+      },
+      "bbox": [
+        0.0524998,
+        51.5362383,
+        0.0525998,
+        51.5363383
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.0525498,
+          51.5362883
+        ]
+      },
+      "video_place": "northwest of England",
+      "video_locality": "England, UK",
+      "video_start": "00:00:51",
+      "video_summary": "Amcor has selected Mold in Wales to build a new environmentally friendly packaging factory, creating jobs for the local community.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": true,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.04.56-120/00.04.56-120.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 253437639,
+        "osm_type": "relation",
+        "osm_id": 6045326,
+        "place_rank": 17,
+        "category": "place",
+        "type": "island",
+        "importance": 0.5765507910293689,
+        "addresstype": "island",
+        "name": "Ynys M\u00f4n / Anglesey",
+        "display_name": "Ynys M\u00f4n / Anglesey, Ynys M\u00f4n / Isle of Anglesey, Cymru / Wales, United Kingdom"
+      },
+      "bbox": [
+        -4.5885435,
+        53.1263644,
+        -4.0401569,
+        53.4300717
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.331919399999999,
+          53.278225799999994
+        ]
+      },
+      "video_place": "Anglesey",
+      "video_locality": "Anglesey",
+      "video_start": "00:00:52",
+      "video_summary": "A 25-year-old teacher narrowly escaped a motiveless assault with a rock at a school in Tranva-Pours and is now being questioned by police searching for her stocky attacker.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.03.33-83/00.03.33-83.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255735977,
+        "osm_type": "relation",
+        "osm_id": 10991991,
+        "place_rank": 20,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.41603709239052356,
+        "addresstype": "town",
+        "name": "Menai Bridge",
+        "display_name": "Menai Bridge, Ynys M\u00f4n / Isle of Anglesey, Cymru / Wales, United Kingdom"
+      },
+      "bbox": [
+        -4.1966952,
+        53.2203945,
+        -4.1533931,
+        53.2456401
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.1631064,
+          53.2259347
+        ]
+      },
+      "video_place": "Menai Bridge",
+      "video_locality": "Wales",
+      "video_start": "00:00:14",
+      "video_summary": "Police are investigating an armed robbery outside Leo's store in Menai Bridge where a security guard was attacked by two men who fled to a wooded area.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.13.23-87/00.13.23-87.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255063656,
+        "osm_type": "way",
+        "osm_id": 132113441,
+        "place_rank": 30,
+        "category": "amenity",
+        "type": "police",
+        "importance": 4.930113679708579e-05,
+        "addresstype": "amenity",
+        "name": "Menai Bridge Police Station",
+        "display_name": "Menai Bridge Police Station, Mona Road, Menai Bridge, Ynys M\u00f4n / Isle of Anglesey, Cymru / Wales, LL59 5EA, United Kingdom"
+      },
+      "bbox": [
+        -4.1658018,
+        53.2239967,
+        -4.1654278,
+        53.2242641
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.1656401,
+          53.224123899999995
+        ]
+      },
+      "video_place": "Menai Bridge police station",
+      "video_locality": "Menai Bridge",
+      "video_start": "00:00:20",
+      "video_summary": "Police are investigating an armed robbery outside Leo's store in Menai Bridge where a security guard was attacked by two men who fled to a wooded area.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.13.23-87/00.13.23-87.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 255117009,
+        "osm_type": "relation",
+        "osm_id": 11241684,
+        "place_rank": 20,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.5472444720430647,
+        "addresstype": "city",
+        "name": "Bangor",
+        "display_name": "Bangor, Gwynedd, Cymru / Wales, United Kingdom"
+      },
+      "bbox": [
+        -4.163477,
+        53.2048869,
+        -4.1081575,
+        53.239791
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.1268822,
+          53.2277163
+        ]
+      },
+      "video_place": "Bangor",
+      "video_locality": "Wales",
+      "video_start": "00:01:00",
+      "video_summary": "Police are investigating an armed robbery outside Leo's store in Menai Bridge where a security guard was attacked by two men who fled to a wooded area.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.13.23-87/00.13.23-87.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 256394260,
+        "osm_type": "relation",
+        "osm_id": 297286,
+        "place_rank": 12,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.5707136232512335,
+        "addresstype": "county",
+        "name": "Gwynedd",
+        "display_name": "Gwynedd, Cymru / Wales, United Kingdom"
+      },
+      "bbox": [
+        -4.8043948,
+        52.5367851,
+        -3.4367833,
+        53.2811296
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.8335244,
+          52.9089585
+        ]
+      },
+      "video_place": "Gwynedd",
+      "video_locality": "Wales",
+      "video_start": "00:00:14",
+      "video_summary": "A new proof-of-age card scheme has been launched in Arvon to combat underage drinking following a survey revealing high rates of alcohol purchases by minors.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.27.40-97/00.27.40-97.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 260673931,
+        "osm_type": "relation",
+        "osm_id": 11075162,
+        "place_rank": 20,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.410690382019838,
+        "addresstype": "suburb",
+        "name": "Aberavon",
+        "display_name": "Aberavon, Neath Port Talbot, Cymru / Wales, United Kingdom"
+      },
+      "bbox": [
+        -3.8016054,
+        51.5922281,
+        -3.7819827,
+        51.6032009
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7954912,
+          51.60014
+        ]
+      },
+      "video_place": "Aberavon",
+      "video_locality": "Wales",
+      "video_start": "00:00:33",
+      "video_summary": "A new proof-of-age card scheme has been launched in Arvon to combat underage drinking following a survey revealing high rates of alcohol purchases by minors.",
+      "video_sport": false,
+      "video_politics": true,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.27.40-97/00.27.40-97.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 256342127,
+        "osm_type": "node",
+        "osm_id": 27459588,
+        "place_rank": 18,
+        "category": "place",
+        "type": "town",
+        "importance": 0.45539959252673184,
+        "addresstype": "town",
+        "name": "Colwyn Bay",
+        "display_name": "Colwyn Bay, Conwy, Cymru / Wales, LL29 8GA, United Kingdom"
+      },
+      "bbox": [
+        -3.7662534,
+        53.2553269,
+        -3.6862534,
+        53.3353269
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7262534,
+          53.2953269
+        ]
+      },
+      "video_place": "Colwyn Bay",
+      "video_locality": "",
+      "video_start": "00:01:06",
+      "video_summary": "Water diviner Clive Thompson uses dowsing rods to help farmers in North Wales find water during droughts.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.24.36-90/00.24.36-90.mp4"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": 253247797,
+        "osm_type": "relation",
+        "osm_id": 1267884,
+        "place_rank": 20,
+        "category": "boundary",
+        "type": "administrative",
+        "importance": 0.13339321202410923,
+        "addresstype": "suburb",
+        "name": "Wales",
+        "display_name": "Wales, Rotherham, South Yorkshire, England, United Kingdom"
+      },
+      "bbox": [
+        -1.3320763,
+        53.3254637,
+        -1.2384274,
+        53.3531284
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.2825379,
+          53.3393418
+        ]
+      },
+      "video_place": "Wales",
+      "video_locality": "Wales",
+      "video_start": "00:01:19",
+      "video_summary": "The video profiles pharmacist Richard Packwood, an award-winning wildlife photographer who emphasizes patience in capturing animals and aims to win a major photography competition.",
+      "video_sport": false,
+      "video_politics": false,
+      "video_places": false,
+      "video_path": "../data/collections/NLW/aobbu34200001/00.08.52-104/00.08.52-104.mp4"
     }
   ]
 }
