@@ -121,7 +121,7 @@
                     <div class="column">
                       <p>{{ item.video }} &gt; {{ item.clip }} &gt; {{ item.shot }}</p>
                       <p>{{ item.short_description }}</p>
-                      <p>{{ Math.floor(item?.sim * 100) }} % similar to query</p>
+                      <p v-if="item?.sim">{{ Math.floor(item?.sim * 100) }} % similar to query</p>
                       <p><a class="button" @click="onClickFindSimilarImages(item)">Find similar images</a></p>
                     </div>
                   </div>
