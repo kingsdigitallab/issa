@@ -41,10 +41,18 @@
         background-color: yellow;
         color: black;
       }
+
+      .awesome-marker i {
+        font-size: 18px;
+        margin-top: 8px;
+      }
     </style>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js"></script>
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+    <!-- link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" -->
+    <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js"></script -->
+    <link rel="stylesheet" href="assets/leaflet-awesome/leaflet.awesome-markers.css">
+    <script src="assets/leaflet-awesome/leaflet.awesome-markers.js"></script>
   </head>
   <body>
     <section class="section" id="geosearch">
@@ -80,6 +88,7 @@
                       <li v-for="unit in clipDisplayUnits">
                         <a @mouseenter="requestVideoJumpInTimeCode(unit.start)" @click="requestVideoJumpInTimeCode(unit.start, true)">{{ unit.start }}</a>: 
                         <span :class="{'current': unit.current}">{{ unit.summary }}</span>
+                        <span v-if="unit.place"> ({{ unit.place }})</span>
                       </li>
                     </ul>
                   </td>
@@ -108,10 +117,12 @@
         return ret
       }
 
-      var redSportsIcon = L.AwesomeMarkers.icon({
-        icon: 'futbol-o', // Font Awesome icon for soccer ball
-        markerColor: 'red',
-        prefix: 'fa'
+      // https://github.com/lennardv2/Leaflet.awesome-markers?tab=readme-ov-file
+      // https://ionic.io/ionicons
+      L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
+      let redSportsIcon = L.AwesomeMarkers.icon({
+        icon: 'football',
+        markerColor: 'cadetblue',
       });
 
       createApp({
@@ -205,8 +216,23 @@
                   // });
                   // return L.marker(latlng, { icon: customIcon });
 
+                  // var newIcon = L.icon({
+                  //   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
+                  //   iconSize: [25, 41],
+                  //   iconAnchor: [12, 41],
+                  //   popupAnchor: [1, -34]
+                  // });
                   var newIcon = L.icon({
-                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
+                    iconUrl: 'assets/icons/soccer-ball-30px.png',
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 30],
+                    popupAnchor: [1, -34]
+                  });
+                  return L.marker(latlng, {icon: newIcon});                  
+                }
+                if (feature.video_places) {
+                  var newIcon = L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
                     iconSize: [25, 41],
                     iconAnchor: [12, 41],
                     popupAnchor: [1, -34]
@@ -214,7 +240,14 @@
                   return L.marker(latlng, {icon: newIcon});                  
                 } else {
                   // Default marker style for other values
-                  return L.marker(latlng);
+                  var newIcon = L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34]
+                  });
+                  return L.marker(latlng, {icon: newIcon});                  
+                  // return L.marker(latlng);
                 }
               }
             },
