@@ -22,9 +22,9 @@ An audio description should:
 * be a short sentence
 
 
-```json
 ANSWER:
 
+```json
 [
     {
         "sentence": "The video opens with a title card that reads 'J. McMILLAN presents' over a blue, watery background.",
