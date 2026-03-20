@@ -55,3 +55,24 @@ Typical length
 ```
 
 ---
+
+Write a python script that generates a markdown file from a json array of audio descriptions and the path to a mp4 video file the descriptions relate to. The audio descriptions have this format:
+
+```json
+[
+    {
+        "sentence": "The video opens with a yellow screen, followed by a blue screen with the text 'J. McMillan presents' and 'By the Waters'.",
+        "start_time": "00:00"
+    },
+    {
+        "sentence": "The scene transitions to a peaceful garden with a house, trees, and a winding path.",
+        "start_time": "00:13"
+    },
+```
+
+The generated markdown file should contain a table with one row per description and with three columns:
+* start_time
+* sentence
+* sample frame
+
+Where sample frame is an image of a frame extracted from the video file at (<start_time of current description> + <start_time following description>) / 2. That is, it should be the frame situated mid-way between the start time of the current and next description.
