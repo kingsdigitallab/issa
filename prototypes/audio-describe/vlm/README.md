@@ -16,8 +16,10 @@ Test cases: By The Waters (9m 54s)
 
 1. try reusing existing scripts or notebook on the HPC
 . reproducing old result no longer working, script killed without reason, possibly due to excess memory usage
+. the following resource allocation now works:
+`srun -p interruptible_gpu -c 8 --mem-per-gpu 128G --gpus-per-task 1 --constraint "rtx6000" -n 1 --time 2:00:00 --pty bash`
+. Processing the 10 mins sample video gets killed
 . 
-srun -p interruptible_gpu -c 8 --mem-per-gpu 128G --gpus-per-task 1 --constraint "rtx6000" -n 1 --time 2:00:00 --pty bash
 
 ### II. AD Visualisation
 
@@ -30,6 +32,7 @@ srun -p interruptible_gpu -c 8 --mem-per-gpu 128G --gpus-per-task 1 --constraint
 
 Video Captioning vs Audio Description (from Deganutti & Al poster about DANTE-AD)
 
+```
 Primary purpose:
     Generates a textual description of visual content
     vs
@@ -39,13 +42,16 @@ Target audience
     Machine learning applications, indexing/search systems
     vs
     Blind or visually impaired audiences
+
 Content focus 
     Visual events, objects, actions 
     vs
     Visual events, objects, actions,scenes, displayed text, mood
+
 Typical length 
     Concise 1-2 sentences 
     vs
     Variable, timed with gaps in dialogue
+```
 
 ---
