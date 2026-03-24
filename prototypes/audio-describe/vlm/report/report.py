@@ -103,4 +103,5 @@ def create_description_report(json_path, video_path, output_md):
 
 if __name__ == "__main__":
     # Ensure you have 'opencv-python' installed: pip install opencv-python
-    create_description_report('../video/out/qwen3-8b-prompt1.md', '../data/waves.mp4', 'qwen3-8b-prompt1.md')
+    input_file = 'qwen3-32b-prompt6'
+    create_description_report(f'../video/out/{input_file}.md', '../data/waves.mp4', f'{input_file}.md')
