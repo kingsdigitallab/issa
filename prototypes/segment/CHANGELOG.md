@@ -1,3 +1,34 @@
+## v0.4.0-segment (2026-04-01)
+
+### Feat
+
+- **ADb**: Added script for AD generation from video input
+- **geosearch**: simple tool to produce FrameSense annotations from a list of segment boundaries
+- **geosearch**: Better icons to the map search
+- **geosearch**: Added more items to the Nominatim cache
+- **geosearch**: Now possible to use a frame as a visual query
+- **geosearch**: Added UI and tools for visual search
+
+### Fix
+
+- **geosearch**: report.py now creates output with same file name (but different extension) as input
+- **ADb**: Renamed the output file, as it was produce with Qwen 32b not 8b
+- **geosearch**: Added missing index html
+- **geosearch**: Semantic search hides similiraty measures when unavailable
+- **geosearch**: Geocoding default area is whole of UK
+- **geosearch**: Requests to Nominatims were declined without a specific user agent
+- **geosearch**: comparison of places among models was broken in compare_answers.py; also improved display formatting
+- **geosearch**: Added more documentation about the prototype in README.md
+- **geosearch**: Added more documentation about the prototype in README.md
+- **geosearch**: Markers on the map no longer overlap, used markercluster plugin
+- **geosearch**: removed default query
+- **geosearch**: better manage failed attempt to fetch json
+- **geosearch**: cosmetic fix to the search button
+
+### Refactor
+
+- **geosearch**: Index scripts now writting json using a shared util function
+
 ## v0.3.0-segment (2026-04-01)
 
 ### Feat
