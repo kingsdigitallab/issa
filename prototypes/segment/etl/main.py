@@ -59,11 +59,12 @@ def caption_frames(
         "../data/1_interim", help="Path to the output folder"
     ),
     backend: str = typer.Option("local", help="The backend to use ('local' or 'api')"),
+    seed: int = typer.Option(42, help="Random seed for reproducible captions"),
 ):
     """Caption frames from a video"""
     try:
         frame_captioning.caption_frames(
-            video_path, model_name, remove_duplicates, output_folder, backend
+            video_path, model_name, remove_duplicates, output_folder, backend, seed
         )
     except Exception as e:
         typer.echo(f"Error: {e}")

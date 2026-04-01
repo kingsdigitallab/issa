@@ -158,7 +158,7 @@ def encode_image(image_path):
         return base64.b64encode(image_file.read()).decode("utf-8")
 
 
-def generate_caption(client_or_model, image_path, prompt, model_name=None):
+def generate_caption(client_or_model, image_path, prompt, model_name=None, seed=42):
     """
     Generate a caption for an image using a vision model or API.
 
@@ -167,12 +167,16 @@ def generate_caption(client_or_model, image_path, prompt, model_name=None):
         image_path (str): Path to the image file.
         prompt (str): The prompt for captioning.
         model_name (str): The name of the model (required for API).
+        seed (int): Optional random seed for reproducible outputs.
 
     Returns:
         str: The generated caption.
     """
     if isinstance(client_or_model, OpenAI):
         base64_image = encode_image(image_path)
+        kwargs = {}
+        if seed is not None:
+            kwargs["seed"] = seed
         response = client_or_model.chat.completions.create(
             model=model_name,
             messages=[
@@ -189,11 +193,15 @@ def generate_caption(client_or_model, image_path, prompt, model_name=None):
                     ],
                 }
             ],
+            **kwargs,
         )
         return response.choices[0].message.content
 
     # Local model inference (assuming Moondream or similar interface)
     image = Image.open(image_path)
+
+    if seed is not None:
+        torch.manual_seed(seed)
 
     # Note: This assumes the local model has a .caption() method like Moondream
     # If using a different local model, this might need adjustment.

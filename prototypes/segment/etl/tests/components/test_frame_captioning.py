@@ -46,6 +46,34 @@ def test_caption_frames(mocker, tmp_path):
     assert data["data"][1]["caption"] == "Caption B"
 
 
+def test_caption_frames_forwards_seed(mocker, tmp_path):
+    video_path = str(tmp_path / "dummy.mp4")
+    output_folder = str(tmp_path / "out")
+
+    frames_path = tmp_path / "out" / "dummy.mp4" / "frames"
+    frames_path.mkdir(parents=True)
+    (frames_path / "frame_0000_0.00.png").touch()
+    (frames_path / "frame_0030_1.00.png").touch()
+
+    mocker.patch(
+        "components.utils.get_model_client", return_value=("model", "processor", "cpu")
+    )
+    mock_generate = mocker.patch(
+        "components.utils.generate_caption", return_value="Caption"
+    )
+
+    frame_captioning.caption_frames(
+        video_path=video_path,
+        model_name="test-model",
+        remove_duplicates=False,
+        output_folder=output_folder,
+        seed=42,
+    )
+
+    for call in mock_generate.call_args_list:
+        assert call.kwargs.get("seed") == 42
+
+
 def test_caption_frames_no_frames(mocker, tmp_path, capsys):
     video_path = str(tmp_path / "dummy.mp4")
     output_folder = str(tmp_path / "out")

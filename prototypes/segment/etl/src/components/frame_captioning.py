@@ -59,6 +59,7 @@ def caption_frames(
     remove_duplicates: bool,
     output_folder: str,
     backend: str = "local",
+    seed: int = 42,
 ):
     """
     Generate captions for frames of a video using a pre-trained vision model.
@@ -69,6 +70,7 @@ def caption_frames(
         remove_duplicates (bool): Whether to remove consecutive duplicate captions.
         output_folder (str): Path to the output folder.
         backend (str): The backend to use ("local" or "api").
+        seed (int): Optional random seed for reproducible captions.
 
     Returns:
         None
@@ -94,7 +96,7 @@ def caption_frames(
         for frame_path in tqdm.tqdm(frames, desc="Captioning frames"):
             full_frame_path = os.path.join(frames_path, frame_path)
             caption_text = utils.generate_caption(
-                model, full_frame_path, prompt, model_name=model_name
+                model, full_frame_path, prompt, model_name=model_name, seed=seed
             )
             timestamp = utils.get_timestamp(frame_path)
 
