@@ -66,7 +66,7 @@ def test_caption_frames_command(mocker):
     )
 
     assert result.exit_code == 0
-    mock_func.assert_called_once_with("dummy.mp4", "test-model", False, "out", "api")
+    mock_func.assert_called_once_with("dummy.mp4", "test-model", False, "out", "api", 42)
 
 
 def test_align_command(mocker):
