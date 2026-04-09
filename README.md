@@ -28,5 +28,5 @@ More information and event recordings in [our Wiki](https://github.com/kingsdigi
 
 ---
 
-> [!NOTE] 
+> [!NOTE]About the project 
 > ISSA is led by [Dr Daniel Chávez Heras](https://www.kcl.ac.uk/meet-dr-daniel-chavez-heras) based in the [Department of Digital Humanities](https://www.kcl.ac.uk/ddh) at King's College London, in collaboration with [King's Digital Lab](https://kdl.kcl.ac.uk/), supported by the [BFI Innovation Challenge Fund](https://www.bfi.org.uk/get-funding-support/bfi-national-lottery-innovation-challenge-fund), with National Lottery funding.
