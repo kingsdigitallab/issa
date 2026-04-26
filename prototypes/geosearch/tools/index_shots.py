@@ -19,14 +19,14 @@ class Index:
         else:
             self.index = {}
 
-    def get_shot_start_time(self, video_name, clip_name, shot_index):
-        start_times = self.get_shots_start_times(video_name, clip_name)
+    def get_shot_start_time(self, video_path, clip_name, shot_index):
+        start_times = self.get_shots_start_times(video_path, clip_name)
         return re.sub(r'\..*$', '', start_times[int(shot_index) - 1]['Start Timecode'])
 
     @lru_cache(maxsize=10)
-    def get_shots_start_times(self, video_name, clip_name):
+    def get_shots_start_times(self, video_path, clip_name):
         ret = []
-        with open(COLLECTION_FOLDER_PATH / 'NI' / video_name / clip_name / 'shots' / 'shots.csv', 'r') as file:
+        with open(video_path / clip_name / 'shots' / 'shots.csv', 'r') as file:
             next(file)  # Skip the first line
             reader = csv.DictReader(file)
             ret = list(reader)
@@ -50,7 +50,9 @@ class Index:
             'colour'
         ]
 
-        for answers_file_path in COLLECTION_FOLDER_PATH.glob("**/frames.json"):
+        for answers_file_path in sorted(COLLECTION_FOLDER_PATH.glob("**/frames.json")):
+            # if 'NLW' in str(answers_file_path): 
+            #     continue
             answers_file_content = json.loads(answers_file_path.read_text())
             middle_props = answers_file_content.get('data', {}).get('middle.jpg', {})
             if not middle_props:
@@ -63,21 +65,22 @@ class Index:
                 'shot': answers_file_path.parent.name,
             }
 
-            entry['start'] = self.get_shot_start_time(entry['video'], entry['clip'], entry['shot'])
+            entry['start'] = self.get_shot_start_time(answers_file_path.parent.parent.parent.parent, entry['clip'], entry['shot'])
 
             for question in questions:
                 entry[question] = middle_props[question]['value']
 
             title_data = middle_props['title']['value']
-            entry['has_title'] = 1 if title_data  else 0
-            if title_data:
+
+            entry['title'] = ''
+            entry['year'] = ''
+            entry['productionCompany'] = ''
+
+            entry['has_title'] = 1 if title_data and isinstance(title_data, dict) else 0
+            if entry['has_title']:
                 entry['title'] = title_data['title']
                 entry['year'] = title_data['year']
                 entry['productionCompany'] = title_data['productionCompany']
-            else:
-                entry['title'] = ''
-                entry['year'] = ''
-                entry['productionCompany'] = ''
 
             self.index.append(entry)
 
@@ -121,13 +124,11 @@ class Index:
             'data': index,
         }
 
-        # Path(INDEX_NAME_VECTORS).write_text(json.dumps(index_content, indent=2))
-        # Path(INDEX_NAME_VECTORS).write_text(json.dumps(index_content))
         utils.write_json(index_content, INDEX_NAME_VECTORS)
 
         print(f'total: {stats["found"] + stats["failed"]}; found: {stats["found"]} ; not found: {stats["failed"]}')
 
 index = Index()
 
-# index.build()
+index.build()
 index.build_vectors()
