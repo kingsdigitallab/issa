@@ -38,6 +38,7 @@ class Index:
         stats = {
             'found': 0,
             'failed': 0,
+            'warnings': 0
         }
 
         questions = [
@@ -77,6 +78,9 @@ class Index:
             entry['productionCompany'] = ''
 
             entry['has_title'] = 1 if title_data and isinstance(title_data, dict) else 0
+            if title_data and not isinstance(title_data, dict):
+                print(f'WARN: title.value in {answers_file_path} should be a dict')
+                stats['warnings'] += 1
             if entry['has_title']:
                 entry['title'] = title_data['title']
                 entry['year'] = title_data['year']
@@ -91,7 +95,7 @@ class Index:
 
         self.index_path.write_text(json.dumps(index_content, indent=2))
 
-        print(f'total: {stats["found"] + stats["failed"]}; found: {stats["found"]} ; not found: {stats["failed"]}')
+        print(f'total: {stats["found"] + stats["failed"]}; found: {stats["found"]} ; not found: {stats["failed"]}; warnings: {stats["warnings"]}')
 
     def build_vectors(self):
         index = []
