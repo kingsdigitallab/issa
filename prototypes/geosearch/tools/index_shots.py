@@ -61,7 +61,7 @@ class Index:
             print(answers_file_path)
 
             entry = {
-                'video': answers_file_path.parent.parent.parent.parent.name,
+                'video': str(Path(answers_file_path.parent.parent.parent.parent.parent.name) / answers_file_path.parent.parent.parent.parent.name),
                 'clip': answers_file_path.parent.parent.parent.name,
                 'shot': answers_file_path.parent.name,
             }
@@ -115,7 +115,7 @@ class Index:
             print(answers_file_path)
 
             entry = {
-                'video': answers_file_path.parent.parent.parent.parent.name,
+                'video': str(Path(answers_file_path.parent.parent.parent.parent.parent.name) / answers_file_path.parent.parent.parent.parent.name),
                 'clip': answers_file_path.parent.parent.parent.name,
                 'shot': answers_file_path.parent.name,
                 'vector': middle_props['embedding']['value']

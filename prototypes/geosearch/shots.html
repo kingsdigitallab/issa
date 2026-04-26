@@ -395,7 +395,7 @@
             return v.map(c => c / l)
           },
           getImageSrcFromShot(item) {
-            return `data/collections/NI/${item.video}/${item.clip}/shots/${item.shot}/middle.jpg`;
+            return `data/collections/${item.video}/${item.clip}/shots/${item.shot}/middle.jpg`;
           },
           loadVideo(path) {
             if (this?.videoPath != path) {
@@ -404,7 +404,7 @@
             }
           },
           onClickFrame(item) {
-            let clipPath = `data/collections/NI/${item.video}/${item.clip}/${item.clip}.webm`
+            let clipPath = `data/collections/${item.video}/${item.clip}/${item.clip}.webm`
             this.loadVideo(clipPath)
             this.requestVideoJumpInTimeCode(item.start, true)
           },
