@@ -192,14 +192,14 @@ uv run python main.py caption-frames path/to/video.mp4 \
 ```bash
 uv run python main.py align path/to/video.mp4 \
     --input-folder ../data/1_interim \
-    --merge-duplicates \
+    --merge-duplicate-transcriptions \
     --output-folder ../data/1_interim
 ```
 
 **Options:**
 
 - `--input-folder`: Folder with transcription and captions from previous steps
-- `--merge-duplicates`: Merge consecutive duplicate transcriptions (default: True). Use `--no-merge-duplicates` to disable.
+- `--merge-duplicate-transcriptions`: Merge consecutive duplicate transcriptions (default: True). Use `--no-merge-duplicate-transcriptions` to disable.
 - `--output-folder`: Where to save aligned captions
 
 ### Step 5: Generate Segments
