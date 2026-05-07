@@ -1,3 +1,15 @@
+## v0.5.0-segment (2026-05-07)
+
+### Feat
+
+- **geosearch**: index_shots.py report invalid format of tilte in the json decoding of frames.json from FS
+- **segment**: Add seed to frame captioning
+
+### Fix
+
+- **geosearch**: Semantic search now works well with videos from more than one collection
+- **geosearch**: indexing noew better copes with invalid json decoding in frames.json from FS
+
 ## v0.4.0-segment (2026-04-01)
 
 ### Feat
