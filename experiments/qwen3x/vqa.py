@@ -3,7 +3,8 @@ import json
 from datetime import datetime
 import subprocess
 
-VIDEO_FILENAME = 'DVC43998.mp4'
+# VIDEO_FILENAME = 'DVC43998.mp4'
+VIDEO_FILENAME = 'S1964_2.mp4'
 
 def format_time(delta):
     hours, remainder = divmod(delta.seconds, 3600)
@@ -63,7 +64,7 @@ if 0:
     print(json.dumps(messages, indent=2))
     
     res = client.chat.completions.create(
-        model="Qwen/Qwen3.5-2B",
+        model="Qwen/Qwen3.5-4B",
         messages=messages,
         max_tokens=32768,
         temperature=1.0,
@@ -81,6 +82,13 @@ if 1:
     '''
     vllm serve Qwen/Qwen3.5-2B --port 8000 --tensor-parallel-size 1 --max-model-len 262144 --reasoning-parser qwen3 --allowed-local-media-path /home/gnoel/src/prj/issa/experiments/ --media-io-kwargs '{"video": {"num_frames": -1}}'
     '''
+    
+    PROMPT = "Summarize the video content in one sentence."
+    PROMPT = '''This video contains one or more TV programs. 
+Each program is normally preceded by a visual separator such as a large count down, a clock, a black screen, color bars or a production card with title.
+Detect all programs in the video. Only return the starting and ending timecode for each program (e.g. 00:13, 01:45). One line per program.
+No need to analyse or describe programs.
+'''
         
     messages = [
         {
@@ -94,7 +102,7 @@ if 1:
                 },
                 {
                     "type": "text",
-                    "text": "Summarize the video content in one sentence."
+                    "text": PROMPT
                 }
             ]
         }
@@ -111,15 +119,16 @@ if 1:
     # With `do_sample_frames=True`, you can customize the `fps` value to set your desired video sampling rate.
     
     options = {
-        'model': "Qwen/Qwen3.5-2B",
+        'model': "Qwen/Qwen3.5-4B",
         'messages': messages,
         'max_tokens': 5*1024,
-        'temperature': 0.7,
-        'top_p': 0.8,
-        'presence_penalty': 1.5,
+        'temperature': 0.6,
+        'top_p': 0.95,
+        'presence_penalty': 1.0,
         'extra_body': {
             "top_k": 20,
-            "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True},    
+            "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True},
+            "enable_thinking": False,            
         }
     }
 
