@@ -1,7 +1,9 @@
 from openai import OpenAI
 import json
+import csv
 from datetime import datetime
 import subprocess
+from pathlib import Path
 from segments import compare_segments, load_segments
 import re
 
@@ -21,6 +23,9 @@ Then returns the only a json array with one item per program.
 Each item is a dictionary with `startTime` and `endTime` in HH:MM:SS format.
 No need to analyse or describe programs.
 '''
+CSV_FILE = 'evaluations.csv'
+CSV_COLUMNS = ['experiment_time', 'duration_seconds', 'model_id', 'video', 'comparison_summary', 'comparison_score', 'vram_gb', 'seed']
+
 # VIDEO_FILENAMES = ['DVC43998', 'DVC43313']
 VIDEO_FILENAMES = ['DVC43998']
 
@@ -66,7 +71,24 @@ def get_system_vram_used():
         
     return [used_mib / 1024, total_mib / 1024]
     
-    # print(f"VRAM used: {used_gib:.2f} GB out of {total_gib:.1f} GB")
+    
+def log_to_csv(experiment_time, duration_seconds, model_id, video, comparison_summary, comparison_score, vram_gb, seed):
+    ret = Path(CSV_FILE)
+    needs_header = not ret.exists()
+    with open(CSV_FILE, 'a', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
+        if needs_header:
+            writer.writeheader()
+        writer.writerow({
+            'experiment_time': experiment_time,
+            'duration_seconds': duration_seconds,
+            'model_id': model_id,
+            'video': video,
+            'comparison_summary': comparison_summary,
+            'comparison_score': comparison_score,
+            'vram_gb': vram_gb,
+            'seed': seed,
+        })
 
     
 def run_experiment(video_filename):
@@ -79,10 +101,13 @@ def run_experiment(video_filename):
     
     video_filename_with_ext = video_filename + '.mp4'
     
+    experiment_time = datetime.now().isoformat()
+    vram_gb, vram_total = get_system_vram_used()
+    
     print('---')
-    print(f'* TIME = {datetime.now().isoformat()}')
+    print(f'* TIME = {experiment_time}')
     print(f'* VIDEO = {video_filename_with_ext}')
-    print_system_vram_usage()
+    print(f'* VRAM used: {vram_gb:.2f} GB out of {vram_total:.1f} GB')
     t0 = datetime.now()
     
     
@@ -141,9 +166,8 @@ def run_experiment(video_filename):
                     # qwen3.5 2b via vllm will respond in reasoning field
                     answer = first_choice.message.reasoning
         
+        comparison = None
         if answer:
-            pass
-            # get json from answer
             print(f'\n* ANSWER = \n{answer}\n')
             
             # compare segments
@@ -161,12 +185,16 @@ def run_experiment(video_filename):
     print('* RESPONSE =')
     print_dict(json.loads(res.model_dump_json()))
     
-    print_system_vram_usage()
+    print(f'* VRAM used: {vram_gb:.2f} GB out of {vram_total:.1f} GB')
     
     print(f'* TIME = {datetime.now().isoformat()}')
     
     if duration:
         print(f'* DURATION = {format_time(duration)}')
+    
+    comparison_summary = comparison.get('summary', '') if comparison else ''
+    comparison_score = comparison.get('score', 0.0) if comparison else 0.0
+    log_to_csv(experiment_time, duration.total_seconds(), MODELID, video_filename, comparison_summary, comparison_score, round(vram_gb, 2), SEED)
     
     print('\n')
     print('-' * 3)
