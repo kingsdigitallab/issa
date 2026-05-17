@@ -2,9 +2,41 @@ from openai import OpenAI
 import json
 from datetime import datetime
 import subprocess
+from segments import compare_segments, load_segments
+import re
 
 # VIDEO_FILENAME = 'DVC43998.mp4'
-VIDEO_FILENAME = 'S1964_2.mp4'
+# VIDEO_FILENAME = 'S1964_2.mp4'
+'''
+vllm serve Qwen/Qwen3.5-2B --port 8000 --tensor-parallel-size 1 --max-model-len 262144 --reasoning-parser qwen3 --allowed-local-media-path /home/gnoel/src/prj/issa/experiments/ --media-io-kwargs '{"video": {"num_frames": -1}}'
+'''
+API_URL = "http://localhost:8000/v1"
+MODELID = "Qwen/Qwen3.5-4B"
+SEED = 42
+PROMPT = "Summarize the video content in one sentence."
+PROMPT = '''This video contains one or more TV programs. 
+Each program is normally preceded by a visual separator such as a large count down, a clock, a black screen, color bars or a production card with title.
+Detect all programs int he video. 
+Then returns the only a json array with one item per program. 
+Each item is a dictionary with `startTime` and `endTime` in HH:MM:SS format.
+No need to analyse or describe programs.
+'''
+# VIDEO_FILENAMES = ['DVC43998', 'DVC43313']
+VIDEO_FILENAMES = ['DVC43998']
+
+def parse_dirty_json(dirty_json):
+    'Convert dirty json to a pythons structure. Handles different formattings.'
+    ret = dirty_json
+    if isinstance(dirty_json, str):
+        json_blocks = re.sub(r'(?s)```json\b(.*)```', r'\1', dirty_json)
+        clean_json = json_blocks.strip(' \n')
+        if (clean_json.startswith('{') and clean_json.endswith('}')) or (clean_json.startswith('[') and clean_json.endswith(']')):
+            try:
+                ret = json.loads(clean_json)
+            except json.decoder.JSONDecodeError:
+                self._warn(f'Invalid JSON format: {ret}')
+                pass
+    return ret
 
 def format_time(delta):
     hours, remainder = divmod(delta.seconds, 3600)
@@ -31,136 +63,115 @@ def get_system_vram_used():
     
     # Parse the output (e.g., "1024, 8192")
     used_mib, total_mib = map(int, result.stdout.strip().split(", "))
-    
-    # Convert MiB to GiB
-#     used_gib = used_mib / 1024
-#     total_gib = total_mib / 1024
-    
+        
     return [used_mib / 1024, total_mib / 1024]
     
     # print(f"VRAM used: {used_gib:.2f} GB out of {total_gib:.1f} GB")
 
     
-# Configured by environment variables
-client = OpenAI(
-    api_key="whatever",
-    base_url="http://localhost:8000/v1"    
-)
-
-print('---')
-print(f'* TIME = {datetime.now().isoformat()}')
-print(f'* VIDEO = {VIDEO_FILENAME}')
-print_system_vram_usage()
-t0 = datetime.now()
-
-
-if 0:
-
-    messages = [
-        {"role": "user", "content": "Just say Hello world in reverse. Do not output reasoning. Only output the final answer."},
-    ]
-    
-    print('PROMPT =')
-    print(json.dumps(messages, indent=2))
-    
-    res = client.chat.completions.create(
-        model="Qwen/Qwen3.5-4B",
-        messages=messages,
-        max_tokens=32768,
-        temperature=1.0,
-        top_p=1.0,
-        presence_penalty=2.0,
-        # reasoning_effort="none",
-        extra_body={
-            "top_k": 20,
-            "enable_thinking": False
-        }, 
+def run_experiment(video_filename):
+        
+    # Configured by environment variables
+    client = OpenAI(
+        api_key="whatever",
+        base_url=API_URL    
     )
-    # print("Chat response:", chat_response)
-
-if 1:
-    '''
-    vllm serve Qwen/Qwen3.5-2B --port 8000 --tensor-parallel-size 1 --max-model-len 262144 --reasoning-parser qwen3 --allowed-local-media-path /home/gnoel/src/prj/issa/experiments/ --media-io-kwargs '{"video": {"num_frames": -1}}'
-    '''
     
-    PROMPT = "Summarize the video content in one sentence."
-    PROMPT = '''This video contains one or more TV programs. 
-Each program is normally preceded by a visual separator such as a large count down, a clock, a black screen, color bars or a production card with title.
-Detect all programs in the video. Only return the starting and ending timecode for each program (e.g. 00:13, 01:45). One line per program.
-No need to analyse or describe programs.
-'''
-        
-    messages = [
-        {
-            "role": "user",
-            "content": [
-                {
-                    "type": "video_url",
-                    "video_url": {
-                        "url": f"file:///home/gnoel/src/prj/issa/experiments/qwen3x/{VIDEO_FILENAME}"
+    video_filename_with_ext = video_filename + '.mp4'
+    
+    print('---')
+    print(f'* TIME = {datetime.now().isoformat()}')
+    print(f'* VIDEO = {video_filename_with_ext}')
+    print_system_vram_usage()
+    t0 = datetime.now()
+    
+    
+    if 1:            
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "video_url",
+                        "video_url": {
+                            "url": f"file:///home/gnoel/src/prj/issa/experiments/qwen3x/videos/{video_filename_with_ext}"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "text": PROMPT
                     }
-                },
-                {
-                    "type": "text",
-                    "text": PROMPT
-                }
-            ]
-        }
-    ]
-    
-#     print('PROMPT =')
-#     print(json.dumps(messages, indent=2))
+                ]
+            }
+        ]
+                    
+        # When vLLM is launched with `--media-io-kwargs '{"video": {"num_frames": -1}}'`,
+        # video frame sampling can be configured via `extra_body` (e.g., by setting `fps`).
+        # This feature is currently supported only in vLLM.
+        #
+        # By default, `fps=2` and `do_sample_frames=True`.
+        # With `do_sample_frames=True`, you can customize the `fps` value to set your desired video sampling rate.
         
-    # When vLLM is launched with `--media-io-kwargs '{"video": {"num_frames": -1}}'`,
-    # video frame sampling can be configured via `extra_body` (e.g., by setting `fps`).
-    # This feature is currently supported only in vLLM.
-    #
-    # By default, `fps=2` and `do_sample_frames=True`.
-    # With `do_sample_frames=True`, you can customize the `fps` value to set your desired video sampling rate.
-    
-    options = {
-        'model': "Qwen/Qwen3.5-4B",
-        'messages': messages,
-        'max_tokens': 5*1024,
-        'temperature': 0.6,
-        'top_p': 0.95,
-        'presence_penalty': 1.0,
-        'extra_body': {
-            "top_k": 20,
-            "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True},
-            "enable_thinking": False,            
+        options = {
+            'model': MODELID,
+            'messages': messages,
+            'max_tokens': 5*1024,
+            'temperature': 0.6,
+            'top_p': 0.95,
+            'presence_penalty': 1.0,
+            'seed': SEED,
+            'extra_body': {
+                "top_k": 20,
+                "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True},
+                "enable_thinking": False,            
+            }
         }
-    }
-
-    print('* REQUEST =')
-    print_dict(options)
     
-    res = client.chat.completions.create(**options)
-#         model="Qwen/Qwen3.5-2B",
-#         messages=messages,
-#         max_tokens=5*1024,
-#         temperature=0.7,
-#         top_p=0.8,
-#         presence_penalty=1.5,
-#         extra_body={
-#             "top_k": 20,
-#             "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True},
-#         }, 
-#     )
-
-t1 = datetime.now()
-duration = t1 - t0
+        print('* REQUEST =')
+        print_dict(options)
+        
+        res = client.chat.completions.create(**options)
+        
+        answer = None
+        first_choice = res.choices[0]
+        if first_choice:
+            if first_choice.finish_reason == 'stop':
+                answer = first_choice.message.content
+                if not answer:
+                    # qwen3.5 2b via vllm will respond in reasoning field
+                    answer = first_choice.message.reasoning
+        
+        if answer:
+            pass
+            # get json from answer
+            print(f'\n* ANSWER = \n{answer}\n')
+            
+            # compare segments
+            segments_true = load_segments(video_filename, 'segments_true')
+            segments_predict = parse_dirty_json(answer)
+            comparison = compare_segments(segments_true, segments_predict)
+            
+            print(f'\n* COMPARISON = ')
+            print_dict(comparison)
+        
     
-print('* RESPONSE =')
-print_dict(json.loads(res.model_dump_json()))
+    t1 = datetime.now()
+    duration = t1 - t0
+        
+    print('* RESPONSE =')
+    print_dict(json.loads(res.model_dump_json()))
+    
+    print_system_vram_usage()
+    
+    print(f'* TIME = {datetime.now().isoformat()}')
+    
+    if duration:
+        print(f'* DURATION = {format_time(duration)}')
+    
+    print('\n')
+    print('-' * 3)
+    print('\n')
 
-print_system_vram_usage()
 
-print(f'* TIME = {datetime.now().isoformat()}')
-
-if duration:
-    print(f'* DURATION = {format_time(duration)}')
-
-print('\n')
-print('-' * 3)
-print('\n')
+for video_filename in VIDEO_FILENAMES:
+    run_experiment(video_filename)

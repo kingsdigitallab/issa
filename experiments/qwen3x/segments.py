@@ -14,16 +14,21 @@ def load_segments(filename, dir):
 
 def convert_segments_to_seconds(segments):
     for i, s in enumerate(segments):
+        s['valid'] = 1
         for p in ['startTime', 'endTime']:
             time_code = s.get(p, None)
             matches = None
             if time_code:
+                matches = re.match(r'^(\d\d):(\d\d)$', time_code)
+                if matches:
+                    time_code = '00:' + time_code
                 matches = re.match(r'^(\d\d):(\d\d):(\d\d)$', time_code)
             if matches:
                 s[p] = (int(matches.group(1)) * 60 + int(matches.group(2))) * 60 + int(matches.group(3))
-                # print(time_code, s[p])
+                # print(time_code, s[p])            
             else:
                 print(f'WARNING: wrong time format in segment {i+1}.{p}, {time_code}')
+                s['valid'] = 0
 
 def get_segs_intersection(seg1, seg2):
     startTime = max(seg1['startTime'], seg2['startTime'])
@@ -52,6 +57,7 @@ def compare_segments(segments_true, segments_predict):
         for seg_pred in segments_predict:
             match = seg_pred.get('true', None)
             if match: continue
+            if seg_pred['valid'] == 0: continue
             inter = get_segs_intersection(seg_true, seg_pred)
             overlap = inter[1] - inter[0]
             if overlap > largest_overlap:

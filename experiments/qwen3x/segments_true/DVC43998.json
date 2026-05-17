@@ -1,14 +1,6 @@
 [
     {
       "sequenceNumber": "1",
-      "startTime": "00:00:00",
-      "endTime": "00:00:22",
-      "srt": [
-      ],
-      "description": ""
-    },
-    {
-      "sequenceNumber": "2",
       "startTime": "00:00:22",
       "endTime": "00:02:32",
       "srt": [
@@ -16,15 +8,7 @@
       "description": ""
     },
     {
-      "sequenceNumber": "3",
-      "startTime": "00:02:33",
-      "endTime": "00:02:37",
-      "srt": [
-      ],
-      "description": ""
-    },
-    {
-      "sequenceNumber": "4",
+      "sequenceNumber": "2",
       "startTime": "00:02:37",
       "endTime": "00:04:12",
       "srt": [
@@ -32,15 +16,7 @@
       "description": ""
     },
     {
-      "sequenceNumber": "5",
-      "startTime": "00:04:12",
-      "endTime": "00:04:18",
-      "srt": [
-      ],
-      "description": ""
-    },
-    {
-      "sequenceNumber": "6",
+      "sequenceNumber": "3",
       "startTime": "00:04:18",
       "endTime": "00:06:36",
       "srt": [
@@ -48,15 +24,7 @@
       "description": ""
     },
     {
-      "sequenceNumber": "7",
-      "startTime": "00:06:36",
-      "endTime": "00:06:42",
-      "srt": [
-      ],
-      "description": ""
-    },
-    {
-      "sequenceNumber": "8",
+      "sequenceNumber": "4",
       "startTime": "00:06:42",
       "endTime": "00:08:17",
       "srt": [
@@ -64,15 +32,7 @@
       "description": ""
     },
     {
-      "sequenceNumber": "9",
-      "startTime": "00:08:17",
-      "endTime": "00:08:24",
-      "srt": [
-      ],
-      "description": ""
-    },
-    {
-      "sequenceNumber": "10",
+      "sequenceNumber": "5",
       "startTime": "00:08:24",
       "endTime": "00:10:33",
       "srt": [
@@ -80,15 +40,7 @@
       "description": ""
     },
     {
-      "sequenceNumber": "11",
-      "startTime": "00:10:33",
-      "endTime": "00:10:44",
-      "srt": [
-      ],
-      "description": ""
-    },
-    {
-      "sequenceNumber": "12",
+      "sequenceNumber": "6",
       "startTime": "00:10:44",
       "endTime": "00:12:25",
       "srt": [
