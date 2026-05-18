@@ -2,8 +2,6 @@ from pathlib import Path
 import json
 import re
 
-INPUT_FILE_NAME = 'v1'
-
 def print_dict(dic):
     print(json.dumps(dic, indent=2))
 
@@ -17,6 +15,9 @@ def convert_segments_to_seconds(segments):
         s['valid'] = 1
         for p in ['startTime', 'endTime']:
             time_code = s.get(p, None)
+            if not time_code:
+                # cope with models that insist on using 'start_time'
+                time_code = s.get(p.replace('Time', '_time'), None)
             matches = None
             if time_code:
                 matches = re.match(r'^(\d\d):(\d\d)$', time_code)
@@ -95,6 +96,8 @@ def compare_segments(segments_true, segments_predict):
     return ret
 
 if 0:
+    INPUT_FILE_NAME = 'v1'
+
     segments_true = load_segments(INPUT_FILE_NAME, 'segments_true')
     segments_predict = load_segments(INPUT_FILE_NAME, 'segments_predict')
 

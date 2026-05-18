@@ -9,25 +9,28 @@ import re
 
 # VIDEO_FILENAME = 'DVC43998.mp4'
 # VIDEO_FILENAME = 'S1964_2.mp4'
-'''
-vllm serve Qwen/Qwen3.5-2B --port 8000 --tensor-parallel-size 1 --max-model-len 262144 --reasoning-parser qwen3 --allowed-local-media-path /home/gnoel/src/prj/issa/experiments/ --media-io-kwargs '{"video": {"num_frames": -1}}'
-'''
+
 API_URL = "http://localhost:8000/v1"
-MODELID = "Qwen/Qwen3.5-4B"
-SEED = 42
+# MODELID = "Qwen/Qwen3.5-4B"
+MODELID = "cyankiwi/Qwen3.5-9B-AWQ-4bit"
+SEEDS = [42, 54]
+SEED = SEEDS[0]
 PROMPT = "Summarize the video content in one sentence."
 PROMPT = '''This video contains one or more TV programs. 
-Each program is normally preceded by a visual separator such as a large count down, a clock, a black screen, color bars or a production card with title.
-Detect all programs int he video. 
-Then returns the only a json array with one item per program. 
-Each item is a dictionary with `startTime` and `endTime` in HH:MM:SS format.
+Each program should be preceded by a special, full screen visual separator such as a large count down, a large clock, a black screen, color bars or a production card with title. The visual separators are not intended for public television, only for production team. A separator may last between a few seconds to a few minutes. They are distinct from title screens within a program.
+Detect all programs in the video. 
+Then returns only a json array with one item per program. 
+Each item is a dictionary with `startTime` and `endTime` keys in 'HH:MM:SS' format.
 No need to analyse or describe programs.
 '''
 CSV_FILE = 'evaluations.csv'
-CSV_COLUMNS = ['experiment_time', 'duration_seconds', 'model_id', 'video', 'comparison_summary', 'comparison_score', 'vram_gb', 'seed']
+CSV_COLUMNS = ['experiment_time', 'duration_seconds', 'model_id', 'video', 'comparison_summary', 'comparison_score', 'vram_gb', 'seed', 'comments']
+CSV_COMMENTS = 'no-reasoning'
 
-# VIDEO_FILENAMES = ['DVC43998', 'DVC43313']
-VIDEO_FILENAMES = ['DVC43998']
+VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A']
+# VIDEO_FILENAMES = ['DVC43998', 'DVC43313', '90D2335_A']
+# True to run only the first experiment (first video, first model seed).
+SINGLE_TEST = False
 
 def parse_dirty_json(dirty_json):
     'Convert dirty json to a pythons structure. Handles different formattings.'
@@ -88,11 +91,15 @@ def log_to_csv(experiment_time, duration_seconds, model_id, video, comparison_su
             'comparison_score': comparison_score,
             'vram_gb': vram_gb,
             'seed': seed,
+            'comments': CSV_COMMENTS
         })
 
     
-def run_experiment(video_filename):
+def run_experiment(video_filename, seed=None):
         
+    if seed is None:
+        seed = SEED
+    
     # Configured by environment variables
     client = OpenAI(
         api_key="whatever",
@@ -109,7 +116,6 @@ def run_experiment(video_filename):
     print(f'* VIDEO = {video_filename_with_ext}')
     print(f'* VRAM used: {vram_gb:.2f} GB out of {vram_total:.1f} GB')
     t0 = datetime.now()
-    
     
     if 1:            
         messages = [
@@ -140,11 +146,11 @@ def run_experiment(video_filename):
         options = {
             'model': MODELID,
             'messages': messages,
-            'max_tokens': 5*1024,
+            'max_tokens': 10*1024,
             'temperature': 0.6,
             'top_p': 0.95,
             'presence_penalty': 1.0,
-            'seed': SEED,
+            'seed': seed,
             'extra_body': {
                 "top_k": 20,
                 "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True},
@@ -184,7 +190,8 @@ def run_experiment(video_filename):
         
     print('* RESPONSE =')
     print_dict(json.loads(res.model_dump_json()))
-    
+
+    vram_gb, vram_total = get_system_vram_used()    
     print(f'* VRAM used: {vram_gb:.2f} GB out of {vram_total:.1f} GB')
     
     print(f'* TIME = {datetime.now().isoformat()}')
@@ -194,7 +201,7 @@ def run_experiment(video_filename):
     
     comparison_summary = comparison.get('summary', '') if comparison else ''
     comparison_score = comparison.get('score', 0.0) if comparison else 0.0
-    log_to_csv(experiment_time, duration.total_seconds(), MODELID, video_filename, comparison_summary, comparison_score, round(vram_gb, 2), SEED)
+    log_to_csv(experiment_time, duration.total_seconds(), MODELID, video_filename, comparison_summary, comparison_score, round(vram_gb, 2), seed)
     
     print('\n')
     print('-' * 3)
@@ -202,4 +209,10 @@ def run_experiment(video_filename):
 
 
 for video_filename in VIDEO_FILENAMES:
-    run_experiment(video_filename)
+    for seed in SEEDS:
+        run_experiment(video_filename, seed)
+        if SINGLE_TEST:
+            break
+    if SINGLE_TEST:
+        break
+
