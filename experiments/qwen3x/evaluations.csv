@@ -1,0 +1,29 @@
+experiment_time,duration_seconds,model_id,video,comparison_summary,comparison_score,vram_gb,seed,comments
+2026-05-18T16:47:53.278934,74.711617,cyankiwi/Qwen3.5-9B-AWQ-4bit,aobbu34200001,20 / 22 matched,0.87,22.89,42,no-reasoning
+2026-05-18T16:49:08.090166,73.794431,cyankiwi/Qwen3.5-9B-AWQ-4bit,aobbu34200001,21 / 22 matched,0.92,22.89,54,no-reasoning
+2026-05-18T16:50:21.963680,44.497408,cyankiwi/Qwen3.5-9B-AWQ-4bit,DVC43998,6 / 6 matched,0.99,22.89,42,no-reasoning
+2026-05-18T16:51:06.558620,42.852171,cyankiwi/Qwen3.5-9B-AWQ-4bit,DVC43998,1 / 6 matched,0.16,22.89,54,no-reasoning
+2026-05-18T16:51:49.509067,125.786756,cyankiwi/Qwen3.5-9B-AWQ-4bit,DVC43313,1 / 2 matched ; 11 extra predictions,0.07,22.89,42,no-reasoning
+2026-05-18T16:53:55.391949,121.605029,cyankiwi/Qwen3.5-9B-AWQ-4bit,DVC43313,2 / 2 matched,0.73,22.89,54,no-reasoning
+2026-05-18T16:55:57.096758,69.473176,cyankiwi/Qwen3.5-9B-AWQ-4bit,90D2335_A,7 / 7 matched,0.76,22.89,42,no-reasoning
+2026-05-18T16:57:06.666298,70.385667,cyankiwi/Qwen3.5-9B-AWQ-4bit,90D2335_A,7 / 7 matched,0.84,22.89,54,no-reasoning
+2026-05-18T21:07:38.960481,82.261866,Qwen/Qwen3.5-4B,aobbu34200001,22 / 22 matched,0.96,21.93,42,no-reasoning
+2026-05-18T21:09:01.312906,75.264116,Qwen/Qwen3.5-4B,aobbu34200001,22 / 22 matched,0.98,21.93,54,no-reasoning
+2026-05-18T21:10:16.675161,47.530445,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,1.0,22.59,42,no-reasoning
+2026-05-18T21:11:04.303025,42.464871,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.99,22.59,54,no-reasoning
+2026-05-18T21:11:46.865312,128.159564,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 9 extra predictions,0.1,22.59,42,no-reasoning
+2026-05-18T21:13:55.121871,114.295457,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 11 extra predictions,0.09,22.59,54,no-reasoning
+2026-05-18T21:15:49.527517,75.325414,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched ; 7 extra predictions,0.39,23.29,42,no-reasoning
+2026-05-18T21:17:04.948198,69.498897,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched,0.72,23.29,54,no-reasoning
+2026-05-18T21:49:27.999502,75.569501,Qwen/Qwen3.5-2B,aobbu34200001,1 / 22 matched,0.01,22.07,42,no-reasoning
+2026-05-18T21:50:43.648246,66.695588,Qwen/Qwen3.5-2B,aobbu34200001,1 / 22 matched,0.0,22.07,54,no-reasoning
+2026-05-18T21:51:50.439794,44.568042,Qwen/Qwen3.5-2B,DVC43998,1 / 6 matched,0.0,22.72,42,no-reasoning
+2026-05-18T21:52:35.105876,40.623434,Qwen/Qwen3.5-2B,DVC43998,1 / 6 matched,0.16,22.72,54,no-reasoning
+2026-05-18T21:53:15.825786,117.127705,Qwen/Qwen3.5-2B,DVC43313,0 / 2 matched,0.0,22.72,42,no-reasoning
+2026-05-18T21:55:13.050462,109.041114,Qwen/Qwen3.5-2B,DVC43313,0 / 2 matched,0.0,22.72,54,no-reasoning
+2026-05-18T21:57:02.187919,71.741388,Qwen/Qwen3.5-2B,90D2335_A,1 / 7 matched,0.01,23.43,42,no-reasoning
+2026-05-18T21:58:14.022917,66.575843,Qwen/Qwen3.5-2B,90D2335_A,1 / 7 matched,0.0,23.43,54,no-reasoning
+2026-05-18T22:40:47.127247,151.144231,cyankiwi/Qwen3.5-4B-AWQ-4bit,aobbu34200001,,0.0,21.85,42,
+2026-05-18T22:43:18.355826,150.915819,cyankiwi/Qwen3.5-4B-AWQ-4bit,aobbu34200001,,0.0,21.85,54,
+2026-05-18T22:45:49.351154,56.259548,cyankiwi/Qwen3.5-4B-AWQ-4bit,DVC43998,6 / 6 matched,1.0,22.5,42,
+2026-05-18T22:46:45.707147,47.205774,cyankiwi/Qwen3.5-4B-AWQ-4bit,DVC43998,0 / 6 matched,0.0,22.5,54,

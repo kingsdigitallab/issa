@@ -7,7 +7,7 @@ Evaluate with metrics how different Qwen3.5 and 3.6 models perform at detecting 
 how to start vLLM
 
 ```bash
-vllm serve Qwen/Qwen3.5-4B --port 8000 --tensor-parallel-size 1 --max-model-len 32768 --reasoning-parser qwen3 --allowed-local-media-path $HOME/src/prj/issa/experiments/ --media-io-kwargs '{"video": {"num_frames": -1}}' --default-chat-template-kwargs '{"enable_thinking": false}'
+vllm serve Qwen/Qwen3.5-4B --port 8000 --tensor-parallel-size 1 --max-model-len 32768 --reasoning-parser qwen3 --allowed-local-media-path $HOME/src/prj/issa/experiments/ --media-io-kwargs '{"video": {"num_frames": -1}}' --default-chat-template-kwargs '{"enable_thinking": false}' --kv_cache_dtype="fp8"`'
 ````
 
 ## Observations

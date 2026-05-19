@@ -11,8 +11,10 @@ import re
 # VIDEO_FILENAME = 'S1964_2.mp4'
 
 API_URL = "http://localhost:8000/v1"
-# MODELID = "Qwen/Qwen3.5-4B"
-MODELID = "cyankiwi/Qwen3.5-9B-AWQ-4bit"
+MODELID = "Qwen/Qwen3.5-4B"
+MODELID = "Qwen/Qwen3.5-2B"
+MODELID = "cyankiwi/Qwen3.5-4B-AWQ-4bit"
+# MODELID = "cyankiwi/Qwen3.5-9B-AWQ-4bit"
 SEEDS = [42, 54]
 SEED = SEEDS[0]
 PROMPT = "Summarize the video content in one sentence."
@@ -146,7 +148,7 @@ def run_experiment(video_filename, seed=None):
         options = {
             'model': MODELID,
             'messages': messages,
-            'max_tokens': 10*1024,
+            'max_tokens': 15*1024,
             'temperature': 0.6,
             'top_p': 0.95,
             'presence_penalty': 1.0,
