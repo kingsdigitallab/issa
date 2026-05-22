@@ -11,7 +11,6 @@ vllm serve Qwen/Qwen3.5-4B --port 8000 --tensor-parallel-size 1 --max-model-len 
 ````
 
 ## Observations
-
 35 mins video + short prompt take ~15k tokens
 
 Situtation so far:
@@ -24,9 +23,16 @@ Situtation so far:
 * But... cyankiwi/Qwen3.5-9B-AWQ-4bit does seem to work well on 24GB (no reasoning, 23GB VRAM)
 * `vllm serve cyankiwi/Qwen3.5-9B-AWQ-4bit --port 8000 --tensor-parallel-size 1 --max-model-len 16384 --reasoning-parser qwen3 --allowed-local-media-path /home/gnoel/src/prj/issa/experiments/ --media-io-kwargs '{"video": {"num_frames": -1}}' --default-chat-template-kwargs '{"enable_thinking": false}' --kv_cache_dtype="fp8"``
 
+## One-page explainer
+A single-page interactive with three charts and a table to visualise and communicate experimental results.
+To open it, serve from the same directory:
+
+`cd experiments/qwen3x && python -m http.server 8080` and then open
+`http://localhost:8080/results.html`
+
+The HTML fetches `evaluations.csv` at runtime. If we add rows to this file, refreshing the page should pick up new data with no HTML edits required.
 
 ### Issues
-
 * qwen3.5-2b & 4b models return MM:SS format even when asked for HH:MM:SS; Or return json with start_time instead of startTime.
 
 * qwen3.5-4b can consume a lot of tokens for thinking (5k); not found yet how to disable it via API; this makes it unable to answer the question using the allocated context of 32k.
@@ -42,7 +48,6 @@ Situtation so far:
 ## Questions
 
 ## TODO
-
 * models: qwen3.5 2b, 4b, *9b, *27b; qwen3.6 27b, (35a3)
 * quantised to 4bits
 * MTP enabled
