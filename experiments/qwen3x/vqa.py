@@ -119,7 +119,8 @@ def run_experiment(video_filename, seed=None):
     print(f'* VRAM used: {vram_gb:.2f} GB out of {vram_total:.1f} GB')
     t0 = datetime.now()
     
-    if 1:            
+    if 1:    
+        video_path = Path.cwd().absolute() / 'videos' / video_filename_with_ext        
         messages = [
             {
                 "role": "user",
@@ -127,7 +128,7 @@ def run_experiment(video_filename, seed=None):
                     {
                         "type": "video_url",
                         "video_url": {
-                            "url": f"file:///home/gnoel/src/prj/issa/experiments/qwen3x/videos/{video_filename_with_ext}"
+                            "url": f"file://{video_path}"
                         }
                     },
                     {
