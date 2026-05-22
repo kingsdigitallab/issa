@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISSA – Qwen3.x Video Programme Segmentation Evaluation</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #ffffff;
+      color: #111;
+      font-size: 15px;
+      line-height: 1.65;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+
+    /* ── Typography ─────────────────────────────────────────────────── */
+    h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+    h2 { font-size: 1.15rem; font-weight: 700; margin: 2.4rem 0 0.8rem; text-transform: uppercase;
+         letter-spacing: 0.05em; color: #333; border-bottom: 1px solid #ddd; padding-bottom: 0.35rem; }
+    h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; color: #222; }
+    p  { margin-bottom: 0.8rem; color: #333; }
+
+    /* ── Header ─────────────────────────────────────────────────────── */
+    header { margin-bottom: 1.8rem; }
+    .subtitle { font-size: 1.05rem; color: #555; font-style: italic; margin-bottom: 0.5rem; }
+    .meta-row { display: flex; gap: 2rem; font-size: 0.82rem; color: #777; font-family: monospace; }
+
+    /* ── Controls ───────────────────────────────────────────────────── */
+    .controls {
+      display: flex; gap: 1.2rem; flex-wrap: wrap; align-items: center;
+      margin: 1rem 0 1.6rem;
+      padding: 0.8rem 1rem;
+      background: #f8f8f8;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+    }
+    .controls label { display: flex; align-items: center; gap: 0.4rem; color: #444; }
+    .controls select {
+      border: 1px solid #ccc; border-radius: 3px; padding: 0.2rem 0.5rem;
+      font-size: 0.83rem; background: #fff; cursor: pointer;
+    }
+
+    /* ── Chart grid ─────────────────────────────────────────────────── */
+    .chart-row {
+      display: grid;
+      gap: 1.6rem;
+      margin-bottom: 1.6rem;
+    }
+    .chart-row-2 { grid-template-columns: 1fr 1.25fr; }
+    .chart-row-1 { grid-template-columns: 1fr; }
+
+    .chart-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 1rem 1.1rem 0.8rem;
+      background: #fff;
+    }
+    .chart-card canvas { max-width: 100%; }
+    .chart-footer {
+      display: flex; justify-content: flex-end; margin-top: 0.5rem;
+    }
+    .btn-export {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem; color: #555; background: #f3f3f3;
+      border: 1px solid #ccc; border-radius: 3px;
+      padding: 0.2rem 0.7rem; cursor: pointer; letter-spacing: 0.02em;
+    }
+    .btn-export:hover { background: #e8e8e8; }
+
+    /* ── Legend (shared across charts) ──────────────────────────────── */
+    .shared-legend {
+      display: flex; gap: 1.4rem; flex-wrap: wrap;
+      margin: 0.6rem 0 1.2rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem; color: #333;
+    }
+    .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+    .legend-swatch {
+      width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0;
+    }
+
+    /* ── Observations ────────────────────────────────────────────────── */
+    .obs-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 2rem;
+      margin-top: 0.6rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.87rem;
+    }
+    .obs-item { padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; color: #333; }
+    .obs-item strong { color: #111; }
+
+    /* ── Data table ──────────────────────────────────────────────────── */
+    .table-wrap { overflow-x: auto; margin-top: 0.8rem; }
+    table {
+      width: 100%; border-collapse: collapse;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+    }
+    thead th {
+      text-align: left; padding: 0.45rem 0.7rem;
+      background: #f5f5f5; border-bottom: 2px solid #ccc;
+      font-weight: 700; color: #222; white-space: nowrap; cursor: pointer;
+    }
+    thead th:hover { background: #eaeaea; }
+    thead th.sorted-asc::after  { content: ' ↑'; color: #777; }
+    thead th.sorted-desc::after { content: ' ↓'; color: #777; }
+    tbody tr { border-bottom: 1px solid #ebebeb; }
+    tbody tr:hover { background: #fafafa; }
+    tbody td { padding: 0.38rem 0.7rem; color: #333; }
+    .score-cell { font-weight: 700; }
+    .score-bar {
+      display: inline-block; height: 8px; border-radius: 2px;
+      margin-left: 6px; vertical-align: middle; opacity: 0.75;
+    }
+    .tag {
+      display: inline-block; padding: 0.05rem 0.4rem;
+      border-radius: 10px; font-size: 0.72rem;
+      background: #eef; color: #44a; border: 1px solid #ccf;
+    }
+    #status-bar {
+      font-family: monospace; font-size: 0.8rem; color: #888;
+      margin-bottom: 1rem;
+    }
+    .no-data { color: #aaa; font-style: italic; font-size: 0.85rem; padding: 1rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Qwen3.5 Video Programme Segmentation</h1>
+  <p class="subtitle">Automated TV programme boundary detection — ISSA archive evaluation</p>
+  <div class="meta-row">
+    <span>Last run: <strong id="last-updated">—</strong></span>
+    <span>Runs: <strong id="run-count">—</strong></span>
+    <span>Videos: <strong id="video-count">—</strong></span>
+    <span>Models: <strong id="model-count">—</strong></span>
+  </div>
+</header>
+
+<section>
+  <h2>Task</h2>
+  <p>
+    Each video in the ISSA archive contains one or more recorded TV programmes separated by visual markers
+    (countdowns, colour bars, black screens, title cards). The model is given a video and must return the
+    start and end timecode of every programme. Predicted segments are matched to ground-truth segments by
+    maximum temporal overlap; the <em>comparison score</em> measures what fraction of each ground-truth
+    segment is covered by its best-matching prediction, averaged across all segments (0 = no coverage,
+    1 = perfect coverage).
+  </p>
+</section>
+
+<!-- ── Controls ───────────────────────────────────────────────────── -->
+<div class="controls">
+  <label>Model:
+    <select id="filter-model">
+      <option value="all">All models</option>
+    </select>
+  </label>
+  <label>Video:
+    <select id="filter-video">
+      <option value="all">All videos</option>
+    </select>
+  </label>
+  <label>Seed:
+    <select id="filter-seed">
+      <option value="all">All seeds</option>
+    </select>
+  </label>
+  <label>Config:
+    <select id="filter-comments">
+      <option value="all">All configs</option>
+    </select>
+  </label>
+</div>
+
+<div id="status-bar">Loading evaluations.csv…</div>
+
+<!-- ── Charts ─────────────────────────────────────────────────────── -->
+<section>
+  <h2>Results</h2>
+
+  <div class="shared-legend" id="shared-legend"></div>
+
+  <div class="chart-row chart-row-2">
+    <div class="chart-card">
+      <h3>Model comparison — mean score across all videos</h3>
+      <canvas id="chart-model-avg" height="260"></canvas>
+      <div class="chart-footer">
+        <button class="btn-export" onclick="exportChart('chart-model-avg', 'model_comparison')">Export PNG</button>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>Per-video performance by model</h3>
+      <canvas id="chart-per-video" height="260"></canvas>
+      <div class="chart-footer">
+        <button class="btn-export" onclick="exportChart('chart-per-video', 'per_video')">Export PNG</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-row chart-row-1">
+    <div class="chart-card">
+      <h3>Speed vs quality — inference duration and comparison score</h3>
+      <canvas id="chart-speed" height="230"></canvas>
+      <div class="chart-footer">
+        <button class="btn-export" onclick="exportChart('chart-speed', 'speed_vs_quality')">Export PNG</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Observations ───────────────────────────────────────────────── -->
+<section>
+  <h2>Observations</h2>
+  <div class="obs-grid">
+    <div class="obs-item"><strong>2B model</strong> — inadequate; consistently scores near 0 across all test videos.</div>
+    <div class="obs-item"><strong>4B (full precision)</strong> — reasoning tokens consume &gt;5k tokens, overrunning the 32k context on long videos.</div>
+    <div class="obs-item"><strong>4B-AWQ-4bit</strong> — preliminary results only; aobbu34200001 runs returned no valid output.</div>
+    <div class="obs-item"><strong>9B-AWQ-4bit</strong> — best overall; fits on 24 GB VRAM (~23 GB); no-reasoning mode recommended.</div>
+    <div class="obs-item"><strong>DVC43313</strong> — hardest video (only 2 ground-truth programmes); models tend to over-segment significantly.</div>
+    <div class="obs-item"><strong>Seed variance</strong> — notable run-to-run variability (e.g. 9B: 0.99 vs 0.16 on DVC43998); multiple seeds needed.</div>
+    <div class="obs-item"><strong>VRAM</strong> — all models run within 24 GB when quantised; 27B-GPTQ-Int4 does not fit.</div>
+    <div class="obs-item"><strong>Next steps</strong> — 9B &amp; 27B on HPC, reasoning on/off comparison, KV-cache FP8 calibration.</div>
+  </div>
+</section>
+
+<!-- ── Data table ─────────────────────────────────────────────────── -->
+<section>
+  <h2>All experimental runs</h2>
+  <div class="table-wrap">
+    <table id="results-table">
+      <thead>
+        <tr>
+          <th data-col="experiment_time">Date / time</th>
+          <th data-col="model_short">Model</th>
+          <th data-col="video">Video</th>
+          <th data-col="comparison_score">Score</th>
+          <th data-col="matched">Matched</th>
+          <th data-col="extra_predictions">Extra preds</th>
+          <th data-col="duration_seconds">Duration (s)</th>
+          <th data-col="vram_gb">VRAM (GB)</th>
+          <th data-col="seed">Seed</th>
+          <th data-col="comments">Config</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <tr><td colspan="10" class="no-data">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── Scripts ────────────────────────────────────────────────────── -->
+<script>
+/* ── Model metadata ──────────────────────────────────────────────── */
+const MODEL_META = {
+  'Qwen/Qwen3.5-2B':              { short: '2B',       color: '#E69F00', order: 0 },
+  'Qwen/Qwen3.5-4B':              { short: '4B',       color: '#0072B2', order: 1 },
+  'cyankiwi/Qwen3.5-4B-AWQ-4bit': { short: '4B-AWQ',  color: '#009E73', order: 2 },
+  'cyankiwi/Qwen3.5-9B-AWQ-4bit': { short: '9B-AWQ',  color: '#CC79A7', order: 3 },
+};
+
+function modelMeta(id) {
+  return MODEL_META[id] || { short: id.split('/').pop(), color: '#aaa', order: 99 };
+}
+
+/* ── Utility ─────────────────────────────────────────────────────── */
+function mean(arr) {
+  if (!arr.length) return null;
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
+function std(arr) {
+  if (arr.length < 2) return 0;
+  const m = mean(arr);
+  return Math.sqrt(arr.reduce((s, v) => s + (v - m) ** 2, 0) / arr.length);
+}
+function fmt2(v) { return v == null ? '—' : v.toFixed(2); }
+
+function parseExtra(summary) {
+  if (!summary) return 0;
+  const m = summary.match(/(\d+)\s+extra\s+prediction/);
+  return m ? parseInt(m[1], 10) : 0;
+}
+function parseMatched(summary) {
+  if (!summary) return '—';
+  const m = summary.match(/(\d+)\s*\/\s*(\d+)/);
+  return m ? `${m[1]} / ${m[2]}` : '—';
+}
+
+/* ── Chart instances (keep refs for export & update) ────────────── */
+let charts = {};
+
+function destroyChart(id) {
+  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+}
+
+function exportChart(canvasId, filename = 'chart') {
+  const canvas = document.getElementById(canvasId);
+  const link = document.createElement('a');
+  link.href = canvas.toDataURL('image/png');
+  link.download = `issa_qwen3x_${filename}.png`;
+  link.click();
+}
+
+/* ── Main data pipeline ─────────────────────────────────────────── */
+let ALL_ROWS = [];
+
+fetch('evaluations.csv')
+  .then(r => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.text();
+  })
+  .then(text => {
+    const result = Papa.parse(text.trim(), { header: true, skipEmptyLines: true });
+    ALL_ROWS = result.data.map(row => ({
+      experiment_time:    row.experiment_time,
+      duration_seconds:   parseFloat(row.duration_seconds),
+      model_id:           row.model_id,
+      model_short:        modelMeta(row.model_id).short,
+      video:              row.video,
+      comparison_summary: row.comparison_summary || '',
+      comparison_score:   parseFloat(row.comparison_score),
+      vram_gb:            parseFloat(row.vram_gb),
+      seed:               parseInt(row.seed, 10),
+      comments:           row.comments || '',
+      matched:            parseMatched(row.comparison_summary),
+      extra_predictions:  parseExtra(row.comparison_summary),
+    }));
+
+    populateFilters();
+    buildLegend();
+    update();
+    document.getElementById('status-bar').textContent = '';
+  })
+  .catch(err => {
+    document.getElementById('status-bar').textContent =
+      `⚠ Could not load evaluations.csv — ${err.message}. Serve this file from a local web server (e.g. python -m http.server).`;
+  });
+
+/* ── Filters ─────────────────────────────────────────────────────── */
+function populateFilters() {
+  const models   = [...new Set(ALL_ROWS.map(r => r.model_id))].sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+  const videos   = [...new Set(ALL_ROWS.map(r => r.video))].sort();
+  const seeds    = [...new Set(ALL_ROWS.map(r => r.seed))].sort();
+  const configs  = [...new Set(ALL_ROWS.map(r => r.comments || 'default'))].sort();
+
+  fill('filter-model',    models,  id => `${modelMeta(id).short} (${id.split('/').pop()})`);
+  fill('filter-video',    videos,  v => v);
+  fill('filter-seed',     seeds,   s => `Seed ${s}`);
+  fill('filter-comments', configs, c => c || 'default');
+
+  ['filter-model','filter-video','filter-seed','filter-comments'].forEach(id =>
+    document.getElementById(id).addEventListener('change', update));
+}
+
+function fill(selectId, values, labelFn) {
+  const sel = document.getElementById(selectId);
+  values.forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v; opt.textContent = labelFn(v);
+    sel.appendChild(opt);
+  });
+}
+
+function filteredRows() {
+  const m  = document.getElementById('filter-model').value;
+  const v  = document.getElementById('filter-video').value;
+  const s  = document.getElementById('filter-seed').value;
+  const c  = document.getElementById('filter-comments').value;
+  return ALL_ROWS.filter(r =>
+    (m === 'all' || r.model_id === m) &&
+    (v === 'all' || r.video === v) &&
+    (s === 'all' || r.seed === parseInt(s, 10)) &&
+    (c === 'all' || (r.comments || 'default') === c)
+  );
+}
+
+/* ── Master update ───────────────────────────────────────────────── */
+function update() {
+  const rows = filteredRows();
+  updateMeta(rows);
+  renderModelAvg(rows);
+  renderPerVideo(rows);
+  renderSpeed(rows);
+  renderTable(rows);
+}
+
+/* ── Meta bar ────────────────────────────────────────────────────── */
+function updateMeta(rows) {
+  const times = rows.map(r => r.experiment_time).filter(Boolean).sort();
+  document.getElementById('last-updated').textContent = times.length
+    ? times[times.length - 1].slice(0, 16).replace('T', ' ')
+    : '—';
+  document.getElementById('run-count').textContent   = rows.length;
+  document.getElementById('video-count').textContent  = new Set(rows.map(r => r.video)).size;
+  document.getElementById('model-count').textContent  = new Set(rows.map(r => r.model_id)).size;
+}
+
+/* ── Shared legend ───────────────────────────────────────────────── */
+function buildLegend() {
+  const el = document.getElementById('shared-legend');
+  el.innerHTML = '';
+  const models = [...new Set(ALL_ROWS.map(r => r.model_id))]
+    .sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+  models.forEach(id => {
+    const m = modelMeta(id);
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `<div class="legend-swatch" style="background:${m.color}"></div>${m.short}`;
+    el.appendChild(item);
+  });
+}
+
+/* ── Chart A: Model average ──────────────────────────────────────── */
+function renderModelAvg(rows) {
+  destroyChart('chart-model-avg');
+
+  const modelIds = [...new Set(rows.map(r => r.model_id))]
+    .sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+
+  const barData   = modelIds.map(id => mean(rows.filter(r => r.model_id === id).map(r => r.comparison_score)));
+  const errData   = modelIds.map(id => std(rows.filter(r => r.model_id === id).map(r => r.comparison_score)));
+  const colors    = modelIds.map(id => modelMeta(id).color);
+  const labels    = modelIds.map(id => modelMeta(id).short);
+
+  /* individual points for overlay */
+  const scatterSets = modelIds.map((id, idx) => ({
+    type: 'scatter',
+    data: rows.filter(r => r.model_id === id).map((r, i) => ({
+      x: idx,
+      y: r.comparison_score,
+      label: `${r.video} seed ${r.seed}`,
+    })),
+    backgroundColor: modelMeta(id).color + 'bb',
+    pointRadius: 4,
+    pointHoverRadius: 6,
+    showLine: false,
+    order: 1,
+  }));
+
+  const ctx = document.getElementById('chart-model-avg');
+  charts['chart-model-avg'] = new Chart(ctx, {
+    data: {
+      labels,
+      datasets: [
+        {
+          type: 'bar',
+          label: 'Mean score',
+          data: barData,
+          backgroundColor: colors.map(c => c + '55'),
+          borderColor: colors,
+          borderWidth: 2,
+          order: 2,
+        },
+        ...scatterSets,
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              if (ctx.dataset.type === 'scatter') return ctx.raw.label + ': ' + fmt2(ctx.raw.y);
+              return `Mean: ${fmt2(ctx.raw)}`;
+            },
+          },
+        },
+      },
+      scales: {
+        x: { type: 'category', title: { display: false } },
+        y: {
+          min: 0, max: 1.05,
+          title: { display: true, text: 'Comparison score' },
+          ticks: { callback: v => v.toFixed(1) },
+        },
+      },
+    },
+    plugins: [{
+      id: 'errorBars',
+      afterDatasetsDraw(chart) {
+        const { ctx: c, scales } = chart;
+        const barSet = chart.data.datasets[0];
+        barSet.data.forEach((val, i) => {
+          if (val == null) return;
+          const err = errData[i];
+          if (!err) return;
+          const xPx = scales.x.getPixelForValue(i);
+          const yTop = scales.y.getPixelForValue(val + err);
+          const yBot = scales.y.getPixelForValue(Math.max(0, val - err));
+          const col = colors[i];
+          c.save();
+          c.strokeStyle = col;
+          c.lineWidth = 1.5;
+          c.beginPath(); c.moveTo(xPx, yTop); c.lineTo(xPx, yBot); c.stroke();
+          c.beginPath(); c.moveTo(xPx - 5, yTop); c.lineTo(xPx + 5, yTop); c.stroke();
+          c.beginPath(); c.moveTo(xPx - 5, yBot); c.lineTo(xPx + 5, yBot); c.stroke();
+          c.restore();
+        });
+      },
+    }],
+  });
+}
+
+/* ── Chart B: Per-video breakdown ────────────────────────────────── */
+function renderPerVideo(rows) {
+  destroyChart('chart-per-video');
+
+  const videos   = [...new Set(rows.map(r => r.video))].sort();
+  const modelIds = [...new Set(rows.map(r => r.model_id))]
+    .sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+
+  const datasets = modelIds.map(id => {
+    const m = modelMeta(id);
+    return {
+      label: m.short,
+      data: videos.map(v => {
+        const s = rows.filter(r => r.model_id === id && r.video === v).map(r => r.comparison_score);
+        return s.length ? mean(s) : null;
+      }),
+      backgroundColor: m.color + '88',
+      borderColor: m.color,
+      borderWidth: 2,
+    };
+  });
+
+  const ctx = document.getElementById('chart-per-video');
+  charts['chart-per-video'] = new Chart(ctx, {
+    type: 'bar',
+    data: { labels: videos, datasets },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${fmt2(ctx.raw)}`,
+          },
+        },
+      },
+      scales: {
+        x: { title: { display: false } },
+        y: {
+          min: 0, max: 1.05,
+          title: { display: true, text: 'Mean comparison score' },
+          ticks: { callback: v => v.toFixed(1) },
+        },
+      },
+    },
+  });
+}
+
+/* ── Chart C: Speed vs quality ───────────────────────────────────── */
+function renderSpeed(rows) {
+  destroyChart('chart-speed');
+
+  const modelIds = [...new Set(rows.map(r => r.model_id))]
+    .sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+
+  const VIDEO_SYMBOLS = ['circle', 'triangle', 'rectRot', 'crossRot'];
+  const videos = [...new Set(ALL_ROWS.map(r => r.video))].sort();
+
+  const datasets = modelIds.map(id => {
+    const m = modelMeta(id);
+    return {
+      label: m.short,
+      data: rows
+        .filter(r => r.model_id === id)
+        .map(r => ({
+          x: r.duration_seconds,
+          y: r.comparison_score,
+          video: r.video,
+          seed: r.seed,
+          pointStyle: VIDEO_SYMBOLS[videos.indexOf(r.video) % VIDEO_SYMBOLS.length],
+        })),
+      backgroundColor: m.color + 'bb',
+      borderColor: m.color,
+      pointRadius: 7,
+      pointHoverRadius: 9,
+    };
+  });
+
+  const ctx = document.getElementById('chart-speed');
+  charts['chart-speed'] = new Chart(ctx, {
+    type: 'scatter',
+    data: { datasets },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const d = ctx.raw;
+              return `${ctx.dataset.label} · ${d.video} · seed ${d.seed} — ${fmt2(d.y)} in ${d.x.toFixed(0)}s`;
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Inference duration (seconds)' },
+          ticks: { callback: v => `${v}s` },
+        },
+        y: {
+          min: 0, max: 1.05,
+          title: { display: true, text: 'Comparison score' },
+          ticks: { callback: v => v.toFixed(1) },
+        },
+      },
+    },
+  });
+}
+
+/* ── Data table ──────────────────────────────────────────────────── */
+let sortCol = 'experiment_time', sortDir = 1;
+
+function renderTable(rows) {
+  const sorted = [...rows].sort((a, b) => {
+    const va = a[sortCol], vb = b[sortCol];
+    if (va == null) return 1; if (vb == null) return -1;
+    return va < vb ? -sortDir : va > vb ? sortDir : 0;
+  });
+
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = '';
+
+  if (!sorted.length) {
+    tbody.innerHTML = '<tr><td colspan="10" class="no-data">No runs match the current filters.</td></tr>';
+    return;
+  }
+
+  sorted.forEach(r => {
+    const score = r.comparison_score;
+    const color = modelMeta(r.model_id).color;
+    const barW  = isNaN(score) ? 0 : Math.round(score * 60);
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="white-space:nowrap;font-family:monospace;font-size:0.76rem">${r.experiment_time.slice(0,16).replace('T',' ')}</td>
+      <td><span class="tag" style="background:${color}22;color:${color};border-color:${color}66">${r.model_short}</span></td>
+      <td style="font-family:monospace">${r.video}</td>
+      <td class="score-cell">${fmt2(score)}<span class="score-bar" style="width:${barW}px;background:${color}"></span></td>
+      <td>${r.matched}</td>
+      <td style="text-align:center">${r.extra_predictions || '—'}</td>
+      <td style="text-align:right">${r.duration_seconds.toFixed(1)}</td>
+      <td style="text-align:right">${r.vram_gb.toFixed(2)}</td>
+      <td style="text-align:center">${r.seed}</td>
+      <td style="font-size:0.77rem;color:#666">${r.comments || '—'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/* Table sort */
+document.querySelectorAll('thead th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (sortCol === col) sortDir *= -1; else { sortCol = col; sortDir = 1; }
+    document.querySelectorAll('thead th').forEach(t => t.classList.remove('sorted-asc', 'sorted-desc'));
+    th.classList.add(sortDir === 1 ? 'sorted-asc' : 'sorted-desc');
+    renderTable(filteredRows());
+  });
+});
+</script>
+</body>
+</html>
