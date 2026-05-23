@@ -11,6 +11,8 @@ def load_segments(filename, dir):
     return ret
 
 def convert_segments_to_seconds(segments):
+    if not(isinstance(segments, list)):
+        return []
     for i, s in enumerate(segments):
         s['valid'] = 1
         for p in ['startTime', 'endTime']:
