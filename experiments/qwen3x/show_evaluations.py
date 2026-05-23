@@ -1,3 +1,11 @@
+'''
+Display on terminal a human-readable version of evaluations.csv.
+Also shows show average performances per model.
+
+Authors: opencoder:kimi-k2.6
+Prompts & tweaks: GN
+'''
+
 import csv
 import shutil
 
@@ -79,34 +87,43 @@ def main():
     current_model = raw_rows[0][0]
     current_comments = raw_rows[0][6]
     block_scores = [float(raw_rows[0][3])]
+    block_durations = [float(raw_rows[0][5])]
 
     for row in raw_rows[1:]:
         if row[0] == current_model and row[6] == current_comments:
             block_scores.append(float(row[3]))
+            block_durations.append(float(row[5]))
         else:
-            avg = sum(block_scores) / len(block_scores)
+            avg_score = sum(block_scores) / len(block_scores)
+            avg_duration = sum(block_durations) / len(block_durations)
             blocks.append([
                 current_model,
                 current_comments,
                 str(len(block_scores)),
-                str(int(avg * 100)),
+                str(int(avg_duration)),
+                str(int(avg_score * 100)),
             ])
             current_model = row[0]
             current_comments = row[6]
             block_scores = [float(row[3])]
+            block_durations = [float(row[5])]
 
-    avg = sum(block_scores) / len(block_scores)
+    avg_score = sum(block_scores) / len(block_scores)
+    avg_duration = sum(block_durations) / len(block_durations)
     blocks.append([
         current_model,
         current_comments,
         str(len(block_scores)),
-        str(int(avg * 100)),
+        str(int(avg_duration)),
+        str(int(avg_score * 100)),
     ])
 
     if blocks:
         print()
-        block_headers = ["model", "comments", "rows", "avg score"]
-        block_align = ['l', 'l', 'r', 'r']
+        print('Average results per model and parameters:')
+        print()
+        block_headers = ["model", "comments", "rows", "seconds", "score"]
+        block_align = ['l', 'l', 'r', 'r', 'r']
         draw_table(block_headers, blocks, block_align)
 
 
