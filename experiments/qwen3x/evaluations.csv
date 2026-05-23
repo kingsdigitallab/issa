@@ -27,3 +27,11 @@ experiment_time,duration_seconds,model_id,video,comparison_summary,comparison_sc
 2026-05-18T22:43:18.355826,150.915819,cyankiwi/Qwen3.5-4B-AWQ-4bit,aobbu34200001,,0.0,21.85,54,
 2026-05-18T22:45:49.351154,56.259548,cyankiwi/Qwen3.5-4B-AWQ-4bit,DVC43998,6 / 6 matched,1.0,22.5,42,
 2026-05-18T22:46:45.707147,47.205774,cyankiwi/Qwen3.5-4B-AWQ-4bit,DVC43998,0 / 6 matched,0.0,22.5,54,
+2026-05-23T00:09:44.802997,49.933447,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.97,72.89,42,no-reasoning a100_80g sglang
+2026-05-23T00:10:34.799320,45.337415,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.96,72.89,54,no-reasoning a100_80g sglang
+2026-05-23T00:11:20.181703,29.612469,Qwen/Qwen3.6-27B,DVC43998,1 / 6 matched,0.16,75.09,42,no-reasoning a100_80g sglang
+2026-05-23T00:11:49.842025,24.941206,Qwen/Qwen3.6-27B,DVC43998,1 / 6 matched,0.16,75.09,54,no-reasoning a100_80g sglang
+2026-05-23T00:12:14.829786,42.653293,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched ; 16 extra predictions,0.04,75.09,42,no-reasoning a100_80g sglang
+2026-05-23T00:12:57.528998,47.965901,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched ; 26 extra predictions,0.04,75.09,54,no-reasoning a100_80g sglang
+2026-05-23T00:13:45.542995,42.198346,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.97,75.47,42,no-reasoning a100_80g sglang
+2026-05-23T00:14:27.787017,31.46324,Qwen/Qwen3.6-27B,90D2335_A,1 / 7 matched,0.14,75.47,54,no-reasoning a100_80g sglang
