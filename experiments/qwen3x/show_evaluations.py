@@ -5,8 +5,7 @@ from datetime import timedelta
 
 
 def format_duration(seconds):
-    sec = float(seconds)
-    return str(timedelta(seconds=int(sec), milliseconds=int((sec % 1) * 1000)))[:-3]
+    return str(int(float(seconds)))
 
 
 def main():
@@ -47,7 +46,10 @@ def main():
         print("┌" + "┬".join(parts) + "┐")
 
     def line(cells):
-        parts = [f" {str(c).ljust(col_widths[i])} " for i, c in enumerate(cells)]
+        parts = []
+        for i, c in enumerate(cells):
+            pad = str(c).rjust(col_widths[i]) if i == 5 else str(c).ljust(col_widths[i])
+            parts.append(f" {pad} ")
         print("│" + "│".join(parts) + "│")
 
     def mid_sep():
