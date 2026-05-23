@@ -13,7 +13,7 @@ import re
 API_URL = "http://localhost:8000/v1"
 MODELID = "Qwen/Qwen3.5-4B"
 MODELID = "Qwen/Qwen3.5-2B"
-MODELID = "cyankiwi/Qwen3.5-4B-AWQ-4bit"
+# MODELID = "cyankiwi/Qwen3.5-4B-AWQ-4bit"
 # MODELID = "cyankiwi/Qwen3.5-9B-AWQ-4bit"
 SEEDS = [42, 54]
 SEED = SEEDS[0]
@@ -27,12 +27,19 @@ No need to analyse or describe programs.
 '''
 CSV_FILE = 'evaluations.csv'
 CSV_COLUMNS = ['experiment_time', 'duration_seconds', 'model_id', 'video', 'comparison_summary', 'comparison_score', 'vram_gb', 'seed', 'comments']
-CSV_COMMENTS = 'no-reasoning'
+DONT_THINK = True
 
 VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A']
 # VIDEO_FILENAMES = ['DVC43998', 'DVC43313', '90D2335_A']
 # True to run only the first experiment (first video, first model seed).
 SINGLE_TEST = False
+ENGINE = 'sglang'
+GPU = 'a100_80g'
+
+CSV_COMMENTS = f'{ENGINE} {GPU}'
+
+if DONT_THINK:
+    CSV_COMMENTS += ' no-reasoning'
 
 def parse_dirty_json(dirty_json):
     'Convert dirty json to a pythons structure. Handles different formattings.'
@@ -156,11 +163,16 @@ def run_experiment(video_filename, seed=None):
             'seed': seed,
             'extra_body': {
                 "top_k": 20,
-                "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True},
-                "enable_thinking": False,            
+                "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True},                
             }
         }
-    
+
+        if DONT_THINK:
+            # not sure which engine respect this one
+            options['extra_body']['enable_thinking'] = False
+            # sglang will respect that
+            options['extra_body']['chat_template_kwargs'] = {"enable_thinking": False}
+
         print('* REQUEST =')
         print_dict(options)
         
