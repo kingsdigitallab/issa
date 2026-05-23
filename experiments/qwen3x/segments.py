@@ -42,9 +42,12 @@ def compare_segments(segments_true, segments_predict):
 
     ret = {
         "score": 0.0,
-        "summary": "",
+        "summary": "invalid input format",
         "diff": [] 
     }
+
+    if not(isinstance(segments_predict, list)):
+        return ret
 
     score = 0.0
     matched_count = 0
