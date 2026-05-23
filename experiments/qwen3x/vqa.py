@@ -222,12 +222,12 @@ def run_experiment(video_filename, seed=None):
     print('-' * 3)
     print('\n')
 
-
-for video_filename in VIDEO_FILENAMES:
-    for seed in SEEDS:
-        run_experiment(video_filename, seed)
+if __name__ == '__main__':
+    for video_filename in VIDEO_FILENAMES:
+        for seed in SEEDS:
+            run_experiment(video_filename, seed)
+            if SINGLE_TEST:
+                break
         if SINGLE_TEST:
             break
-    if SINGLE_TEST:
-        break
 
