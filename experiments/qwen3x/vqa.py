@@ -37,15 +37,15 @@ SINGLE_TEST = False
 def parse_dirty_json(dirty_json):
     'Convert dirty json to a pythons structure. Handles different formattings.'
     ret = dirty_json
-    if isinstance(dirty_json, str):
-        json_blocks = re.sub(r'(?s)```json\b(.*)```', r'\1', dirty_json)
+    if isinstance(ret, str):
+        json_blocks = re.sub(r'(?s)^.*?```json\b(.*)```.*?$', r'\1', ret)
         clean_json = json_blocks.strip(' \n')
         if (clean_json.startswith('{') and clean_json.endswith('}')) or (clean_json.startswith('[') and clean_json.endswith(']')):
             try:
                 ret = json.loads(clean_json)
             except json.decoder.JSONDecodeError:
-                self._warn(f'Invalid JSON format: {ret}')
-                pass
+                print(f'Invalid JSON format: {ret}')
+    
     return ret
 
 def format_time(delta):
