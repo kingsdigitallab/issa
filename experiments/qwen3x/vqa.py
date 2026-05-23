@@ -15,7 +15,9 @@ MODELID = "Qwen/Qwen3.5-4B"
 MODELID = "Qwen/Qwen3.5-2B"
 # MODELID = "cyankiwi/Qwen3.5-4B-AWQ-4bit"
 # MODELID = "cyankiwi/Qwen3.5-9B-AWQ-4bit"
+MODELID = 'Qwen/Qwen3.5-9B'
 SEEDS = [42, 54]
+SEEDS = [54]
 SEED = SEEDS[0]
 PROMPT = "Summarize the video content in one sentence."
 PROMPT = '''This video contains one or more TV programs. 
@@ -25,18 +27,40 @@ Then returns only a json array with one item per program.
 Each item is a dictionary with `startTime` and `endTime` keys in 'HH:MM:SS' format.
 No need to analyse or describe programs.
 '''
+PROMPT = '''This video contains one or more TV programs. 
+Each program should be preceded by a special, full screen visual separator.
+A visual separator looks like a large count down, a large clock, a black screen, color bars or a production card with title. 
+The visual separators are not intended for public television, only for production team. 
+A separator may last between a few seconds to a few minutes. They are very distinct from title screens within a program.
+Detect all programs in the video.
+Then returns only a json array with the time each detected progeam starts and ends.
+Follow exactly this format:
+
+[
+    {
+        "startTime": "00:01:14",
+        "endTime": "00:06:23"
+    },
+    {
+        "startTime": "00:10:45",
+        "endTime": "00:24:32"
+    }
+]
+
+'''
 CSV_FILE = 'evaluations.csv'
 CSV_COLUMNS = ['experiment_time', 'duration_seconds', 'model_id', 'video', 'comparison_summary', 'comparison_score', 'vram_gb', 'seed', 'comments']
 DONT_THINK = True
 
-VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A']
-# VIDEO_FILENAMES = ['DVC43998', 'DVC43313', '90D2335_A']
+# VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A']
+VIDEO_FILENAMES = ['DVC43998', 'DVC43313', '90D2335_A']
 # True to run only the first experiment (first video, first model seed).
-SINGLE_TEST = False
+# SINGLE_TEST = False
+SINGLE_TEST = True
 ENGINE = 'sglang'
 GPU = 'a100_80g'
 
-CSV_COMMENTS = f'{ENGINE} {GPU}'
+CSV_COMMENTS = f'new-prompt {ENGINE} {GPU}'
 
 if DONT_THINK:
     CSV_COMMENTS += ' no-reasoning'
