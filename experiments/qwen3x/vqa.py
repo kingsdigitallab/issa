@@ -1,24 +1,54 @@
 from openai import OpenAI
 import json
-import csv
 from datetime import datetime
-import subprocess
 from pathlib import Path
 from segments import compare_segments, load_segments
+from utils import parse_dirty_json, format_time, print_dict, print_system_vram_usage, get_system_vram_used, get_first_gpu_name, log_to_csv, get_first_model_name
 import re
 
-# VIDEO_FILENAME = 'DVC43998.mp4'
-# VIDEO_FILENAME = 'S1964_2.mp4'
+ENGINE_API_URL = "http://localhost:8000/v1"
+ENGINE_TIMEOUT = 20*60.0 # 
+ENGINE_CLIENT = OpenAI(
+    api_key="whatever",
+    base_url=ENGINE_API_URL,
+    timeout=ENGINE_TIMEOUT
+)
 
-API_URL = "http://localhost:8000/v1"
-MODELID = "Qwen/Qwen3.5-4B"
-MODELID = "Qwen/Qwen3.5-2B"
+MODELID = get_first_model_name(ENGINE_CLIENT)
+
+# Qwen3.5
+# MODELID = "Qwen/Qwen3.5-2B"
+# MODELID = "Qwen/Qwen3.5-4B"
+# MODELID = 'Qwen/Qwen3.5-9B'
 # MODELID = "cyankiwi/Qwen3.5-4B-AWQ-4bit"
-# MODELID = "cyankiwi/Qwen3.5-9B-AWQ-4bit"
-MODELID = 'Qwen/Qwen3.5-9B'
-SEEDS = [42, 54]
-SEEDS = [54]
-SEED = SEEDS[0]
+
+# See Qwen3.5 Model Card on Huggingface
+# https://huggingface.co/Qwen/Qwen3.5-27B
+
+TEMP = 1.0    # 0.7 - 1.0 (2B -> 27B); 2B best with 0.6
+TOP_P = 0.95  # 0.8 to 0.95 for Qwen3.5 2-27B
+TOP_K = 20    # 
+
+# MODELID = "OpenGVLab/InternVL3-14B"
+
+# for Qwen3-VL
+if 'Qwen3-VL' in MODELID:
+    # MODELID = "Qwen/Qwen3-VL-32B_Instruct"
+    TEMP = 0.7
+    TOP_P = 0.8
+    TOP_K = 20
+
+# False for benchmarking on multiple video with 2 seeds
+# True to test with one video and 2-4 seeds (to tune hyperparams)
+IS_TUNING = False
+# IS_TUNING = True
+    
+if IS_TUNING:
+    SEEDS = [106, 23, 86, 12] # ONLY for tuning params
+    SEEDS = [12, 23]
+else:
+    SEEDS = [42, 54] # For multi-video benchmarking
+        
 PROMPT = "Summarize the video content in one sentence."
 PROMPT = '''This video contains one or more TV programs. 
 Each program should be preceded by a special, full screen visual separator such as a large count down, a large clock, a black screen, color bars or a production card with title. The visual separators are not intended for public television, only for production team. A separator may last between a few seconds to a few minutes. They are distinct from title screens within a program.
@@ -28,116 +58,67 @@ Each item is a dictionary with `startTime` and `endTime` keys in 'HH:MM:SS' form
 No need to analyse or describe programs.
 '''
 PROMPT = '''This video contains one or more TV programs. 
-Each program should be preceded by a special, full screen visual separator.
+Each program is be preceded by a special, full screen visual separator.
 A visual separator looks like a large count down, a large clock, a black screen, color bars or a production card with title. 
 The visual separators are not intended for public television, only for production team. 
 A separator may last between a few seconds to a few minutes. They are very distinct from title screens within a program.
 Detect all programs in the video.
-Then returns only a json array with the time each detected progeam starts and ends.
+Then returns only a json array program timecodes.
 Follow exactly this format:
 
 [
     {
-        "startTime": "00:01:14",
-        "endTime": "00:06:23"
+        "start": "00:01:14",
+        "end": "00:06:23"
     },
     {
-        "startTime": "00:10:45",
-        "endTime": "00:24:32"
+        "start": "00:10:45",
+        "end": "00:24:32"
     }
 ]
-
 '''
-CSV_FILE = 'evaluations.csv'
-CSV_COLUMNS = ['experiment_time', 'duration_seconds', 'model_id', 'video', 'comparison_summary', 'comparison_score', 'vram_gb', 'seed', 'comments']
+
+# Disable model reasoning => much faster processing, but possibly less accurate
 DONT_THINK = True
+# DONT_THINK = False
 
-# VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A']
-VIDEO_FILENAMES = ['DVC43998', 'DVC43313', '90D2335_A']
+## That prompting technique doesn't seem to make any difference on Qwen3.5:
+# if not DONT_THINK:
+#     # not sure if models will follow that... 
+#     PROMPT += '\nThink step by step, but keep your reasoning brief. Then give the final answer. Do not explain anything beyond what is necessary.'
+
+VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A']
+
+if IS_TUNING:
+    VIDEO_FILENAMES = ['DVC43998'] # smallest video; faster for fine-tuning
+    # VIDEO_FILENAMES = ['90D2335_A'] # Qwen3.5 tends to overthink it
+
 # True to run only the first experiment (first video, first model seed).
-# SINGLE_TEST = False
-SINGLE_TEST = True
+SINGLE_TEST = False
+# SINGLE_TEST = True
 ENGINE = 'sglang'
-GPU = 'a100_80g'
+ENGINE_ATTENTION_BACKEND = 'fa3'
+GPU = get_first_gpu_name()
 
-CSV_COMMENTS = f'new-prompt {ENGINE} {GPU}'
+# WRITE_TO_CSV = False
+WRITE_TO_CSV = not IS_TUNING
+
+CSV_COMMENTS = f't={TEMP} top_p={TOP_P} {ENGINE_ATTENTION_BACKEND} {ENGINE} {GPU}'
 
 if DONT_THINK:
     CSV_COMMENTS += ' no-reasoning'
 
-def parse_dirty_json(dirty_json):
-    'Convert dirty json to a pythons structure. Handles different formattings.'
-    ret = dirty_json
-    if isinstance(ret, str):
-        json_blocks = re.sub(r'(?s)^.*?```json\b(.*)```.*?$', r'\1', ret)
-        clean_json = json_blocks.strip(' \n')
-        if (clean_json.startswith('{') and clean_json.endswith('}')) or (clean_json.startswith('[') and clean_json.endswith(']')):
-            try:
-                ret = json.loads(clean_json)
-            except json.decoder.JSONDecodeError:
-                print(f'Invalid JSON format: {ret}')
-    
-    return ret
+# will be populated by each run and displayed at the end of the series
+stats = {
+    'runs': [],
+    'options': {},
+}
 
-def format_time(delta):
-    hours, remainder = divmod(delta.seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    return f"{hours:02d}:{minutes:02d}:{seconds:02d}"    
-
-def print_dict(d):
-    print('')
-    print('```json')
-    print(json.dumps(d, indent=2))
-    print('```')
-    print('')
-    
-def print_system_vram_usage():
-    used, total = get_system_vram_used()
-    print(f'* VRAM used: {used:.2f} GB out of {total:.1f} GB')
-    
-def get_system_vram_used():
-    # Query GPU memory usage in MiB
-    result = subprocess.run(
-        ["nvidia-smi", "--query-gpu=memory.used,memory.total", "--format=csv,noheader,nounits"],
-        capture_output=True, text=True
-    )
-    
-    # Parse the output (e.g., "1024, 8192")
-    used_mib, total_mib = map(int, result.stdout.strip().split(", "))
-        
-    return [used_mib / 1024, total_mib / 1024]
-    
-    
-def log_to_csv(experiment_time, duration_seconds, model_id, video, comparison_summary, comparison_score, vram_gb, seed):
-    ret = Path(CSV_FILE)
-    needs_header = not ret.exists()
-    with open(CSV_FILE, 'a', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
-        if needs_header:
-            writer.writeheader()
-        writer.writerow({
-            'experiment_time': experiment_time,
-            'duration_seconds': duration_seconds,
-            'model_id': model_id,
-            'video': video,
-            'comparison_summary': comparison_summary,
-            'comparison_score': comparison_score,
-            'vram_gb': vram_gb,
-            'seed': seed,
-            'comments': CSV_COMMENTS
-        })
-
-    
-def run_experiment(video_filename, seed=None):
-        
-    if seed is None:
-        seed = SEED
-    
-    # Configured by environment variables
-    client = OpenAI(
-        api_key="whatever",
-        base_url=API_URL    
-    )
+   
+   
+def run_experiment(video_filename, seed):
+            
+    client = ENGINE_CLIENT
     
     video_filename_with_ext = video_filename + '.mp4'
     
@@ -180,14 +161,18 @@ def run_experiment(video_filename, seed=None):
         options = {
             'model': MODELID,
             'messages': messages,
-            'max_tokens': 15*1024,
-            'temperature': 0.6,
-            'top_p': 0.95,
-            'presence_penalty': 1.0,
+            'max_tokens': 15*1024, # maximum OUTPUT tokens (add ~15k for video+prompt input context)
+            'temperature': TEMP,
+            'top_p': TOP_P, 
+            'presence_penalty': 1.5, # low for better json output; but will make thinking loop/repeat; Qwen3.5 recommends 1.5
+            # 'frequency_penalty': 0.9, # same here?
             'seed': seed,
+#             'response_format': {
+#                 'type': 'json_object'
+#             },
             'extra_body': {
-                "top_k": 20,
-                "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True},                
+                "top_k": TOP_K,
+                "mm_processor_kwargs": {"fps": 2, "do_sample_frames": True}, # see Qwen3.5 card
             }
         }
 
@@ -196,12 +181,17 @@ def run_experiment(video_filename, seed=None):
             options['extra_body']['enable_thinking'] = False
             # sglang will respect that
             options['extra_body']['chat_template_kwargs'] = {"enable_thinking": False}
+            
+        stats['options'] = options
 
         print('* REQUEST =')
         print_dict(options)
         
         res = client.chat.completions.create(**options)
-        
+
+        print('* RESPONSE =')
+        print_dict(json.loads(res.model_dump_json()))
+                
         answer = None
         first_choice = res.choices[0]
         if first_choice:
@@ -227,9 +217,6 @@ def run_experiment(video_filename, seed=None):
     t1 = datetime.now()
     duration = t1 - t0
         
-    print('* RESPONSE =')
-    print_dict(json.loads(res.model_dump_json()))
-
     vram_gb, vram_total = get_system_vram_used()    
     print(f'* VRAM used: {vram_gb:.2f} GB out of {vram_total:.1f} GB')
     
@@ -240,12 +227,20 @@ def run_experiment(video_filename, seed=None):
     
     comparison_summary = comparison.get('summary', '') if comparison else ''
     comparison_score = comparison.get('score', 0.0) if comparison else 0.0
-    log_to_csv(experiment_time, duration.total_seconds(), MODELID, video_filename, comparison_summary, comparison_score, round(vram_gb, 2), seed)
+    if WRITE_TO_CSV:
+        log_to_csv(experiment_time, duration.total_seconds(), MODELID, video_filename, comparison_summary, comparison_score, round(vram_gb, 2), seed, CSV_COMMENTS)
     
     print('\n')
     print('-' * 3)
     print('\n')
 
+    stats['runs'].append({
+        'video': video_filename,
+        'score': comparison_score,
+        'seed': seed,
+        'time': duration.total_seconds(),
+    })
+    
 if __name__ == '__main__':
     for video_filename in VIDEO_FILENAMES:
         for seed in SEEDS:
@@ -254,4 +249,18 @@ if __name__ == '__main__':
                 break
         if SINGLE_TEST:
             break
+
+print('---')  
+
+print('SUMMARY')  
+            
+print_dict(stats)
+
+print(CSV_COMMENTS)
+
+avg_score = sum([s['score'] for s in stats['runs']]) / len(stats['runs'])
+
+print(f'Avg score: {avg_score:0.2f} over {len(stats['runs'])} runs')
+
+print()
 

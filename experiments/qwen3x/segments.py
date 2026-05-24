@@ -20,6 +20,9 @@ def convert_segments_to_seconds(segments):
             if not time_code:
                 # cope with models that insist on using 'start_time'
                 time_code = s.get(p.replace('Time', '_time'), None)
+            if not time_code:
+                # support for start/end
+                time_code = s.get(p.replace('Time', ''), None)
             matches = None
             if time_code:
                 matches = re.match(r'^(\d\d):(\d\d)$', time_code)
