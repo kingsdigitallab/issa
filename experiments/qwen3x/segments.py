@@ -11,9 +11,12 @@ def load_segments(filename, dir):
     return ret
 
 def convert_segments_to_seconds(segments):
-    if not(isinstance(segments, list)):
+    ret = json.loads(json.dumps(segments))
+    if isinstance(segments, dict):
+        ret = ret.get('programs', [])
+    if not(isinstance(ret, list)):
         return []
-    for i, s in enumerate(segments):
+    for i, s in enumerate(ret):
         s['valid'] = 1
         for p in ['startTime', 'endTime']:
             time_code = s.get(p, None)
@@ -35,6 +38,8 @@ def convert_segments_to_seconds(segments):
             else:
                 print(f'WARNING: wrong time format in segment {i+1}.{p}, {time_code}')
                 s['valid'] = 0
+    
+    return ret
 
 def get_segs_intersection(seg1, seg2):
     startTime = max(seg1['startTime'], seg2['startTime'])
@@ -42,8 +47,8 @@ def get_segs_intersection(seg1, seg2):
     return [startTime, endTime]
 
 def compare_segments(segments_true, segments_predict):
-    convert_segments_to_seconds(segments_true)
-    convert_segments_to_seconds(segments_predict)
+    segments_true = convert_segments_to_seconds(segments_true)
+    segments_predict = convert_segments_to_seconds(segments_predict)
 
     ret = {
         "score": 0.0,
