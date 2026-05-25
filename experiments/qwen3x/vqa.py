@@ -5,9 +5,12 @@ from pathlib import Path
 from segments import compare_segments, load_segments
 from utils import parse_dirty_json, format_time, print_dict, print_system_vram_usage, get_system_vram_used, get_first_gpu_name, log_to_csv, get_first_model_name
 import re
+import os
 
-ENGINE_API_URL = "http://localhost:8000/v1"
-ENGINE_TIMEOUT = 20*60.0 # 
+engine_port = os.getenv('VQA_PORT', '8000')
+
+ENGINE_API_URL = f"http://localhost:{engine_port}/v1"
+ENGINE_TIMEOUT = 30*60.0 # 
 ENGINE_CLIENT = OpenAI(
     api_key="whatever",
     base_url=ENGINE_API_URL,
@@ -37,17 +40,21 @@ if 'Qwen3-VL' in MODELID:
     TEMP = 0.7
     TOP_P = 0.8
     TOP_K = 20
+    
+if 'Qwen3.5-2B' in MODELID:
+    TEMP = 0.6
 
 # False for benchmarking on multiple video with 2 seeds
 # True to test with one video and 2-4 seeds (to tune hyperparams)
-IS_TUNING = False
-# IS_TUNING = True
+# IS_TUNING = False
+IS_TUNING = bool(int(os.getenv('VQA_TUNE', 0)))
     
 if IS_TUNING:
     SEEDS = [106, 23, 86, 12] # ONLY for tuning params
     SEEDS = [12, 23]
 else:
     SEEDS = [42, 54] # For multi-video benchmarking
+    SEEDS = [142, 154]
         
 PROMPT = "Summarize the video content in one sentence."
 PROMPT = '''This video contains one or more TV programs. 
@@ -57,15 +64,38 @@ Then returns only a json array with one item per program.
 Each item is a dictionary with `startTime` and `endTime` keys in 'HH:MM:SS' format.
 No need to analyse or describe programs.
 '''
+#    "reasoning": "< brief analysis or reasoning here; maximum 1000 words >",
+
+
+# Disable model reasoning => much faster processing, but possibly less accurate
+DONT_THINK = engine_port = not bool(int(os.getenv('VQA_THINK', '0')))
+# DONT_THINK = False
+
+# Good old COT with model reasoning mode disabled
+CHAIN_OF_THOUGHT = bool(int(os.getenv('VQA_COT', '0')))
+# CHAIN_OF_THOUGHT = True
+
+PROMPT_COT = ''
+
+if not DONT_THINK:
+    CHAIN_OF_THOUGHT = False
+        
+if 0 and CHAIN_OF_THOUGHT:
+    PROMPT_COT += '''
+First you must briefly respond with your reasoning step by step (maximum 500 words),
+'''
+
+
 PROMPT = '''This video contains one or more TV programs. 
-Each program is be preceded by a special, full screen visual separator.
+Each program should be preceded by a special, full screen visual separator.
 A visual separator looks like a large count down, a large clock, a black screen, color bars or a production card with title. 
 The visual separators are not intended for public television, only for production team. 
 A separator may last between a few seconds to a few minutes. They are very distinct from title screens within a program.
 Detect all programs in the video.
-Then returns only a json array program timecodes.
-Follow exactly this format:
-
+''' + PROMPT_COT + '''Then returns a JSON with an array of program timecodes. Timecode format is 'HH:MM:SS'.
+Your reponse must follow exactly this structure:
+    
+```json
 [
     {
         "start": "00:01:14",
@@ -76,11 +106,40 @@ Follow exactly this format:
         "end": "00:24:32"
     }
 ]
+```
+
 '''
 
-# Disable model reasoning => much faster processing, but possibly less accurate
-DONT_THINK = True
-# DONT_THINK = False
+
+PROMPT_IGNORE = '''This video contains one or more TV programs. 
+Each program is be preceded by a special, full screen visual separator.
+A visual separator looks like a large count down, a large clock, a black screen, color bars or a production card with title. 
+The visual separators are not intended for public television, only for production team. 
+A separator may last between a few seconds to a few minutes. They are very distinct from title screens within a program.
+Detect all programs in the video.
+''' + PROMPT_COT + '''
+Then return only a JSON response of all programs in the video, in exactly the following structure (timecode format is 'HH:MM:SS')
+
+```json
+{
+    "reasoning": "< your analysis and reasoning (max 1000 words) >",
+    "programs": [
+        {
+            "start": "00:01:14",
+            "end": "00:06:23"
+        },
+        {
+            "start": "00:10:45",
+            "end": "00:24:32"
+        }
+    ]
+}
+```
+
+'''
+
+COMMENTS_PROMPT = '[]'
+# COMMENTS_PROMPT = '{r}'
 
 ## That prompting technique doesn't seem to make any difference on Qwen3.5:
 # if not DONT_THINK:
@@ -88,6 +147,7 @@ DONT_THINK = True
 #     PROMPT += '\nThink step by step, but keep your reasoning brief. Then give the final answer. Do not explain anything beyond what is necessary.'
 
 VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A']
+# VIDEO_FILENAMES = VIDEO_FILENAMES[-2:]
 
 if IS_TUNING:
     VIDEO_FILENAMES = ['DVC43998'] # smallest video; faster for fine-tuning
@@ -106,14 +166,18 @@ WRITE_TO_CSV = not IS_TUNING
 CSV_COMMENTS = f't={TEMP} top_p={TOP_P} {ENGINE_ATTENTION_BACKEND} {ENGINE} {GPU}'
 
 if DONT_THINK:
-    CSV_COMMENTS += ' no-reasoning'
+    if CHAIN_OF_THOUGHT:
+        CSV_COMMENTS += ' chain-of-thought'
+    else:
+        CSV_COMMENTS += ' no-reasoning'
 
+CSV_COMMENTS += f' {COMMENTS_PROMPT}'
+        
 # will be populated by each run and displayed at the end of the series
 stats = {
     'runs': [],
     'options': {},
 }
-
    
    
 def run_experiment(video_filename, seed):
@@ -150,6 +214,15 @@ def run_experiment(video_filename, seed):
                 ]
             }
         ]
+        
+#         if 1 and not DONT_THINK:
+#             # Adding that to Q3.5-4B on last video w/ seed=12 actually increases the reasoning!
+#             messages = [
+#                 {
+#                     "role": "system",
+#                     "content": "Be concise and decisive with your reasoning."
+#                 }
+#             ] + messages
                     
         # When vLLM is launched with `--media-io-kwargs '{"video": {"num_frames": -1}}'`,
         # video frame sampling can be configured via `extra_body` (e.g., by setting `fps`).
@@ -181,6 +254,9 @@ def run_experiment(video_filename, seed):
             options['extra_body']['enable_thinking'] = False
             # sglang will respect that
             options['extra_body']['chat_template_kwargs'] = {"enable_thinking": False}
+        else:
+            # NO effect on Q3.5-4B with SGLANG
+            options['extra_body']['thinking_budget'] = 256
             
         stats['options'] = options
 
@@ -205,14 +281,17 @@ def run_experiment(video_filename, seed):
         if answer:
             print(f'\n* ANSWER = \n{answer}\n')
             
+            print(f'\n* COMPARISON = ')
+
             # compare segments
             segments_true = load_segments(video_filename, 'segments_true')
             segments_predict = parse_dirty_json(answer)
             comparison = compare_segments(segments_true, segments_predict)
             
-            print(f'\n* COMPARISON = ')
             print_dict(comparison)
-        
+        else:
+            print('* RESPONSE =')
+            print_dict(json.loads(res.model_dump_json()))
     
     t1 = datetime.now()
     duration = t1 - t0
