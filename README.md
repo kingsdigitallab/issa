@@ -24,7 +24,7 @@ More information and event recordings in [our Wiki](https://github.com/kingsdigi
 
 - [Tech Review (2025)](https://github.com/kingsdigitallab/issa/wiki/Tech-Review)
 - [Use cases (2025-26)](https://github.com/kingsdigitallab/issa/wiki/Use-Cases)
-- [DEERIN prototypes 2026](https://github.com/kingsdigitallab/issa/wiki/DEERIN-Prototypes)
+- [DEERIN prototypes (2026)](https://github.com/kingsdigitallab/issa/wiki/DEERIN-Prototypes)
 - [Frequently Asked Questions](https://github.com/kingsdigitallab/issa/wiki/Frequently-Asked-Questions)
 
 ---
