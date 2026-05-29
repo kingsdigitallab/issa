@@ -206,9 +206,15 @@ experiment_time,duration_seconds,model_id,video,comparison_summary,comparison_sc
 2026-05-25T15:03:24.186148,245.389133,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.99,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
 2026-05-25T15:07:29.804555,49.898572,Qwen/Qwen3.6-27B,90D2335_A,0 / 7 matched,0.0,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
 2026-05-25T15:08:19.879708,53.131099,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.74,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
-2026-05-25T15:33:01.040129,1616.688535,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.96,72.3,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
-2026-05-25T15:59:57.813370,1759.808855,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.84,74.32,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
-2026-05-25T16:29:17.730225,402.620594,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.67,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
-2026-05-25T16:36:00.555741,736.572951,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,1.0,74.67,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T15:33:01.040129,1616.688535,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.96,72.3,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2
+2026-05-25T15:59:57.813370,1759.808855,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.84,74.32,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2
+2026-05-25T16:29:17.730225,402.620594,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.67,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2
+2026-05-25T16:36:00.555741,736.572951,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,1.0,74.67,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2
 2026-05-25T22:06:37.843449,423.558563,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.96,72.34,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
 2026-05-25T22:13:41.476692,807.472062,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.97,74.36,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T22:27:09.015507,144.698932,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.71,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T22:29:33.763228,483.658246,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.71,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T22:37:37.517732,1742.897459,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.27,74.71,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T23:06:40.492876,738.725823,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.99,74.71,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T23:18:59.414076,569.36132,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.72,75.08,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T23:28:28.923141,338.134022,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.73,75.08,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb []

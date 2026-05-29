@@ -137,10 +137,32 @@ Avg score: 0.28 over 2 runs
 t=1.0 top_p=0.95 fa3 sglang l40s no-reasoning {r}
 Avg score: 0.43 over 8 runs
 
+---
 
-python -m sglang.launch_server --model-path Qwen/Qwen3.5-35B-A3B-FP8 --port 8001 --tp-size 1 --mem-fraction-static 0.8 --context-length 49152 --enable-deterministic-inference --reasoning-parser qwen3  --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device
+### Qwen 35B on HPC...
+
 
 => won't work on h100!
+
+I followed the exact same command as recommended by sgand website
+
+https://docs.sglang.io/cookbook/autoregressive/Qwen/Qwen3.6#1-model-introduction
+
+sglang serve --model-path Qwen/Qwen3.6-35B-A3B-FP8 \
+  --reasoning-parser qwen3 \
+  --mem-fraction-static 0.8
+  
+Or
+
+sglang serve --model-path Qwen/Qwen3.6-35B-A3B \
+  --reasoning-parser qwen3 \
+  --mem-fraction-static 0.8
+
+Which is supposed to work on a single H100 ("All Qwen3.6 variants (MoE 35B-A3B and Dense 27B) fit on a single supported GPU at both precisions: [BF16 and FP8 on 80GB+]")
+
+Exception: Capture cuda graph failed: Assertion error (_deps/repo-deepgemm-src/csrc/apis/../jit_kernels/impls/../../jit/compiler.hpp:147): (major > 12 or (major == 12 and minor >= 3)) and "NVCC version should be >= 12.3"
+
+nvcc --version shows 12.2 (cuda 12.2)
 
 ---
 

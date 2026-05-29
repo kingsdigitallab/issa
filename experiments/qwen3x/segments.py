@@ -28,17 +28,34 @@ def convert_segments_to_seconds(segments):
                 time_code = s.get(p.replace('Time', ''), None)
             matches = None
             if time_code:
-                matches = re.match(r'^(\d\d):(\d\d)$', time_code)
+                time_code = str(time_code)
+                matches = re.match(r'^[\d.]+$', time_code)
                 if matches:
-                    time_code = '00:' + time_code
-                matches = re.match(r'^(\d\d):(\d\d):(\d\d)$', time_code)
-            if matches:
-                s[p] = (int(matches.group(1)) * 60 + int(matches.group(2))) * 60 + int(matches.group(3))
-                # print(time_code, s[p])            
-            else:
+                    s[p] = float(time_code)
+                else:                    
+                    matches = re.match(r'^(\d\d):(\d\d)$', time_code)
+                    if matches:
+                        time_code = '00:' + time_code
+                    matches = re.match(r'^(\d\d):(\d\d):(\d\d)$', time_code)
+                    if matches:
+                        s[p] = (int(matches.group(1)) * 60 + int(matches.group(2))) * 60 + int(matches.group(3))
+                        # print(time_code, s[p])
+            if not matches:
                 print(f'WARNING: wrong time format in segment {i+1}.{p}, {time_code}')
                 s['valid'] = 0
     
+    return ret
+
+def convert_segments_from_programs_to_separators(segments):
+    ret = []
+    last_end = 0
+    for s in segments:
+        ret.append({
+            'startTime': last_end,
+            'endTime': s['startTime'],
+            'valid': 1
+        })
+        last_end = s['endTime']
     return ret
 
 def get_segs_intersection(seg1, seg2):
@@ -46,8 +63,10 @@ def get_segs_intersection(seg1, seg2):
     endTime = min(seg1['endTime'], seg2['endTime'])
     return [startTime, endTime]
 
-def compare_segments(segments_true, segments_predict):
+def compare_segments(segments_true, segments_predict, is_separator=False):
     segments_true = convert_segments_to_seconds(segments_true)
+    if is_separator:
+        segments_true = convert_segments_from_programs_to_separators(segments_true)
     segments_predict = convert_segments_to_seconds(segments_predict)
 
     ret = {
@@ -70,8 +89,17 @@ def compare_segments(segments_true, segments_predict):
         # select the predicted segment with largest overlap over the true seg
         for seg_pred in segments_predict:
             match = seg_pred.get('true', None)
-            if match: continue
+            if match: continue   
             if seg_pred['valid'] == 0: continue
+                
+            if is_separator:
+                # predicted separator can't go over programs
+                TOLERANCE = 3
+                if (seg_pred['startTime'] < (seg_true['startTime'] - TOLERANCE) or
+                    seg_pred['endTime'] > (seg_true['endTime'] + TOLERANCE)
+                    ):
+                    continue
+            
             inter = get_segs_intersection(seg_true, seg_pred)
             overlap = inter[1] - inter[0]
             if overlap > largest_overlap:
@@ -82,8 +110,16 @@ def compare_segments(segments_true, segments_predict):
         # So 1.0 if covered fully (or over), 0.5 if only cover half
         if best_pred:
             best_pred['true'] = seg_true
-            pred_score = largest_overlap / (seg_true['endTime'] - seg_true['startTime'])
-            best_pred['score'] = int(pred_score*100)/100
+            if is_separator:
+                # score is intersection / union
+                union = [
+                    min(seg_true['startTime'], best_pred['startTime']),
+                    max(seg_true['endTime'], best_pred['endTime'])
+                ]
+                pred_score = largest_overlap / (union[1] - union[0])
+            else:
+                pred_score = largest_overlap / (seg_true['endTime'] - seg_true['startTime'])
+            best_pred['score'] = int(pred_score * 100) / 100
             print(best_pred)
             score += pred_score
             matched_count += 1

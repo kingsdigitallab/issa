@@ -4,6 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from segments import compare_segments, load_segments
 from utils import parse_dirty_json, format_time, print_dict, print_system_vram_usage, get_system_vram_used, get_first_gpu_name, log_to_csv, get_first_model_name
+import settings
 import re
 import os
 
@@ -32,40 +33,38 @@ TEMP = 1.0    # 0.7 - 1.0 (2B -> 27B); 2B best with 0.6
 TOP_P = 0.95  # 0.8 to 0.95 for Qwen3.5 2-27B
 TOP_K = 20    # 
 
-# MODELID = "OpenGVLab/InternVL3-14B"
+if 'Qwen3.5-2B' in MODELID:
+    TEMP = 0.6
 
 # for Qwen3-VL
 if 'Qwen3-VL' in MODELID:
     # MODELID = "Qwen/Qwen3-VL-32B_Instruct"
     TEMP = 0.7
     TOP_P = 0.8
-    TOP_K = 20
-    
-if 'Qwen3.5-2B' in MODELID:
-    TEMP = 0.6
+    TOP_K = 20   
 
 # False for benchmarking on multiple video with 2 seeds
 # True to test with one video and 2-4 seeds (to tune hyperparams)
 # IS_TUNING = False
-IS_TUNING = bool(int(os.getenv('VQA_TUNE', 0)))
+IS_TUNING = os.getenv('VQA_TUNE', '0') != '0'
     
 if IS_TUNING:
     SEEDS = [106, 23, 86, 12] # ONLY for tuning params
     SEEDS = [12, 23]
 else:
     SEEDS = [42, 54] # For multi-video benchmarking
-    SEEDS = [142, 154]
-        
-PROMPT = "Summarize the video content in one sentence."
-PROMPT = '''This video contains one or more TV programs. 
-Each program should be preceded by a special, full screen visual separator such as a large count down, a large clock, a black screen, color bars or a production card with title. The visual separators are not intended for public television, only for production team. A separator may last between a few seconds to a few minutes. They are distinct from title screens within a program.
-Detect all programs in the video. 
-Then returns only a json array with one item per program. 
-Each item is a dictionary with `startTime` and `endTime` keys in 'HH:MM:SS' format.
-No need to analyse or describe programs.
-'''
-#    "reasoning": "< brief analysis or reasoning here; maximum 1000 words >",
+    # SEEDS = [142, 154] # Alternate pair of seed for confirmation testing
+    
+PRINT_MESSAGES = False
+   
+PROMPT_KEY = os.getenv('VQA_PROMPT', 'prog1')
+PROMPT_DATA = settings.TEMPLATES[PROMPT_KEY]
 
+PROMPT = PROMPT_DATA["text"]
+
+# if 0, model predicts program boundaries
+# PREDICT_SEPARATORS = bool(int(os.getenv('VQA_SEP', 0)))
+PREDICT_SEPARATORS = bool(int(PROMPT_DATA["find_separators"]))
 
 # Disable model reasoning => much faster processing, but possibly less accurate
 DONT_THINK = engine_port = not bool(int(os.getenv('VQA_THINK', '0')))
@@ -85,59 +84,6 @@ if 0 and CHAIN_OF_THOUGHT:
 First you must briefly respond with your reasoning step by step (maximum 500 words),
 '''
 
-
-PROMPT = '''This video contains one or more TV programs. 
-Each program should be preceded by a special, full screen visual separator.
-A visual separator looks like a large count down, a large clock, a black screen, color bars or a production card with title. 
-The visual separators are not intended for public television, only for production team. 
-A separator may last between a few seconds to a few minutes. They are very distinct from title screens within a program.
-Detect all programs in the video.
-''' + PROMPT_COT + '''Then returns a JSON with an array of program timecodes. Timecode format is 'HH:MM:SS'.
-Your reponse must follow exactly this structure:
-    
-```json
-[
-    {
-        "start": "00:01:14",
-        "end": "00:06:23"
-    },
-    {
-        "start": "00:10:45",
-        "end": "00:24:32"
-    }
-]
-```
-
-'''
-
-
-PROMPT_IGNORE = '''This video contains one or more TV programs. 
-Each program is be preceded by a special, full screen visual separator.
-A visual separator looks like a large count down, a large clock, a black screen, color bars or a production card with title. 
-The visual separators are not intended for public television, only for production team. 
-A separator may last between a few seconds to a few minutes. They are very distinct from title screens within a program.
-Detect all programs in the video.
-''' + PROMPT_COT + '''
-Then return only a JSON response of all programs in the video, in exactly the following structure (timecode format is 'HH:MM:SS')
-
-```json
-{
-    "reasoning": "< your analysis and reasoning (max 1000 words) >",
-    "programs": [
-        {
-            "start": "00:01:14",
-            "end": "00:06:23"
-        },
-        {
-            "start": "00:10:45",
-            "end": "00:24:32"
-        }
-    ]
-}
-```
-
-'''
-
 COMMENTS_PROMPT = '[]'
 # COMMENTS_PROMPT = '{r}'
 
@@ -150,8 +96,12 @@ VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A']
 # VIDEO_FILENAMES = VIDEO_FILENAMES[-2:]
 
 if IS_TUNING:
-    VIDEO_FILENAMES = ['DVC43998'] # smallest video; faster for fine-tuning
-    # VIDEO_FILENAMES = ['90D2335_A'] # Qwen3.5 tends to overthink it
+    tune = os.getenv('VQA_TUNE', '0')
+    if tune in VIDEO_FILENAMES:
+        VIDEO_FILENAMES = [tune]
+    else:
+        VIDEO_FILENAMES = ['DVC43998'] # smallest video; faster for fine-tuning
+        # VIDEO_FILENAMES = ['90D2335_A'] # Qwen3.5 tends to overthink it
 
 # True to run only the first experiment (first video, first model seed).
 SINGLE_TEST = False
@@ -160,8 +110,8 @@ ENGINE = 'sglang'
 ENGINE_ATTENTION_BACKEND = 'fa3'
 GPU = get_first_gpu_name()
 
-# WRITE_TO_CSV = False
-WRITE_TO_CSV = not IS_TUNING
+WRITE_TO_CSV = False
+# WRITE_TO_CSV = not IS_TUNING
 
 CSV_COMMENTS = f't={TEMP} top_p={TOP_P} {ENGINE_ATTENTION_BACKEND} {ENGINE} {GPU}'
 
@@ -172,6 +122,8 @@ if DONT_THINK:
         CSV_COMMENTS += ' no-reasoning'
 
 CSV_COMMENTS += f' {COMMENTS_PROMPT}'
+
+CSV_COMMENTS += f' {PROMPT_KEY}'
         
 # will be populated by each run and displayed at the end of the series
 stats = {
@@ -260,13 +212,15 @@ def run_experiment(video_filename, seed):
             
         stats['options'] = options
 
-        print('* REQUEST =')
-        print_dict(options)
+        if PRINT_MESSAGES:
+            print('* REQUEST =')
+            print_dict(options)
         
         res = client.chat.completions.create(**options)
 
-        print('* RESPONSE =')
-        print_dict(json.loads(res.model_dump_json()))
+        if PRINT_MESSAGES:
+            print('* RESPONSE =')
+            print_dict(json.loads(res.model_dump_json()))
                 
         answer = None
         first_choice = res.choices[0]
@@ -286,7 +240,7 @@ def run_experiment(video_filename, seed):
             # compare segments
             segments_true = load_segments(video_filename, 'segments_true')
             segments_predict = parse_dirty_json(answer)
-            comparison = compare_segments(segments_true, segments_predict)
+            comparison = compare_segments(segments_true, segments_predict, PREDICT_SEPARATORS)
             
             print_dict(comparison)
         else:
