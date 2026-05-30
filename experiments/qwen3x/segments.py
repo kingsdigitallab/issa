@@ -12,12 +12,12 @@ def load_segments(filename, dir):
 
 def get_hms_from_secs(time_in_seconds):
     ret = []
-    parts = [24, 60, 60]
+    parts = [60, 60, 24]
     res = time_in_seconds
     for p in parts:
         ret.append(res % p)
         res = res // p
-    return f'{ret[1]:02d}:{ret[0]:02d}'
+    return f'{int(ret[1]):02d}:{int(ret[0]):02d}'
 
 def convert_segments_to_seconds(segments):
     ret = json.loads(json.dumps(segments))
@@ -102,9 +102,9 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
                 
             if is_separator:
                 # reject prediction if overlaps surrounding programs by X secs.
-                TOLERANCE = 4
-                if (seg_pred['startTime'] < (seg_true['startTime'] - TOLERANCE) or
-                    seg_pred['endTime'] > (seg_true['endTime'] + TOLERANCE)
+                SEPARATOR_TOLERANCE_IN_SECS = 4
+                if (seg_pred['startTime'] < (seg_true['startTime'] - SEPARATOR_TOLERANCE_IN_SECS) or
+                    seg_pred['endTime'] > (seg_true['endTime'] + SEPARATOR_TOLERANCE_IN_SECS)
                     ):
                     continue
             
@@ -118,11 +118,24 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
             best_pred['true'] = seg_true
             if is_separator:
                 # score is intersection / union
-                union = [
-                    min(seg_true['startTime'], best_pred['startTime']),
-                    max(seg_true['endTime'], best_pred['endTime'])
-                ]
-                pred_score = largest_overlap / (union[1] - union[0])
+                if 0:
+                    union = [
+                        min(seg_true['startTime'], best_pred['startTime']),
+                        max(seg_true['endTime'], best_pred['endTime'])
+                    ]
+                    pred_score = largest_overlap / (union[1] - union[0])
+                else:
+                    # rationale: prediction need to capture title before next prog
+                    # not really an issue if it captures a bit of separator after last
+                    BEFORE_NEXT_PROG_IN_SECS = 5
+                    before_next_prog = {
+                        'startTime': max(seg_true['startTime'], seg_true['endTime'] - BEFORE_NEXT_PROG_IN_SECS),
+                        'endTime': seg_true['endTime']
+                    }
+                    inter = get_segs_intersection(before_next_prog, best_pred)
+                    overlap = inter[1] - inter[0]
+                    # TODO: But pred going a bit over programs will also get 100%...
+                    pred_score = overlap / (before_next_prog['endTime'] - before_next_prog['startTime'])
             else:
                 # score is the proportion of true segmment covered by predicted
                 pred_score = largest_overlap / (seg_true['endTime'] - seg_true['startTime'])
@@ -154,7 +167,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
 
     for pred in segments_predict:
         pred_readable = f'{int(pred.get("score", 0) * 100):3d}%  '
-        pred_readable += f'{get_hms_from_secs(pred["startTime"])} - {get_hms_from_secs(pred["endTime"])}'
+        pred_readable += f'{get_hms_from_secs(pred["startTime"])} - {get_hms_from_secs(pred["endTime"])} '
         if pred.get('true', None):
             pred_readable += f'  /  {get_hms_from_secs(pred["true"]["startTime"])} - {get_hms_from_secs(pred["true"]["endTime"])}'
         print(pred_readable)
@@ -163,6 +176,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
 
 if __name__ == '__main__':
     INPUT_FILE_NAME = 'aobbu34200001'
+    # INPUT_FILE_NAME = 'DVC43313'
 
     segments_true = load_segments(INPUT_FILE_NAME, 'segments_true')
     segments_predict = load_segments(INPUT_FILE_NAME, 'segments_predict')
