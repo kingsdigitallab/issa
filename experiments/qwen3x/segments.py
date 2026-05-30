@@ -29,14 +29,14 @@ def convert_segments_to_seconds(segments):
         s['valid'] = 1
         for p in ['startTime', 'endTime']:
             time_code = s.get(p, None)
-            if not time_code:
+            if time_code is None:
                 # cope with models that insist on using 'start_time'
                 time_code = s.get(p.replace('Time', '_time'), None)
-            if not time_code:
+            if time_code is None:
                 # support for start/end
                 time_code = s.get(p.replace('Time', ''), None)
             matches = None
-            if time_code:
+            if time_code is not None:
                 time_code = str(time_code)
                 matches = re.match(r'^[\d.]+$', time_code)
                 if matches:
@@ -170,7 +170,10 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
 
     for pred in segments_predict:
         pred_readable = f'{int(pred.get("score", 0) * 100):3d}%  '
-        pred_readable += f'{get_hms_from_secs(pred["startTime"])} - {get_hms_from_secs(pred["endTime"])} '
+        if pred['valid']:
+            pred_readable += f'{get_hms_from_secs(pred["startTime"])} - {get_hms_from_secs(pred["endTime"])} '
+        else:
+            pred_readable += f'invalid format '
         if pred.get('true', None):
             pred_readable += f'  /  {get_hms_from_secs(pred["true"]["startTime"])} - {get_hms_from_secs(pred["true"]["endTime"])}'
         print(pred_readable)
@@ -178,11 +181,12 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     return ret
 
 if __name__ == '__main__':
-    # INPUT_FILE_NAME = 'aobbu34200001'
-    INPUT_FILE_NAME = 'DVC43313'
+    INPUT_FILE_NAME = 'aobbu34200001'
+    # INPUT_FILE_NAME = 'DVC43313'
 
     segments_true = load_segments(INPUT_FILE_NAME, 'segments_true')
     segments_predict = load_segments(INPUT_FILE_NAME, 'segments_predict')
 
-    res = compare_segments(segments_true, segments_predict, False)
+    # res = compare_segments(segments_true, segments_predict, False)
+    res = compare_segments(segments_true, segments_predict)
     print(print_dict(res))
