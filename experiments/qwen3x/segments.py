@@ -90,7 +90,9 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     matched_count = 0
 
     # find the best match for each true seg
-    for seg_true in segments_true:
+    # mtach largest segments first
+    segments_true_longest_first = sorted(segments_true, key=lambda s: s['endTime'] - s['startTime'], reverse=True)
+    for seg_true in segments_true_longest_first:
         largest_overlap = 0
         best_pred = None
 
@@ -148,6 +150,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
 
     if score:
         # penalty for any missing segment or excess prediction
+        # Flaw = missing a tiny prog has same penalty as a major one..
         ret['score'] = score / max(len(segments_true), len(segments_predict))            
     else:
         ret['score'] = score
@@ -175,11 +178,11 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     return ret
 
 if __name__ == '__main__':
-    INPUT_FILE_NAME = 'aobbu34200001'
-    # INPUT_FILE_NAME = 'DVC43313'
+    # INPUT_FILE_NAME = 'aobbu34200001'
+    INPUT_FILE_NAME = 'DVC43313'
 
     segments_true = load_segments(INPUT_FILE_NAME, 'segments_true')
     segments_predict = load_segments(INPUT_FILE_NAME, 'segments_predict')
 
-    res = compare_segments(segments_true, segments_predict, True)
+    res = compare_segments(segments_true, segments_predict, False)
     print(print_dict(res))

@@ -2,8 +2,11 @@
 ## TODO
 
 . ask models to express timecodes in secs? They tend to do that anyway and avoid misinterpretaion of HH:MM:SS format
-. sep covers last 5 secs before prog => 100%
-. debug prog match for DVC
+. add another video annotation
+  . 2 from NI
+  . 2 from NLS
+DONE sep covers last 5 secs before prog => 100%
+DONE debug prog match for DVC: (sep is rejected as it goes over tolerance zone)
 
 ### model selection: 
 
