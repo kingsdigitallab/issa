@@ -10,6 +10,15 @@ def load_segments(filename, dir):
     ret = json.loads(ret.read_text())
     return ret
 
+def get_hms_from_secs(time_in_seconds):
+    ret = []
+    parts = [24, 60, 60]
+    res = time_in_seconds
+    for p in parts:
+        ret.append(res % p)
+        res = res // p
+    return f'{ret[1]:02d}:{ret[0]:02d}'
+
 def convert_segments_to_seconds(segments):
     ret = json.loads(json.dumps(segments))
     if isinstance(segments, dict):
@@ -72,7 +81,6 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     ret = {
         "score": 0.0,
         "summary": "invalid input format",
-        "diff": [] 
     }
 
     if not(isinstance(segments_predict, list)):
@@ -88,13 +96,13 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
 
         # select the predicted segment with largest overlap over the true seg
         for seg_pred in segments_predict:
-            match = seg_pred.get('true', None)
-            if match: continue   
+            already_matched = seg_pred.get('true', None)
+            if already_matched: continue   
             if seg_pred['valid'] == 0: continue
                 
             if is_separator:
-                # predicted separator can't go over programs
-                TOLERANCE = 3
+                # reject prediction if overlaps surrounding programs by X secs.
+                TOLERANCE = 4
                 if (seg_pred['startTime'] < (seg_true['startTime'] - TOLERANCE) or
                     seg_pred['endTime'] > (seg_true['endTime'] + TOLERANCE)
                     ):
@@ -106,8 +114,6 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
                 largest_overlap = overlap
                 best_pred = seg_pred
 
-        # score for that prediction is the ratio of the true seg covered by it
-        # So 1.0 if covered fully (or over), 0.5 if only cover half
         if best_pred:
             best_pred['true'] = seg_true
             if is_separator:
@@ -118,9 +124,10 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
                 ]
                 pred_score = largest_overlap / (union[1] - union[0])
             else:
+                # score is the proportion of true segmment covered by predicted
                 pred_score = largest_overlap / (seg_true['endTime'] - seg_true['startTime'])
+
             best_pred['score'] = int(pred_score * 100) / 100
-            print(best_pred)
             score += pred_score
             matched_count += 1
             
@@ -139,8 +146,18 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     excess = len(segments_predict) - len(segments_true)
     if excess > 0:
         ret['summary'] += f' ; {excess} extra predictions'
+    
+    ret['predicted'] = len(segments_predict)
+    ret['matched'] = matched_count
+    ret['extra'] = excess
 
-    # ret['missing'] = segments_predict
+
+    for pred in segments_predict:
+        pred_readable = f'{int(pred.get("score", 0) * 100):3d}% '
+        pred_readable += f'{get_hms_from_secs(pred["startTime"])} - {get_hms_from_secs(pred["endTime"])}'
+        if pred.get('true', None):
+            pred_readable += f' / true = {get_hms_from_secs(pred["true"]["startTime"])} - {get_hms_from_secs(pred["true"]["endTime"])}'
+        print(pred_readable)
 
     return ret
 
