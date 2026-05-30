@@ -144,11 +144,11 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
 
     return ret
 
-if 0:
-    INPUT_FILE_NAME = 'v1'
+if __name__ == '__main__':
+    INPUT_FILE_NAME = 'aobbu34200001'
 
     segments_true = load_segments(INPUT_FILE_NAME, 'segments_true')
     segments_predict = load_segments(INPUT_FILE_NAME, 'segments_predict')
 
-    res = compare_segments(segments_true, segments_predict)
+    res = compare_segments(segments_true, segments_predict, True)
     print(print_dict(res))

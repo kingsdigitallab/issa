@@ -1,55 +1,55 @@
 [
   {
     "sequenceNumber": "1",
-    "startTime": "00:01:42",
-    "endTime": "00:06:42",
+    "startTime": "00:02:00",
+    "endTime": "00:06:04",
     "srt": [
     ],
     "description": ""
   },
   {
     "sequenceNumber": "2",
-    "startTime": "00:06:42",
-    "endTime": "00:11:42",
+    "startTime": "00:07:00",
+    "endTime": "00:11:09",
     "srt": [
     ],
     "description": ""
   },
   {
     "sequenceNumber": "3",
-    "startTime": "00:11:42",
-    "endTime": "00:16:42",
+    "startTime": "00:12:00",
+    "endTime": "00:16:00",
     "srt": [
     ],
     "description": ""
   },
   {
     "sequenceNumber": "4",
-    "startTime": "00:16:42",
-    "endTime": "00:21:42",
+    "startTime": "00:17:00",
+    "endTime": "00:20:51",
     "srt": [
     ],
     "description": ""
   },
   {
     "sequenceNumber": "5",
-    "startTime": "00:21:42",
-    "endTime": "00:26:42",
+    "startTime": "00:22:00",
+    "endTime": "00:26:01",
     "srt": [
     ],
     "description": ""
   },
   {
     "sequenceNumber": "6",
-    "startTime": "00:26:42",
-    "endTime": "00:31:42",
+    "startTime": "00:27:00",
+    "endTime": "00:31:05",
     "srt": [
     ],
     "description": ""
   },
   {
     "sequenceNumber": "7",
-    "startTime": "00:31:42",
+    "startTime": "00:32:00",
     "endTime": "00:36:05",
     "srt": [
     ],
