@@ -1,6 +1,9 @@
 
 ## TODO
 
+. ask models to express timecodes in secs? They tend to do that anyway and avoid misinterpretaion of HH:MM:SS format
+. 
+
 ### model selection: 
 
 - qwen3.5 2b

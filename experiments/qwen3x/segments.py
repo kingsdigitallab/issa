@@ -153,10 +153,10 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
 
 
     for pred in segments_predict:
-        pred_readable = f'{int(pred.get("score", 0) * 100):3d}% '
+        pred_readable = f'{int(pred.get("score", 0) * 100):3d}%  '
         pred_readable += f'{get_hms_from_secs(pred["startTime"])} - {get_hms_from_secs(pred["endTime"])}'
         if pred.get('true', None):
-            pred_readable += f' / true = {get_hms_from_secs(pred["true"]["startTime"])} - {get_hms_from_secs(pred["true"]["endTime"])}'
+            pred_readable += f'  /  {get_hms_from_secs(pred["true"]["startTime"])} - {get_hms_from_secs(pred["true"]["endTime"])}'
         print(pred_readable)
 
     return ret
