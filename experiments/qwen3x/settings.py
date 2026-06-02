@@ -139,7 +139,7 @@ Your reponse must follow exactly this structure:
         ''',
         "find_separators": 1
     },
-    "sep2": {
+    "sep2-brave": {
         "desc": "example from Brave AI",
         "text": '''You are an expert video analysis AI. Your task is to identify program separators in the provided video. 
 
@@ -157,5 +157,87 @@ Tasks:
 Do not include transitions within the same program (e.g., scene changes). Only identify breaks between distinct programs or segments.
 ''',
         "find_separators": 1,
+    },
+    "sep3": {
+        "desc": "",
+        "text": '''The video is a broadcast television recording from a UK regional channel. 
+It contains one or more programs visually preceded by a clear separator screen.
+A separator screen has the following properties:
+* usually just a silent image without movement or a large count down
+* often contains the title or the producer of the upcoming program
+* often looks like a large clock, countdown or cross, but not always
+* it can last from a few seconds to a couple of minutes
+* it is never part of the program itself and not meant for public viewing
+* its visual style is normally very different from the upcoming programme
+* it is never an advertisement
+
+Usually most separator screens in a video look very similar.
+
+Please only mention separators before a new program, not those within programmes.
+
+Return a valid JSON Array with a list of all the times a separator appears.
+
+Each entry should have those keys:
+* start: start time of the separator in seconds
+* end: end time
+* title: all the text written on the separator screen
+* year: if the year is visible on screen
+* producer: if the channel name or producer is visible on screen
+* visual: maximum three words describing what the separator screen looks like
+        ''',
+        "find_separators": 1
+    },
+    "sep4": {
+        "desc": "",
+        "text": '''The video is a broadcast television recording from a UK regional channel. 
+It contains one or more programs directly preceded by a clear visual separator screen.
+
+A separator screen has the following properties:
+* usually just a silent and mostly static image
+* often contains the title of the upcoming program
+* often looks like a large clock, countdown or cross, color bars, but not always
+* it can last from a few seconds to a couple of minutes
+* it is never part of the program itself and not meant for public viewing
+* its visual style is normally very different from the upcoming programme
+* it is never an advertisement
+
+Usually most separator screens in a video look very similar.
+
+Please only mention separators right before a new program, not those within programmes.
+
+Return a valid JSON Array with a list of all the times (in seconds) a separator appears.
+
+The response should look like this:
+    
+```json
+[
+    {
+        "start": 103,
+        "end": 110,
+        "title": "DIVER",
+        "year": "1992",
+        "producer": "ITV",
+        "visual": "clock face graphic"
+    },
+    {
+        "start": 323,
+        "end": 340,
+        "title": "",
+        "year": "",
+        "producer": "",
+        "visual": "flashing cross"
     }
+]
+```
+
+Each entry should have those keys:
+* start: start time of the separator in seconds
+* end: end time
+* title: all the text written on the separator screen
+* year: if the year is visible on screen
+* producer: if the channel name or producer is visible on screen
+* visual: maximum three words describing what the separator screen looks like
+        ''',
+        "find_separators": 1
+    },
 }

@@ -89,6 +89,8 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     score = 0.0
     matched_count = 0
 
+    true_matched = []
+
     # find the best match for each true seg
     # mtach largest segments first
     segments_true_longest_first = sorted(segments_true, key=lambda s: s['endTime'] - s['startTime'], reverse=True)
@@ -118,6 +120,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
 
         if best_pred:
             best_pred['true'] = seg_true
+            true_matched.append(seg_true)
             if is_separator:
                 # score is intersection / union
                 if 0:
@@ -168,7 +171,16 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     ret['extra'] = excess
 
 
+    # display all (matched and unmatched) segments
+    last_pred_start = 0
     for pred in segments_predict:
+        # display all unmatched true segment before this and previous
+        if pred['valid']:
+            for t in segments_true:
+                if t in true_matched: continue
+                if t['startTime'] >= last_pred_start and t['startTime'] < pred['startTime']:
+                  print(f'                      /  {get_hms_from_secs(t["startTime"])} - {get_hms_from_secs(t["endTime"])}')  
+        
         pred_readable = f'{int(pred.get("score", 0) * 100):3d}%  '
         if pred['valid']:
             pred_readable += f'{get_hms_from_secs(pred["startTime"])} - {get_hms_from_secs(pred["endTime"])} '
@@ -176,6 +188,8 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
             pred_readable += f'invalid format '
         if pred.get('true', None):
             pred_readable += f'  /  {get_hms_from_secs(pred["true"]["startTime"])} - {get_hms_from_secs(pred["true"]["endTime"])}'
+        if pred['valid']:
+            last_pred_start = pred["startTime"]
         print(pred_readable)
 
     return ret

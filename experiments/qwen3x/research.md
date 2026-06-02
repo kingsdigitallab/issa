@@ -1,10 +1,13 @@
 
 ## TODO
 
+. debug -%
+. add initial separator
 . ask models to express timecodes in secs? They tend to do that anyway and avoid misinterpretaion of HH:MM:SS format
 . add another video annotation
-  . 2 from NI
-  . 2 from NLS
+  . 2 from NI  - Done
+  . 2 from NLS -
+. only retain most diverse samples
 DONE sep covers last 5 secs before prog => 100%
 DONE debug prog match for DVC: (sep is rejected as it goes over tolerance zone)
 
@@ -175,3 +178,27 @@ nvcc --version shows 12.2 (cuda 12.2)
 
 python -m sglang.launch_server --model-path Qwen/Qwen3.6-27B --port 8000 --tp-size 1 --mem-fraction-static 0.8 --context-length 49152 --enable-deterministic-inference --reasoning-parser qwen3  --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device
 
+## Typology of separators
+
+Separator
+    Title card
+        Slate (2-pop) https://en.wikipedia.org/wiki/Slate_(broadcasting)
+    Color bars https://en.wikipedia.org/wiki/SMPTE_color_bars
+    
+
+## Sample videos
+
+NI/S1964_2
+NI/55300_A    
+NI/DVC43998
+    pre: title card (text only)
+NI/DVC43313, tricky b/c:
+    Two prg, very short one with presenters preparing before going live; then long (~30mins) with actual live show
+    The long program contains its own inner title screens
+    The separators can be preceded or interrupted by 2-s of footage
+    pre: count-down-clock()
+NI/90D2335_A
+    pre: count-down-clock()
+NLW/aobbu34200001
+    ini: color bars
+    pre: black(1s)+count-down-clock(9s)+black(2s)

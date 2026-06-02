@@ -51,6 +51,7 @@ IS_TUNING = os.getenv('VQA_TUNE', '0') != '0'
 if IS_TUNING:
     SEEDS = [106, 23, 86, 12] # ONLY for tuning params
     SEEDS = [12, 23]
+    SEEDS = [12]
 else:
     SEEDS = [42, 54] # For multi-video benchmarking
     # SEEDS = [142, 154] # Alternate pair of seed for confirmation testing
@@ -92,7 +93,8 @@ COMMENTS_PROMPT = '[]'
 #     # not sure if models will follow that... 
 #     PROMPT += '\nThink step by step, but keep your reasoning brief. Then give the final answer. Do not explain anything beyond what is necessary.'
 
-VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A']
+NEW_VIDEO_FILENAMES = ['S1964_2', '55300_A']
+VIDEO_FILENAMES = ['aobbu34200001', 'DVC43998', 'DVC43313', '90D2335_A'] + NEW_VIDEO_FILENAMES
 # VIDEO_FILENAMES = VIDEO_FILENAMES[-2:]
 
 if IS_TUNING:
@@ -110,8 +112,8 @@ ENGINE = 'sglang'
 ENGINE_ATTENTION_BACKEND = 'fa3'
 GPU = get_first_gpu_name()
 
-WRITE_TO_CSV = False
-# WRITE_TO_CSV = not IS_TUNING
+# WRITE_TO_CSV = False
+WRITE_TO_CSV = not IS_TUNING
 
 CSV_COMMENTS = f't={TEMP} top_p={TOP_P} {ENGINE_ATTENTION_BACKEND} {ENGINE} {GPU}'
 
