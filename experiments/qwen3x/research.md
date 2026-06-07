@@ -176,6 +176,12 @@ nvcc --version shows 12.2 (cuda 12.2)
 
 ---
 
+ML - sg - 3.5 2b
+
+python -m sglang.launch_server --model-path Qwen/Qwen3.5-2B --port 30000 --tp-size 1 --mem-fraction-static 0.8 --context-length 32768 --enable-deterministic-inference --reasoning-parser qwen3  --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device
+
+
+
 python -m sglang.launch_server --model-path Qwen/Qwen3.6-27B --port 8000 --tp-size 1 --mem-fraction-static 0.8 --context-length 49152 --enable-deterministic-inference --reasoning-parser qwen3  --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device
 
 ## Typology of separators
@@ -202,3 +208,12 @@ NI/90D2335_A
 NLW/aobbu34200001
     ini: color bars
     pre: black(1s)+count-down-clock(9s)+black(2s)
+
+
+sglang w/ Qwen3.5-2B runs OOM on a 24GB VRAM!!!!
+
+sgd --model-path Qwen/Qwen3.5-2B --host 0.0.0.0 --port 30000 --tp-size 1 --mem-fraction-static 0.7 --context-length 20480 --enable-deterministic-inference --reasoning-parser qwen3  --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device --kv-cache-dtype fp8_e4m3
+
+On ml computer
+
+/home/projects/vllm$ vllm serve cyankiwi/Qwen3.5-4B-AWQ-4bit --port 30000 --tensor-parallel-size 1 --max-model-len 32768 --reasoning-parser qwen3 --allowed-local-media-path ~/src/prj/framesense/tests --media-io-kwargs '{"video": {"num_frames": -1}}' --default-chat-template-kwargs '{"enable_thinking": false}' --kv_cache_dtype="fp8"
