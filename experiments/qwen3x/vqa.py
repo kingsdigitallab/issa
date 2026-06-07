@@ -68,7 +68,7 @@ PROMPT = PROMPT_DATA["text"]
 PREDICT_SEPARATORS = bool(int(PROMPT_DATA["find_separators"]))
 
 # Disable model reasoning => much faster processing, but possibly less accurate
-DONT_THINK = engine_port = not bool(int(os.getenv('VQA_THINK', '0')))
+DONT_THINK = not bool(int(os.getenv('VQA_THINK', '0')))
 # DONT_THINK = False
 
 # Good old COT with model reasoning mode disabled
