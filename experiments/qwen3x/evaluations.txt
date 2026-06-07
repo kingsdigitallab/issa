@@ -1,0 +1,339 @@
+┌──────────────────────────────┬──────┬───────────────┬───────┬──────────────────────┬──────────┬───────────────────────────────────────────────────────────────┐
+│ model                        │ seed │ video         │ score │ summary              │ duration │ comments                                                      │
+├──────────────────────────────┼──────┼───────────────┼───────┼──────────────────────┼──────────┼───────────────────────────────────────────────────────────────┤
+│ cyankiwi/Qwen3.5-9B-AWQ-4bit │ 42   │ aobbu34200001 │    87 │ 20 / 22 matched      │       74 │ no-reasoning                                                  │
+│ cyankiwi/Qwen3.5-9B-AWQ-4bit │ 54   │ aobbu34200001 │    92 │ 21 / 22 matched      │       73 │ no-reasoning                                                  │
+│ cyankiwi/Qwen3.5-9B-AWQ-4bit │ 42   │ DVC43998      │    99 │ 6 / 6 matched        │       44 │ no-reasoning                                                  │
+│ cyankiwi/Qwen3.5-9B-AWQ-4bit │ 54   │ DVC43998      │    16 │ 1 / 6 matched        │       42 │ no-reasoning                                                  │
+│ cyankiwi/Qwen3.5-9B-AWQ-4bit │ 42   │ DVC43313      │     7 │ 1 / 2 matched ; 1... │      125 │ no-reasoning                                                  │
+│ cyankiwi/Qwen3.5-9B-AWQ-4bit │ 54   │ DVC43313      │    73 │ 2 / 2 matched        │      121 │ no-reasoning                                                  │
+│ cyankiwi/Qwen3.5-9B-AWQ-4bit │ 42   │ 90D2335_A     │    76 │ 7 / 7 matched        │       69 │ no-reasoning                                                  │
+│ cyankiwi/Qwen3.5-9B-AWQ-4bit │ 54   │ 90D2335_A     │    84 │ 7 / 7 matched        │       70 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-4B              │ 42   │ aobbu34200001 │    96 │ 22 / 22 matched      │       82 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-4B              │ 54   │ aobbu34200001 │    98 │ 22 / 22 matched      │       75 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43998      │   100 │ 6 / 6 matched        │       47 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43998      │    99 │ 6 / 6 matched        │       42 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43313      │    10 │ 2 / 2 matched ; 9... │      128 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43313      │     9 │ 2 / 2 matched ; 1... │      114 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-4B              │ 42   │ 90D2335_A     │    39 │ 7 / 7 matched ; 7... │       75 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-4B              │ 54   │ 90D2335_A     │    72 │ 7 / 7 matched        │       69 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-2B              │ 42   │ aobbu34200001 │     1 │ 1 / 22 matched       │       75 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-2B              │ 54   │ aobbu34200001 │     0 │ 1 / 22 matched       │       66 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-2B              │ 42   │ DVC43998      │     0 │ 1 / 6 matched        │       44 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-2B              │ 54   │ DVC43998      │    16 │ 1 / 6 matched        │       40 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-2B              │ 42   │ DVC43313      │     0 │ 0 / 2 matched        │      117 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-2B              │ 54   │ DVC43313      │     0 │ 0 / 2 matched        │      109 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-2B              │ 42   │ 90D2335_A     │     1 │ 1 / 7 matched        │       71 │ no-reasoning                                                  │
+│ Qwen/Qwen3.5-2B              │ 54   │ 90D2335_A     │     0 │ 1 / 7 matched        │       66 │ no-reasoning                                                  │
+│ cyankiwi/Qwen3.5-4B-AWQ-4bit │ 42   │ aobbu34200001 │     0 │                      │      151 │                                                               │
+│ cyankiwi/Qwen3.5-4B-AWQ-4bit │ 54   │ aobbu34200001 │     0 │                      │      150 │                                                               │
+│ cyankiwi/Qwen3.5-4B-AWQ-4bit │ 42   │ DVC43998      │   100 │ 6 / 6 matched        │       56 │                                                               │
+│ cyankiwi/Qwen3.5-4B-AWQ-4bit │ 54   │ DVC43998      │     0 │ 0 / 6 matched        │       47 │                                                               │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │    97 │ 22 / 22 matched      │       49 │ no-reasoning a100_80g sglang                                  │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │    96 │ 22 / 22 matched      │       45 │ no-reasoning a100_80g sglang                                  │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    16 │ 1 / 6 matched        │       29 │ no-reasoning a100_80g sglang                                  │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │    16 │ 1 / 6 matched        │       24 │ no-reasoning a100_80g sglang                                  │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │     4 │ 2 / 2 matched ; 1... │       42 │ no-reasoning a100_80g sglang                                  │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │     4 │ 2 / 2 matched ; 2... │       47 │ no-reasoning a100_80g sglang                                  │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │    97 │ 7 / 7 matched        │       42 │ no-reasoning a100_80g sglang                                  │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │    14 │ 1 / 7 matched        │       31 │ no-reasoning a100_80g sglang                                  │
+│ Qwen/Qwen3.5-9B              │ 42   │ aobbu34200001 │    94 │ 22 / 22 matched      │       56 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-9B              │ 54   │ aobbu34200001 │     2 │ 2 / 22 matched       │       30 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-9B              │ 42   │ DVC43998      │    16 │ 1 / 6 matched        │       26 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-9B              │ 54   │ DVC43998      │    82 │ 5 / 6 matched        │       22 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-9B              │ 42   │ DVC43313      │     0 │ invalid input format │       27 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-9B              │ 54   │ DVC43313      │    50 │ 1 / 2 matched        │       25 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-9B              │ 42   │ 90D2335_A     │    75 │ 7 / 7 matched        │       44 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-9B              │ 54   │ 90D2335_A     │    77 │ 7 / 7 matched        │       34 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-4B              │ 42   │ aobbu34200001 │    84 │ 22 / 22 matched      │      391 │ new-prompt sglang a100_80g                                    │
+│ Qwen/Qwen3.5-4B              │ 54   │ aobbu34200001 │    93 │ 22 / 22 matched      │      526 │ new-prompt sglang a100_80g                                    │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43998      │   100 │ 6 / 6 matched        │       73 │ new-prompt sglang a100_80g                                    │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43998      │    98 │ 6 / 6 matched        │       80 │ new-prompt sglang a100_80g                                    │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43313      │    13 │ 2 / 2 matched ; 8... │      320 │ new-prompt sglang a100_80g                                    │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43313      │    70 │ 2 / 2 matched        │      518 │ new-prompt sglang a100_80g                                    │
+│ Qwen/Qwen3.5-4B              │ 42   │ aobbu34200001 │    95 │ 22 / 22 matched      │       54 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-4B              │ 54   │ aobbu34200001 │    72 │ 18 / 22 matched      │       49 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43998      │     0 │ 0 / 6 matched        │       16 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43998      │    99 │ 6 / 6 matched        │       22 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43313      │     5 │ 2 / 2 matched ; 1... │       52 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43313      │     2 │ 2 / 2 matched ; 3... │       65 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-4B              │ 42   │ 90D2335_A     │     0 │ 0 / 7 matched        │       33 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-4B              │ 54   │ 90D2335_A     │     0 │ 0 / 7 matched        │       22 │ new-prompt sglang a100_80g no-reasoning                       │
+│ Qwen/Qwen3.5-2B              │ 42   │ aobbu34200001 │    20 │ 5 / 22 matched       │       29 │ new-prompt sglang a100_80g no-reasoning tuned                 │
+│ Qwen/Qwen3.5-2B              │ 54   │ aobbu34200001 │    44 │ 20 / 22 matched ;... │       44 │ new-prompt sglang a100_80g no-reasoning tuned                 │
+│ Qwen/Qwen3.5-2B              │ 42   │ DVC43998      │    82 │ 6 / 6 matched ; 1... │       19 │ new-prompt sglang a100_80g no-reasoning tuned                 │
+│ Qwen/Qwen3.5-2B              │ 54   │ DVC43998      │    61 │ 4 / 6 matched        │       16 │ new-prompt sglang a100_80g no-reasoning tuned                 │
+│ Qwen/Qwen3.5-2B              │ 42   │ DVC43313      │    15 │ 2 / 2 matched ; 6... │       27 │ new-prompt sglang a100_80g no-reasoning tuned                 │
+│ Qwen/Qwen3.5-2B              │ 54   │ DVC43313      │    27 │ 1 / 2 matched        │       22 │ new-prompt sglang a100_80g no-reasoning tuned                 │
+│ Qwen/Qwen3.5-2B              │ 42   │ 90D2335_A     │    75 │ 6 / 7 matched        │       26 │ new-prompt sglang a100_80g no-reasoning tuned                 │
+│ Qwen/Qwen3.5-2B              │ 54   │ 90D2335_A     │    49 │ 7 / 7 matched ; 2... │       26 │ new-prompt sglang a100_80g no-reasoning tuned                 │
+│ Qwen/Qwen3.5-2B              │ 42   │ aobbu34200001 │    23 │ 6 / 22 matched       │       29 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-2B              │ 54   │ aobbu34200001 │    57 │ 17 / 22 matched      │       37 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-2B              │ 42   │ DVC43998      │    99 │ 6 / 6 matched        │       20 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-2B              │ 54   │ DVC43998      │    61 │ 5 / 6 matched        │       17 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-2B              │ 42   │ DVC43313      │    11 │ 2 / 2 matched ; 9... │       29 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-2B              │ 54   │ DVC43313      │    27 │ 1 / 2 matched        │       23 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-2B              │ 42   │ 90D2335_A     │    77 │ 7 / 7 matched ; 1... │       28 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-2B              │ 54   │ 90D2335_A     │     3 │ 7 / 7 matched ; 9... │       89 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-4B              │ 42   │ aobbu34200001 │     1 │ 1 / 22 matched       │       29 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-4B              │ 54   │ aobbu34200001 │    87 │ 20 / 22 matched      │       53 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43998      │    99 │ 6 / 6 matched        │       24 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43998      │     0 │ 0 / 6 matched        │       23 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43313      │     4 │ 2 / 2 matched ; 2... │       55 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43313      │    77 │ 2 / 2 matched        │       25 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-4B              │ 42   │ 90D2335_A     │    88 │ 7 / 7 matched        │       31 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-4B              │ 54   │ 90D2335_A     │    89 │ 7 / 7 matched        │       30 │ fa3 new-prompt sglang a100_80g no-reasoning                   │
+│ Qwen/Qwen3.5-4B              │ 42   │ aobbu34200001 │     6 │ 2 / 22 matched       │       38 │ t=0.9 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 54   │ aobbu34200001 │    85 │ 21 / 22 matched      │       48 │ t=0.9 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43998      │    99 │ 6 / 6 matched        │       23 │ t=0.9 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43998      │    99 │ 6 / 6 matched        │       23 │ t=0.9 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43313      │     8 │ 2 / 2 matched ; 7... │       34 │ t=0.9 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43313      │     0 │ 2 / 2 matched ; 1... │      190 │ t=0.9 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 42   │ 90D2335_A     │    77 │ 6 / 7 matched        │       40 │ t=0.9 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 54   │ 90D2335_A     │    86 │ 7 / 7 matched        │       32 │ t=0.9 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 42   │ aobbu34200001 │    11 │ 3 / 22 matched       │       36 │ t=1.0 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 54   │ aobbu34200001 │    95 │ 22 / 22 matched      │       49 │ t=1.0 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43998      │    99 │ 6 / 6 matched        │       22 │ t=1.0 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43998      │    99 │ 6 / 6 matched        │       23 │ t=1.0 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43313      │     5 │ 2 / 2 matched ; 1... │       37 │ t=1.0 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43313      │     2 │ 2 / 2 matched ; 3... │       61 │ t=1.0 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 42   │ 90D2335_A     │    77 │ 6 / 7 matched        │       29 │ t=1.0 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ Qwen/Qwen3.5-4B              │ 54   │ 90D2335_A     │    81 │ 7 / 7 matched        │       32 │ t=1.0 fa3 new-prompt sglang a100_80g no-reasoning             │
+│ OpenGVLab/InternVL3-8B       │ 42   │ aobbu34200001 │    14 │ 6 / 22 matched       │       32 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-8B       │ 54   │ aobbu34200001 │     8 │ 4 / 22 matched       │       35 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-8B       │ 42   │ DVC43998      │    14 │ 2 / 6 matched        │        6 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-8B       │ 54   │ DVC43998      │    22 │ 2 / 6 matched        │        6 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-8B       │ 42   │ DVC43313      │     3 │ 2 / 2 matched ; 1... │       32 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-8B       │ 54   │ DVC43313      │     8 │ 2 / 2 matched ; 1... │       26 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-8B       │ 42   │ 90D2335_A     │    10 │ 3 / 7 matched        │       21 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-8B       │ 54   │ 90D2335_A     │    36 │ 4 / 7 matched        │       12 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-14B      │ 42   │ aobbu34200001 │     9 │ 4 / 22 matched       │       19 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-14B      │ 54   │ aobbu34200001 │     8 │ 4 / 22 matched       │       16 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-14B      │ 42   │ DVC43998      │    23 │ 2 / 6 matched        │       11 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-14B      │ 54   │ DVC43998      │    22 │ 2 / 6 matched        │        9 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-14B      │ 42   │ DVC43313      │    15 │ 2 / 2 matched ; 6... │       23 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-14B      │ 54   │ DVC43313      │     6 │ 2 / 2 matched ; 1... │       35 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-14B      │ 42   │ 90D2335_A     │    27 │ 4 / 7 matched        │       20 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ OpenGVLab/InternVL3-14B      │ 54   │ 90D2335_A     │    32 │ 4 / 7 matched        │       18 │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │
+│ Qwen/Qwen3.5-27B             │ 42   │ aobbu34200001 │    73 │ 19 / 22 matched      │      119 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.5-27B             │ 54   │ aobbu34200001 │     4 │ 1 / 22 matched       │       31 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.5-27B             │ 42   │ DVC43998      │    19 │ 5 / 6 matched        │       40 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.5-27B             │ 54   │ DVC43998      │    99 │ 6 / 6 matched        │       45 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.5-27B             │ 42   │ DVC43313      │    11 │ 1 / 2 matched ; 1... │       42 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.5-27B             │ 54   │ DVC43313      │    50 │ 1 / 2 matched        │       30 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.5-27B             │ 42   │ 90D2335_A     │    99 │ 7 / 7 matched        │       66 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.5-27B             │ 54   │ 90D2335_A     │    74 │ 7 / 7 matched        │       52 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.5-27B             │ 42   │ aobbu34200001 │    85 │ 22 / 22 matched      │      922 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.5-27B             │ 54   │ aobbu34200001 │    83 │ 22 / 22 matched      │      896 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.5-27B             │ 42   │ DVC43998      │     0 │ invalid input format │     1136 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.5-27B             │ 54   │ DVC43998      │    98 │ 6 / 6 matched        │      512 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.5-27B             │ 42   │ DVC43313      │     0 │ invalid input format │      407 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │    96 │ 22 / 22 matched      │      729 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │    85 │ 22 / 22 matched      │      796 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    98 │ 6 / 6 matched        │      267 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │   100 │ 6 / 6 matched        │      441 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │    98 │ 2 / 2 matched        │     1417 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │    98 │ 2 / 2 matched        │     1519 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │    86 │ 7 / 7 matched        │     1391 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │    99 │ 7 / 7 matched        │     1337 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │
+│ Qwen/Qwen3.5-4B              │ 42   │ aobbu34200001 │    47 │ 13 / 22 matched      │       79 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-4B              │ 54   │ aobbu34200001 │     0 │ invalid input format │       76 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43998      │    99 │ 6 / 6 matched        │       45 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43998      │   100 │ 6 / 6 matched        │       50 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-4B              │ 42   │ DVC43313      │    15 │ 2 / 2 matched ; 6... │       60 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-4B              │ 54   │ DVC43313      │    50 │ 1 / 2 matched        │       36 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-4B              │ 42   │ 90D2335_A     │    74 │ 7 / 7 matched        │       67 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-4B              │ 54   │ 90D2335_A     │    74 │ 7 / 7 matched        │       57 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-9B              │ 42   │ aobbu34200001 │    15 │ 6 / 22 matched       │       46 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-9B              │ 54   │ aobbu34200001 │    11 │ 3 / 22 matched       │       38 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-9B              │ 42   │ DVC43998      │    78 │ 5 / 6 matched        │       30 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-9B              │ 54   │ DVC43998      │    16 │ 1 / 6 matched        │       20 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-9B              │ 42   │ DVC43313      │    50 │ 1 / 2 matched        │       47 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-9B              │ 54   │ DVC43313      │     0 │ 0 / 2 matched ; 2... │       35 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-9B              │ 42   │ 90D2335_A     │    72 │ 7 / 7 matched ; 1... │       44 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.5-9B              │ 54   │ 90D2335_A     │    21 │ 2 / 7 matched        │       33 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │     0 │ 1 / 22 matched       │      144 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │     2 │ 1 / 22 matched       │      114 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │     0 │ 0 / 6 matched        │       47 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │    99 │ 6 / 6 matched        │       42 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │    28 │ 1 / 2 matched        │       41 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │    82 │ 2 / 2 matched        │       35 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │    14 │ 1 / 7 matched        │       63 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │    70 │ 7 / 7 matched        │       53 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │
+│ Qwen/Qwen3.5-2B              │ 42   │ aobbu34200001 │     5 │ 2 / 22 matched       │       33 │ t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}             │
+│ Qwen/Qwen3.5-2B              │ 54   │ aobbu34200001 │     5 │ 2 / 22 matched       │       32 │ t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}             │
+│ Qwen/Qwen3.5-2B              │ 42   │ DVC43998      │    26 │ 2 / 6 matched        │       19 │ t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}             │
+│ Qwen/Qwen3.5-2B              │ 54   │ DVC43998      │    16 │ 1 / 6 matched        │       17 │ t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}             │
+│ Qwen/Qwen3.5-2B              │ 42   │ DVC43313      │    49 │ 2 / 2 matched        │       28 │ t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}             │
+│ Qwen/Qwen3.5-2B              │ 54   │ DVC43313      │    27 │ 1 / 2 matched        │       26 │ t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}             │
+│ Qwen/Qwen3.5-2B              │ 42   │ 90D2335_A     │    16 │ 2 / 7 matched        │       29 │ t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}             │
+│ Qwen/Qwen3.5-2B              │ 54   │ 90D2335_A     │    22 │ 3 / 7 matched        │       29 │ t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}             │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │    90 │ 22 / 22 matched      │      124 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}        │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │    84 │ 22 / 22 matched      │      119 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}        │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    98 │ 6 / 6 matched        │       57 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}        │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │     0 │ 0 / 6 matched        │       85 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}        │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │    48 │ 1 / 2 matched        │       48 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}        │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │    48 │ 1 / 2 matched        │       56 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}        │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │    73 │ 7 / 7 matched ; 1... │      144 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}        │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │    84 │ 7 / 7 matched        │       66 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}        │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │     2 │ 1 / 22 matched       │       33 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1   │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │     2 │ 1 / 22 matched       │       37 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1   │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    99 │ 6 / 6 matched        │       53 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1   │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │    98 │ 6 / 6 matched        │       41 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1   │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │     8 │ 1 / 2 matched        │       35 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1   │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │    45 │ 1 / 2 matched        │       35 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1   │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │    39 │ 7 / 7 matched ; 6... │       87 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1   │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │    85 │ 7 / 7 matched        │       52 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1   │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │    56 │ 15 / 22 matched      │       99 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │     9 │ 16 / 22 matched      │       99 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    97 │ 6 / 6 matched        │       42 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │     0 │ 0 / 6 matched        │       45 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │    45 │ 1 / 2 matched        │       32 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │    43 │ 1 / 2 matched        │       35 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │    98 │ 7 / 7 matched        │       61 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │     0 │ 0 / 7 matched        │       80 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │     3 │ 1 / 22 matched       │       37 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3   │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │     4 │ 1 / 22 matched       │       33 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3   │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    83 │ 6 / 6 matched        │       41 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3   │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │    99 │ 6 / 6 matched        │       41 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3   │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │    47 │ 1 / 2 matched        │       31 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3   │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │    42 │ 2 / 2 matched        │       35 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3   │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │    23 │ 2 / 7 matched        │       35 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3   │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │    76 │ 7 / 7 matched        │       57 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3   │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │    97 │ 22 / 22 matched      │      353 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │     4 │ 4 / 22 matched       │      318 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    99 │ 6 / 6 matched        │       41 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │    99 │ 6 / 6 matched        │       41 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │    28 │ 2 / 2 matched ; 2... │       42 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │    99 │ 2 / 2 matched        │      245 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │     0 │ 0 / 7 matched        │       49 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │    74 │ 7 / 7 matched        │       53 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │    96 │ 22 / 22 matched      │     1616 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2                    │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │    84 │ 22 / 22 matched      │     1759 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2                    │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    99 │ 6 / 6 matched        │      402 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2                    │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │   100 │ 6 / 6 matched        │      736 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2                    │
+│ Qwen/Qwen3.6-27B             │ 142  │ aobbu34200001 │    96 │ 22 / 22 matched      │      423 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb []                      │
+│ Qwen/Qwen3.6-27B             │ 154  │ aobbu34200001 │    97 │ 22 / 22 matched      │      807 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb []                      │
+│ Qwen/Qwen3.6-27B             │ 142  │ DVC43998      │    99 │ 6 / 6 matched        │      144 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb []                      │
+│ Qwen/Qwen3.6-27B             │ 154  │ DVC43998      │    99 │ 6 / 6 matched        │      483 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb []                      │
+│ Qwen/Qwen3.6-27B             │ 142  │ DVC43313      │    27 │ 1 / 2 matched        │     1742 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb []                      │
+│ Qwen/Qwen3.6-27B             │ 154  │ DVC43313      │    99 │ 2 / 2 matched        │      738 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb []                      │
+│ Qwen/Qwen3.6-27B             │ 142  │ 90D2335_A     │    72 │ 7 / 7 matched        │      569 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb []                      │
+│ Qwen/Qwen3.6-27B             │ 154  │ 90D2335_A     │    73 │ 7 / 7 matched        │      338 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb []                      │
+│ Qwen/Qwen3.5-9B              │ 42   │ aobbu34200001 │     0 │ 0 / 22 matched       │       37 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.5-9B              │ 54   │ aobbu34200001 │     0 │ 0 / 22 matched       │       33 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.5-9B              │ 42   │ DVC43998      │    16 │ 2 / 6 matched        │       39 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.5-9B              │ 54   │ DVC43998      │    93 │ 6 / 6 matched        │       37 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.5-9B              │ 42   │ DVC43313      │     0 │ 0 / 2 matched        │       32 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.5-9B              │ 54   │ DVC43313      │     0 │ 0 / 2 matched        │       31 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.5-9B              │ 42   │ 90D2335_A     │     0 │ 0 / 7 matched        │       29 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.5-9B              │ 54   │ 90D2335_A     │     0 │ 0 / 7 matched        │       56 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │    78 │ 21 / 22 matched ;... │      289 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │     0 │ 0 / 22 matched       │       35 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │     0 │ 0 / 6 matched        │       38 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │    98 │ 6 / 6 matched        │       80 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │    50 │ 2 / 2 matched ; 2... │       77 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │     0 │ 1 / 2 matched        │       50 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │    12 │ 1 / 7 matched ; 1... │      166 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │     0 │ 0 / 7 matched        │       84 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │     3 │ 3 / 22 matched       │      205 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │    96 │ 22 / 22 matched      │      209 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    93 │ 6 / 6 matched        │       79 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │    80 │ 5 / 6 matched        │       80 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │    30 │ 1 / 2 matched        │       37 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │    30 │ 1 / 2 matched        │       36 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │  -172 │ 7 / 7 matched ; 8... │      140 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │  -113 │ 3 / 7 matched        │       72 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.6-27B             │ 42   │ aobbu34200001 │     0 │ 0 / 22 matched       │     1233 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4                 │
+│ Qwen/Qwen3.6-27B             │ 54   │ aobbu34200001 │    82 │ 20 / 22 matched      │      779 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4                 │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43998      │    89 │ 6 / 6 matched        │      364 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4                 │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43998      │    93 │ 6 / 6 matched        │      515 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4                 │
+│ Qwen/Qwen3.6-27B             │ 42   │ DVC43313      │    50 │ 2 / 2 matched        │      641 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4                 │
+│ Qwen/Qwen3.6-27B             │ 54   │ DVC43313      │    20 │ 1 / 2 matched        │     1257 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4                 │
+│ Qwen/Qwen3.6-27B             │ 42   │ 90D2335_A     │     2 │ 4 / 7 matched        │      388 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4                 │
+│ Qwen/Qwen3.6-27B             │ 54   │ 90D2335_A     │    88 │ 7 / 7 matched        │     1569 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4                 │
+│ Qwen/Qwen3.5-27B             │ 42   │ aobbu34200001 │    90 │ 21 / 22 matched      │      273 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 54   │ aobbu34200001 │    89 │ 22 / 22 matched      │      241 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 42   │ DVC43998      │    86 │ 6 / 6 matched        │       89 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 54   │ DVC43998      │    86 │ 6 / 6 matched        │       70 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 42   │ DVC43313      │    60 │ 2 / 2 matched        │       55 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 54   │ DVC43313      │     0 │ 1 / 2 matched ; 4... │       65 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 42   │ 90D2335_A     │    34 │ 7 / 7 matched        │      155 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 54   │ 90D2335_A     │   100 │ 7 / 7 matched        │      146 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 142  │ aobbu34200001 │    11 │ 3 / 22 matched       │      228 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2 │
+│ Qwen/Qwen3.5-27B             │ 154  │ aobbu34200001 │    88 │ 21 / 22 matched      │      203 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2 │
+│ Qwen/Qwen3.5-27B             │ 142  │ DVC43998      │    93 │ 6 / 6 matched        │       81 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2 │
+│ Qwen/Qwen3.5-27B             │ 154  │ DVC43998      │    60 │ 4 / 6 matched        │       60 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2 │
+│ Qwen/Qwen3.5-27B             │ 142  │ DVC43313      │    50 │ 2 / 2 matched        │       46 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2 │
+│ Qwen/Qwen3.5-27B             │ 154  │ DVC43313      │    20 │ 1 / 2 matched        │       40 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2 │
+│ Qwen/Qwen3.5-27B             │ 142  │ 90D2335_A     │   -14 │ 7 / 7 matched        │      140 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2 │
+│ Qwen/Qwen3.5-27B             │ 154  │ 90D2335_A     │    85 │ 7 / 7 matched        │      129 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2 │
+│ Qwen/Qwen3.6-27B             │ 142  │ aobbu34200001 │    99 │ 22 / 22 matched      │     1193 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 154  │ aobbu34200001 │    97 │ 22 / 22 matched      │     1024 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 142  │ DVC43998      │    99 │ 6 / 6 matched        │      665 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 154  │ DVC43998      │    99 │ 6 / 6 matched        │      820 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 142  │ DVC43313      │    98 │ 2 / 2 matched        │      430 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 154  │ DVC43313      │    50 │ 2 / 2 matched ; 1... │     1160 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 142  │ 90D2335_A     │    89 │ 7 / 7 matched        │     1652 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 154  │ 90D2335_A     │   100 │ 7 / 7 matched        │      961 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.5-27B             │ 42   │ S1964_2       │    47 │ 3 / 6 matched        │       55 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] prog1   │
+│ Qwen/Qwen3.5-27B             │ 54   │ S1964_2       │    33 │ 2 / 6 matched        │       37 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] prog1   │
+│ Qwen/Qwen3.5-27B             │ 42   │ 55300_A       │     0 │ 0 / 1 matched        │       52 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] prog1   │
+│ Qwen/Qwen3.5-27B             │ 54   │ 55300_A       │     0 │ 0 / 1 matched        │       44 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] prog1   │
+│ Qwen/Qwen3.6-27B             │ 42   │ S1964_2       │    16 │ 1 / 6 matched        │      233 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog1                │
+│ Qwen/Qwen3.5-27B             │ 42   │ S1964_2       │    26 │ 2 / 6 matched        │       50 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 54   │ S1964_2       │     0 │ 0 / 6 matched        │       53 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 42   │ 55300_A       │     0 │ 0 / 1 matched        │       57 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.5-27B             │ 54   │ 55300_A       │     0 │ 0 / 1 matched        │       46 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │
+│ Qwen/Qwen3.6-27B             │ 42   │ S1964_2       │    50 │ 3 / 6 matched        │     1723 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 54   │ S1964_2       │    33 │ 2 / 6 matched        │      379 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 42   │ 55300_A       │   100 │ 1 / 1 matched        │      447 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+│ Qwen/Qwen3.6-27B             │ 54   │ 55300_A       │    99 │ 1 / 1 matched        │      248 │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │
+└──────────────────────────────┴──────┴───────────────┴───────┴──────────────────────┴──────────┴───────────────────────────────────────────────────────────────┘
+
+Average results per model and parameters:
+
+┌──────────────────────────────┬───────────────────────────────────────────────────────────────┬──────┬─────────┬───────┐
+│ model                        │ comments                                                      │ rows │ seconds │ score │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┼──────┼─────────┼───────┤
+│ cyankiwi/Qwen3.5-9B-AWQ-4bit │ no-reasoning                                                  │    8 │      77 │    66 │
+│ Qwen/Qwen3.5-4B              │ no-reasoning                                                  │    8 │      79 │    65 │
+│ Qwen/Qwen3.5-2B              │ no-reasoning                                                  │    8 │      73 │     2 │
+│ cyankiwi/Qwen3.5-4B-AWQ-4bit │                                                               │    4 │     101 │    25 │
+│ Qwen/Qwen3.6-27B             │ no-reasoning a100_80g sglang                                  │    8 │      39 │    43 │
+│ Qwen/Qwen3.5-9B              │ new-prompt sglang a100_80g no-reasoning                       │    8 │      33 │    49 │
+│ Qwen/Qwen3.5-4B              │ new-prompt sglang a100_80g                                    │    6 │     318 │    76 │
+│ Qwen/Qwen3.5-4B              │ new-prompt sglang a100_80g no-reasoning                       │    8 │      39 │    34 │
+│ Qwen/Qwen3.5-2B              │ new-prompt sglang a100_80g no-reasoning tuned                 │    8 │      26 │    46 │
+│ Qwen/Qwen3.5-2B              │ fa3 new-prompt sglang a100_80g no-reasoning                   │    8 │      34 │    44 │
+│ Qwen/Qwen3.5-4B              │ fa3 new-prompt sglang a100_80g no-reasoning                   │    8 │      34 │    55 │
+│ Qwen/Qwen3.5-4B              │ t=0.9 fa3 new-prompt sglang a100_80g no-reasoning             │    8 │      53 │    57 │
+│ Qwen/Qwen3.5-4B              │ t=1.0 fa3 new-prompt sglang a100_80g no-reasoning             │    8 │      36 │    58 │
+│ OpenGVLab/InternVL3-8B       │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │    8 │      21 │    14 │
+│ OpenGVLab/InternVL3-14B      │ t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning              │    8 │      19 │    17 │
+│ Qwen/Qwen3.5-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │    8 │      53 │    53 │
+│ Qwen/Qwen3.5-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │    5 │     775 │    53 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb                         │    8 │     987 │    95 │
+│ Qwen/Qwen3.5-4B              │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │    8 │      59 │    57 │
+│ Qwen/Qwen3.5-9B              │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought        │    8 │      37 │    32 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning            │    8 │      67 │    36 │
+│ Qwen/Qwen3.5-2B              │ t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}             │    8 │      27 │    20 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}        │    8 │      87 │    65 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1   │    8 │      47 │    47 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │    8 │      62 │    43 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3   │    8 │      39 │    47 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []     │    8 │     143 │    62 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2                    │    4 │    1128 │    94 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb []                      │    8 │     656 │    82 │
+│ Qwen/Qwen3.5-9B              │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │    8 │      37 │    13 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3    │    8 │     102 │    29 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │    8 │     107 │     5 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4                 │    8 │     843 │    53 │
+│ Qwen/Qwen3.5-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │    8 │     137 │    68 │
+│ Qwen/Qwen3.5-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2 │    8 │     116 │    49 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │    8 │     988 │    91 │
+│ Qwen/Qwen3.5-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] prog1   │    4 │      47 │    20 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog1                │    1 │     233 │    16 │
+│ Qwen/Qwen3.5-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4    │    4 │      52 │     6 │
+│ Qwen/Qwen3.6-27B             │ t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3                │    4 │     699 │    70 │
+└──────────────────────────────┴───────────────────────────────────────────────────────────────┴──────┴─────────┴───────┘
