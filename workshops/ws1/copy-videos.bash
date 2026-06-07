@@ -5,7 +5,7 @@
 # Each mp4 file will be copied under a folder of the same name.
 # That structure is compatible with FrameSense
 
-SAMPLE_FILE="sample-10.txt"
+SAMPLE_FILE="sample-11.txt"
 BASE_DIR="hpc:/rds/prj/dh_issa/data/input/NLS"
 
 # Read the list of relative paths from sample-10.txt
