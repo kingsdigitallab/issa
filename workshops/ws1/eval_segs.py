@@ -10,6 +10,7 @@ SEGMENTS_TRUE_DIR = Path("./segments_true")
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", action="store_true", help="print diffs for all F")
+    parser.add_argument("-q", default="programs_3x", help="question key to evaluate (default: programs_3x)")
     args = parser.parse_args()
 
     rows = []
@@ -25,7 +26,7 @@ def main() -> None:
 
         with open(answers_file) as f:
             data = json.load(f)
-        segments_predict = data["data"]["programs_3x"]["answer"]
+        segments_predict = data["data"][args.q]["answer"]
 
         result = compare_segments(segments_true, segments_predict)
         result["F"] = subdir.name
