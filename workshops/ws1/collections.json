@@ -1,0 +1,79 @@
+{
+    "meta": {
+        "type": "collection",
+        "comment": "NLS sample collection",
+        "params": {
+            "transcribe_speech_parakeet": {
+                "model": "nvidia/canary-1b-v2"
+            },
+            "answer_frames_ollama": {
+                "ollama_host": "http://localhost:11434",
+                "model": "qwen3-vl:4b",
+                "seed": 3407,
+                "context_length": 1500,
+                "frame_filter": "middle",
+                "questions": {
+                    "short_description": {
+                        "question": "describe the image in one short sentence"
+                    }
+                }
+            },
+            "answer_videos_vlm": {
+                "model": "Qwen/Qwen3.6-27B",
+                "seed": 3407,
+                "think": false,
+                "max_tokens": "32k",
+                "questions": {
+                    "summary2": {
+                        "question": "summarise the video in two short sentences."
+                    },
+                    "programs_3x": {
+                        "question_MULTILINES": [
+"This video contains one or more TV programs.",
+"Each program is preceded by a special, full screen visual separator.",
+"A visual separator usually looks like a large count down, a large clock, a black screen, color bars or a production card with title.",
+"The visual separators are not meant for public audience, only for production team. ",
+"A separator may last between a few seconds to a few minutes.",
+"They are very distinct from title screens within a program.",
+"Detect all separators and programs in the video.",
+"Then returns only a valid JSON array of programs with `start` and `end` timecodes (format is 'HH:MM:SS')."
+                        ]
+                    }
+                }
+            },
+            "answer_videos_qwen3vl": {
+                "model": "Qwen/Qwen3-VL-32B-Instruct-FP8",
+                "seed": 3407,
+                "new_tokens": "2000",
+                "questions": {
+                    "programs_3vl": {
+                        "question_MULTILINES": [
+"This video contains one or more TV programs.",
+"Each program is preceded by a special, full screen visual separator.",
+"A visual separator usually looks like a large count down, a large clock, a black screen, color bars or a production card with title.",
+"The visual separators are not meant for public audience, only for production team. ",
+"A separator may last between a few seconds to a few minutes.",
+"They are very distinct from title screens within a program.",
+"Detect all separators and programs in the video.",
+"Then returns only a JSON array of programs `start` and `end` timecodes (format is 'HH:MM:SS')."
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "data": [
+        {
+            "type": "collection",
+            "id": "nls-11",
+            "attributes": {
+                "name": "NLS Sample 11",
+                "collector": "",
+                "description": "11 videos sampled from batch 1 and 2",
+                "origin": "",
+                "path": "sample11",
+                "annotations_path": ""
+            }            
+        }
+    ]
+}
