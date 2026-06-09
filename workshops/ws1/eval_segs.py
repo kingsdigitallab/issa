@@ -1,3 +1,4 @@
+import argparse
 import json
 from pathlib import Path
 from segments import compare_segments, load_segments
@@ -7,6 +8,10 @@ SEGMENTS_TRUE_DIR = Path("./segments_true")
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-v", action="store_true", help="print diffs for all F")
+    args = parser.parse_args()
+
     rows = []
     for subdir in sorted(SOURCE_DIR.iterdir()):
         if not subdir.is_dir():
@@ -26,10 +31,20 @@ def main() -> None:
         result["F"] = subdir.name
         rows.append(result)
 
+    if args.v:
+        for r in rows:
+            print(f"--- {r['F']} ---")
+            print(r.get('diff', ''))
+            print()
+
     print(f"{'F':<20} {'Score':>6} {'Extra':>5}  Summary")
     print("-" * 60)
     for r in rows:
         print(f"{r['F']:<20} {r['score']:>6.2f} {r['extra']:>5d}  {r['summary']}")
+
+    if rows:
+        avg = sum(r['score'] for r in rows) / len(rows)
+        print(f"\n{'Average':<20} {avg:>6.2f}")
 
 
 if __name__ == "__main__":
