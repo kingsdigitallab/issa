@@ -26,8 +26,8 @@ def main() -> None:
 
         with open(answers_file) as f:
             data = json.load(f)
-        segments_predict = data["data"][args.q]["answer"]
-
+        segments_predict = data["data"].get(args.q, {}).get("answer", None)
+        
         result = compare_segments(segments_true, segments_predict)
         result["F"] = subdir.name
         rows.append(result)
@@ -38,7 +38,7 @@ def main() -> None:
             print(r.get('diff', ''))
             print()
 
-    print(f"{'F':<20} {'Score':>6} {'Extra':>5}  Summary")
+    print(f"{'File':<20} {'Score':>6} {'Extra':>5}  Summary")
     print("-" * 60)
     for r in rows:
         print(f"{r['F']:<20} {r['score']:>6.2f} {r['extra']:>5d}  {r['summary']}")
