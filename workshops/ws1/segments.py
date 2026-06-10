@@ -165,11 +165,12 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     excess = len(segments_predict) - len(segments_true)
     if excess > 0:
         ret['summary'] += f' ; {excess} extra predictions'
+    else:
+        excess = 0
     
     ret['predicted'] = len(segments_predict)
     ret['matched'] = matched_count
     ret['extra'] = excess
-
 
     # diff: display all (matched and unmatched) segments
     diff_lines = []
