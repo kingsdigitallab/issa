@@ -16,7 +16,7 @@ Issues:
     * could be limitation in context or max new tokens
     * could be an error in the formatting of the json in the output
     
-* why is token/s so slow on a100_80g? 8.15 for qwen3.6-27B
+* why is token/s so slow on a100_80g? 8.15 for qwen3.6-27B - But SGlang can't work with GGUF, and Ampere don't work with FP8.
 
 * 27b not working on h100, but same config works on a100_80g
     - RuntimeError: DeepGEMM failed for matrix shapes M=14, N=10240, K=5120. This typically occurs when dimensions are too small for DeepGEMM's TMA descriptors. Consider increasing MIN_DEEPGEMM_DIM in matmul_persistent() or disabling DeepGEMM for small matrices. Original error: Assertion error (_deps/repo-deepgemm-src/csrc/apis/../jit_kernels/impls/../../jit/compiler.hpp:147): (major > 12 or (major == 12 and minor >= 3)) and "NVCC version should be >= 12.3"
@@ -26,7 +26,26 @@ Issues:
 
 * 27b spread over 4 x l40s misbehave with normal settings; it returns just a few random characters
 
-* Only 8 tokens /s on a100_80g. But SGlang can't work with GGUF, and Ampere don't work with FP8.
+* rtx6000: 
+    - 3.5-27B
+        - fa3 not supported by Blackwell => fa4
+        - fa4 not supported for deterministic inferrence => remove deterministic inferrence
+        - "AssertionError: triton or trtllm_mha backend are the only supported backends on Blackwell GPUs for hybrid GDN models, use --attention-backend triton or --attention-backend trtllm_mha to specify the backend" => leave unspecified
+        - When using triton attention by default, sglang will OOM on the 27B model
+        - python -m sglang.launch_server --model-path Qwen/Qwen3.5-27B --port 30000 --tp-size 1 --mem-fraction-static 0.7 --context-length 49152 --reasoning-parser qwen3 --attention-backend triton
+            - ^ works... at 23tps
+            - but accuracy is terrible
+    - 3.6-27B 
+        - Error: Capture cuda graph failed: DeepGEMM failed for matrix shapes M=16, N=10240, K=5120. This typically occurs when dimensions are too small for DeepGEMM's TMA descriptors. Consider increasing MIN_DEEPGEMM_DIM in matmul_persistent() or disabling DeepGEMM for small matrices. Original error: Assertion error (_deps/repo-deepgemm-src/csrc/apis/gemm.hpp:390): Unsupported architecture
+    - 3.5-27B-FP8:
+        - Error: major > 12 or (major == 12 and minor >= 3)) and "NVCC version should be >= 12.3"
+        - nvcc on erc-hpc-comp242 is Cuda compilation tools, release 12.2, V12.2.128; Build cuda_12.2.r12.2/compiler.33053471_0
+        - yet nvidia-smi shows cuda 13...
+
+
+* quantised models
+    - python -m sglang.launch_server --model-path Qwen/Qwen3.5-27B-GPTQ-Int4 --port 30000 --tp-size 1 --mem-fraction-static 0.7 --context-length 49152 --enable-deterministic-inference --reasoning-parser qwen3 --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device
+        - works at 13.80 tps
 
 ## Errors in program boundary detection
 
@@ -69,3 +88,10 @@ e.g. in video 828, 2.32 -> 2.35 is a long back screen before end credit. Which i
 
 139* : 0.15 - 5.01, 5.03 - 22.21, 22.23 - 32.27
 
+# videos
+
+103: 
+234: 109 mins
+911: tricky as there is a (accidental) space between two parts of the same program.
+
+    

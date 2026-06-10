@@ -18,6 +18,9 @@ If not already there, place the sample videos under sample11/X.32/X.32.mp4. Wher
 
 python -m sglang.launch_server --model-path Qwen/Qwen3.6-27B --port 30000 --tp-size 1 --mem-fraction-static 0.7 --context-length 49152 --enable-deterministic-inference --reasoning-parser qwen3  --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device
 
+# Or
+# python -m sglang.launch_server --model-path Qwen/Qwen3.5-27B-GPTQ-Int4 --port 30000 --tp-size 1 --mem-fraction-static 0.7 --context-length 49152 --enable-deterministic-inference --reasoning-parser qwen3  --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device
+
 # run framsense operator on NLS sample
 
 cd /scratch/prj/dh_issa/framesense

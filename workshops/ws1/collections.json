@@ -38,6 +38,31 @@
 "Detect all separators and programs in the video.",
 "Then returns only a valid JSON array of programs with `start` and `end` timecodes (format is 'HH:MM:SS')."
                         ]
+                    },
+                    "programs_3xinc": {
+                        "question_MULTILINES": [
+"This video contains one or more TV programs.",
+"Program are separated by a special, full screen visual separator.",
+"A visual separator usually looks like color bars, blank screen, white noise.",
+"The visual separators are not meant for public audience, only for production team.",
+"A separator may last between a second to a few minutes.",
+"They are very distinct from title screens within a program.",
+"Detect all separators and programs in the video.",
+"Then responds only with a valid JSON array of programs with `start` and `end` timecodes (format is 'HH:MM:SS').",
+"Here is an example of a response for two detected programs:",
+"```json",
+"[",
+"    {",
+"        \"start\": \"00:01:14\",",
+"        \"end\": \"00:06:23\"",
+"    },",
+"    {",
+"        \"start\": \"00:10:45\",",
+"        \"end\": \"00:24:32\"",
+"    }",
+"]",
+"```"
+                        ]
                     }
                 }
             },
