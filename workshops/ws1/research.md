@@ -40,12 +40,22 @@ Issues:
     - 3.5-27B-FP8:
         - Error: major > 12 or (major == 12 and minor >= 3)) and "NVCC version should be >= 12.3"
         - nvcc on erc-hpc-comp242 is Cuda compilation tools, release 12.2, V12.2.128; Build cuda_12.2.r12.2/compiler.33053471_0
-        - yet nvidia-smi shows cuda 13...
-
+        - yet nvidia-smi shows cuda 13... driver is 580.126.20
+    - try sglang 0.5.12 with singularity, which contains nvcc 13
+        - build singularity sif with `singularity pull docker://lmsysorg/sglang:latest` & copied to HPC
+        - singularity exec --nv --bind $HF_HOME:$HF_HOME  --bind ./models:/models   sglang_latest.sif sglang serve --model-path Qwen/Qwen3.6-27B --port 30000 --tp-size 1 --mem-fraction-static 0.7 --context-length 49152 --enable-deterministic-inference --reasoning-parser qwen3  --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device
+            + sglang serve --model-path Qwen/Qwen3.5-4B --port 30000 --tp-size 1 --mem-fraction-static 0.7 --context-length 49152 --reasoning-parser qwen3  --enable-flashinfer-allreduce-fusion
+            + singularity exec --nv --bind
+            + singularity exec --nv --bind /cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1:/cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1 --bind $HF_HOME:$HF_HOME /scratch/prj/dh_issa/sglang/sglang_latest.sif sglang serve --model-path Qwen/Qwen3.5-4B --port 30000 --tp-size 1 --mem-fraction-static 0.7 --context-length 49152 --reasoning-parser qwen3 --enable-flashinfer-allreduce-fusion
+            + https://github.com/local-inference-lab/rtx6kpro/blob/master/inference-engines/sglang.md#qwen35-397b-fp8-8-gpus
 
 * quantised models
     - python -m sglang.launch_server --model-path Qwen/Qwen3.5-27B-GPTQ-Int4 --port 30000 --tp-size 1 --mem-fraction-static 0.7 --context-length 49152 --enable-deterministic-inference --reasoning-parser qwen3 --mm-attention-backend fa3 --attention-backend fa3 --keep-mm-feature-on-device
-        - works at 13.80 tps
+        - works at 13.80 tps on a100 80g
+
+* long video support
+    - --mm-process-config '{"video": {"size": {"longest_edge": 469762048, "shortest_edge": 4096}}}'
+    - that number is for 224k of video frame tokens
 
 ## Errors in program boundary detection
 
