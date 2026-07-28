@@ -1,0 +1,289 @@
+experiment_time,duration_seconds,model_id,video,comparison_summary,comparison_score,vram_gb,seed,comments
+2026-05-18T16:47:53.278934,74.711617,cyankiwi/Qwen3.5-9B-AWQ-4bit,aobbu34200001,20 / 22 matched,0.87,22.89,42,no-reasoning
+2026-05-18T16:49:08.090166,73.794431,cyankiwi/Qwen3.5-9B-AWQ-4bit,aobbu34200001,21 / 22 matched,0.92,22.89,54,no-reasoning
+2026-05-18T16:50:21.963680,44.497408,cyankiwi/Qwen3.5-9B-AWQ-4bit,DVC43998,6 / 6 matched,0.99,22.89,42,no-reasoning
+2026-05-18T16:51:06.558620,42.852171,cyankiwi/Qwen3.5-9B-AWQ-4bit,DVC43998,1 / 6 matched,0.16,22.89,54,no-reasoning
+2026-05-18T16:51:49.509067,125.786756,cyankiwi/Qwen3.5-9B-AWQ-4bit,DVC43313,1 / 2 matched ; 11 extra predictions,0.07,22.89,42,no-reasoning
+2026-05-18T16:53:55.391949,121.605029,cyankiwi/Qwen3.5-9B-AWQ-4bit,DVC43313,2 / 2 matched,0.73,22.89,54,no-reasoning
+2026-05-18T16:55:57.096758,69.473176,cyankiwi/Qwen3.5-9B-AWQ-4bit,90D2335_A,7 / 7 matched,0.76,22.89,42,no-reasoning
+2026-05-18T16:57:06.666298,70.385667,cyankiwi/Qwen3.5-9B-AWQ-4bit,90D2335_A,7 / 7 matched,0.84,22.89,54,no-reasoning
+2026-05-18T21:07:38.960481,82.261866,Qwen/Qwen3.5-4B,aobbu34200001,22 / 22 matched,0.96,21.93,42,no-reasoning
+2026-05-18T21:09:01.312906,75.264116,Qwen/Qwen3.5-4B,aobbu34200001,22 / 22 matched,0.98,21.93,54,no-reasoning
+2026-05-18T21:10:16.675161,47.530445,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,1.0,22.59,42,no-reasoning
+2026-05-18T21:11:04.303025,42.464871,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.99,22.59,54,no-reasoning
+2026-05-18T21:11:46.865312,128.159564,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 9 extra predictions,0.1,22.59,42,no-reasoning
+2026-05-18T21:13:55.121871,114.295457,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 11 extra predictions,0.09,22.59,54,no-reasoning
+2026-05-18T21:15:49.527517,75.325414,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched ; 7 extra predictions,0.39,23.29,42,no-reasoning
+2026-05-18T21:17:04.948198,69.498897,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched,0.72,23.29,54,no-reasoning
+2026-05-18T21:49:27.999502,75.569501,Qwen/Qwen3.5-2B,aobbu34200001,1 / 22 matched,0.01,22.07,42,no-reasoning
+2026-05-18T21:50:43.648246,66.695588,Qwen/Qwen3.5-2B,aobbu34200001,1 / 22 matched,0.0,22.07,54,no-reasoning
+2026-05-18T21:51:50.439794,44.568042,Qwen/Qwen3.5-2B,DVC43998,1 / 6 matched,0.0,22.72,42,no-reasoning
+2026-05-18T21:52:35.105876,40.623434,Qwen/Qwen3.5-2B,DVC43998,1 / 6 matched,0.16,22.72,54,no-reasoning
+2026-05-18T21:53:15.825786,117.127705,Qwen/Qwen3.5-2B,DVC43313,0 / 2 matched,0.0,22.72,42,no-reasoning
+2026-05-18T21:55:13.050462,109.041114,Qwen/Qwen3.5-2B,DVC43313,0 / 2 matched,0.0,22.72,54,no-reasoning
+2026-05-18T21:57:02.187919,71.741388,Qwen/Qwen3.5-2B,90D2335_A,1 / 7 matched,0.01,23.43,42,no-reasoning
+2026-05-18T21:58:14.022917,66.575843,Qwen/Qwen3.5-2B,90D2335_A,1 / 7 matched,0.0,23.43,54,no-reasoning
+2026-05-18T22:40:47.127247,151.144231,cyankiwi/Qwen3.5-4B-AWQ-4bit,aobbu34200001,,0.0,21.85,42,
+2026-05-18T22:43:18.355826,150.915819,cyankiwi/Qwen3.5-4B-AWQ-4bit,aobbu34200001,,0.0,21.85,54,
+2026-05-18T22:45:49.351154,56.259548,cyankiwi/Qwen3.5-4B-AWQ-4bit,DVC43998,6 / 6 matched,1.0,22.5,42,
+2026-05-18T22:46:45.707147,47.205774,cyankiwi/Qwen3.5-4B-AWQ-4bit,DVC43998,0 / 6 matched,0.0,22.5,54,
+2026-05-23T00:09:44.802997,49.933447,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.97,72.89,42,no-reasoning a100_80g sglang
+2026-05-23T00:10:34.799320,45.337415,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.96,72.89,54,no-reasoning a100_80g sglang
+2026-05-23T00:11:20.181703,29.612469,Qwen/Qwen3.6-27B,DVC43998,1 / 6 matched,0.16,75.09,42,no-reasoning a100_80g sglang
+2026-05-23T00:11:49.842025,24.941206,Qwen/Qwen3.6-27B,DVC43998,1 / 6 matched,0.16,75.09,54,no-reasoning a100_80g sglang
+2026-05-23T00:12:14.829786,42.653293,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched ; 16 extra predictions,0.04,75.09,42,no-reasoning a100_80g sglang
+2026-05-23T00:12:57.528998,47.965901,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched ; 26 extra predictions,0.04,75.09,54,no-reasoning a100_80g sglang
+2026-05-23T00:13:45.542995,42.198346,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.97,75.47,42,no-reasoning a100_80g sglang
+2026-05-23T00:14:27.787017,31.46324,Qwen/Qwen3.6-27B,90D2335_A,1 / 7 matched,0.14,75.47,54,no-reasoning a100_80g sglang
+2026-05-23T12:02:02.807117,56.528445,Qwen/Qwen3.5-9B,aobbu34200001,22 / 22 matched,0.94,76.78,42,new-prompt sglang a100_80g no-reasoning
+2026-05-23T12:02:59.399497,30.009785,Qwen/Qwen3.5-9B,aobbu34200001,2 / 22 matched,0.02,76.78,54,new-prompt sglang a100_80g no-reasoning
+2026-05-23T12:03:29.479264,26.393334,Qwen/Qwen3.5-9B,DVC43998,1 / 6 matched,0.16,76.78,42,new-prompt sglang a100_80g no-reasoning
+2026-05-23T12:03:55.950658,22.757713,Qwen/Qwen3.5-9B,DVC43998,5 / 6 matched,0.82,76.78,54,new-prompt sglang a100_80g no-reasoning
+2026-05-23T12:04:18.766476,27.865989,Qwen/Qwen3.5-9B,DVC43313,invalid input format,0.0,76.78,42,new-prompt sglang a100_80g no-reasoning
+2026-05-23T12:04:46.769372,25.275648,Qwen/Qwen3.5-9B,DVC43313,1 / 2 matched,0.5,76.78,54,new-prompt sglang a100_80g no-reasoning
+2026-05-23T12:05:12.109472,44.25076,Qwen/Qwen3.5-9B,90D2335_A,7 / 7 matched,0.75,77.15,42,new-prompt sglang a100_80g no-reasoning
+2026-05-23T12:05:56.420290,34.999781,Qwen/Qwen3.5-9B,90D2335_A,7 / 7 matched,0.77,77.15,54,new-prompt sglang a100_80g no-reasoning
+2026-05-23T12:19:38.958978,391.024282,Qwen/Qwen3.5-4B,aobbu34200001,22 / 22 matched,0.84,75.0,42,new-prompt sglang a100_80g
+2026-05-23T12:26:10.105296,526.989229,Qwen/Qwen3.5-4B,aobbu34200001,22 / 22 matched,0.93,75.0,54,new-prompt sglang a100_80g
+2026-05-23T12:34:57.179354,73.143248,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,1.0,77.6,42,new-prompt sglang a100_80g
+2026-05-23T12:36:10.404139,80.530405,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.98,77.6,54,new-prompt sglang a100_80g
+2026-05-23T12:37:31.005231,320.814403,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 8 extra predictions,0.13,77.6,42,new-prompt sglang a100_80g
+2026-05-23T12:42:51.928851,518.688397,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched,0.7,77.6,54,new-prompt sglang a100_80g
+2026-05-23T16:13:36.204559,54.528574,Qwen/Qwen3.5-4B,aobbu34200001,22 / 22 matched,0.95,76.97,42,new-prompt sglang a100_80g no-reasoning
+2026-05-23T16:14:30.817125,49.022319,Qwen/Qwen3.5-4B,aobbu34200001,18 / 22 matched,0.72,76.97,54,new-prompt sglang a100_80g no-reasoning
+2026-05-23T16:15:19.885567,16.143471,Qwen/Qwen3.5-4B,DVC43998,0 / 6 matched,0.0,76.97,42,new-prompt sglang a100_80g no-reasoning
+2026-05-23T16:15:36.073020,22.567193,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.99,76.97,54,new-prompt sglang a100_80g no-reasoning
+2026-05-23T16:15:58.686523,52.498216,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 19 extra predictions,0.05,76.97,42,new-prompt sglang a100_80g no-reasoning
+2026-05-23T16:16:51.435697,65.205737,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 30 extra predictions,0.02,76.97,54,new-prompt sglang a100_80g no-reasoning
+2026-05-23T16:17:56.691841,33.010261,Qwen/Qwen3.5-4B,90D2335_A,0 / 7 matched,0.0,76.97,42,new-prompt sglang a100_80g no-reasoning
+2026-05-23T16:18:29.745781,22.290793,Qwen/Qwen3.5-4B,90D2335_A,0 / 7 matched,0.0,76.97,54,new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:14:29.787122,29.610251,Qwen/Qwen3.5-2B,aobbu34200001,5 / 22 matched,0.2,78.78,42,new-prompt sglang a100_80g no-reasoning tuned
+2026-05-23T18:14:59.485973,44.351401,Qwen/Qwen3.5-2B,aobbu34200001,20 / 22 matched ; 11 extra predictions,0.44,78.78,54,new-prompt sglang a100_80g no-reasoning tuned
+2026-05-23T18:15:43.949403,19.350891,Qwen/Qwen3.5-2B,DVC43998,6 / 6 matched ; 1 extra predictions,0.82,78.78,42,new-prompt sglang a100_80g no-reasoning tuned
+2026-05-23T18:16:03.373654,16.857158,Qwen/Qwen3.5-2B,DVC43998,4 / 6 matched,0.61,78.78,54,new-prompt sglang a100_80g no-reasoning tuned
+2026-05-23T18:16:20.316203,27.318236,Qwen/Qwen3.5-2B,DVC43313,2 / 2 matched ; 6 extra predictions,0.15,79.11,42,new-prompt sglang a100_80g no-reasoning tuned
+2026-05-23T18:16:47.735487,22.851627,Qwen/Qwen3.5-2B,DVC43313,1 / 2 matched,0.27,79.11,54,new-prompt sglang a100_80g no-reasoning tuned
+2026-05-23T18:17:10.655975,26.761897,Qwen/Qwen3.5-2B,90D2335_A,6 / 7 matched,0.75,78.85,42,new-prompt sglang a100_80g no-reasoning tuned
+2026-05-23T18:17:37.576286,26.982829,Qwen/Qwen3.5-2B,90D2335_A,7 / 7 matched ; 2 extra predictions,0.49,78.85,54,new-prompt sglang a100_80g no-reasoning tuned
+2026-05-23T18:28:19.185915,29.956716,Qwen/Qwen3.5-2B,aobbu34200001,6 / 22 matched,0.23,74.32,42,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:28:49.239903,37.576122,Qwen/Qwen3.5-2B,aobbu34200001,17 / 22 matched,0.58,74.32,54,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:29:26.925793,20.72827,Qwen/Qwen3.5-2B,DVC43998,6 / 6 matched,0.99,75.06,42,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:29:47.717369,17.831546,Qwen/Qwen3.5-2B,DVC43998,5 / 6 matched,0.61,75.06,54,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:30:05.614667,29.962825,Qwen/Qwen3.5-2B,DVC43313,2 / 2 matched ; 9 extra predictions,0.11,75.06,42,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:30:35.638538,23.298671,Qwen/Qwen3.5-2B,DVC43313,1 / 2 matched,0.27,75.06,54,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:30:58.997171,28.124865,Qwen/Qwen3.5-2B,90D2335_A,7 / 7 matched ; 1 extra predictions,0.77,75.76,42,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:31:27.243776,89.359822,Qwen/Qwen3.5-2B,90D2335_A,7 / 7 matched ; 96 extra predictions,0.03,75.76,54,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:40:53.688045,29.084106,Qwen/Qwen3.5-4B,aobbu34200001,1 / 22 matched,0.01,72.18,42,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:41:22.824716,53.243206,Qwen/Qwen3.5-4B,aobbu34200001,20 / 22 matched,0.87,74.2,54,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:42:16.127023,24.599483,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.99,74.94,42,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:42:40.782723,23.443081,Qwen/Qwen3.5-4B,DVC43998,0 / 6 matched,0.0,74.94,54,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:43:04.283926,55.667515,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 25 extra predictions,0.04,74.94,42,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:44:00.030331,25.336095,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched,0.77,74.94,54,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:44:25.433286,31.879171,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched,0.88,75.64,42,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T18:44:57.414278,30.545107,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched,0.89,75.64,54,fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:39:06.437208,38.037192,Qwen/Qwen3.5-4B,aobbu34200001,2 / 22 matched,0.06,75.64,42,t=0.9 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:39:44.543327,48.553643,Qwen/Qwen3.5-4B,aobbu34200001,21 / 22 matched,0.85,75.64,54,t=0.9 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:40:33.158840,23.29583,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.99,75.64,42,t=0.9 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:40:56.525893,23.741758,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.99,75.64,54,t=0.9 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:41:20.324829,34.855443,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 7 extra predictions,0.08,75.64,42,t=0.9 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:41:55.270488,190.469725,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 136 extra predictions,0.0,75.64,54,t=0.9 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:45:05.801301,40.130117,Qwen/Qwen3.5-4B,90D2335_A,6 / 7 matched,0.77,75.64,42,t=0.9 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:45:46.018804,32.175588,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched,0.86,75.64,54,t=0.9 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:51:02.406813,36.387384,Qwen/Qwen3.5-4B,aobbu34200001,3 / 22 matched,0.11,75.64,42,t=1.0 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:51:38.856682,49.647921,Qwen/Qwen3.5-4B,aobbu34200001,22 / 22 matched,0.95,75.64,54,t=1.0 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:52:28.603915,22.591765,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.99,75.64,42,t=1.0 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:52:51.261802,23.73584,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.99,75.64,54,t=1.0 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:53:15.063482,37.895194,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 11 extra predictions,0.05,75.64,42,t=1.0 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:53:53.029375,61.927363,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 31 extra predictions,0.02,75.64,54,t=1.0 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:54:55.006536,29.697933,Qwen/Qwen3.5-4B,90D2335_A,6 / 7 matched,0.77,75.64,42,t=1.0 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T19:55:24.770105,32.311063,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched,0.81,75.64,54,t=1.0 fa3 new-prompt sglang a100_80g no-reasoning
+2026-05-23T22:58:34.810522,32.722861,OpenGVLab/InternVL3-8B,aobbu34200001,6 / 22 matched,0.14,69.59,42,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T22:59:07.607496,35.558543,OpenGVLab/InternVL3-8B,aobbu34200001,4 / 22 matched,0.08,69.59,54,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T22:59:43.247098,6.176861,OpenGVLab/InternVL3-8B,DVC43998,2 / 6 matched,0.14,69.59,42,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T22:59:49.492156,6.180022,OpenGVLab/InternVL3-8B,DVC43998,2 / 6 matched,0.22,69.59,54,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T22:59:55.747421,32.239811,OpenGVLab/InternVL3-8B,DVC43313,2 / 2 matched ; 18 extra predictions,0.03,69.59,42,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:00:28.059202,26.412031,OpenGVLab/InternVL3-8B,DVC43313,2 / 2 matched ; 14 extra predictions,0.08,69.59,54,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:00:54.537321,21.830824,OpenGVLab/InternVL3-8B,90D2335_A,3 / 7 matched,0.1,69.59,42,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:01:16.468246,12.088558,OpenGVLab/InternVL3-8B,90D2335_A,4 / 7 matched,0.36,69.59,54,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:14:42.695496,19.148802,OpenGVLab/InternVL3-14B,aobbu34200001,4 / 22 matched,0.09,70.53,42,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:15:01.910125,16.661936,OpenGVLab/InternVL3-14B,aobbu34200001,4 / 22 matched,0.08,70.56,54,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:15:18.641185,11.165432,OpenGVLab/InternVL3-14B,DVC43998,2 / 6 matched,0.23,70.6,42,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:15:29.885278,9.226049,OpenGVLab/InternVL3-14B,DVC43998,2 / 6 matched,0.22,70.64,54,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:15:39.181524,23.45262,OpenGVLab/InternVL3-14B,DVC43313,2 / 2 matched ; 6 extra predictions,0.15,70.64,42,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:16:02.717649,35.579455,OpenGVLab/InternVL3-14B,DVC43313,2 / 2 matched ; 11 extra predictions,0.06,70.64,54,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:16:38.374619,20.935529,OpenGVLab/InternVL3-14B,90D2335_A,4 / 7 matched,0.27,70.64,42,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-23T23:16:59.369178,18.985866,OpenGVLab/InternVL3-14B,90D2335_A,4 / 7 matched,0.32,70.64,54,t=0.8 top_p=0.8 fa3 sglang a100_80g no-reasoning
+2026-05-24T14:08:41.803303,119.124605,Qwen/Qwen3.5-27B,aobbu34200001,19 / 22 matched,0.73,78.04,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-24T14:10:40.977545,31.53184,Qwen/Qwen3.5-27B,aobbu34200001,1 / 22 matched,0.04,78.04,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-24T14:11:12.553757,40.3545,Qwen/Qwen3.5-27B,DVC43998,5 / 6 matched,0.19,78.04,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-24T14:11:52.953644,45.566147,Qwen/Qwen3.5-27B,DVC43998,6 / 6 matched,0.99,78.04,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-24T14:12:38.560143,42.512615,Qwen/Qwen3.5-27B,DVC43313,1 / 2 matched ; 1 extra predictions,0.11,78.04,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-24T14:13:21.115774,30.828605,Qwen/Qwen3.5-27B,DVC43313,1 / 2 matched,0.5,78.04,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-24T14:13:51.983766,66.260406,Qwen/Qwen3.5-27B,90D2335_A,7 / 7 matched,0.99,78.41,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-24T14:14:58.284438,52.541181,Qwen/Qwen3.5-27B,90D2335_A,7 / 7 matched,0.74,78.41,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-24T14:16:54.713485,922.638937,Qwen/Qwen3.5-27B,aobbu34200001,22 / 22 matched,0.85,78.41,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-24T14:32:17.391782,896.356661,Qwen/Qwen3.5-27B,aobbu34200001,22 / 22 matched,0.83,78.41,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-24T14:47:13.791079,1136.672104,Qwen/Qwen3.5-27B,DVC43998,invalid input format,0.0,78.41,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-24T15:06:10.539461,512.256825,Qwen/Qwen3.5-27B,DVC43998,6 / 6 matched,0.98,78.41,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-24T15:14:42.837411,407.865101,Qwen/Qwen3.5-27B,DVC43313,invalid input format,0.0,78.41,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-24T23:16:24.363804,729.08854,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.96,64.28,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-24T23:28:33.560587,796.703885,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.85,66.3,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-24T23:41:50.330204,267.340652,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.98,66.65,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-24T23:46:17.732522,441.959263,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,1.0,66.65,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-25T00:43:39.360883,1417.656298,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.98,64.07,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-25T01:07:17.137451,1519.758713,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.98,69.77,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-25T01:32:36.978164,1391.020183,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.86,70.14,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-25T01:55:48.100589,1337.187001,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.99,70.14,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb
+2026-05-25T02:27:00.589795,79.892612,Qwen/Qwen3.5-4B,aobbu34200001,13 / 22 matched,0.47,78.41,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:28:20.556764,76.659922,Qwen/Qwen3.5-4B,aobbu34200001,invalid input format,0.0,78.41,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:29:37.278292,45.278297,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,0.99,78.41,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:30:22.616510,50.995186,Qwen/Qwen3.5-4B,DVC43998,6 / 6 matched,1.0,78.41,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:31:13.683773,60.528415,Qwen/Qwen3.5-4B,DVC43313,2 / 2 matched ; 6 extra predictions,0.15,78.41,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:32:14.274794,36.820405,Qwen/Qwen3.5-4B,DVC43313,1 / 2 matched,0.5,78.41,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:32:51.184341,67.162383,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched,0.74,78.41,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:33:58.410421,57.800126,Qwen/Qwen3.5-4B,90D2335_A,7 / 7 matched,0.74,78.41,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:43:18.397245,46.345004,Qwen/Qwen3.5-9B,aobbu34200001,6 / 22 matched,0.15,72.61,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:44:04.817044,38.750399,Qwen/Qwen3.5-9B,aobbu34200001,3 / 22 matched,0.11,74.63,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:44:43.635438,30.16751,Qwen/Qwen3.5-9B,DVC43998,5 / 6 matched,0.78,74.99,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:45:13.863514,20.724405,Qwen/Qwen3.5-9B,DVC43998,1 / 6 matched,0.16,74.99,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:45:34.654885,47.953429,Qwen/Qwen3.5-9B,DVC43313,1 / 2 matched,0.5,74.99,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:46:22.677738,35.805537,Qwen/Qwen3.5-9B,DVC43313,0 / 2 matched ; 2 extra predictions,0.0,74.99,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:46:58.544098,44.952328,Qwen/Qwen3.5-9B,90D2335_A,7 / 7 matched ; 1 extra predictions,0.72,75.36,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T02:47:43.553350,33.254076,Qwen/Qwen3.5-9B,90D2335_A,2 / 7 matched,0.21,75.36,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought
+2026-05-25T10:41:35.491188,144.398719,Qwen/Qwen3.6-27B,aobbu34200001,1 / 22 matched,0.0,72.3,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-25T10:44:00.092797,114.893393,Qwen/Qwen3.6-27B,aobbu34200001,1 / 22 matched,0.02,74.32,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-25T10:45:55.028543,47.65787,Qwen/Qwen3.6-27B,DVC43998,0 / 6 matched,0.0,74.67,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-25T10:46:42.744035,42.44856,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.67,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-25T10:47:25.232705,41.197204,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.28,74.67,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-25T10:48:06.469499,35.586858,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.82,74.67,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-25T10:48:42.135570,63.623278,Qwen/Qwen3.6-27B,90D2335_A,1 / 7 matched,0.14,75.05,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-25T10:49:45.858250,53.546124,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.7,75.05,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning
+2026-05-25T10:59:57.929490,33.402037,Qwen/Qwen3.5-2B,aobbu34200001,2 / 22 matched,0.05,43.42,42,t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}
+2026-05-25T11:00:31.430056,32.73563,Qwen/Qwen3.5-2B,aobbu34200001,2 / 22 matched,0.05,43.42,54,t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}
+2026-05-25T11:01:04.223641,19.446426,Qwen/Qwen3.5-2B,DVC43998,2 / 6 matched,0.26,43.42,42,t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}
+2026-05-25T11:01:23.715885,17.621724,Qwen/Qwen3.5-2B,DVC43998,1 / 6 matched,0.16,43.42,54,t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}
+2026-05-25T11:01:41.390939,28.179074,Qwen/Qwen3.5-2B,DVC43313,2 / 2 matched,0.49,43.42,42,t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}
+2026-05-25T11:02:09.637155,26.989266,Qwen/Qwen3.5-2B,DVC43313,1 / 2 matched,0.27,43.42,54,t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}
+2026-05-25T11:02:36.739566,29.190014,Qwen/Qwen3.5-2B,90D2335_A,2 / 7 matched,0.16,43.42,42,t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}
+2026-05-25T11:03:05.985214,29.769468,Qwen/Qwen3.5-2B,90D2335_A,3 / 7 matched,0.22,43.42,54,t=0.6 top_p=0.95 fa3 sglang l40s no-reasoning {r}
+2026-05-25T11:38:22.705431,124.012831,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.9,75.05,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}
+2026-05-25T11:40:26.803486,119.776664,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.84,75.05,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}
+2026-05-25T11:42:26.647104,57.619075,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.98,75.05,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}
+2026-05-25T11:43:24.341585,85.182753,Qwen/Qwen3.6-27B,DVC43998,0 / 6 matched,0.0,75.05,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}
+2026-05-25T11:44:49.582998,48.361551,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.48,75.05,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}
+2026-05-25T11:45:38.009020,56.630493,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.48,75.05,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}
+2026-05-25T11:46:34.730660,144.392606,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched ; 1 extra predictions,0.73,75.05,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}
+2026-05-25T11:48:59.180422,66.362281,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.84,75.05,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning {r}
+2026-05-25T13:25:29.880006,33.630775,Qwen/Qwen3.6-27B,aobbu34200001,1 / 22 matched,0.02,74.71,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1
+2026-05-25T13:26:03.572189,37.953694,Qwen/Qwen3.6-27B,aobbu34200001,1 / 22 matched,0.02,74.71,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1
+2026-05-25T13:26:41.686883,53.214529,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.71,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1
+2026-05-25T13:27:35.021492,41.165746,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.98,74.71,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1
+2026-05-25T13:28:16.261536,35.605788,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.08,74.71,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1
+2026-05-25T13:28:51.957893,35.609296,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.45,74.71,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1
+2026-05-25T13:29:27.650483,87.408295,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched ; 6 extra predictions,0.39,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1
+2026-05-25T13:30:55.139393,52.245899,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.85,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 1
+2026-05-25T14:22:11.868815,99.339097,Qwen/Qwen3.6-27B,aobbu34200001,15 / 22 matched,0.57,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T14:23:51.541230,99.189496,Qwen/Qwen3.6-27B,aobbu34200001,16 / 22 matched,0.09,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T14:25:31.059041,42.193045,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.97,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T14:26:13.569895,45.391604,Qwen/Qwen3.6-27B,DVC43998,0 / 6 matched,0.0,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T14:26:59.062939,32.743421,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.45,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T14:27:31.877996,35.881484,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.43,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T14:28:07.863717,61.732285,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.98,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T14:29:09.922918,80.389097,Qwen/Qwen3.6-27B,90D2335_A,0 / 7 matched,0.0,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T14:38:31.709770,37.747346,Qwen/Qwen3.6-27B,aobbu34200001,1 / 22 matched,0.03,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3
+2026-05-25T14:39:09.536359,33.820975,Qwen/Qwen3.6-27B,aobbu34200001,1 / 22 matched,0.04,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3
+2026-05-25T14:39:43.674560,41.394078,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.83,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3
+2026-05-25T14:40:25.295736,41.239086,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3
+2026-05-25T14:41:06.798106,31.137231,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.47,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3
+2026-05-25T14:41:38.243120,35.452724,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.42,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3
+2026-05-25T14:42:13.831914,35.560984,Qwen/Qwen3.6-27B,90D2335_A,2 / 7 matched,0.23,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3
+2026-05-25T14:42:49.534797,57.768047,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.76,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought [] 3
+2026-05-25T14:50:05.890154,353.009612,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.97,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T14:55:59.495131,318.460474,Qwen/Qwen3.6-27B,aobbu34200001,4 / 22 matched,0.04,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T15:01:18.028961,41.704465,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T15:01:59.913651,41.050974,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T15:02:41.189219,42.577151,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched ; 2 extra predictions,0.29,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T15:03:24.186148,245.389133,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.99,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T15:07:29.804555,49.898572,Qwen/Qwen3.6-27B,90D2335_A,0 / 7 matched,0.0,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T15:08:19.879708,53.131099,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.74,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb chain-of-thought []
+2026-05-25T15:33:01.040129,1616.688535,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.96,72.3,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2
+2026-05-25T15:59:57.813370,1759.808855,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.84,74.32,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2
+2026-05-25T16:29:17.730225,402.620594,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.67,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2
+2026-05-25T16:36:00.555741,736.572951,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,1.0,74.67,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] 2
+2026-05-25T22:06:37.843449,423.558563,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.96,72.34,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T22:13:41.476692,807.472062,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.97,74.36,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T22:27:09.015507,144.698932,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.71,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T22:29:33.763228,483.658246,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.71,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T22:37:37.517732,1742.897459,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.27,74.71,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T23:06:40.492876,738.725823,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.99,74.71,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T23:18:59.414076,569.36132,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.72,75.08,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-25T23:28:28.923141,338.134022,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.73,75.08,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb []
+2026-05-31T01:19:25.313080,37.757038,Qwen/Qwen3.5-9B,aobbu34200001,0 / 22 matched,0.0,64.59,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T01:20:03.133781,33.12771,Qwen/Qwen3.5-9B,aobbu34200001,0 / 22 matched,0.0,66.61,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T01:20:36.336396,39.290729,Qwen/Qwen3.5-9B,DVC43998,2 / 6 matched,0.16,66.96,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T01:21:15.668889,37.945407,Qwen/Qwen3.5-9B,DVC43998,6 / 6 matched,0.93,66.96,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T01:21:53.662073,32.935445,Qwen/Qwen3.5-9B,DVC43313,0 / 2 matched,0.0,66.96,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T01:22:26.635288,31.988003,Qwen/Qwen3.5-9B,DVC43313,0 / 2 matched,0.0,66.96,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T01:22:58.664566,29.909966,Qwen/Qwen3.5-9B,90D2335_A,0 / 7 matched,0.0,67.33,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T01:23:28.611692,56.276575,Qwen/Qwen3.5-9B,90D2335_A,0 / 7 matched,0.0,67.33,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T09:55:19.509080,289.816147,Qwen/Qwen3.6-27B,aobbu34200001,21 / 22 matched ; 2 extra predictions,0.78,72.34,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T10:00:09.395965,35.251478,Qwen/Qwen3.6-27B,aobbu34200001,0 / 22 matched,0.0,74.36,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T10:00:44.713981,38.291016,Qwen/Qwen3.6-27B,DVC43998,0 / 6 matched,0.0,74.71,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T10:01:12.337907,80.15797,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.98,66.65,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T10:02:32.697758,77.718823,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched ; 2 extra predictions,0.5,66.65,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T10:03:50.454963,50.8893,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.0,66.65,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T10:04:41.782973,166.002623,Qwen/Qwen3.6-27B,90D2335_A,1 / 7 matched ; 1 extra predictions,0.12,67.02,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T10:07:28.350825,84.38002,Qwen/Qwen3.6-27B,90D2335_A,0 / 7 matched,0.0,67.02,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep3
+2026-05-31T10:36:20.641463,205.782185,Qwen/Qwen3.6-27B,aobbu34200001,3 / 22 matched,0.03,67.02,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T10:39:46.520820,209.823344,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.96,67.02,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T10:43:16.413909,79.088467,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.93,67.02,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T10:44:35.562918,80.350016,Qwen/Qwen3.6-27B,DVC43998,5 / 6 matched,0.8,67.02,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T10:45:55.964459,37.386326,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.3,67.02,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T10:46:33.457307,36.39344,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.3,67.02,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T10:47:09.939671,140.668326,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched ; 8 extra predictions,-1.72,67.02,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T10:49:30.673015,72.996865,Qwen/Qwen3.6-27B,90D2335_A,3 / 7 matched,-1.14,67.02,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T10:40:48.894784,1233.111154,Qwen/Qwen3.6-27B,aobbu34200001,0 / 22 matched,0.0,74.71,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4
+2026-05-31T11:01:22.101228,779.155776,Qwen/Qwen3.6-27B,aobbu34200001,20 / 22 matched,0.82,74.71,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4
+2026-05-31T11:14:21.321317,364.99456,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.89,74.71,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4
+2026-05-31T11:20:26.386098,515.871934,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.93,74.71,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4
+2026-05-31T11:29:02.319205,641.331487,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.5,74.71,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4
+2026-05-31T11:39:43.720752,1257.106611,Qwen/Qwen3.6-27B,DVC43313,1 / 2 matched,0.2,74.71,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4
+2026-05-31T12:00:40.902591,388.141419,Qwen/Qwen3.6-27B,90D2335_A,4 / 7 matched,0.02,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4
+2026-05-31T12:07:09.113074,1569.886694,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.88,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] sep4
+2026-05-31T23:29:46.229781,273.012969,Qwen/Qwen3.5-27B,aobbu34200001,21 / 22 matched,0.9,72.34,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T23:34:19.330082,241.988224,Qwen/Qwen3.5-27B,aobbu34200001,22 / 22 matched,0.89,74.36,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T23:38:21.368299,89.795143,Qwen/Qwen3.5-27B,DVC43998,6 / 6 matched,0.86,74.71,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T23:39:51.209571,70.677777,Qwen/Qwen3.5-27B,DVC43998,6 / 6 matched,0.86,74.71,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T23:41:01.927885,55.244461,Qwen/Qwen3.5-27B,DVC43313,2 / 2 matched,0.6,74.71,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T23:41:57.368456,65.875093,Qwen/Qwen3.5-27B,DVC43313,1 / 2 matched ; 4 extra predictions,0.0,74.71,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T23:43:03.385140,155.739048,Qwen/Qwen3.5-27B,90D2335_A,7 / 7 matched,0.34,75.08,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T23:45:39.159945,146.192905,Qwen/Qwen3.5-27B,90D2335_A,7 / 7 matched,1.0,75.08,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-05-31T23:52:40.225851,228.220078,Qwen/Qwen3.5-27B,aobbu34200001,3 / 22 matched,0.11,75.08,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2
+2026-05-31T23:56:28.508609,203.47861,Qwen/Qwen3.5-27B,aobbu34200001,21 / 22 matched,0.88,75.08,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2
+2026-05-31T23:59:52.023814,81.16105,Qwen/Qwen3.5-27B,DVC43998,6 / 6 matched,0.93,75.08,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2
+2026-06-01T00:01:13.291101,60.850588,Qwen/Qwen3.5-27B,DVC43998,4 / 6 matched,0.6,75.08,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2
+2026-06-01T00:02:14.264181,46.406078,Qwen/Qwen3.5-27B,DVC43313,2 / 2 matched,0.5,75.08,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2
+2026-06-01T00:03:00.709612,40.676416,Qwen/Qwen3.5-27B,DVC43313,1 / 2 matched,0.2,75.08,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2
+2026-06-01T00:03:41.423576,140.837053,Qwen/Qwen3.5-27B,90D2335_A,7 / 7 matched,-0.14,75.08,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2
+2026-06-01T00:06:02.297937,129.517099,Qwen/Qwen3.5-27B,90D2335_A,7 / 7 matched,0.85,75.08,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4 s2
+2026-06-01T00:11:57.609130,1193.327986,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.99,72.34,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-01T00:31:51.002624,1024.781543,Qwen/Qwen3.6-27B,aobbu34200001,22 / 22 matched,0.97,74.36,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-01T00:48:55.847471,665.406386,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.71,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-01T01:00:01.289221,820.907861,Qwen/Qwen3.6-27B,DVC43998,6 / 6 matched,0.99,74.71,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-01T01:13:42.289675,430.257034,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched,0.98,74.71,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-01T01:20:52.587278,1160.715924,Qwen/Qwen3.6-27B,DVC43313,2 / 2 matched ; 1 extra predictions,0.5,74.71,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-01T01:40:13.494232,1652.938702,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,0.89,75.08,142,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-01T02:07:46.508490,961.452557,Qwen/Qwen3.6-27B,90D2335_A,7 / 7 matched,1.0,75.08,154,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-03T00:32:13.469630,55.572401,Qwen/Qwen3.5-27B,S1964_2,3 / 6 matched,0.47,72.01,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] prog1
+2026-06-03T00:33:09.105693,37.836693,Qwen/Qwen3.5-27B,S1964_2,2 / 6 matched,0.33,73.89,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] prog1
+2026-06-03T00:33:47.014437,52.44493,Qwen/Qwen3.5-27B,55300_A,0 / 1 matched,0.0,73.9,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] prog1
+2026-06-03T00:34:39.497795,44.328711,Qwen/Qwen3.5-27B,55300_A,0 / 1 matched,0.0,73.9,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] prog1
+2026-06-03T00:32:13.473901,233.128431,Qwen/Qwen3.6-27B,S1964_2,1 / 6 matched,0.16,72.01,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog1
+2026-06-03T00:38:58.651548,50.559273,Qwen/Qwen3.5-27B,S1964_2,2 / 6 matched,0.26,73.9,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-06-03T00:39:49.281433,53.937998,Qwen/Qwen3.5-27B,S1964_2,0 / 6 matched,0.0,73.9,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-06-03T00:40:43.298819,57.143982,Qwen/Qwen3.5-27B,55300_A,0 / 1 matched,0.0,73.9,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-06-03T00:41:40.481707,46.801485,Qwen/Qwen3.5-27B,55300_A,0 / 1 matched,0.0,73.9,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb no-reasoning [] sep4
+2026-06-03T00:39:40.492876,1723.405059,Qwen/Qwen3.6-27B,S1964_2,3 / 6 matched,0.5,73.89,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-03T01:08:23.989905,379.589438,Qwen/Qwen3.6-27B,S1964_2,2 / 6 matched,0.33,73.89,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-03T01:14:43.658193,447.64122,Qwen/Qwen3.6-27B,55300_A,1 / 1 matched,1.0,73.9,42,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
+2026-06-03T01:22:11.390586,248.389442,Qwen/Qwen3.6-27B,55300_A,1 / 1 matched,0.99,73.9,54,t=1.0 top_p=0.95 fa3 sglang a100_80gb [] prog3
