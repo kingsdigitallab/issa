@@ -130,13 +130,19 @@
       margin-bottom: 1rem;
     }
     .no-data { color: #aaa; font-style: italic; font-size: 0.85rem; padding: 1rem; }
+    .site-title {
+      font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: #888; margin-bottom: 1.2rem;
+    }
   </style>
 </head>
 <body>
 
+<div class="site-title">ISSA mini-dashboard</div>
+
 <header>
   <h1>Qwen3.5 Video Programme Segmentation</h1>
-  <p class="subtitle">Automated TV programme boundary detection — ISSA archive evaluation</p>
+  <p class="subtitle">Automated TV programme boundary detection — ISSA samples evaluation</p>
   <div class="meta-row">
     <span>Last run: <strong id="last-updated">—</strong></span>
     <span>Runs: <strong id="run-count">—</strong></span>
@@ -148,7 +154,7 @@
 <section>
   <h2>Task</h2>
   <p>
-    Each video in the ISSA archive contains one or more recorded TV programmes separated by visual markers
+    Each video in the ISSA samples contains one or more recorded TV programmes separated by visual markers
     (countdowns, colour bars, black screens, title cards). The model is given a video and must return the
     start and end timecode of every programme. Predicted segments are matched to ground-truth segments by
     maximum temporal overlap; the <em>comparison score</em> measures what fraction of each ground-truth
