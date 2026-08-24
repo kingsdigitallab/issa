@@ -25,12 +25,16 @@ Situtation so far:
 
 ## One-page explainer
 A single-page interactive with three charts and a table to visualise and communicate experimental results.
-To open it, serve from the same directory:
+
+Live version (published via GitHub Pages, shareable with partners):
+`https://kingsdigitallab.github.io/issa/experiments/qwen3x/results.html`
+
+The HTML fetches `evaluations.csv` at runtime, so pushing updated rows to `main` is enough to refresh the published page — no HTML edits or redeploy step required.
+
+For local development, serve it from the same directory instead:
 
 `cd experiments/qwen3x && python -m http.server 8080` and then open
 `http://localhost:8080/results.html`
-
-The HTML fetches `evaluations.csv` at runtime. If we add rows to this file, refreshing the page should pick up new data with no HTML edits required.
 
 ### Issues
 * qwen3.5-2b & 4b models return MM:SS format even when asked for HH:MM:SS; Or return json with start_time instead of startTime.

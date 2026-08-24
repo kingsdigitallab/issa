@@ -130,13 +130,34 @@
       margin-bottom: 1rem;
     }
     .no-data { color: #aaa; font-style: italic; font-size: 0.85rem; padding: 1rem; }
+    .table-hint {
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem;
+      color: #777; margin-top: 0.4rem;
+    }
+    tr.group-row { cursor: pointer; }
+    tr.group-row:hover { background: #f4f7fa; }
+    tr.group-row.expanded { background: #f4f7fa; }
+    .expand-icon {
+      display: inline-block; width: 0.8em; color: #888; font-size: 0.7rem;
+      transition: transform 0.15s ease;
+    }
+    tr.group-row.expanded .expand-icon { transform: rotate(90deg); }
+    tr.run-row { background: #fbfbfb; }
+    tr.run-row td { color: #777; font-size: 0.76rem; }
+    tr.run-row td:first-child { padding-left: 1.6rem; }
+    .site-title {
+      font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: #888; margin-bottom: 1.2rem;
+    }
   </style>
 </head>
 <body>
 
+<div class="site-title">ISSA mini-dashboard</div>
+
 <header>
   <h1>Qwen3.5 Video Programme Segmentation</h1>
-  <p class="subtitle">Automated TV programme boundary detection — ISSA archive evaluation</p>
+  <p class="subtitle">Automated TV programme boundary detection — ISSA samples evaluation</p>
   <div class="meta-row">
     <span>Last run: <strong id="last-updated">—</strong></span>
     <span>Runs: <strong id="run-count">—</strong></span>
@@ -148,7 +169,7 @@
 <section>
   <h2>Task</h2>
   <p>
-    Each video in the ISSA archive contains one or more recorded TV programmes separated by visual markers
+    Each video in the ISSA samples contains one or more recorded TV programmes separated by visual markers
     (countdowns, colour bars, black screens, title cards). The model is given a video and must return the
     start and end timecode of every programme. Predicted segments are matched to ground-truth segments by
     maximum temporal overlap; the <em>comparison score</em> measures what fraction of each ground-truth
@@ -174,9 +195,25 @@
       <option value="all">All seeds</option>
     </select>
   </label>
-  <label>Config:
-    <select id="filter-comments">
-      <option value="all">All configs</option>
+  <label>Reasoning:
+    <select id="filter-reasoning">
+      <option value="all">All</option>
+    </select>
+  </label>
+  <label>Runtime:
+    <select id="filter-runtime">
+      <option value="all">All</option>
+    </select>
+  </label>
+  <label>Prompt:
+    <select id="filter-prompt">
+      <option value="all">All</option>
+    </select>
+  </label>
+  <label>Chart grouping:
+    <select id="group-by">
+      <option value="family">By family</option>
+      <option value="model">By model</option>
     </select>
   </label>
 </div>
@@ -235,24 +272,26 @@
 <!-- ── Data table ─────────────────────────────────────────────────── -->
 <section>
   <h2>All experimental runs</h2>
+  <p class="table-hint">Rows are grouped by model, video and configuration — repeated seeds are folded into one summary row. Click a row to expand the individual runs behind it.</p>
   <div class="table-wrap">
     <table id="results-table">
       <thead>
         <tr>
-          <th data-col="experiment_time">Date / time</th>
+          <th data-col="_expand"></th>
           <th data-col="model_short">Model</th>
           <th data-col="video">Video</th>
-          <th data-col="comparison_score">Score</th>
-          <th data-col="matched">Matched</th>
-          <th data-col="extra_predictions">Extra preds</th>
-          <th data-col="duration_seconds">Duration (s)</th>
-          <th data-col="vram_gb">VRAM (GB)</th>
-          <th data-col="seed">Seed</th>
-          <th data-col="comments">Config</th>
+          <th data-col="reasoning">Reasoning</th>
+          <th data-col="runtime">Runtime</th>
+          <th data-col="prompt">Prompt</th>
+          <th data-col="n">Runs</th>
+          <th data-col="meanScore">Mean score</th>
+          <th data-col="stdScore">Std</th>
+          <th data-col="meanDuration">Duration (s)</th>
+          <th data-col="meanVram">VRAM (GB)</th>
         </tr>
       </thead>
       <tbody id="table-body">
-        <tr><td colspan="10" class="no-data">Loading…</td></tr>
+        <tr><td colspan="11" class="no-data">Loading…</td></tr>
       </tbody>
     </table>
   </div>
@@ -261,15 +300,55 @@
 <!-- ── Scripts ────────────────────────────────────────────────────── -->
 <script>
 /* ── Model metadata ──────────────────────────────────────────────── */
+/* One fixed hue per model family (Okabe-Ito, CVD-safe); within a family,
+   individual models are shades of that hue (light = smaller, dark = larger)
+   rather than each getting its own arbitrary hue. */
+const FAMILIES = {
+  'qwen3.5':   { label: 'Qwen3.5',   color: '#0072B2', order: 0 },
+  'qwen3.6':   { label: 'Qwen3.6',   color: '#D55E00', order: 1 },
+  'internvl3': { label: 'InternVL3', color: '#009E73', order: 2 },
+};
+
 const MODEL_META = {
-  'Qwen/Qwen3.5-2B':              { short: '2B',       color: '#E69F00', order: 0 },
-  'Qwen/Qwen3.5-4B':              { short: '4B',       color: '#0072B2', order: 1 },
-  'cyankiwi/Qwen3.5-4B-AWQ-4bit': { short: '4B-AWQ',  color: '#009E73', order: 2 },
-  'cyankiwi/Qwen3.5-9B-AWQ-4bit': { short: '9B-AWQ',  color: '#CC79A7', order: 3 },
+  'Qwen/Qwen3.5-2B':              { short: '2B',      family: 'qwen3.5',   color: '#5cc6ff', order: 0 },
+  'Qwen/Qwen3.5-4B':              { short: '4B',      family: 'qwen3.5',   color: '#29b4ff', order: 1 },
+  'cyankiwi/Qwen3.5-4B-AWQ-4bit': { short: '4B-AWQ',  family: 'qwen3.5',   color: '#00a6ff', order: 2 },
+  'Qwen/Qwen3.5-9B':              { short: '9B',      family: 'qwen3.5',   color: '#008bd6', order: 3 },
+  'cyankiwi/Qwen3.5-9B-AWQ-4bit': { short: '9B-AWQ',  family: 'qwen3.5',   color: '#0071ad', order: 4 },
+  'Qwen/Qwen3.5-27B':             { short: '27B',     family: 'qwen3.5',   color: '#005685', order: 5 },
+  'Qwen/Qwen3.6-27B':             { short: '27B',     family: 'qwen3.6',   color: '#d65600', order: 6 },
+  'OpenGVLab/InternVL3-8B':       { short: '8B',      family: 'internvl3', color: '#1affbe', order: 7 },
+  'OpenGVLab/InternVL3-14B':      { short: '14B',     family: 'internvl3', color: '#00a375', order: 8 },
 };
 
 function modelMeta(id) {
-  return MODEL_META[id] || { short: id.split('/').pop(), color: '#aaa', order: 99 };
+  return MODEL_META[id] || { short: id.split('/').pop(), family: 'other', color: '#aaa', order: 99 };
+}
+function familyMeta(key) {
+  return FAMILIES[key] || { label: key, color: '#aaa', order: 99 };
+}
+
+/* ── Config parsing (from the freeform `comments` column) ──────────
+   Geoffroy's run notes are freeform (engine/GPU/sampling/prompt tags all
+   mixed together); these turn them into a few clean, filterable facets
+   without touching the underlying spreadsheet. */
+function parseReasoning(comments) {
+  if (/chain-of-thought/i.test(comments)) return 'Chain-of-thought';
+  if (/no-reasoning/i.test(comments)) return 'No-reasoning';
+  return 'Unspecified';
+}
+function parseRuntime(comments) {
+  const engine = /sglang/i.test(comments) ? 'sglang' : null;
+  let gpu = null;
+  if (/a100_80g/i.test(comments)) gpu = 'A100 80GB';
+  else if (/l40s/i.test(comments)) gpu = 'L40S';
+  if (engine && gpu) return `${engine} · ${gpu}`;
+  if (engine) return engine;
+  if (gpu) return gpu;
+  return 'Unspecified';
+}
+function parsePrompt(comments) {
+  return /new-prompt/i.test(comments) ? 'New prompt' : 'Default';
 }
 
 /* ── Utility ─────────────────────────────────────────────────────── */
@@ -325,12 +404,16 @@ fetch('evaluations.csv')
       duration_seconds:   parseFloat(row.duration_seconds),
       model_id:           row.model_id,
       model_short:        modelMeta(row.model_id).short,
+      family:             modelMeta(row.model_id).family,
       video:              row.video,
       comparison_summary: row.comparison_summary || '',
       comparison_score:   parseFloat(row.comparison_score),
       vram_gb:            parseFloat(row.vram_gb),
       seed:               parseInt(row.seed, 10),
       comments:           row.comments || '',
+      reasoning:          parseReasoning(row.comments || ''),
+      runtime:            parseRuntime(row.comments || ''),
+      prompt:             parsePrompt(row.comments || ''),
       matched:            parseMatched(row.comparison_summary),
       extra_predictions:  parseExtra(row.comparison_summary),
     }));
@@ -346,19 +429,32 @@ fetch('evaluations.csv')
   });
 
 /* ── Filters ─────────────────────────────────────────────────────── */
+let groupBy = 'family';
+
 function populateFilters() {
-  const models   = [...new Set(ALL_ROWS.map(r => r.model_id))].sort((a, b) => modelMeta(a).order - modelMeta(b).order);
-  const videos   = [...new Set(ALL_ROWS.map(r => r.video))].sort();
-  const seeds    = [...new Set(ALL_ROWS.map(r => r.seed))].sort();
-  const configs  = [...new Set(ALL_ROWS.map(r => r.comments || 'default'))].sort();
+  const models     = [...new Set(ALL_ROWS.map(r => r.model_id))].sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+  const videos     = [...new Set(ALL_ROWS.map(r => r.video))].sort();
+  const seeds      = [...new Set(ALL_ROWS.map(r => r.seed))].sort((a, b) => a - b);
+  const reasonings = [...new Set(ALL_ROWS.map(r => r.reasoning))].sort();
+  const runtimes   = [...new Set(ALL_ROWS.map(r => r.runtime))].sort();
+  const prompts    = [...new Set(ALL_ROWS.map(r => r.prompt))].sort();
 
-  fill('filter-model',    models,  id => `${modelMeta(id).short} (${id.split('/').pop()})`);
-  fill('filter-video',    videos,  v => v);
-  fill('filter-seed',     seeds,   s => `Seed ${s}`);
-  fill('filter-comments', configs, c => c || 'default');
+  fill('filter-model',     models,     id => `${modelMeta(id).short} (${id.split('/').pop()})`);
+  fill('filter-video',     videos,     v => v);
+  fill('filter-seed',      seeds,      s => `Seed ${s}`);
+  fill('filter-reasoning', reasonings, r => r);
+  fill('filter-runtime',   runtimes,   r => r);
+  fill('filter-prompt',    prompts,    p => p);
 
-  ['filter-model','filter-video','filter-seed','filter-comments'].forEach(id =>
-    document.getElementById(id).addEventListener('change', update));
+  ['filter-model','filter-video','filter-seed','filter-reasoning','filter-runtime','filter-prompt']
+    .forEach(id => document.getElementById(id).addEventListener('change', update));
+
+  document.getElementById('group-by').value = groupBy;
+  document.getElementById('group-by').addEventListener('change', e => {
+    groupBy = e.target.value;
+    buildLegend();
+    update();
+  });
 }
 
 function fill(selectId, values, labelFn) {
@@ -374,12 +470,16 @@ function filteredRows() {
   const m  = document.getElementById('filter-model').value;
   const v  = document.getElementById('filter-video').value;
   const s  = document.getElementById('filter-seed').value;
-  const c  = document.getElementById('filter-comments').value;
+  const re = document.getElementById('filter-reasoning').value;
+  const rt = document.getElementById('filter-runtime').value;
+  const p  = document.getElementById('filter-prompt').value;
   return ALL_ROWS.filter(r =>
     (m === 'all' || r.model_id === m) &&
     (v === 'all' || r.video === v) &&
     (s === 'all' || r.seed === parseInt(s, 10)) &&
-    (c === 'all' || (r.comments || 'default') === c)
+    (re === 'all' || r.reasoning === re) &&
+    (rt === 'all' || r.runtime === rt) &&
+    (p === 'all' || r.prompt === p)
   );
 }
 
@@ -408,14 +508,35 @@ function updateMeta(rows) {
 function buildLegend() {
   const el = document.getElementById('shared-legend');
   el.innerHTML = '';
-  const models = [...new Set(ALL_ROWS.map(r => r.model_id))]
-    .sort((a, b) => modelMeta(a).order - modelMeta(b).order);
-  models.forEach(id => {
-    const m = modelMeta(id);
-    const item = document.createElement('div');
-    item.className = 'legend-item';
-    item.innerHTML = `<div class="legend-swatch" style="background:${m.color}"></div>${m.short}`;
-    el.appendChild(item);
+
+  if (groupBy === 'family') {
+    const families = [...new Set(ALL_ROWS.map(r => r.family))]
+      .sort((a, b) => familyMeta(a).order - familyMeta(b).order);
+    families.forEach(key => {
+      const f = familyMeta(key);
+      const item = document.createElement('div');
+      item.className = 'legend-item';
+      item.innerHTML = `<div class="legend-swatch" style="background:${f.color}"></div>${f.label}`;
+      el.appendChild(item);
+    });
+    return;
+  }
+
+  const families = [...new Set(ALL_ROWS.map(r => r.family))]
+    .sort((a, b) => familyMeta(a).order - familyMeta(b).order);
+  families.forEach(famKey => {
+    const models = [...new Set(ALL_ROWS.filter(r => r.family === famKey).map(r => r.model_id))]
+      .sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+    const group = document.createElement('div');
+    group.className = 'legend-item';
+    group.style.gap = '0.6rem';
+    group.innerHTML = `<strong style="color:#555">${familyMeta(famKey).label}</strong>` +
+      models.map(id => {
+        const m = modelMeta(id);
+        return `<span style="display:inline-flex;align-items:center;gap:0.3rem;margin-left:0.6rem">
+          <span class="legend-swatch" style="background:${m.color}"></span>${m.short}</span>`;
+      }).join('');
+    el.appendChild(group);
   });
 }
 
@@ -423,23 +544,27 @@ function buildLegend() {
 function renderModelAvg(rows) {
   destroyChart('chart-model-avg');
 
-  const modelIds = [...new Set(rows.map(r => r.model_id))]
-    .sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+  const groupIds = groupBy === 'family'
+    ? [...new Set(rows.map(r => r.family))].sort((a, b) => familyMeta(a).order - familyMeta(b).order)
+    : [...new Set(rows.map(r => r.model_id))].sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+  const meta = groupBy === 'family' ? familyMeta : modelMeta;
+  const keyOf = groupBy === 'family' ? (r => r.family) : (r => r.model_id);
+  const labelOf = groupBy === 'family' ? (g => familyMeta(g).label) : (g => modelMeta(g).short);
 
-  const barData   = modelIds.map(id => mean(rows.filter(r => r.model_id === id).map(r => r.comparison_score)));
-  const errData   = modelIds.map(id => std(rows.filter(r => r.model_id === id).map(r => r.comparison_score)));
-  const colors    = modelIds.map(id => modelMeta(id).color);
-  const labels    = modelIds.map(id => modelMeta(id).short);
+  const barData   = groupIds.map(id => mean(rows.filter(r => keyOf(r) === id).map(r => r.comparison_score)));
+  const errData   = groupIds.map(id => std(rows.filter(r => keyOf(r) === id).map(r => r.comparison_score)));
+  const colors    = groupIds.map(id => meta(id).color);
+  const labels    = groupIds.map(labelOf);
 
   /* individual points for overlay */
-  const scatterSets = modelIds.map((id, idx) => ({
+  const scatterSets = groupIds.map((id, idx) => ({
     type: 'scatter',
-    data: rows.filter(r => r.model_id === id).map((r, i) => ({
+    data: rows.filter(r => keyOf(r) === id).map((r, i) => ({
       x: idx,
       y: r.comparison_score,
-      label: `${r.video} seed ${r.seed}`,
+      label: `${r.model_short} · ${r.video} seed ${r.seed}`,
     })),
-    backgroundColor: modelMeta(id).color + 'bb',
+    backgroundColor: meta(id).color + 'bb',
     pointRadius: 4,
     pointHoverRadius: 6,
     showLine: false,
@@ -516,15 +641,19 @@ function renderPerVideo(rows) {
   destroyChart('chart-per-video');
 
   const videos   = [...new Set(rows.map(r => r.video))].sort();
-  const modelIds = [...new Set(rows.map(r => r.model_id))]
-    .sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+  const groupIds = groupBy === 'family'
+    ? [...new Set(rows.map(r => r.family))].sort((a, b) => familyMeta(a).order - familyMeta(b).order)
+    : [...new Set(rows.map(r => r.model_id))].sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+  const meta = groupBy === 'family' ? familyMeta : modelMeta;
+  const keyOf = groupBy === 'family' ? (r => r.family) : (r => r.model_id);
+  const labelOf = groupBy === 'family' ? (g => familyMeta(g).label) : (g => modelMeta(g).short);
 
-  const datasets = modelIds.map(id => {
-    const m = modelMeta(id);
+  const datasets = groupIds.map(id => {
+    const m = meta(id);
     return {
-      label: m.short,
+      label: labelOf(id),
       data: videos.map(v => {
-        const s = rows.filter(r => r.model_id === id && r.video === v).map(r => r.comparison_score);
+        const s = rows.filter(r => keyOf(r) === id && r.video === v).map(r => r.comparison_score);
         return s.length ? mean(s) : null;
       }),
       backgroundColor: m.color + '88',
@@ -563,22 +692,27 @@ function renderPerVideo(rows) {
 function renderSpeed(rows) {
   destroyChart('chart-speed');
 
-  const modelIds = [...new Set(rows.map(r => r.model_id))]
-    .sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+  const groupIds = groupBy === 'family'
+    ? [...new Set(rows.map(r => r.family))].sort((a, b) => familyMeta(a).order - familyMeta(b).order)
+    : [...new Set(rows.map(r => r.model_id))].sort((a, b) => modelMeta(a).order - modelMeta(b).order);
+  const meta = groupBy === 'family' ? familyMeta : modelMeta;
+  const keyOf = groupBy === 'family' ? (r => r.family) : (r => r.model_id);
+  const labelOf = groupBy === 'family' ? (g => familyMeta(g).label) : (g => modelMeta(g).short);
 
-  const VIDEO_SYMBOLS = ['circle', 'triangle', 'rectRot', 'crossRot'];
+  const VIDEO_SYMBOLS = ['circle', 'triangle', 'rect', 'rectRot', 'star', 'crossRot'];
   const videos = [...new Set(ALL_ROWS.map(r => r.video))].sort();
 
-  const datasets = modelIds.map(id => {
-    const m = modelMeta(id);
+  const datasets = groupIds.map(id => {
+    const m = meta(id);
     return {
-      label: m.short,
+      label: labelOf(id),
       data: rows
-        .filter(r => r.model_id === id)
+        .filter(r => keyOf(r) === id)
         .map(r => ({
           x: r.duration_seconds,
           y: r.comparison_score,
           video: r.video,
+          model: r.model_short,
           seed: r.seed,
           pointStyle: VIDEO_SYMBOLS[videos.indexOf(r.video) % VIDEO_SYMBOLS.length],
         })),
@@ -601,7 +735,8 @@ function renderSpeed(rows) {
           callbacks: {
             label: ctx => {
               const d = ctx.raw;
-              return `${ctx.dataset.label} · ${d.video} · seed ${d.seed} — ${fmt2(d.y)} in ${d.x.toFixed(0)}s`;
+              const who = groupBy === 'family' ? `${ctx.dataset.label} ${d.model}` : ctx.dataset.label;
+              return `${who} · ${d.video} · seed ${d.seed} — ${fmt2(d.y)} in ${d.x.toFixed(0)}s`;
             },
           },
         },
@@ -622,10 +757,41 @@ function renderSpeed(rows) {
 }
 
 /* ── Data table ──────────────────────────────────────────────────── */
-let sortCol = 'experiment_time', sortDir = 1;
+/* Repeated seeds are the main source of table bloat (each config is run at
+   2-5 seeds); group by everything except seed, show the aggregate, and let
+   the individual runs be expanded on demand. */
+let sortCol = 'meanScore', sortDir = -1;
+const expandedGroups = new Set();
+
+function groupRows(rows) {
+  const groups = new Map();
+  rows.forEach(r => {
+    const key = [r.model_id, r.video, r.reasoning, r.runtime, r.prompt].join('||');
+    if (!groups.has(key)) {
+      groups.set(key, {
+        key,
+        model_id: r.model_id, model_short: r.model_short,
+        video: r.video, reasoning: r.reasoning, runtime: r.runtime, prompt: r.prompt,
+        runs: [],
+      });
+    }
+    groups.get(key).runs.push(r);
+  });
+  return [...groups.values()].map(g => ({
+    ...g,
+    n: g.runs.length,
+    meanScore: mean(g.runs.map(r => r.comparison_score)),
+    stdScore: std(g.runs.map(r => r.comparison_score)),
+    meanDuration: mean(g.runs.map(r => r.duration_seconds)),
+    meanVram: mean(g.runs.map(r => r.vram_gb)),
+    lastRun: g.runs.map(r => r.experiment_time).sort().slice(-1)[0],
+  }));
+}
 
 function renderTable(rows) {
-  const sorted = [...rows].sort((a, b) => {
+  const groups = groupRows(rows);
+
+  groups.sort((a, b) => {
     const va = a[sortCol], vb = b[sortCol];
     if (va == null) return 1; if (vb == null) return -1;
     return va < vb ? -sortDir : va > vb ? sortDir : 0;
@@ -634,35 +800,60 @@ function renderTable(rows) {
   const tbody = document.getElementById('table-body');
   tbody.innerHTML = '';
 
-  if (!sorted.length) {
-    tbody.innerHTML = '<tr><td colspan="10" class="no-data">No runs match the current filters.</td></tr>';
+  if (!groups.length) {
+    tbody.innerHTML = '<tr><td colspan="11" class="no-data">No runs match the current filters.</td></tr>';
     return;
   }
 
-  sorted.forEach(r => {
-    const score = r.comparison_score;
-    const color = modelMeta(r.model_id).color;
-    const barW  = isNaN(score) ? 0 : Math.round(score * 60);
+  groups.forEach(g => {
+    const color = modelMeta(g.model_id).color;
+    const barW  = isNaN(g.meanScore) ? 0 : Math.round(g.meanScore * 60);
+    const isOpen = expandedGroups.has(g.key);
 
     const tr = document.createElement('tr');
+    tr.className = 'group-row' + (isOpen ? ' expanded' : '');
     tr.innerHTML = `
-      <td style="white-space:nowrap;font-family:monospace;font-size:0.76rem">${r.experiment_time.slice(0,16).replace('T',' ')}</td>
-      <td><span class="tag" style="background:${color}22;color:${color};border-color:${color}66">${r.model_short}</span></td>
-      <td style="font-family:monospace">${r.video}</td>
-      <td class="score-cell">${fmt2(score)}<span class="score-bar" style="width:${barW}px;background:${color}"></span></td>
-      <td>${r.matched}</td>
-      <td style="text-align:center">${r.extra_predictions || '—'}</td>
-      <td style="text-align:right">${r.duration_seconds.toFixed(1)}</td>
-      <td style="text-align:right">${r.vram_gb.toFixed(2)}</td>
-      <td style="text-align:center">${r.seed}</td>
-      <td style="font-size:0.77rem;color:#666">${r.comments || '—'}</td>
+      <td><span class="expand-icon">▶</span></td>
+      <td><span class="tag" style="background:${color}22;color:${color};border-color:${color}66">${g.model_short}</span></td>
+      <td style="font-family:monospace">${g.video}</td>
+      <td>${g.reasoning}</td>
+      <td>${g.runtime}</td>
+      <td>${g.prompt}</td>
+      <td style="text-align:center">${g.n}</td>
+      <td class="score-cell">${fmt2(g.meanScore)}<span class="score-bar" style="width:${barW}px;background:${color}"></span></td>
+      <td style="text-align:right">${fmt2(g.stdScore)}</td>
+      <td style="text-align:right">${g.meanDuration.toFixed(1)}</td>
+      <td style="text-align:right">${g.meanVram.toFixed(2)}</td>
     `;
+    tr.addEventListener('click', () => {
+      if (expandedGroups.has(g.key)) expandedGroups.delete(g.key);
+      else expandedGroups.add(g.key);
+      renderTable(filteredRows());
+    });
     tbody.appendChild(tr);
+
+    if (!isOpen) return;
+    [...g.runs].sort((a, b) => a.experiment_time < b.experiment_time ? -1 : 1).forEach(r => {
+      const runTr = document.createElement('tr');
+      runTr.className = 'run-row';
+      runTr.innerHTML = `
+        <td></td>
+        <td colspan="2" style="white-space:nowrap;font-family:monospace">${r.experiment_time.slice(0,16).replace('T',' ')} · seed ${r.seed}</td>
+        <td colspan="3">${r.comments || '—'}</td>
+        <td>${r.matched}</td>
+        <td class="score-cell">${fmt2(r.comparison_score)}</td>
+        <td style="text-align:center">${r.extra_predictions ? r.extra_predictions + ' extra' : '—'}</td>
+        <td style="text-align:right">${r.duration_seconds.toFixed(1)}</td>
+        <td style="text-align:right">${r.vram_gb.toFixed(2)}</td>
+      `;
+      tbody.appendChild(runTr);
+    });
   });
 }
 
 /* Table sort */
 document.querySelectorAll('thead th[data-col]').forEach(th => {
+  if (th.dataset.col === '_expand') return;
   th.addEventListener('click', () => {
     const col = th.dataset.col;
     if (sortCol === col) sortDir *= -1; else { sortCol = col; sortDir = 1; }
