@@ -56,6 +56,21 @@ Issues:
 * long video support
     - --mm-process-config '{"video": {"size": {"longest_edge": 469762048, "shortest_edge": 4096}}}'
     - that number is for 224k of video frame tokens
+    - 2m39s video => 11517 prompt tokens (inc question) => 11517t/3m*60s*2fps = 32t/f
+    - 106mins => 13394t =>
+    - https://huggingface.co/Qwen/Qwen3.6-27B: Long Video Understanding: To optimize inference efficiency for plain text and images, the size parameter in the released video_preprocessor_config.json is conservatively configured. It is recommended to set the longest_edge parameter in the video_preprocessor_config file to 469,762,048 (corresponding to 224k video tokens) to enable higher frame-rate sampling for hour-scale videos and thereby achieve superior performance. For example
+    - 469762048/224/1024 = 2048
+    - 25165824 default in video_preprocessor_config.json, patch_size=16 => That's 12k tokens. Which approx matches the number prompt tokens on my experiments.
+    - video frame resolution = 768*576
+    - 768*576/16/16 = 1728 patches or tokens per frame
+
+VLLM_ENABLE_CUDA_COMPATIBILITY=1 singularity exec --nv --bind /cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1:/cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1 --bind $HF_HOME:$HF_HOME /scratch/prj/dh_issa/vllm/vllm-openai_latest.sif vllm serve Qwen/Qwen3.6-27B --port 30000 --reasoning-parser qwen3 --max-model-len 49152
+
+{"longest_edge": 469762048, "shortest_edge": 4096}
+
+Alternatively, override the default values via engine startup parameters.
+
+
 
 ## Errors in program boundary detection
 
