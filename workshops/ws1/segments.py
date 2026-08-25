@@ -6,8 +6,13 @@ def print_dict(dic):
     print(json.dumps(dic, indent=2))
 
 def load_segments(filename, dir):
-    ret = Path(dir) / f'{filename}.json'
-    ret = json.loads(ret.read_text())
+    ret = []
+    filepath = Path(dir) / f'{filename}.json'
+    try:
+        ret = json.loads(filepath.read_text())
+    except json.decoder.JSONDecodeError as e:
+        print(f'ERROR: {filepath} ({e})')
+        exit()        
     return ret
 
 def get_hms_from_secs(time_in_seconds):
@@ -17,7 +22,7 @@ def get_hms_from_secs(time_in_seconds):
     for p in parts:
         ret.append(res % p)
         res = res // p
-    return f'{int(ret[1]):02d}:{int(ret[0]):02d}'
+    return f'{int(ret[2]):02d}:{int(ret[1]):02d}:{int(ret[0]):02d}'
 
 def convert_segments_to_seconds(segments):
     ret = json.loads(json.dumps(segments))
@@ -42,10 +47,10 @@ def convert_segments_to_seconds(segments):
                 if matches:
                     s[p] = float(time_code)
                 else:                    
-                    matches = re.match(r'^(\d\d):(\d\d)$', time_code)
+                    matches = re.match(r'^(\d?\d\d):(\d\d)$', time_code)
                     if matches:
                         time_code = '00:' + time_code
-                    matches = re.match(r'^(\d\d):(\d\d):(\d\d)$', time_code)
+                    matches = re.match(r'^(\d\d):(\d?\d\d):(\d\d)$', time_code)
                     if matches:
                         s[p] = (int(matches.group(1)) * 60 + int(matches.group(2))) * 60 + int(matches.group(3))
                         # print(time_code, s[p])
@@ -181,7 +186,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
             for t in segments_true:
                 if t in true_matched: continue
                 if t['startTime'] >= last_pred_start and t['startTime'] < pred['startTime']:
-                    diff_lines.append(f'                      /  {get_hms_from_secs(t["startTime"])} - {get_hms_from_secs(t["endTime"])}')
+                    diff_lines.append(f'                            /  {get_hms_from_secs(t["startTime"])} - {get_hms_from_secs(t["endTime"])}')
 
         pred_readable = f'{int(pred.get("score", 0) * 100):3d}%  '
         if pred['valid']:
