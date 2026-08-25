@@ -187,3 +187,8 @@ data
 *.whl
 *.srt
 
+.vscode
+TODO.md
+tst
+prototypes/audio-describe/vlm/report
+source.ml
