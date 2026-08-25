@@ -1,5 +1,6 @@
 import argparse
 import json
+import re
 from pathlib import Path
 from segments import compare_segments, load_segments
 
@@ -41,14 +42,19 @@ def main() -> None:
             print(r.get('diff', ''))
             print()
 
-    print(f"{'File':<20} {'Score':>6} {'Extra':>5}  Summary")
-    print("-" * 60)
+    print(f"{'File':<15} {'score':>6} {'exp.':>4} {'miss':>4} {'extra':>5} {'beyond':>6}")
+    print("-" * 45)
     for r in rows:
-        print(f"{r['F']:<20} {r['score']:>6.2f} {r['extra']:>5d}  {r['summary']}")
+        beyond = r['duration_diff_ratio']
+        beyond = "" if beyond < 1.5 else f"{r['duration_diff_ratio']:.1f}"
+        missing = r['expected'] - r['matched']
+        missing = str(missing) if missing else ""
+        extra = str(r['extra']) if r['extra'] else ""
+        print(f"{r['F']:<15} {r['score']*100:>6.0f} {r['expected']:>4d} {missing:>4} {extra:>5} {beyond:>6}")
 
     if rows:
         avg = sum(r['score'] for r in rows) / len(rows)
-        print(f"\n{'Average':<20} {avg:>6.2f}")
+        print(f"\n{'Average':<15} {avg*100:>6.0f}")
         print(f"Duration: {int(sum(durations))} secs   Question: {args.q}")
 
 

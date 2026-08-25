@@ -175,6 +175,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
         excess = 0
     
     ret['predicted'] = len(segments_predict)
+    ret['expected'] = len(segments_true)
     ret['matched'] = matched_count
     ret['extra'] = excess
     # Strong indicator of hallucinated times
