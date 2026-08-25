@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 import re
+import sys
 
 def print_dict(dic):
     print(json.dumps(dic, indent=2))
@@ -12,7 +13,7 @@ def load_segments(filename, dir):
         ret = json.loads(filepath.read_text())
     except json.decoder.JSONDecodeError as e:
         print(f'ERROR: {filepath} ({e})')
-        exit()        
+        sys.exit(1)        
     return ret
 
 def get_hms_from_secs(time_in_seconds):
@@ -176,6 +177,11 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     ret['predicted'] = len(segments_predict)
     ret['matched'] = matched_count
     ret['extra'] = excess
+    # Strong indicator of hallucinated times
+    ret['duration_diff_ratio'] = segments_predict[-1]['endTime'] / segments_true[-1]['endTime']
+    if ret['duration_diff_ratio'] > 1.5:
+        ret['summary'] += f' ; hallucinated end {ret["duration_diff_ratio"]:.2}'
+        ret['score'] /= ret['duration_diff_ratio']
 
     # diff: display all (matched and unmatched) segments
     diff_lines = []
