@@ -14,6 +14,7 @@ def main() -> None:
     args = parser.parse_args()
 
     rows = []
+    durations = []
     for subdir in sorted(SOURCE_DIR.iterdir()):
         if not subdir.is_dir():
             continue
@@ -31,6 +32,8 @@ def main() -> None:
         result = compare_segments(segments_true, segments_predict)
         result["F"] = subdir.name
         rows.append(result)
+        
+        durations.append(data["data"].get(args.q, {}).get('stats', {}).get('duration_seconds', 0.0))
 
     if args.v:
         for r in rows:
@@ -46,6 +49,7 @@ def main() -> None:
     if rows:
         avg = sum(r['score'] for r in rows) / len(rows)
         print(f"\n{'Average':<20} {avg:>6.2f}")
+        print(f"Duration: {int(sum(durations))} secs   Question: {args.q}")
 
 
 if __name__ == "__main__":
