@@ -46,21 +46,31 @@ Program detection seems to yield better results.
 
 Go to compute node
 
-`srun -p interruptible_gpu -c 8 --gpus=1 --mem-per-gpu 64G --gpus-per-task 1 --constraint "rtx6000" -n 1 --time 4:00:00 --pty --exclude erc-hpc-comp[235-239] bash`
+```bash
+srun -p interruptible_gpu -c 8 --mem-per-gpu 16G --gpus-per-task 1 --constraint "rtx6000" -n 1 --time 4:00:00 --pty --exclude erc-hpc-comp[235-239] bash
+```
 
 Start model server, SGlang:
 
-`singularity exec --nv --bind /cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1:/cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1 --bind $HF_HOME:$HF_HOME /scratch/prj/dh_issa/sglang/sglang_latest.sif sglang serve --reasoning-parser qwen3 --port 30000 --model-path Qwen/Qwen3.6-27B --mem-fraction-static 0.7 --context-length 49152 --attention-backend flashinfer`
+```bash
+singularity exec --nv --bind /cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1:/cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1 --bind $HF_HOME:$HF_HOME /scratch/prj/dh_issa/sglang/sglang_latest.sif sglang serve --reasoning-parser qwen3 --port 30000 --model-path Qwen/Qwen3.8-27B --mem-fraction-static 0.7 --context-length 49152 --attention-backend flashinfer
+```
 
 When ready, press CTRL+Z, then type `bg`
 
 Run video Q&A with framesense on HPC:
 
-`/scratch/users/k1217897/prj/framesense$ ANSWER_VIDEOS_VLM_MAX_TOKENS=30k ANSWER_VIDEOS_VLM_SEED=3407 ANSWER_VIDEOS_VLM_THINK=1 ANSWER_VIDEOS_VLM_MODEL=Qwen/Qwen3.6-27B ANSWER_VIDEOS_VLM_API_BASE=http://localhost:30000/v1 ANSWER_VIDEOS_VLM_FILTER_QUESTIONS=programs_3xinc_sec-35-27B-v12k-think FRAMESENSE_DEBUG=1 FRAMESENSE_COLLECTIONS=/scratch/prj/dh_issa/issa/workshops/ws1/collections.json python framesense.py answer_videos_vlm`
+```bash
+cd /scratch/users/k1217897/prj/framesense
+. ./venv/bin/activate
+ANSWER_VIDEOS_VLM_MAX_TOKENS=30k ANSWER_VIDEOS_VLM_SEED=43 ANSWER_VIDEOS_VLM_THINK="1" ANSWER_VIDEOS_VLM_MODEL=Qwen/Qwen3.8-27B ANSWER_VIDEOS_VLM_API_BASE=http://localhost:30000/v1 ANSWER_VIDEOS_VLM_FILTER_QUESTIONS=programs_3xinc-35-27B-v12k-think-s43 FRAMESENSE_DEBUG=1 FRAMESENSE_COLLECTIONS=/scratch/prj/dh_issa/issa/workshops/ws1/collections.json python framesense.py answer_videos_vlm -f 234 -r
+```
 
 Evaluate results:
 
-/scratch/prj/dh_issa/issa/workshops/ws1$ python eval_segs.py -q programs_3xinc_sec-35-27B-v12k-think
+```
+/scratch/prj/dh_issa/issa/workshops/ws1$ python eval_segs.py -q programs_3xinc-35-27B-v12k-think-s43 > evals/programs_3xinc-38-27B-v12k-think-s43
+```
 
 Q9. what hasn't been tested?
 
