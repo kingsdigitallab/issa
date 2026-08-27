@@ -1,8 +1,8 @@
-Fieldwork log with ideas, issues and observation around the experiments 
+Fieldwork log with ideas, issues and observations around the experiments 
 to test the performances of programme boundary detection on NLS videos.
 
 Format is quite unstructured. It is mostly for internal purpose with the aim
-to reorganised knowledge later into the README.md.
+to reorganise it later into README.md.
 
 We are using Qwen3.x for one-shot detection of programmes in the videos.
 
