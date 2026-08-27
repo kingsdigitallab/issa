@@ -10,8 +10,7 @@ We are using Qwen3.x for one-shot detection of programmes in the videos.
 
 Questions we are trying to address via experiments.
 
-One major caveat is for the answer below is that the tests are done a tiny sample and with just a few runs.
-Some answers may be inaccurate until we try more runs (due to stochastic nature of the model).
+One major caveat for the answers below is that the tests are done with a tiny sample and with just a couple of runs per settings. Some answers may be unreliable until we try more repeated experiments. But this can consumes a lot of time.
 
 ## Q1. Is reasoning/thinking mode needed?
 
