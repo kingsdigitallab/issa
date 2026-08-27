@@ -279,6 +279,50 @@ VLLM_ENABLE_CUDA_COMPATIBILITY=1 singularity exec --nv --bind /cephfs/volumes/hp
 
 Alternatively, override the default values via engine startup parameters.
 
+# Engines & models
+
+Docs about running Qwen3.8-27B:
+
+* [Unsloth](https://unsloth.ai/docs/models/qwen3.8#run-qwen3.8-guide)
+* [vLLM](https://recipes.vllm.ai/Qwen/Qwen3.8-27B?variant=nvfp4&hardware=b200&features=reasoning%2Cencoder_parallel)
+* [HF Qwen3.8 card](https://huggingface.co/Qwen/Qwen3.8-27B-FP8)
+* [SGLang](https://lmsysorg.mintlify.app/cookbook/autoregressive/Qwen/Qwen3.8-27B#hw=h200&variant=default&quant=fp8&nodes=single&spec=none&tier=low-latency&ssmDtype=float32)
+* [Vram calculator](https://vramcalculator.com/qwen3-8-vram-requirements/)
+
+Q4_K_M -> 64K context on 24GB VRAM
+
+According to that calculator: 262K window requires 36GB at 4bits quant. 30k is used by thinking + response. That leaves 232K for video context which is above the maximum according to Qwen. So in principle a 40+GB VRAM GPU (A40, A100, L40s) should be sufficient for long video processing.
+
+At full precision (16b), the model requires 73GB for 262K window. So why did I find it diffucult to avoid OOM with SGlang at 64K on 80GB VRAM GPU?
+
+## SGlang
+
+I've found it easier to run across different nodes on HPC than vLLM back in June. But harder to tune its VRAM usage.
+
+## vLLM
+
+From SM:
+
+```bash
+env VLLM_ENGINE_READY_TIMEOUT_S=3600 \
+  /home/xxx/vllm/.venv/bin/vllm serve Qwen/Qwen3.8-27B \
+    --served-model-name Qwen3.8-27B-NVFP4 \
+    --max-model-len 131072 \
+    --quantization fp8 \
+    --kv-cache-dtype fp8 \
+    --tensor-parallel-size 1 \
+    --max-num-seqs 512 \
+    --reasoning-parser qwen3 \
+    --allowed-local-media-path /home/shihan/storage/video/silence_cut_test \
+    --mm-processor-kwargs '{"fps": 2.0, "do_sample_frames": true}' \
+    --mm-processor-cache-gb 0 \
+    --host 0.0.0.0 \
+    --port 8000 \
+    --gpu-memory-utilization 0.95
+```
+
+NVFP4: 4bits, only for Blackwell GPUs
+
 
 
 
