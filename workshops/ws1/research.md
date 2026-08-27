@@ -35,7 +35,7 @@ Some independent benchmarks show a slight advantage for 3.6 for video understand
 
 ## Q3. on which GPU can it run?
 
-So far A100, RTX 6000. Qwen 27B, unquantised needs ~80+GB.
+So far A100, H200, RTX 6000. Qwen 27B, unquantised needs ~80+GB.
 
 ## Q4. which inferrence engine works best?
 
