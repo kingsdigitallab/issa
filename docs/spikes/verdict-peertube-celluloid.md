@@ -21,7 +21,7 @@ If the checkpoints pass, the idea is proven and we scope the real build. If they
 
 ## Logic (the 3-piece test)
 
-| Piece | What it proves | Why it matters |
+| Piece | What it proves | Expected Outcome |
 |-------|----------------|----------------|
 | **PeerTube** (private, self-hosted) | Serves an RDS tape over HTTPS on a private network; lockdown (registration/federation off, orig-res transcode, P2P off); programmatic upload as Unlisted; plays by URL. | Private video delivery substrate that keeps copyrighted archive material off the public internet. |
 | **Celluloid** (self-hosted) | Imports a PeerTube video via its watch URL; resolves title/thumbnail/duration; plays inside Celluloid's annotation view. | Reuses a PeerTube-native, open-source annotation surface with existing chapter/timeline UI and a pluggable AI-processing pattern. |
@@ -72,7 +72,7 @@ If the checkpoints pass, the idea is proven and we scope the real build. If they
 
 We did not reach the annotation round-trip. Two viable directions remain, and the next step is requirements gathering + UX discussion with the designer:
 
-| Path | Description | Why consider it |
+| Path | Description | Notes |
 |-------|-------------|-----------------|
 | **1. PeerTube-native chapters/comments API** | PeerTube exposes a **chapters API** and **comments/annotations API**. The "machine proposes → human corrects" loop may be implementable **directly on PeerTube** (create chapters via API, human edits via UI or API, read back via API). No extra app needed. | Reuses the one layer that already works; zero new infrastructure; PeerTube's chapter model (`lastEditedById`) already captures the machine→human transition. |
 | **2. Custom lightweight web app** (React/Next.js) | A minimal app that: imports a PeerTube watch URL, plays the video, renders machine chapters (from FrameSense/Qwen3-VL output), captures human edits (start/end time, title, description), writes corrections back to a store (PostgreSQL), and exports the corrected record for the next machine pass. | Full control over UX (archivist workflows are specific); can integrate with FrameSense output directly; can implement the two-level (programme/atomic) schema and three-source provenance from day one. |
