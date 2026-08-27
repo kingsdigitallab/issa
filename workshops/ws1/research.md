@@ -68,6 +68,11 @@ The maximum Qwen can process, given enough VRAM, is 224K.
 
 ### Q5a. How is the sampling actually happening?
 
+It's quite important to understand how much of the video Qwen "sees". 
+For instance if the context is too small, it's likely the fps or downsampling will drop considerably.
+If we know the model only sees 1 frame per 10 seconds on a 1h30m video, 
+then we better understand the time resolution limitation for the programme detection.
+
 See [video preprocessor in sglang](https://github.com/sgl-project/sglang/blob/b647ae82f524ed5e607ac39286ed50ee0b90d023/python/sglang/srt/hardware_backend/npu/modules/qwen_vl_processor.py#L172).
 
 [More info in modelstudio](https://modelstudio.console.alibabacloud.com/ap-southeast-1?spm=a3c0i.28768018.1579141730.1.5cd37661VG9kBj&tab=doc#/doc/?type=model&url=2845871).
