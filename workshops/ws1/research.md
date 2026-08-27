@@ -57,8 +57,7 @@ Presumably there might be a drop in accuracy beyond a certain duration.
 **TODO:** But where?
 
 This also depends on the context size, fps, and max pixels.
-Not sure exactly how things are calulated.
-Some info here: https://modelstudio.console.alibabacloud.com/ap-southeast-1?spm=a3c0i.28768018.1579141730.1.5cd37661VG9kBj&tab=doc#/doc/?type=model&url=2845871
+Not sure exactly how things are calulated (see Q5a).
 
 We've tried 12K and 32K tokens for the video encoding in the context.
 
@@ -66,6 +65,19 @@ Surprisingly 12K had better accuracy over a few experiments.
 
 Note that 32K is our limit within 80-90GB VRAM using SGlang.
 The maximum Qwen can process, given enough VRAM, is 224K.
+
+### Q5a. How is the sampling actually happening?
+
+See [video preprocessor in sglang](https://github.com/sgl-project/sglang/blob/b647ae82f524ed5e607ac39286ed50ee0b90d023/python/sglang/srt/hardware_backend/npu/modules/qwen_vl_processor.py#L172).
+
+[More info in modelstudio](https://modelstudio.console.alibabacloud.com/ap-southeast-1?spm=a3c0i.28768018.1579141730.1.5cd37661VG9kBj&tab=doc#/doc/?type=model&url=2845871).
+
+**TODO**: I'd like to see what is a the exact fps and frame dimensions used by Qwen
+for a given longest_edge, desired fps and input video dimensions & duration.
+
+One way would be to patch the pre-processor to show accurate information at runtime. But not easy in a sif container.
+
+Another would be to ask a coding assistant to build such formula from the pre-processor code source. And have faith in it.
 
 ## Q6. which quant is best?
 
@@ -180,6 +192,18 @@ Mitigation: change the prompt to include titles; and redefine the notion of sepa
 
 e.g. in video 828, 2.32 -> 2.35 is a long back screen before end credit. Which is qutie a common practice. But the VLM split that into two programs. Ground truth = 0.0 -> 2.54
 
+
+### videos
+
+(139* : 0.15 - 5.01, 5.03 - 22.21, 22.23 - 32.27)
+
+103: 
+234: 109 mins
+911: tricky as there is a (accidental) space between two parts of the same program.
+
+- answer_videos_qwen3vl] w/ "Qwen/Qwen3-VL-32B-Instruct is OOM on RTX6000 (97GB VRAM)
+
+
 # Issues
 
 ## Making FS work with SGLang on HPC nodes
@@ -240,6 +264,7 @@ Issues:
     - 25165824 default in video_preprocessor_config.json, patch_size=16 => That's 12k tokens. Which approx matches the number prompt tokens on my experiments.
     - video frame resolution = 768*576
     - 768*576/16/16 = 1728 patches or tokens per frame
+    - [video preprocessor in sglang](https://github.com/sgl-project/sglang/blob/b647ae82f524ed5e607ac39286ed50ee0b90d023/python/sglang/srt/hardware_backend/npu/modules/qwen_vl_processor.py#L172)
 
 VLLM_ENABLE_CUDA_COMPATIBILITY=1 singularity exec --nv --bind /cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1:/cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1 --bind $HF_HOME:$HF_HOME /scratch/prj/dh_issa/vllm/vllm-openai_latest.sif vllm serve Qwen/Qwen3.6-27B --port 30000 --reasoning-parser qwen3 --max-model-len 49152
 
@@ -251,13 +276,3 @@ Alternatively, override the default values via engine startup parameters.
 
 
 ---
-
-139* : 0.15 - 5.01, 5.03 - 22.21, 22.23 - 32.27
-
-# videos
-
-103: 
-234: 109 mins
-911: tricky as there is a (accidental) space between two parts of the same program.
-
-- answer_videos_qwen3vl] w/ "Qwen/Qwen3-VL-32B-Instruct is OOM on RTX6000 (97GB VRAM)
