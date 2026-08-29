@@ -21,8 +21,8 @@
             "answer_videos_vlm": {
                 "model": "Qwen/Qwen3.6-27B",
                 "seed": 3407,
-                "think": false,
-                "max_tokens": "16k",
+                "reasoning_effort": "low",
+                "max_tokens": "30k",
                 "questions": {
                     "summary2": {
                         "question": "summarise the video in two short sentences."
