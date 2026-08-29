@@ -1,18 +1,34 @@
 [
   {
     "start": "00:00:16",
-    "end": "00:05:03"
+    "end": "00:03:13",
+    "desc": "Aberdeen Grammar School"
   },
   {
-    "start": "00:05:06",
-    "end": "00:22:21"
+    "start": "00:03:14",
+    "end": "00:05:01",
+    "desc": "Summerhill Academy, Aberdeen"
   },
   {
-    "start": "00:22:23",
-    "end": "00:25:20"
+    "start": "00:05:03",
+    "end": "00:19:11",
+    "desc": "Dundee University honorary graduates"
+  },
+  {
+    "start": "00:19:12",
+    "end": "00:22:21",
+    "desc": "Dundee University centenary"
+  },
+  {
+    "start": "00:22:22",
+    "end": "00:25:20",
+    "desc": "Hercules the bear at Bucksburn School",
+    "before": "cut"
   },
   {
     "start": "00:25:23",
-    "end": "00:32:20"
+    "end": "00:32:20",
+    "desc": "Nursery kids in Aberdeen, classroom activity",
+    "before": "color-bar"
   }
 ]

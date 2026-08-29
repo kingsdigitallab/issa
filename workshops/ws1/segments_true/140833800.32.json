@@ -1,10 +1,27 @@
 [
   {
-    "start": "00:22",
-    "end": "33:25"
+    "start": "00:24",
+    "end": "31:44",
+    "desc": "opening ceremony",
+    "before": "color-bar"
   },
   {
-    "start": "32:27",
-    "end": "01:01:50"
+    "start": "31:47",
+    "end": "33:25",
+    "desc": "Flooding on green at World Bowls",
+    "before": "color-bar"
+  },
+  {
+    "start": "33:27",
+    "end": "47:20",
+    "desc": "gvs players in the rain. Scotland v Kenya (Wood) also England (Bryant)",
+    "before": "color-bar"
+  },
+  {
+    "start": "47:22",
+    "end": "01:01:50",
+    "desc": "Scotland v Western Samoa (Pairs, Adrian Wood) - also triples match (Scotland) at 50.42 mins which lasts for 1 min 30 [continued on Tape L0338]",
+    "before": "color-bar"
+
   }
 ]
