@@ -1,0 +1,335 @@
+{
+  "framesense": {
+    "clones": {
+      "2026-08-13": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-14": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-15": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-16": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-17": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-18": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-19": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-20": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-21": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-22": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-23": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-24": {
+        "count": 3,
+        "uniques": 3
+      },
+      "2026-08-25": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-26": {
+        "count": 4,
+        "uniques": 3
+      },
+      "2026-08-27": {
+        "count": 3,
+        "uniques": 2
+      }
+    },
+    "referrers": {
+      "2026-08-27": [
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        }
+      ],
+      "2026-08-28": [
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        }
+      ],
+      "2026-08-29": [
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        }
+      ]
+    },
+    "views": {
+      "2026-08-13": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-14": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-15": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-16": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-17": {
+        "count": 2,
+        "uniques": 1
+      },
+      "2026-08-18": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-19": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-20": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-21": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-22": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-23": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-24": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-25": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-26": {
+        "count": 13,
+        "uniques": 1
+      },
+      "2026-08-27": {
+        "count": 1,
+        "uniques": 1
+      }
+    }
+  },
+  "goatcounter": {
+    "2026-08-29": {
+      "visitors": 0
+    }
+  },
+  "issa": {
+    "clones": {
+      "2026-08-13": {
+        "count": 30,
+        "uniques": 25
+      },
+      "2026-08-14": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-15": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-16": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-17": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-18": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-19": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-20": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-21": {
+        "count": 3,
+        "uniques": 3
+      },
+      "2026-08-22": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-23": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-24": {
+        "count": 3,
+        "uniques": 3
+      },
+      "2026-08-25": {
+        "count": 23,
+        "uniques": 9
+      },
+      "2026-08-26": {
+        "count": 13,
+        "uniques": 10
+      },
+      "2026-08-27": {
+        "count": 36,
+        "uniques": 15
+      }
+    },
+    "referrers": {
+      "2026-08-27": [
+        {
+          "count": 20,
+          "referrer": "Google",
+          "uniques": 2
+        },
+        {
+          "count": 10,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 3,
+          "referrer": "ukc-word-edit.officeapps.live.com",
+          "uniques": 1
+        }
+      ],
+      "2026-08-28": [
+        {
+          "count": 20,
+          "referrer": "Google",
+          "uniques": 2
+        },
+        {
+          "count": 10,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 3,
+          "referrer": "ukc-word-edit.officeapps.live.com",
+          "uniques": 1
+        }
+      ],
+      "2026-08-29": [
+        {
+          "count": 20,
+          "referrer": "Google",
+          "uniques": 2
+        },
+        {
+          "count": 10,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 3,
+          "referrer": "ukc-word-edit.officeapps.live.com",
+          "uniques": 1
+        }
+      ]
+    },
+    "views": {
+      "2026-08-13": {
+        "count": 2,
+        "uniques": 2
+      },
+      "2026-08-14": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-15": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-16": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-17": {
+        "count": 2,
+        "uniques": 1
+      },
+      "2026-08-18": {
+        "count": 2,
+        "uniques": 2
+      },
+      "2026-08-19": {
+        "count": 3,
+        "uniques": 3
+      },
+      "2026-08-20": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-08-21": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-22": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-23": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-24": {
+        "count": 25,
+        "uniques": 2
+      },
+      "2026-08-25": {
+        "count": 2,
+        "uniques": 2
+      },
+      "2026-08-26": {
+        "count": 31,
+        "uniques": 1
+      },
+      "2026-08-27": {
+        "count": 45,
+        "uniques": 2
+      }
+    }
+  }
+}
