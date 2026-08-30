@@ -60,6 +60,14 @@
       "2026-08-27": {
         "count": 3,
         "uniques": 2
+      },
+      "2026-08-28": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-29": {
+        "count": 9,
+        "uniques": 5
       }
     },
     "referrers": {
@@ -78,6 +86,13 @@
         }
       ],
       "2026-08-29": [
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        }
+      ],
+      "2026-08-30": [
         {
           "count": 1,
           "referrer": "Google",
@@ -145,6 +160,14 @@
       "2026-08-27": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-08-28": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-29": {
+        "count": 0,
+        "uniques": 0
       }
     }
   },
@@ -214,6 +237,14 @@
       "2026-08-27": {
         "count": 36,
         "uniques": 15
+      },
+      "2026-08-28": {
+        "count": 11,
+        "uniques": 6
+      },
+      "2026-08-29": {
+        "count": 5,
+        "uniques": 3
       }
     },
     "referrers": {
@@ -256,6 +287,23 @@
           "count": 20,
           "referrer": "Google",
           "uniques": 2
+        },
+        {
+          "count": 10,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 3,
+          "referrer": "ukc-word-edit.officeapps.live.com",
+          "uniques": 1
+        }
+      ],
+      "2026-08-30": [
+        {
+          "count": 19,
+          "referrer": "Google",
+          "uniques": 1
         },
         {
           "count": 10,
@@ -329,6 +377,14 @@
       "2026-08-27": {
         "count": 45,
         "uniques": 2
+      },
+      "2026-08-28": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-08-29": {
+        "count": 0,
+        "uniques": 0
       }
     }
   }
