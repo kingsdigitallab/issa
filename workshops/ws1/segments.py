@@ -179,7 +179,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     ret['matched'] = matched_count
     ret['extra'] = excess
     # Strong indicator of hallucinated times
-    ret['duration_diff_ratio'] = segments_predict[-1]['endTime'] / segments_true[-1]['endTime']
+    ret['duration_diff_ratio'] = segments_predict[-1]['endTime'] / segments_true[-1]['endTime'] if segments_predict else 0
     if ret['duration_diff_ratio'] > 1.5:
         ret['summary'] += f' ; hallucinated end {ret["duration_diff_ratio"]:.2}'
         ret['score'] /= ret['duration_diff_ratio']
