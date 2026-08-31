@@ -187,8 +187,13 @@ data
 *.whl
 *.srt
 
+# this project
+
 .vscode
 TODO.md
 tst
 prototypes/audio-describe/vlm/report
 source.ml
+
+workshops/ws1/docs/vllm_src/
+workshops/ws1/docs/*sh
