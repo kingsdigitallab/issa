@@ -19,77 +19,15 @@
                 }
             },
             "answer_videos_vlm": {
-                "model": "Qwen/Qwen3.6-27B",
-                "seed": 3407,
+                "model": "Qwen/Qwen3.8-27B",
+                "seed": 43,
                 "reasoning_effort": "low",
                 "max_tokens": "30k",
                 "questions": {
                     "summary2": {
                         "question": "summarise the video in two short sentences."
                     },
-                    "programs_3x": {
-                        "question_MULTILINES": [
-"This video contains one or more TV programs.",
-"Each program is preceded by a special, full screen visual separator.",
-"A visual separator usually looks like a large count down, a large clock, a black screen, color bars or a production card with title.",
-"The visual separators are not meant for public audience, only for production team. ",
-"A separator may last between a few seconds to a few minutes.",
-"They are very distinct from title screens within a program.",
-"Detect all separators and programs in the video.",
-"Then returns only a valid JSON array of programs with `start` and `end` timecodes (format is 'HH:MM:SS')."
-                        ]
-                    },
-                    "programs_3xinc_sec-35-27B-v12k-think": {
-                        "question_MULTILINES": [
-"This video contains one or more TV programs.",
-"Program are separated by a special, full screen visual separator.",
-"A visual separator usually looks like color bars, blank screen or white noise.",
-"The visual separators are not meant for public audience, only for production team.",
-"A separator may last between a few seconds to a few minutes.",
-"They are very distinct from title screens within a program. They usually don't have a photographic background.",
-"Detect all separators and programs in the video.",
-"Then responds only with a valid JSON array of programs with `start` and `end` timecodes (in seconds).",
-"Here is an example of a response for two detected programs:",
-"```json",
-"[",
-"    {",
-"        \"start\": 74,",
-"        \"end\": 383",
-"    },",
-"    {",
-"        \"start\": 645,",
-"        \"end\": 1472",
-"    }",
-"]",
-"```"
-                        ]
-                    },
-                    "programs_3xinc_sec-35-35B-A3B-FP8-v32k-think-s42": {
-                        "question_MULTILINES": [
-"This video contains one or more TV programs.",
-"Program are separated by a special, full screen visual separator.",
-"A visual separator usually looks like color bars, blank screen or white noise.",
-"The visual separators are not meant for public audience, only for production team.",
-"A separator may last between a few seconds to a few minutes.",
-"They are very distinct from title screens within a program. They usually don't have a photographic background.",
-"Detect all separators and programs in the video.",
-"Then responds only with a valid JSON array of programs with `start` and `end` timecodes (in seconds).",
-"Here is an example of a response for two detected programs:",
-"```json",
-"[",
-"    {",
-"        \"start\": 74,",
-"        \"end\": 383",
-"    },",
-"    {",
-"        \"start\": 645,",
-"        \"end\": 1472",
-"    }",
-"]",
-"```"
-                        ]
-                    },
-                    "programs_3xinc-35-27B-v12k-think-s43": {
+                    "prg1": {
                         "question_MULTILINES": [
 "This video contains one or more TV programs.",
 "Programs are separated by a special, full-screen visual separator.",
