@@ -6,10 +6,13 @@ SING_FILE="/scratch/prj/dh_issa/sglang/vllm-openai_v0.28.0-cu130.sif"
 # ((224 * 1024 = 229376))
 # 268435456 = 128k video context = 128 * 1024 * 2048 # tested ok
 # 298450944 = 144k # 331612160 = 160k # 397934592 = 192k # 431095808 = 208k
+PATCH_DIR=/scratch/prj/dh_issa/issa/workshops/ws1/inferencers/vllm-patches
 
 SINGULARITYENV_VLLM_LOGGING_LEVEL=DEBUG \
 SINGULARITYENV_VLLM_DEBUG_LOG_API_SERVER_RESPONSE=TRUE \
 singularity exec --nv \
+    --bind $PATCH_DIR/vllm/multimodal/video.py:/usr/local/lib/python3.12/dist-packages/vllm/multimodal/video.py \
+    --bind $PATCH_DIR/vllm/multimodal/media/video.py:/usr/local/lib/python3.12/dist-packages/vllm/multimodal/media/video.py \
     --bind $COLLECTION_PATH:$COLLECTION_PATH \
     --bind $HF_HOME:$HF_HOME \
     $SING_FILE \
