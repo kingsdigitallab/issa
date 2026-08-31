@@ -12,7 +12,7 @@ BASE_DIR="hpc:/rds/prj/dh_issa/data/input/NLS"
 mapfile -t paths < <(grep -v '^#' $SAMPLE_FILE)
 
 # Define the destination directory
-DEST_BASE="."
+DEST_BASE="sample11/."
 
 # Create the destination directory if it doesn't exist
 # mkdir -p "$dest"
@@ -28,7 +28,8 @@ for rel_path in "${paths[@]}"; do
     dest_file="${dest_dir}/${filename}"
     
     mkdir -p "$dest_dir"
-    scp "$full_source" "$dest_file"
+    # scp "$full_source" "$dest_file"
+    rsync -av --size-only "$full_source" "$dest_file"
     
     echo "Copied: $filepath"
 done
