@@ -1,15 +1,21 @@
-DODfilenameprefix,title,dateOfReleaseYYYY,timing,sound,colour,type,Progs,synopsis
-75247299,CANALS IN SCOTLAND,1938,9.30 mins,silent,bw,educational,1,"Scotland's three canals, the Crinan, Caledonian, and Forth and Clyde are shown in operation. "
-82814521,SISYPHUS,1971,3 mins,sound,sepia,"sponsored
-animation",1,"Films of Scotland's first cartoon film.  A version in Scots of the Greek legend of Sisyphus, read by Robert Garioch."
-83972061,LES BETES NOIRES,1962,10.55 mins,sound,col,amateur,1,"Entertaining domestic scenes as the family puppies are let out by young children and run riot, wrecking the mother's wedding outfit while she is out tending her flowers in the greenhouse.  Scenes of a young boy and his baby sister dressing up in the wedding hats."
-91174079,CLEAN FOOD,1957,16.04 mins,sound,bw,sponsored,1,"Public information film taking the form of a ""Food Code"". It shows  both good and bad practices at work and in domestic situations,  dramatically demonstrating the results of a lack of care."
-100194707,AMATEUR CINEMATOGRAPHY,1948,3.00 mins,sound,bw,advertising,1,"Demonstration on how to make a film, made as a trailer for the 10th Scottish Amateur Film Festival held in the Cosmo Cinema, Glasgow."
-103008963,ROBOT THREE,1951,12 mins,sound,col,"amateur, fiction, horror",1,"Fictional story following the lines of a Frankenstein type horror movie:  A grim scientist orders one of his androids to destroy another, after finding out it has fallen in love with a third, ""female"" robot. She seduces her creator into drinking from a poisoned cup, and makes her escape..."
-106033956,"(GLASGOW STREET SCENES / ""KILL THE BILL"" DEMONSTRATION)",1975,21.52 mins,silent,col,amateur,1,"A compilation of amateur film showing places and events in Glasgow, including the aftermath of the Metropole Theatre fire, May Day parades, the Barras Market, the City centre and South side and a march and demonstration against the Industrial Relations Bill of 1971."
-139329389,[GRAMPIAN TELEVISION NEWS TAPE L0139],1982,32.12 mins,sound,col,"tv news ",4,"Six news items from Grampian Television,"
-140833800,[GRAMPIAN TELEVISION NEWS TAPE L0337],1984,65.00 mins,sound,col,"tv sport
-tv news",2,"Grampian Television news tape, featuring items about the Men's World Outdoor World Bowls competition, 1984.  Held at Westburn Park in Aberdeen, Scotland, from 11–28 July."
-234552207,[GRAMPIAN TELEVISION NEWS TAPE L1355],1995,109.49 mins,sound,col,"tv news ",25,A compilation tape featuring news items from Grampian Television.
-260522455,(ANTI-GAS PRECAUTIONS IN GLASGOW),1942,10.00 mins,silent,bw,instructional,1,"Widespread gas attacks were feared at the start of the War, so procedures were practiced to deal with them.  In this chilling film emergency services are seen in action as the alarm is raised for a ‘gas raid’."
-,,,,,,,
+DODfilenameprefix,ref no,title,dateOfReleaseYYYY,timing,sound,colour,type,synopsis,progs
+75247299,79,CANALS IN SCOTLAND,1938,9.30 mins,silent,bw,educational,"Scotland's three canals, the Crinan, Caledonian, and Forth and Clyde are shown in operation. ",1
+82814521,2912,SISYPHUS,1971,3 mins,sound,sepia,"sponsored
+animation","Films of Scotland's first cartoon film.  A version in Scots of the Greek legend of Sisyphus, read by Robert Garioch.",1
+83972061,3814,LES BETES NOIRES,1962,10.55 mins,sound,col,amateur,"Entertaining domestic scenes as the family puppies are let out by young children and run riot, wrecking the mother's wedding outfit while she is out tending her flowers in the greenhouse.  Scenes of a young boy and his baby sister dressing up in the wedding hats.",1
+85060728,7340,[MAGAZINE - LOOKING BACK],1966,35.49 mins,silent,bwcol,amateur,"A compilation of amateur film taken by James Anderson.  Includes heavy snow blocking the roads in Newton Mearns; a military parade in London, leisurely scenes in Queens Park and Ravenglass and Eskdale miniature railway.  There are also shots of Scottish Industries Exhibition, and opening of new premises at Crow Hamilton & Co. Ltd.",1
+91174079,1102,CLEAN FOOD,1957,16.04 mins,sound,bw,sponsored,"Public information film taking the form of a ""Food Code"". It shows  both good and bad practices at work and in domestic situations,  dramatically demonstrating the results of a lack of care.",1
+100194707,105,AMATEUR CINEMATOGRAPHY,1948,3.00 mins,sound,bw,advertising,"Demonstration on how to make a film, made as a trailer for the 10th Scottish Amateur Film Festival held in the Cosmo Cinema, Glasgow.",1
+103008963,1111,ROBOT THREE,1951,12 mins,sound,col,"amateur, fiction, horror","Fictional story following the lines of a Frankenstein type horror movie:  A grim scientist orders one of his androids to destroy another, after finding out it has fallen in love with a third, ""female"" robot. She seduces her creator into drinking from a poisoned cup, and makes her escape...",1
+106033956,7726,"(GLASGOW STREET SCENES / ""KILL THE BILL"" DEMONSTRATION)",1975,21.52 mins,silent,col,amateur,"A compilation of amateur film showing places and events in Glasgow, including the aftermath of the Metropole Theatre fire, May Day parades, the Barras Market, the City centre and South side and a march and demonstration against the Industrial Relations Bill of 1971.",1
+139329389,10748,[GRAMPIAN TELEVISION NEWS TAPE L0139],1982,32.12 mins,sound,col,tv news ,"Six news items from Grampian Television,",6
+140179431,10807,[GRAMPIAN TELEVISION NEWS TAPE L0103],1982,39.51 mins,sound,col,tv news,"Nine news items from Grampian Television, 1982.",0
+140180335,10777,[GRAMPIAN TELEVISION NEWS TAPE L0144],1982,45.32 mins,sound,col,tv news ,"A compilation tape featuring news items from Grampian Television in the 1980s.
+",0
+140833800,10973,[GRAMPIAN TELEVISION NEWS TAPE L0337],1984,65.00 mins,sound,col,"tv sport
+tv news","Grampian Television news tape, featuring items about the Men's World Outdoor World Bowls competition, 1984.  Held at Westburn Park in Aberdeen, Scotland, from 11–28 July.",4
+144133880,12043,[GRAMPIAN TELEVISION NEWS TAPE L0858],1989,50.10 mins,sound,col,tv news,A compilation tape featuring news items from Grampian Television in the 1980s.,0
+231298910,9071,[MAC MOVIES ARCHIVE COMPILATION 3],2002,56.25 mins,sound,col,"amateur
+local topical","A record of events held during the festival on Greenock's waterfront, including shows performed by school groups, local bands, Royal Marine big band, charities and emergency services.   Children's events are most common; kids are shown enjoying face painting, games and a bouncy castle. A shorter version follows.",0
+234552207,13044,[GRAMPIAN TELEVISION NEWS TAPE L1355],1995,109.49 mins,sound,col,tv news ,A compilation tape featuring news items from Grampian Television.,25
+260522455,157,(ANTI-GAS PRECAUTIONS IN GLASGOW),1942,10.00 mins,silent,bw,instructional,"Widespread gas attacks were feared at the start of the War, so procedures were practiced to deal with them.  In this chilling film emergency services are seen in action as the alarm is raised for a ‘gas raid’.",1
