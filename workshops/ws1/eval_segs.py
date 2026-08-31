@@ -11,7 +11,7 @@ SEGMENTS_TRUE_DIR = Path("./segments_true")
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", action="store_true", help="print diffs for all F")
-    parser.add_argument("-q", default="programs_3x", help="question key to evaluate (default: programs_3x)")
+    parser.add_argument("-q", default="prog1", help="question key to evaluate (default: prog1)")
     args = parser.parse_args()
 
     rows = []
