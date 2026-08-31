@@ -79,6 +79,16 @@ def get_segs_intersection(seg1, seg2):
     return [startTime, endTime]
 
 def compare_segments(segments_true, segments_predict, is_separator=False):
+    '''
+    This method is based on proportionality of coverage of matching segment.
+    It penalises distance to true boundaries proportionally to the length of the true segment
+    But it has a few flaws:
+    1. If only one perfect prediction covering 50% of a 10-segs video, score is 50%
+    2. If buggy predictor repeats the same first match, it can get 100%
+    It has advantages as well:
+    1. deals well with two predictions covering different parts of the same segment
+    2. penalise too early or too late matches consistently and proportionally
+    '''
     segments_true = convert_segments_to_seconds(segments_true)
     if is_separator:
         segments_true = convert_segments_from_programs_to_separators(segments_true)
@@ -87,9 +97,84 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     ret = {
         "score": 0.0,
         "summary": "invalid input format",
+        "valid": True,
+        "beyond": 1,
+        "matched": 0,
+        "expected": len(segments_true),
+        "duration_diff_ratio": 1,
+        "extra": 0
+    }
+
+    # 1. score all combinations of segments
+    for sp in segments_predict:
+        # best_true_segment = None
+        sp['score'] = -1
+        for st in segments_true:
+            score = score_segment_pair(st, sp)
+            if score > sp['score']:
+                sp['score'] = score
+                sp['true'] = st
+                # best_true_segment = st
+        length = sp['true']['endTime'] - sp['true']['startTime']
+        ret['score'] += sp['score'] * length
+
+    ret['score'] /= sum([st['endTime'] - st['startTime'] for st in segments_true])
+    ret['matched'] = len({sp['true']['startTime'] for sp in segments_predict})
+
+    extra = len(segments_predict) - len(segments_true)
+    if extra > 0:
+        # necessary? extra predictions are already penalised with above method
+        ret['score'] = ret['score'] / len(segments_predict) * len(segments_true)
+        ret['extra'] = extra
+
+    if segments_predict:
+        beyond = segments_predict[-1]['endTime'] / segments_true[-1]['endTime']
+        if beyond > 1:
+            ret['score'] /= beyond
+            ret['beyond'] = beyond
+            ret['duration_diff_ratio'] = beyond
+
+    # 2. generate difference report
+    diff = []
+    for st in segments_true:
+        st_str = f'{get_hms_from_secs(st["startTime"])} - {get_hms_from_secs(st["endTime"])}'
+        score = ''
+        for sp in segments_predict:
+            if sp['true'] == st:
+                diff.append(f'{int(sp['score']*100):>3d}% {get_hms_from_secs(sp["startTime"])} - {get_hms_from_secs(sp["endTime"])}  /  {st_str}')
+                st_str = ''
+        if st_str:
+            diff.append(f'{' '*24}  /  {st_str}')
+    ret['diff'] = '\n'.join(diff)
+
+    return ret
+
+def score_segment_pair(segment_true, segment_predict):
+    ret = 0.5
+    length = segment_true['endTime'] - segment_true['startTime']
+    ret = 1 - abs(segment_true['startTime'] - segment_predict['startTime']) / length - abs(segment_true['endTime'] - segment_predict['endTime']) / length
+    ret = max(0, ret)
+    return ret
+
+def compare_segments_old(segments_true, segments_predict, is_separator=False):
+    segments_true = convert_segments_to_seconds(segments_true)
+    if is_separator:
+        segments_true = convert_segments_from_programs_to_separators(segments_true)
+    segments_predict = convert_segments_to_seconds(segments_predict)
+
+    ret = {
+        "score": 0.0,
+        "summary": "invalid input format",
+        "valid": True,
+        "beyond": 0,
+        "matched": 0,
+        "expected": len(segments_true),
+        "duration_diff_ratio": 1,
+        "extra": 0
     }
 
     if not(isinstance(segments_predict, list)):
+        ret["valid"] = False
         return ret
 
     score = 0.0
@@ -175,11 +260,10 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
         excess = 0
     
     ret['predicted'] = len(segments_predict)
-    ret['expected'] = len(segments_true)
     ret['matched'] = matched_count
     ret['extra'] = excess
     # Strong indicator of hallucinated times
-    ret['duration_diff_ratio'] = segments_predict[-1]['endTime'] / segments_true[-1]['endTime'] if segments_predict else 0
+    ret['duration_diff_ratio'] = segments_predict[-1]['endTime'] / segments_true[-1]['endTime']
     if ret['duration_diff_ratio'] > 1.5:
         ret['summary'] += f' ; hallucinated end {ret["duration_diff_ratio"]:.2}'
         ret['score'] /= ret['duration_diff_ratio']

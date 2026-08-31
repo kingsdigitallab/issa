@@ -2,7 +2,7 @@ import argparse
 import json
 import re
 from pathlib import Path
-from segments import compare_segments, load_segments
+from segments import compare_segments, compare_segments_old, load_segments
 
 SOURCE_DIR = Path("./sample11")
 SEGMENTS_TRUE_DIR = Path("./segments_true")
@@ -50,6 +50,7 @@ def main() -> None:
         missing = r['expected'] - r['matched']
         missing = str(missing) if missing else ""
         extra = str(r['extra']) if r['extra'] else ""
+
         print(f"{r['F']:<15} {r['score']*100:>6.0f} {r['expected']:>4d} {missing:>4} {extra:>5} {beyond:>6}")
 
     if rows:
