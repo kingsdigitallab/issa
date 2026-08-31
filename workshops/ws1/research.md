@@ -85,6 +85,11 @@ One way would be to patch the pre-processor to show accurate information at runt
 
 Another would be to ask a coding assistant to build such formula from the pre-processor code source. And have faith in it.
 
+### Q5b. What is the model context made of
+
+12k allocated for video input
+30k allocated for output: the reasoning and the actual answer (list of timecodes)
+
 ## Q6. which quant is best?
 
 We've tried 27B unquantised (16bits), which runs ok on 80+GB VRAM.
@@ -151,7 +156,7 @@ Run video Q&A with framesense on HPC:
 ```bash
 cd /scratch/users/k1217897/prj/framesense
 . ./venv/bin/activate
-ANSWER_VIDEOS_VLM_MAX_TOKENS=30k ANSWER_VIDEOS_VLM_SEED=43 ANSWER_VIDEOS_VLM_THINK="1" ANSWER_VIDEOS_VLM_MODEL=Qwen/Qwen3.8-27B ANSWER_VIDEOS_VLM_API_BASE=http://localhost:30000/v1 ANSWER_VIDEOS_VLM_FILTER_QUESTIONS=programs_3xinc-35-27B-v12k-think-s43 FRAMESENSE_DEBUG=1 FRAMESENSE_COLLECTIONS=/scratch/prj/dh_issa/issa/workshops/ws1/collections.json python framesense.py answer_videos_vlm -f 234 -r
+ANSWER_VIDEOS_VLM_MAX_TOKENS=12k ANSWER_VIDEOS_VLM_SEED=43 ANSWER_VIDEOS_VLM_THINK="1" ANSWER_VIDEOS_VLM_MODEL=RedHatAI/Qwen3.8-27B-INT4 ANSWER_VIDEOS_VLM_API_BASE=http://localhost:30000/v1 ANSWER_VIDEOS_VLM_FILTER_QUESTIONS=programs_3xinc-35-27B-v12k-think-s43 FRAMESENSE_DEBUG=1 FRAMESENSE_COLLECTIONS=/scratch/prj/dh_issa/issa/workshops/ws1/collections.json python framesense.py answer_videos_vlm -f 234 -r
 ```
 
 Evaluate results:
@@ -287,6 +292,7 @@ Docs about running Qwen3.8-27B:
 * [HF Qwen3.8 card](https://huggingface.co/Qwen/Qwen3.8-27B-FP8)
 * [SGLang](https://lmsysorg.mintlify.app/cookbook/autoregressive/Qwen/Qwen3.8-27B#hw=h200&variant=default&quant=fp8&nodes=single&spec=none&tier=low-latency&ssmDtype=float32)
 * [Vram calculator](https://vramcalculator.com/qwen3-8-vram-requirements/)
+* [Kingy.ai tips for Qwen3.8](https://kingy.ai/blog/qwen3-8-27b-local-hardware-requirements/)
 
 Q4_K_M -> 64K context on 24GB VRAM
 
@@ -298,7 +304,48 @@ At full precision (16b), the model requires 73GB for 262K window. So why did I f
 
 I've found it easier to run across different nodes on HPC than vLLM back in June. But harder to tune its VRAM usage.
 
+```bash
+sglang serve \
+    --reasoning-parser qwen3\
+    --port 30000\
+    --model-path Qwen/Qwen3.8-27B\
+    --mem-fraction-static 0.7\
+    --context-length 49152\
+    --attention-backend flashinfer
+```
+
+```bash
+singularity exec --nv --bind /cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1:/cephfs/volumes/hpc_data_prj/dh_issa/ca337d95-d1b7-4efe-bfd9-6bb60ea0df32/issa/workshops/ws1 --bind $HF_HOME:$HF_HOME /scratch/prj/dh_issa/sglang/sglang_latest.sif sglang serve --reasoning-parser qwen3 --port 30000 --model-path Qwen/Qwen3.8-27B --mem-fraction-static 0.7 --context-length 49152 --attention-backend flashinfer
+```
+
+
 ## vLLM
+
+https://recipes.vllm.ai/Qwen/Qwen3.8-27B?variant=int4&hardware=h100&features=reasoning%2Cencoder_parallel
+
+
+```bash
+singularity exec \
+    /scratch/prj/dh_issa/sglang/vllm-0.28.0-cu130.sif \
+    vllm \
+
+COLLECTION_PATH=$HOME/src/prj/issa/workshops/ws1/sample11 \
+singularity exec --nv \
+    --bind $COLLECTION_PATH:$COLLECTION_PATH \
+    --bind $HOME/infer/models:/models \
+    $HOME/infer/llama.cpp_server0.3.0-cuda13.sif \
+    llama-server \
+        -m /models/Qwen3.8-27B-UD-Q4_K_M.gguf \
+        --media-path $HOME/src/prj/issa/workshops/ws1/sample11 \
+        --spec-default --spec-type draft-mtp \
+        --mmproj /models/mmproj-BF16.gguf \
+        --port 30000 \
+        --image-min-tokens 1024 \
+        -ngl 999 \
+        -c 65536 \
+        --reasoning_effort medium \
+        -fa on 
+```
 
 From SM:
 
@@ -320,9 +367,70 @@ env VLLM_ENGINE_READY_TIMEOUT_S=3600 \
     --gpu-memory-utilization 0.95
 ```
 
-NVFP4: 4bits, only for Blackwell GPUs
+* GGUF support is highly experimental and my attempt with unsloth/Qwen3.8-27B-GGUF led to startup errors as the model was not recognised.
+* FP8: qwen offers a FP8 variant. But that requires Ada (partial support), Hopper, or above. A40/A100 don't support it but Marlin work around allows VRAM reduction without increased speed.
+* NVFP4: 4bits, but only for Blackwell GPUs.
+* INT4 (RedHatAI/Qwen3.8-27B-INT4): is best supported by Axxx. 
+* cyankiwi/Qwen3.8-27B-AWQ-INT4: is another possible candidate
 
+```
+(APIServer pid=312243) INFO 08-29 21:24:17 [entrypoints/.../utils/server_utils.py:290] response_body={{"error":{"message":"The decoder prompt contains a(n) video item with 18432 embedding tokens, which exceeds the pre-allocated encoder cache size 16384. Please reduce the input size or increase the encoder cache size by setting --limit-mm-per-prompt at startup.","type":"BadRequestError","param":null,"code":400}}}
+```
 
+```
+If you get an Out-Of-Memory error at launch:
+Enable FlashInfer or vLLM's Chunked Prefill to manage huge prompt activation spikes:
 
+Bash
+--enable-chunked-prefill --max-num-batched-tokens 8192
+```
 
+## llama.cpp
+
+**UPDATE**: [llama-server does **NOT** support video input](https://github.com/lmstudio-ai/lms/issues/158).
+(I also tried it, the mp4 looks like its loading then no token is filled in the context for it)
+
+Try llama-server as it should work well with GGUFs. 
+Which would give us a lot of flexibility for GPUs.
+
+https://github.com/ggml-org/llama.cpp/blob/master/docs/docker.md
+
+https://unsloth.ai/docs/models/qwen3.8
+
+```bash
+# Download the main LLM weights (Q4_K_M)
+hf download unsloth/Qwen3.8-27B-GGUF --include "*Q4_K_M*" --local-dir ./models
+
+# Download the vision tower (mmproj)
+hf download unsloth/Qwen3.8-27B-GGUF --include "*mmproj*" --local-dir ./models
 ---
+
+Run lama-server on ML computer:
+
+```bash
+COLLECTION_PATH=$HOME/src/prj/issa/workshops/ws1/sample11 \
+singularity exec --nv \
+    --bind $COLLECTION_PATH:$COLLECTION_PATH \
+    --bind $HOME/infer/models:/models \
+    $HOME/infer/llama.cpp_server0.3.0-cuda13.sif \
+    llama-server \
+        -m /models/Qwen3.8-27B-UD-Q4_K_M.gguf \
+        --media-path $HOME/src/prj/issa/workshops/ws1/sample11 \
+        --spec-default --spec-type draft-mtp \
+        --mmproj /models/mmproj-BF16.gguf \
+        --port 30000 \
+        --image-min-tokens 1024 \
+        -ngl 999 \
+        -c 65536 \
+        --reasoning_effort medium \
+        -fa on 
+```
+
+Run framesense on ML computer:
+
+```bash
+cd ~/src/prj/issa/workshops/ws1
+
+ANSWER_VIDEOS_VLM_MAX_TOKENS=12k ANSWER_VIDEOS_VLM_SEED=43 ANSWER_VIDEOS_VLM_THINK="1" ANSWER_VIDEOS_VLM_MODEL=Qwen/Qwen3.8-27B ANSWER_VIDEOS_VLM_API_BASE=http://localhost:30000/v1 ANSWER_VIDEOS_VLM_FILTER_QUESTIONS=programs_3xinc-35-27B-v12k-think-s43 FRAMESENSE_DEBUG=1 FRAMESENSE_COLLECTIONS=~/src/prj/issa/workshops/ws1/collections.json ~/src/prj/framesense/venv/bin/python ~/src/prj/framesense/framesense.py answer_videos_vlm -f 234 -r
+```
+
