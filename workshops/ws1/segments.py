@@ -94,16 +94,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
         segments_true = convert_segments_from_programs_to_separators(segments_true)
     segments_predict = convert_segments_to_seconds(segments_predict)
 
-    ret = {
-        "score": 0.0,
-        "summary": "invalid input format",
-        "valid": True,
-        "beyond": 1,
-        "matched": 0,
-        "expected": len(segments_true),
-        "duration_diff_ratio": 1,
-        "extra": 0
-    }
+    ret = get_default_comparison(segments_true)
 
     # 1. score all combinations of segments
     for sp in segments_predict:
@@ -141,10 +132,10 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
         score = ''
         for sp in segments_predict:
             if sp['true'] == st:
-                diff.append(f'{int(sp['score']*100):>3d}% {get_hms_from_secs(sp["startTime"])} - {get_hms_from_secs(sp["endTime"])}  /  {st_str}')
+                diff.append(f'{int(sp["score"]*100):>3d}% {get_hms_from_secs(sp["startTime"])} - {get_hms_from_secs(sp["endTime"])}  /  {st_str}')
                 st_str = ''
         if st_str:
-            diff.append(f'{' '*24}  /  {st_str}')
+            diff.append(f'{" "*24}  /  {st_str}')
     ret['diff'] = '\n'.join(diff)
 
     return ret
@@ -156,22 +147,25 @@ def score_segment_pair(segment_true, segment_predict):
     ret = max(0, ret)
     return ret
 
+def get_default_comparison(segments_true):
+    return {
+        "score": 0.0,
+        "summary": "invalid input format",
+        "valid": True,
+        "beyond": 1,
+        "matched": 0,
+        "expected": len(segments_true),
+        "duration_diff_ratio": 1,
+        "extra": 0
+    }
+
 def compare_segments_old(segments_true, segments_predict, is_separator=False):
     segments_true = convert_segments_to_seconds(segments_true)
     if is_separator:
         segments_true = convert_segments_from_programs_to_separators(segments_true)
     segments_predict = convert_segments_to_seconds(segments_predict)
 
-    ret = {
-        "score": 0.0,
-        "summary": "invalid input format",
-        "valid": True,
-        "beyond": 0,
-        "matched": 0,
-        "expected": len(segments_true),
-        "duration_diff_ratio": 1,
-        "extra": 0
-    }
+    ret = get_default_comparison(segments_true)
 
     if not(isinstance(segments_predict, list)):
         ret["valid"] = False
