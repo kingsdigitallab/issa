@@ -2,7 +2,7 @@ import argparse
 import json
 import re
 from pathlib import Path
-from segments import compare_segments, compare_segments_old, load_segments
+from segments import compare_segments, compare_segments_old, load_segments, validate_segments
 
 SOURCE_DIR = Path("./sample11")
 SEGMENTS_TRUE_DIR = Path("./segments_true")
@@ -25,6 +25,12 @@ def main() -> None:
             continue
 
         segments_true = load_segments(subdir.name, SEGMENTS_TRUE_DIR)
+
+        errors = validate_segments(segments_true)
+        if errors:
+            print(f'Errors in ground truth segment {subdir.name}')
+            print(json.dumps(errors, indent=2))
+            exit(2)
 
         with open(answers_file) as f:
             data = json.load(f)

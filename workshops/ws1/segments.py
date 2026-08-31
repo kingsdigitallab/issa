@@ -288,6 +288,27 @@ def compare_segments_old(segments_true, segments_predict, is_separator=False):
 
     return ret
 
+def validate_segments(segments):
+    '''Returns an array of validation errors'''
+    ret = []
+    segs_in_seconds = convert_segments_to_seconds(segments)
+    lastEnd = 0
+    for idx, s in enumerate(segs_in_seconds):
+        error = ''
+        if s['startTime'] > s['endTime']:
+            error = f'start > end'
+        if lastEnd > s['startTime']:
+            error = f'end of last segment > start of this segment'
+        if error:
+            ret.append({
+                'index': idx,
+                'error': error,
+                'segment': segments[idx]
+            })
+        lastEnd = s['endTime']
+    return ret
+
+
 if __name__ == '__main__':
     INPUT_FILE_NAME = 'aobbu34200001'
     # INPUT_FILE_NAME = 'DVC43313'
@@ -298,3 +319,4 @@ if __name__ == '__main__':
     # res = compare_segments(segments_true, segments_predict, False)
     res = compare_segments(segments_true, segments_predict)
     print(print_dict(res))
+
