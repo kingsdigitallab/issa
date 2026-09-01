@@ -18,6 +18,7 @@ being honoured and which are being dropped.
 |-------------------------------|----------------|
 | `vllm/multimodal/video.py` | `/usr/local/lib/python3.12/dist-packages/vllm/multimodal/video.py` |
 | `vllm/multimodal/media/video.py` | `/usr/local/lib/python3.12/dist-packages/vllm/multimodal/media/video.py` |
+| `vllm/model_executor/models/qwen3_vl.py` | `/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/qwen3_vl.py` |
 
 Both files were extracted verbatim from the SIF and then edited. Original,
 unpatched files can be re-extracted at any time:
@@ -67,6 +68,33 @@ channel instead of the video loader channel.
 Shows the actual decoded frame array: `N` = number of frames, `H`/`W` = pixel
 resolution (before any HF `smart_resize` downsampling).
 
+### 4. `Qwen3VLMultiModalProcessor._call_hf_processor` — the true embedded frame dimensions
+
+```
+[VIDEO DEBUG] Qwen3VLMultiModalProcessor._call_hf_processor embedded frames:
+  Decoded input : frames shape=(768, 576, 768, 3) (N,H,W,C), backend=opencv, duration=5400.00 s
+  Size budget   : {'shortest_edge': 4096, 'longest_edge': 24576000} (HF smart_resize input, from mm_processor_kwargs)
+  Patch grid    : t=384 h=8 w=12 (patch_size=16, merge_size=2, temporal_patch_size=2)
+  Embedded      : 768 frames (incl. temporal padding), 128 x 192 px per frame
+  Tokens        : 24 per frame, 9216 total for this video (before pruning)
+```
+
+This is the **final** diagnostic: it fires once per video, after the HF
+processor's `smart_resize` has run, and shows the actual dimensions of the
+frames that will be embedded and passed to the Qwen vision encoder — not the
+pre-resize decoded shape from message #3.
+
+- **Embedded** `H x W px per frame` = `grid h/w x patch_size` (16): the true
+  post-`smart_resize` resolution. Compare it with `Decoded input` to see the
+  downscale ratio applied by the `Size budget` (`size.longest_edge` from
+  `mm_processor_kwargs`, per-request via `ANSWER_VIDEOS_VLM_VIDEO_TOKENS`).
+- **Embedded frames** = `grid t x temporal_patch_size` (2), i.e. the sampled
+  frame count rounded up to a multiple of 2 (`incl. temporal padding`).
+- **Tokens per frame** = `grid h x grid w / merge_size^2` (4); **total** =
+  `grid t x tokens per frame` = the number of vision tokens this video
+  contributes to the prompt. `t x h x w / 4` must match the expanded
+  `<|video_pad|>` token count in the prompt.
+
 ## How to apply (bind-mount, no SIF rebuild)
 
 The patched files are bound over the originals when launching the container,
@@ -84,6 +112,8 @@ singularity exec --nv \
         /usr/local/lib/python3.12/dist-packages/vllm/multimodal/video.py \
     --bind $PATCH_DIR/vllm/multimodal/media/video.py:\
         /usr/local/lib/python3.12/dist-packages/vllm/multimodal/media/video.py \
+    --bind $PATCH_DIR/vllm/model_executor/models/qwen3_vl.py:\
+        /usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/qwen3_vl.py \
     \
     --bind $COLLECTION_PATH:$COLLECTION_PATH \
     --bind $HF_HOME:$HF_HOME \

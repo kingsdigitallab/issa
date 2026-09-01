@@ -13,6 +13,7 @@ SINGULARITYENV_VLLM_DEBUG_LOG_API_SERVER_RESPONSE=TRUE \
 singularity exec --nv \
     --bind $PATCH_DIR/vllm/multimodal/video.py:/usr/local/lib/python3.12/dist-packages/vllm/multimodal/video.py \
     --bind $PATCH_DIR/vllm/multimodal/media/video.py:/usr/local/lib/python3.12/dist-packages/vllm/multimodal/media/video.py \
+    --bind $PATCH_DIR/vllm/model_executor/models/qwen3_vl.py:/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/qwen3_vl.py \
     --bind $COLLECTION_PATH:$COLLECTION_PATH \
     --bind $HF_HOME:$HF_HOME \
     $SING_FILE \
