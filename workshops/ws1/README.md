@@ -22,6 +22,7 @@ If not already there, place the sample videos under sample11/X.32/X.32.mp4. Wher
 # Scripts
 
 - `copy-videos.bash`: Copy the sample videos listed in `sample-11.txt` from the ISSA RDS data folder into `sample11/`
+- `preproc-video-folder.py`: Watch the current folder and compress every new `X.mp4` landing in it into `X/X.mp4` (ffmpeg via the FrameSense singularity image)
 - `inferencers/vllm.sh`: Launch the vLLM server (Qwen3.8-27B-INT4, 256k context) with the diagnostic patches bind-mounted
 - `inferencers/vllm-patches/`: Diagnostic `[VIDEO DEBUG]` patches bind-mounted over the SIF's vLLM files (see its README)
 - `answer_videos_vlm.bash`: Answer the programme questions on the NLS videos via the running server (`--fps`, `--video-tokens`, `--seed`, `--reasoning-effort`)
