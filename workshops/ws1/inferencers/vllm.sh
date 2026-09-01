@@ -72,3 +72,9 @@ singularity exec --nv \
 #
 # Still OOM at startup due to dummy video pre-processing => Apex recommends lowering longest_edge to 268435456 (128k video tokens)
 #
+# --gpu-memory-utilization 0.70 is s good choice on A100 80g for our settings
+# Recommendation from GLM: 
+# When to change it
+# - 0.75 — only if you later need many concurrent long-context requests (KV pressure).
+# - 0.65 — if you push longest_edge toward 224k+ and see runtime encoder OOM.
+# - Don't exceed 0.80 (docs/04's tradeoff table: headroom drops to 15.85 GiB, which fails the 1.5x-safety test for the 224K encoder).
