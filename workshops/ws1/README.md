@@ -32,5 +32,5 @@ If not already there, place the sample videos under sample11/X.32/X.32.mp4. Wher
 - `segments.py`: Segment helpers (load/compare/validate) shared by the eval scripts
 - `extract_segments.py`: Draft true programme segments from the model predictions, for manual verification
 - `eval_segs.py`: Score predicted segments against `segments_true/`
-- `evals/viz.py`: Render an SVG timeline of programme intervals for one video as a stack of four bands: ground mid-frames, ground segments, ground gap mid-frames, predicted segments (run from the repo root, e.g. `venv/bin/python evals/viz.py prg1 139329389.32`)
+- `evals/viz.py`: Render an SVG timeline of programme intervals for one video as a stack of four bands: ground mid-frames, ground segments, ground gap mid-frames (red border = undetected gap), predicted segments (run from the repo root, e.g. `venv/bin/python evals/viz.py prg1 139329389.32`)
 - `qwen3_video_sampling.py`: Simulate Qwen3.8 video sampling in vLLM (fps, frame count, resolution) for planning settings

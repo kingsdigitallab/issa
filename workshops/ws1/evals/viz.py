@@ -7,7 +7,8 @@ stack of four horizontal bands (top to bottom):
 2. "ground segments": thin bars of the ground-truth segments with vertical start/end
    timecodes
 3. "ground gap mid-frames": medium frame thumbnails from the middle of each gap between
-   ground-truth segments
+   ground-truth segments, with a red border on undetected gaps (gaps with no time
+   overlap with any gap between predicted segments)
 4. "predicted segments": thin bars of the predicted segments
    (sample11/<video>/video_answers.json data[<key>]) with vertical start/end timecodes
 '''
@@ -65,6 +66,8 @@ GROUND_SEGMENTS_COLOR = '#3f6fa3'
 GROUND_SEGMENTS_LABEL_COLOR = '#28507a'
 PREDICTED_SEGMENTS_COLOR = '#d98a3d'
 PREDICTED_SEGMENTS_LABEL_COLOR = '#9c5c1e'
+UNDETECTED_GAP_COLOR = '#cc0000'
+BORDER_WIDTH = 2
 TITLE_COLOR = '#333333'
 NOTE_COLOR = '#999999'
 
@@ -175,6 +178,12 @@ def svg_image(x: float, y: float, width: float, height: float, jpeg_bytes: bytes
     return ret
 
 
+def svg_border(x: float, y: float, width: float, height: float, color: str) -> str:
+    ret = (f'<rect x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="{height:.1f}" '
+           f'fill="none" stroke="{color}" stroke-width="{BORDER_WIDTH:.1f}"/>')
+    return ret
+
+
 def get_label_width(text: str) -> float:
     ret = len(text) * LABEL_CHAR_WIDTH + LABEL_PAD
     return ret
@@ -245,17 +254,18 @@ def render_segments_band(segments: list, duration: float, y_bar: float, color: s
 def build_svg(video: str, key: str, model: str, duration: float, ground_segments: list,
               predicted_segments: list, ground_mid_frames: list,
               ground_gap_mid_frames: list) -> str:
-    '''Assemble the complete SVG document. Both frame lists are (mid_time, width, jpeg).'''
+    '''Assemble the complete SVG document. Frame lists are (mid_time, width, jpeg) tuples,
+    with a trailing undetected flag on the gap frames.'''
     ret = []
     x0 = LEFT_MARGIN
     x1 = SVG_WIDTH - LEFT_MARGIN
     px_per_sec = (x1 - x0) / duration
     ground_mid_items = [(mid, width, width / get_jpeg_aspect(jpeg), jpeg)
                         for mid, width, jpeg in ground_mid_frames]
-    ground_gap_mid_items = [(mid, width, width / get_jpeg_aspect(jpeg), jpeg)
-                            for mid, width, jpeg in ground_gap_mid_frames]
+    ground_gap_mid_items = [(mid, width, width / get_jpeg_aspect(jpeg), jpeg, undetected)
+                            for mid, width, jpeg, undetected in ground_gap_mid_frames]
     ground_mid_frames_height = max([height for _, _, height, _ in ground_mid_items] or [0])
-    ground_gap_mid_frames_height = max([height for _, _, height, _ in ground_gap_mid_items]
+    ground_gap_mid_frames_height = max([height for _, _, height, _, _ in ground_gap_mid_items]
                                         or [0])
     ground_mid_frames_top = TITLE_HEIGHT + GROUND_MID_FRAMES_GAP
     ground_mid_frames_bottom = ground_mid_frames_top + ground_mid_frames_height
@@ -280,12 +290,13 @@ def build_svg(video: str, key: str, model: str, duration: float, ground_segments
                              width, height, jpeg))
     ret.append(render_segments_band(ground_segments, duration, ground_segments_y,
                                     GROUND_SEGMENTS_COLOR, GROUND_SEGMENTS_LABEL_COLOR, True))
-    for mid, width, height, jpeg in ground_gap_mid_items:
+    for mid, width, height, jpeg, undetected in ground_gap_mid_items:
         cx = x0 + mid * px_per_sec
-        ret.append(svg_image(cx - width / 2,
-                             ground_gap_mid_frames_top +
-                             (ground_gap_mid_frames_height - height) / 2,
-                             width, height, jpeg))
+        frame_x = cx - width / 2
+        frame_y = ground_gap_mid_frames_top + (ground_gap_mid_frames_height - height) / 2
+        ret.append(svg_image(frame_x, frame_y, width, height, jpeg))
+        if undetected:
+            ret.append(svg_border(frame_x, frame_y, width, height, UNDETECTED_GAP_COLOR))
     ret.append(render_segments_band(predicted_segments, duration, predicted_segments_y,
                                     PREDICTED_SEGMENTS_COLOR,
                                     PREDICTED_SEGMENTS_LABEL_COLOR, False))
@@ -341,13 +352,20 @@ def main() -> None:
         if frame:
             ground_mid_frames.append(frame)
 
-    ground_gap_mids = []
+    ground_gaps = []
     for seg, next_seg in zip(ground_segments, ground_segments[1:]):
         if next_seg['startTime'] > seg['endTime']:
-            ground_gap_mids.append((seg['endTime'] + next_seg['startTime']) / 2)
+            ground_gaps.append((seg['endTime'], next_seg['startTime']))
+    ground_gap_mids = [(gap_start + gap_end) / 2 for gap_start, gap_end in ground_gaps]
+
+    predicted_gaps = []
+    for seg, next_seg in zip(predicted_segments, predicted_segments[1:]):
+        if next_seg['startTime'] > seg['endTime']:
+            predicted_gaps.append((seg['endTime'], next_seg['startTime']))
 
     ground_gap_mid_frames = []
-    for idx, gap_mid in enumerate(ground_gap_mids):
+    for idx, (gap_start, gap_end) in enumerate(ground_gaps):
+        gap_mid = ground_gap_mids[idx]
         mid = max(MID_CLAMP_IN_SECS, min(gap_mid, duration - MID_CLAMP_IN_SECS))
         cx = LEFT_MARGIN + mid * px_per_sec
         frame_width = MEDIUM_FRAME_WIDTH
@@ -359,10 +377,13 @@ def main() -> None:
             frame_width = min(frame_width,
                               (ground_gap_mids[idx + 1] - gap_mid) * px_per_sec
                               - 2 * FRAME_PAD)
+        undetected = not any(gap_start < pe and ps < gap_end for ps, pe in predicted_gaps)
         frame = extract_frame(video_path, mid,
                               min(frame_width, 2 * cx, 2 * (SVG_WIDTH - cx)), ffmpeg_exe)
         if frame:
-            ground_gap_mid_frames.append(frame)
+            ground_gap_mid_frames.append(frame + (undetected,))
+
+    undetected_count = sum(1 for frame in ground_gap_mid_frames if frame[3])
 
     svg = build_svg(args.video, args.key, model, duration, ground_segments,
                     predicted_segments, ground_mid_frames, ground_gap_mid_frames)
@@ -373,7 +394,8 @@ def main() -> None:
     print(f'Written {out_path} '
           f'({len(ground_segments)} ground / {len(predicted_segments)} predicted segments, '
           f'{len(ground_mid_frames)} ground mid-frames / '
-          f'{len(ground_gap_mid_frames)} ground gap mid-frames, '
+          f'{len(ground_gap_mid_frames)} ground gap mid-frames '
+          f'({undetected_count} undetected), '
           f'duration {int(duration)}s)')
 
 
