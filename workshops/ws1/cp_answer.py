@@ -17,7 +17,7 @@ content_in = json.loads(Path(SRC_PATH).read_text())
 answer = content_in['data'][QST_NAME]
 options = answer['options']
 
-answer_key =  f'fps-{options['media_io_kwargs']['video']['fps']}-vctx-{int(options['mm_processor_kwargs']['size']['longest_edge']/1024/2048)}-re-{options['reasoning_effort']}-s-{options['seed']}'
+answer_key =  f"fps-{options['media_io_kwargs']['video']['fps']}-vctx-{int(options['mm_processor_kwargs']['size']['longest_edge']/1024/2048)}-re-{options['reasoning_effort']}-s-{options['seed']}"
 
 content_out = {}
 if dst_path.exists():
