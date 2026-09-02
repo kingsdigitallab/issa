@@ -12,12 +12,16 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", action="store_true", help="print diffs for all F")
     parser.add_argument("-q", default="prog1", help="question key to evaluate (default: prog1)")
+    parser.add_argument("-f", default="", help="only consider video which name contains this filter")
     args = parser.parse_args()
 
     rows = []
     durations = []
     for subdir in sorted(SOURCE_DIR.iterdir()):
         if not subdir.is_dir():
+            continue
+        
+        if args.f not in str(subdir):
             continue
 
         answers_file = subdir / "video_answers.json"

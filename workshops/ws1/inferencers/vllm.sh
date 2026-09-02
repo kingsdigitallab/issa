@@ -32,6 +32,7 @@ singularity exec --nv \
         --skip-mm-profiling \
         --mm-processor-cache-gb 0 \
         --gpu-memory-utilization 0.70 \
+        --max-num-seqs 8 \
         --media-io-kwargs '{"video": {"num_frames": -1}}'
 
 # disables the multi-modal processor cache, which prevents the system from caching and re-processing past multi-modal inputs.  This action eliminates the memory overhead associated with the cache (which defaults to 4 GiB), but may result in increased latency for repeated multi-modal processing tasks. 
@@ -78,3 +79,11 @@ singularity exec --nv \
 # - 0.75 — only if you later need many concurrent long-context requests (KV pressure).
 # - 0.65 — if you push longest_edge toward 224k+ and see runtime encoder OOM.
 # - Don't exceed 0.80 (docs/04's tradeoff table: headroom drops to 15.85 GiB, which fails the 1.5x-safety test for the 224K encoder).
+#
+# --max-num-seqs 980 
+# ^ this was recommended by opencode/big-pickle after vllm would OOM at launch on a H100 (and not on A100):
+# Why it worked on A100 but not H100:
+# The GDN linear attention / Mamba kernel (qwen_gdn_linear_attn.py) allocates per-block state tensors whose size depends on the SM architecture. H100 (SM 9.0) likely uses wider tensor core layouts or # additional buffers for the Mamba SSM state compared to A100 (SM 8.0), making each block larger — so fewer fit in the same memory budget.
+# This is the direct fix — the error message itself says "Please lower max_num_seqs to at most 985". Since 985 is the exact count at 0.70, use 980 for margin.
+# Since you're at 1 request at a time, you could safely set it to 4 or 8 — low enough to never hit the Mamba cache block limit, while leaving tiny headroom for edge cases like prefill/decode overlap.
+# Setting it to 1 would be the absolute minimum but risks edge cases where vLLM briefly needs 2+ internal slots (e.g., chunked prefill overlap with decode). 4 is a safe floor.
