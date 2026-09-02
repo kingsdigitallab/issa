@@ -1,7 +1,7 @@
 '''
 Script created by opencode:e-research/arc:apex
 For a given answer key and video, render an SVG timeline of the programme intervals as a
-stack of four horizontal bands (top to bottom):
+stack of five horizontal bands (top to bottom):
 1. "ground mid-frames": medium frame thumbnails from the middle of each ground-truth
    segment (segments_true/<video>.json)
 2. "ground segments": thin bars of the ground-truth segments with vertical start/end
@@ -9,7 +9,9 @@ stack of four horizontal bands (top to bottom):
 3. "ground gap mid-frames": medium frame thumbnails from the middle of each gap between
    ground-truth segments, with a red border on undetected gaps (gaps with no time
    overlap with any gap between predicted segments)
-4. "predicted segments": thin bars of the predicted segments
+4. "false predictions gap mid-frames": medium frame thumbnails from the middle of each
+   gap between predicted segments with no time overlap with any ground-truth gap
+5. "predicted segments": thin bars of the predicted segments
    (sample11/<video>/video_answers.json data[<key>]) with vertical start/end timecodes
 '''
 import argparse
@@ -42,6 +44,7 @@ TITLE_HEIGHT = 34
 GROUND_MID_FRAMES_GAP = 10
 MEDIUM_FRAME_WIDTH = 96
 GROUND_GAP_MID_FRAMES_GAP = 10
+FALSE_PREDICTIONS_GAP_MID_FRAMES_GAP = 10
 FRAME_PAD = 4
 MIN_EXTRACTION_WIDTH = 4
 BAR_HEIGHT = 10
@@ -130,6 +133,25 @@ def extract_frame(video_path: Path, mid: float, frame_width: float, ffmpeg_exe: 
     jpeg = extract_frame_jpeg(video_path, mid, frame_width, ffmpeg_exe)
     if jpeg:
         ret = (mid, frame_width, jpeg)
+    return ret
+
+
+def get_gap_mid_and_width(gap_mids: list, idx: int, duration: float,
+                          px_per_sec: float) -> tuple:
+    '''(clamped mid, medium frame width) for a gap, clamped to neighbours and the canvas.'''
+    ret = (0.0, MEDIUM_FRAME_WIDTH)
+    gap_mid = gap_mids[idx]
+    mid = max(MID_CLAMP_IN_SECS, min(gap_mid, duration - MID_CLAMP_IN_SECS))
+    cx = LEFT_MARGIN + mid * px_per_sec
+    frame_width = MEDIUM_FRAME_WIDTH
+    if idx > 0:
+        frame_width = min(frame_width,
+                          (gap_mid - gap_mids[idx - 1]) * px_per_sec - 2 * FRAME_PAD)
+    if idx < len(gap_mids) - 1:
+        frame_width = min(frame_width,
+                          (gap_mids[idx + 1] - gap_mid) * px_per_sec - 2 * FRAME_PAD)
+    frame_width = min(frame_width, 2 * cx, 2 * (SVG_WIDTH - cx))
+    ret = (mid, frame_width)
     return ret
 
 
@@ -253,9 +275,9 @@ def render_segments_band(segments: list, duration: float, y_bar: float, color: s
 
 def build_svg(video: str, key: str, model: str, duration: float, ground_segments: list,
               predicted_segments: list, ground_mid_frames: list,
-              ground_gap_mid_frames: list) -> str:
+              ground_gap_mid_frames: list, false_predictions_gap_mid_frames: list) -> str:
     '''Assemble the complete SVG document. Frame lists are (mid_time, width, jpeg) tuples,
-    with a trailing undetected flag on the gap frames.'''
+    with a trailing undetected flag on the ground gap frames.'''
     ret = []
     x0 = LEFT_MARGIN
     x1 = SVG_WIDTH - LEFT_MARGIN
@@ -264,15 +286,23 @@ def build_svg(video: str, key: str, model: str, duration: float, ground_segments
                         for mid, width, jpeg in ground_mid_frames]
     ground_gap_mid_items = [(mid, width, width / get_jpeg_aspect(jpeg), jpeg, undetected)
                             for mid, width, jpeg, undetected in ground_gap_mid_frames]
+    false_predictions_gap_mid_items = [(mid, width, width / get_jpeg_aspect(jpeg), jpeg)
+                                       for mid, width, jpeg in false_predictions_gap_mid_frames]
     ground_mid_frames_height = max([height for _, _, height, _ in ground_mid_items] or [0])
     ground_gap_mid_frames_height = max([height for _, _, height, _, _ in ground_gap_mid_items]
                                         or [0])
+    false_predictions_gap_mid_frames_height = max(
+        [height for _, _, height, _ in false_predictions_gap_mid_items] or [0])
     ground_mid_frames_top = TITLE_HEIGHT + GROUND_MID_FRAMES_GAP
     ground_mid_frames_bottom = ground_mid_frames_top + ground_mid_frames_height
     ground_segments_y = ground_mid_frames_bottom + LABEL_BAND_HEIGHT
     ground_gap_mid_frames_top = ground_segments_y + BAR_HEIGHT + GROUND_GAP_MID_FRAMES_GAP
-    predicted_segments_y = (ground_gap_mid_frames_top + ground_gap_mid_frames_height +
-                            GROUND_GAP_MID_FRAMES_GAP)
+    false_predictions_gap_mid_frames_top = (ground_gap_mid_frames_top +
+                                            ground_gap_mid_frames_height +
+                                            GROUND_GAP_MID_FRAMES_GAP)
+    predicted_segments_y = (false_predictions_gap_mid_frames_top +
+                            false_predictions_gap_mid_frames_height +
+                            FALSE_PREDICTIONS_GAP_MID_FRAMES_GAP)
     svg_height = predicted_segments_y + BAR_HEIGHT + LABEL_BAND_HEIGHT + BOTTOM_MARGIN
 
     title = f'{video} — {key}'
@@ -297,6 +327,12 @@ def build_svg(video: str, key: str, model: str, duration: float, ground_segments
         ret.append(svg_image(frame_x, frame_y, width, height, jpeg))
         if undetected:
             ret.append(svg_border(frame_x, frame_y, width, height, UNDETECTED_GAP_COLOR))
+    for mid, width, height, jpeg in false_predictions_gap_mid_items:
+        cx = x0 + mid * px_per_sec
+        ret.append(svg_image(cx - width / 2,
+                             false_predictions_gap_mid_frames_top +
+                             (false_predictions_gap_mid_frames_height - height) / 2,
+                             width, height, jpeg))
     ret.append(render_segments_band(predicted_segments, duration, predicted_segments_y,
                                     PREDICTED_SEGMENTS_COLOR,
                                     PREDICTED_SEGMENTS_LABEL_COLOR, False))
@@ -365,28 +401,28 @@ def main() -> None:
 
     ground_gap_mid_frames = []
     for idx, (gap_start, gap_end) in enumerate(ground_gaps):
-        gap_mid = ground_gap_mids[idx]
-        mid = max(MID_CLAMP_IN_SECS, min(gap_mid, duration - MID_CLAMP_IN_SECS))
-        cx = LEFT_MARGIN + mid * px_per_sec
-        frame_width = MEDIUM_FRAME_WIDTH
-        if idx > 0:
-            frame_width = min(frame_width,
-                              (gap_mid - ground_gap_mids[idx - 1]) * px_per_sec
-                              - 2 * FRAME_PAD)
-        if idx < len(ground_gap_mids) - 1:
-            frame_width = min(frame_width,
-                              (ground_gap_mids[idx + 1] - gap_mid) * px_per_sec
-                              - 2 * FRAME_PAD)
+        mid, frame_width = get_gap_mid_and_width(ground_gap_mids, idx, duration, px_per_sec)
         undetected = not any(gap_start < pe and ps < gap_end for ps, pe in predicted_gaps)
-        frame = extract_frame(video_path, mid,
-                              min(frame_width, 2 * cx, 2 * (SVG_WIDTH - cx)), ffmpeg_exe)
+        frame = extract_frame(video_path, mid, frame_width, ffmpeg_exe)
         if frame:
             ground_gap_mid_frames.append(frame + (undetected,))
+
+    false_predictions_gap_mids = [(ps + pe) / 2 for ps, pe in predicted_gaps
+                                  if not any(gs < pe and ps < ge for gs, ge in ground_gaps)]
+
+    false_predictions_gap_mid_frames = []
+    for idx in range(len(false_predictions_gap_mids)):
+        mid, frame_width = get_gap_mid_and_width(false_predictions_gap_mids, idx, duration,
+                                                 px_per_sec)
+        frame = extract_frame(video_path, mid, frame_width, ffmpeg_exe)
+        if frame:
+            false_predictions_gap_mid_frames.append(frame)
 
     undetected_count = sum(1 for frame in ground_gap_mid_frames if frame[3])
 
     svg = build_svg(args.video, args.key, model, duration, ground_segments,
-                    predicted_segments, ground_mid_frames, ground_gap_mid_frames)
+                    predicted_segments, ground_mid_frames, ground_gap_mid_frames,
+                    false_predictions_gap_mid_frames)
 
     out_path = Path(args.out) if args.out else OUT_DIR / f'{args.video}_{args.key}.svg'
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -395,7 +431,8 @@ def main() -> None:
           f'({len(ground_segments)} ground / {len(predicted_segments)} predicted segments, '
           f'{len(ground_mid_frames)} ground mid-frames / '
           f'{len(ground_gap_mid_frames)} ground gap mid-frames '
-          f'({undetected_count} undetected), '
+          f'({undetected_count} undetected) / '
+          f'{len(false_predictions_gap_mid_frames)} false predictions gap mid-frames, '
           f'duration {int(duration)}s)')
 
 
