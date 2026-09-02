@@ -2,7 +2,8 @@
 Script created by opencode:e-research/arc:apex
 For a given answer key and video, render an SVG timeline of the programme intervals:
 ground-truth bars (segments_true/<video>.json) with a midpoint frame thumbnail above
-each segment and vertical start/end timecodes, and the predicted bars from
+each segment (sized to its segment width) and vertical start/end timecodes, and the
+predicted bars from
 sample11/<video>/video_answers.json data[<key>] in a track below.
 '''
 import argparse
@@ -33,7 +34,9 @@ TITLE_SIZE = 20
 TITLE_BASELINE = TITLE_SIZE + 4
 TITLE_HEIGHT = 34
 FRAME_GAP = 10
-FRAME_HEIGHT = 72
+FRAME_PAD = 4
+MIN_FRAME_WIDTH = 2.0
+MIN_EXTRACTION_WIDTH = 4
 BAR_HEIGHT = 10
 TRACK_GAP = 8
 BOTTOM_MARGIN = 14
@@ -61,8 +64,6 @@ TITLE_COLOR = '#333333'
 NOTE_COLOR = '#999999'
 
 LABEL_BAND_HEIGHT = 48
-SVG_HEIGHT = (TITLE_HEIGHT + FRAME_GAP + FRAME_HEIGHT + LABEL_BAND_HEIGHT + BAR_HEIGHT +
-              TRACK_GAP + BAR_HEIGHT + LABEL_BAND_HEIGHT + BOTTOM_MARGIN)
 
 
 def find_exe(name: str) -> str:
@@ -87,12 +88,14 @@ def get_video_duration(video_path: Path, ffprobe_exe: str) -> float:
     return ret
 
 
-def extract_frame_jpeg(video_path: Path, time_sec: float, ffmpeg_exe: str) -> bytes:
-    '''Single JPEG frame at time_sec scaled to FRAME_HEIGHT, empty bytes on failure.'''
+def extract_frame_jpeg(video_path: Path, time_sec: float, width_px: float,
+                       ffmpeg_exe: str) -> bytes:
+    '''Single JPEG frame at time_sec scaled to width_px, empty bytes on failure.'''
     ret = b''
+    scale_width = max(int(round(width_px)), MIN_EXTRACTION_WIDTH)
     proc = subprocess.run(
         [ffmpeg_exe, '-v', 'error', '-ss', f'{time_sec:.2f}', '-i', str(video_path),
-         '-frames:v', '1', '-vf', f'scale=-2:{FRAME_HEIGHT}', '-q:v', JPEG_QUALITY,
+         '-frames:v', '1', '-vf', f'scale={scale_width}:-2', '-q:v', JPEG_QUALITY,
          '-f', 'image2', '-'],
         capture_output=True)
     if proc.returncode == 0 and proc.stdout.startswith(b'\xff\xd8'):
@@ -103,11 +106,12 @@ def extract_frame_jpeg(video_path: Path, time_sec: float, ffmpeg_exe: str) -> by
     return ret
 
 
-def get_jpeg_size(jpeg_bytes: bytes) -> tuple:
-    '''(width, height) of a JPEG image, assuming a 4:3 aspect when PIL is missing.'''
-    ret = (int(FRAME_HEIGHT * FALLBACK_ASPECT), FRAME_HEIGHT)
+def get_jpeg_aspect(jpeg_bytes: bytes) -> float:
+    '''Width/height ratio of a JPEG image, 4:3 when PIL is unavailable.'''
+    ret = FALLBACK_ASPECT
     if PilImage is not None:
-        ret = PilImage.open(io.BytesIO(jpeg_bytes)).size
+        w, h = PilImage.open(io.BytesIO(jpeg_bytes)).size
+        ret = w / h
     return ret
 
 
@@ -225,27 +229,32 @@ def render_track(segs: list, duration: float, y_bar: float, color: str, label_co
 
 def build_svg(video: str, key: str, model: str, duration: float, segs_true: list,
               segs_pred: list, frames: list) -> str:
-    '''Assemble the complete SVG document.'''
+    '''Assemble the complete SVG document. frames are (mid_time, width, jpeg) tuples.'''
     ret = []
     x0 = LEFT_MARGIN
     x1 = SVG_WIDTH - LEFT_MARGIN
     px_per_sec = (x1 - x0) / duration
     frames_top = TITLE_HEIGHT + FRAME_GAP
-    true_bar_y = frames_top + FRAME_HEIGHT + LABEL_BAND_HEIGHT
+    frame_items = [(mid, width, width / get_jpeg_aspect(jpeg), jpeg)
+                   for mid, width, jpeg in frames]
+    frames_height = max([height for _, _, height, _ in frame_items] or [0])
+    true_bar_y = frames_top + frames_height + LABEL_BAND_HEIGHT
     pred_bar_y = true_bar_y + BAR_HEIGHT + TRACK_GAP
+    svg_height = pred_bar_y + BAR_HEIGHT + LABEL_BAND_HEIGHT + BOTTOM_MARGIN
+    frames_bottom = true_bar_y - LABEL_BAND_HEIGHT
 
     title = f'{video} — {key}'
     if model:
         title += f'   ({model})'
     ret.append(f'<svg xmlns="http://www.w3.org/2000/svg" '
                f'xmlns:xlink="http://www.w3.org/1999/xlink" width="{SVG_WIDTH}" '
-               f'height="{SVG_HEIGHT}" viewBox="0 0 {SVG_WIDTH} {SVG_HEIGHT}" '
+               f'height="{svg_height:.0f}" viewBox="0 0 {SVG_WIDTH} {svg_height:.0f}" '
                f'font-family="sans-serif">')
-    ret.append(svg_rect(0, 0, SVG_WIDTH, SVG_HEIGHT, BACKGROUND_COLOR))
+    ret.append(svg_rect(0, 0, SVG_WIDTH, svg_height, BACKGROUND_COLOR))
     ret.append(svg_text(x0, TITLE_BASELINE, title, TITLE_COLOR, TITLE_SIZE))
-    for mid, jpeg in frames:
-        w, h = get_jpeg_size(jpeg)
-        ret.append(svg_image(x0 + mid * px_per_sec - w / 2, frames_top, w, h, jpeg))
+    for mid, width, height, jpeg in frame_items:
+        cx = x0 + mid * px_per_sec
+        ret.append(svg_image(cx - width / 2, frames_bottom - height, width, height, jpeg))
     ret.append(render_track(segs_true, duration, true_bar_y, TRUE_COLOR, TRUE_LABEL_COLOR, True))
     ret.append(render_track(segs_pred, duration, pred_bar_y, PRED_COLOR, PRED_LABEL_COLOR, False))
     if not segs_pred:
@@ -284,13 +293,17 @@ def main() -> None:
     if duration <= 0:
         sys.exit('ERROR: could not determine the video duration')
 
+    px_per_sec = (SVG_WIDTH - 2 * LEFT_MARGIN) / duration
     frames = []
     for seg in segs_true:
-        mid = (seg['startTime'] + seg['endTime']) / 2
-        mid = max(MID_CLAMP_IN_SECS, min(mid, duration - MID_CLAMP_IN_SECS))
-        jpeg = extract_frame_jpeg(video_path, mid, ffmpeg_exe)
+        start_s = seg['startTime']
+        end_s = min(seg['endTime'], duration)
+        mid = max(MID_CLAMP_IN_SECS, min((start_s + end_s) / 2, duration - MID_CLAMP_IN_SECS))
+        seg_width = max((end_s - start_s) * px_per_sec - 2 * FRAME_PAD, MIN_FRAME_WIDTH)
+        frame_width = max(int(round(seg_width)), MIN_EXTRACTION_WIDTH)
+        jpeg = extract_frame_jpeg(video_path, mid, frame_width, ffmpeg_exe)
         if jpeg:
-            frames.append((mid, jpeg))
+            frames.append((mid, frame_width, jpeg))
 
     svg = build_svg(args.video, args.key, model, duration, segs_true, segs_pred, frames)
 
