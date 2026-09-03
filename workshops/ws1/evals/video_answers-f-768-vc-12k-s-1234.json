@@ -1,0 +1,2908 @@
+{
+  "data": {
+    "programs_3x": {
+      "answer": [
+        {
+          "start": "00:02:00",
+          "end": "01:02:12"
+        },
+        {
+          "start": "01:02:15",
+          "end": "05:01:44"
+        },
+        {
+          "start": "05:01:48",
+          "end": "05:16:21"
+        },
+        {
+          "start": "05:16:24",
+          "end": "05:50:55"
+        },
+        {
+          "start": "05:50:59",
+          "end": "06:25:38"
+        },
+        {
+          "start": "06:25:41",
+          "end": "07:54:05"
+        },
+        {
+          "start": "07:54:08",
+          "end": "10:18:58"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-27B",
+      "options": {
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-09T08:39:03.112486+00:00",
+      "prompt_hash": "b8788d02",
+      "stats": {},
+      "usage": {
+        "prompt_tokens": 13518,
+        "total_tokens": 23202,
+        "completion_tokens": 9684,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "summary2": {
+      "answer": "The video offers a glimpse into Scottish life and industry, featuring scenes of children playing rugby, tours of whisky distilleries, and activities in charity shops and hostels. It also documents a dramatic helicopter rescue, formal meetings, and various local businesses and landmarks.",
+      "model": "Qwen/Qwen3.6-27B",
+      "options": {
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-09T22:03:16.921325+00:00",
+      "prompt_hash": "5cf4e3c4",
+      "stats": {},
+      "usage": {
+        "prompt_tokens": 13394,
+        "total_tokens": 14920,
+        "completion_tokens": 1526,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "programs_3xinc": {
+      "answer": [
+        {
+          "start": "00:01",
+          "end": "06:20"
+        },
+        {
+          "start": "06:21",
+          "end": "09:34"
+        },
+        {
+          "start": "09:36",
+          "end": "11:37"
+        },
+        {
+          "start": "11:38",
+          "end": "16:32"
+        },
+        {
+          "start": "16:33",
+          "end": "18:45"
+        },
+        {
+          "start": "18:46",
+          "end": "20:42"
+        },
+        {
+          "start": "20:44",
+          "end": "24:52"
+        },
+        {
+          "start": "24:54",
+          "end": "30:17"
+        },
+        {
+          "start": "30:19",
+          "end": "32:31"
+        },
+        {
+          "start": "32:32",
+          "end": "39:41"
+        },
+        {
+          "start": "39:43",
+          "end": "44:05"
+        },
+        {
+          "start": "44:07",
+          "end": "45:38"
+        },
+        {
+          "start": "45:40",
+          "end": "49:53"
+        },
+        {
+          "start": "49:55",
+          "end": "56:23"
+        },
+        {
+          "start": "56:25",
+          "end": "60:39"
+        },
+        {
+          "start": "60:41",
+          "end": "63:40"
+        },
+        {
+          "start": "63:42",
+          "end": "66:21"
+        },
+        {
+          "start": "66:23",
+          "end": "70:44"
+        },
+        {
+          "start": "70:46",
+          "end": "75:40"
+        },
+        {
+          "start": "75:42",
+          "end": "79:15"
+        },
+        {
+          "start": "79:17",
+          "end": "83:26"
+        },
+        {
+          "start": "83:28",
+          "end": "88:37"
+        },
+        {
+          "start": "88:39",
+          "end": "89:51"
+        },
+        {
+          "start": "89:53",
+          "end": "96:08"
+        },
+        {
+          "start": "96:10",
+          "end": "100:06"
+        },
+        {
+          "start": "100:08",
+          "end": "109:40"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-15T09:17:19.426582+00:00",
+      "prompt_hash": "5c454511",
+      "stats": {
+        "duration_seconds": 325.99045991897583,
+        "reasoning_content": 13250
+      },
+      "usage": {
+        "prompt_tokens": 25118,
+        "total_tokens": 31783,
+        "completion_tokens": 6665,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 5872
+      }
+    },
+    "programs_3xinc-36-27B-v24k-nothink": {
+      "answer": [
+        {
+          "start": "00:01:24",
+          "end": "03:37:12"
+        },
+        {
+          "start": "03:37:25",
+          "end": "03:57:27"
+        },
+        {
+          "start": "04:14:15",
+          "end": "04:32:51"
+        },
+        {
+          "start": "05:30:31",
+          "end": "05:49:03"
+        },
+        {
+          "start": "06:43:47",
+          "end": "07:01:17"
+        },
+        {
+          "start": "07:02:13",
+          "end": "07:12:28"
+        },
+        {
+          "start": "07:31:09",
+          "end": "07:45:32"
+        },
+        {
+          "start": "07:56:53",
+          "end": "08:13:56"
+        },
+        {
+          "start": "08:14:05",
+          "end": "08:19:24"
+        },
+        {
+          "start": "08:19:27",
+          "end": "08:38:27"
+        },
+        {
+          "start": "08:45:16",
+          "end": "08:52:14"
+        },
+        {
+          "start": "09:11:09",
+          "end": "09:26:17"
+        },
+        {
+          "start": "09:26:36",
+          "end": "09:40:12"
+        },
+        {
+          "start": "09:41:02",
+          "end": "09:48:40"
+        },
+        {
+          "start": "09:49:14",
+          "end": "09:54:34"
+        },
+        {
+          "start": "10:10:07",
+          "end": "10:26:55"
+        },
+        {
+          "start": "10:33:00",
+          "end": "10:44:14"
+        },
+        {
+          "start": "10:44:59",
+          "end": "10:55:51"
+        },
+        {
+          "start": "11:28:42",
+          "end": "11:42:49"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-15T09:49:55.633605+00:00",
+      "prompt_hash": "5c454511",
+      "stats": {
+        "duration_seconds": 98.88572955131531,
+        "reasoning_content": 0
+      },
+      "usage": {
+        "prompt_tokens": 25120,
+        "total_tokens": 25851,
+        "completion_tokens": 731,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "programs_3xinc-36-27B-v24k-think": {
+      "answer": [
+        {
+          "start": "00:01",
+          "end": "11:31"
+        },
+        {
+          "start": "11:32",
+          "end": "24:54"
+        },
+        {
+          "start": "24:55",
+          "end": "30:24"
+        },
+        {
+          "start": "30:41",
+          "end": "32:22"
+        },
+        {
+          "start": "32:23",
+          "end": "38:54"
+        },
+        {
+          "start": "38:55",
+          "end": "44:58"
+        },
+        {
+          "start": "44:59",
+          "end": "53:06"
+        },
+        {
+          "start": "53:38",
+          "end": "60:41"
+        },
+        {
+          "start": "60:42",
+          "end": "92:54"
+        },
+        {
+          "start": "92:55",
+          "end": "109:42"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-15T10:10:29.225718+00:00",
+      "prompt_hash": "5c454511",
+      "stats": {
+        "duration_seconds": 371.97672152519226,
+        "reasoning_content": 18770
+      },
+      "usage": {
+        "prompt_tokens": 25118,
+        "total_tokens": 32726,
+        "completion_tokens": 7608,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 7297
+      }
+    },
+    "programs_3xinc-35-27B-v12k-nothink": {
+      "answer": [
+        {
+          "start": "00:00:00",
+          "end": "00:05:44"
+        },
+        {
+          "start": "00:05:45",
+          "end": "00:09:29"
+        },
+        {
+          "start": "00:09:30",
+          "end": "00:15:48"
+        },
+        {
+          "start": "00:15:49",
+          "end": "00:18:43"
+        },
+        {
+          "start": "00:18:44",
+          "end": "00:22:05"
+        },
+        {
+          "start": "00:22:06",
+          "end": "00:25:27"
+        },
+        {
+          "start": "00:25:28",
+          "end": "00:30:19"
+        },
+        {
+          "start": "00:30:20",
+          "end": "00:32:21"
+        },
+        {
+          "start": "00:32:22",
+          "end": "00:35:16"
+        },
+        {
+          "start": "00:35:17",
+          "end": "00:39:01"
+        },
+        {
+          "start": "00:39:02",
+          "end": "00:43:22"
+        },
+        {
+          "start": "00:43:23",
+          "end": "00:47:23"
+        },
+        {
+          "start": "00:47:24",
+          "end": "00:51:24"
+        },
+        {
+          "start": "00:51:25",
+          "end": "00:55:25"
+        },
+        {
+          "start": "00:55:26",
+          "end": "00:58:51"
+        },
+        {
+          "start": "00:58:52",
+          "end": "01:01:52"
+        },
+        {
+          "start": "01:01:53",
+          "end": "01:03:53"
+        },
+        {
+          "start": "01:03:54",
+          "end": "01:06:54"
+        },
+        {
+          "start": "01:06:55",
+          "end": "01:09:55"
+        },
+        {
+          "start": "01:09:56",
+          "end": "01:14:12"
+        },
+        {
+          "start": "01:14:13",
+          "end": "01:16:22"
+        },
+        {
+          "start": "01:16:23",
+          "end": "01:19:23"
+        },
+        {
+          "start": "01:19:24",
+          "end": "01:21:33"
+        },
+        {
+          "start": "01:21:34",
+          "end": "01:24:34"
+        },
+        {
+          "start": "01:24:35",
+          "end": "01:26:44"
+        },
+        {
+          "start": "01:26:45",
+          "end": "01:29:45"
+        },
+        {
+          "start": "01:29:46",
+          "end": "01:32:57"
+        },
+        {
+          "start": "01:32:58",
+          "end": "01:35:58"
+        },
+        {
+          "start": "01:35:59",
+          "end": "01:39:10"
+        },
+        {
+          "start": "01:39:11",
+          "end": "01:42:22"
+        },
+        {
+          "start": "01:42:23",
+          "end": "01:45:23"
+        },
+        {
+          "start": "01:45:24",
+          "end": "01:48:24"
+        },
+        {
+          "start": "01:48:25",
+          "end": "01:51:25"
+        },
+        {
+          "start": "01:51:26",
+          "end": "01:54:26"
+        },
+        {
+          "start": "01:54:27",
+          "end": "01:57:27"
+        },
+        {
+          "start": "01:57:28",
+          "end": "02:00:38"
+        }
+      ],
+      "model": "Qwen/Qwen3.5-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 42,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-15T11:04:30.853804+00:00",
+      "prompt_hash": "c6bb00a3",
+      "stats": {
+        "duration_seconds": 164.47329092025757,
+        "reasoning_content": 0
+      },
+      "usage": {
+        "prompt_tokens": 13600,
+        "total_tokens": 14905,
+        "completion_tokens": 1305,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "programs_3xinc-35-27B-v12k-think": {
+      "answer": [
+        {
+          "start": "00:00:00",
+          "end": "00:06:16"
+        },
+        {
+          "start": "00:06:16",
+          "end": "00:09:36"
+        },
+        {
+          "start": "00:09:36",
+          "end": "00:11:28"
+        },
+        {
+          "start": "00:11:28",
+          "end": "00:16:27"
+        },
+        {
+          "start": "00:16:27",
+          "end": "00:18:54"
+        },
+        {
+          "start": "00:18:54",
+          "end": "00:20:50"
+        },
+        {
+          "start": "00:20:50",
+          "end": "00:24:53"
+        },
+        {
+          "start": "00:24:53",
+          "end": "00:30:19"
+        },
+        {
+          "start": "00:30:19",
+          "end": "00:32:29"
+        },
+        {
+          "start": "00:32:29",
+          "end": "00:39:38"
+        },
+        {
+          "start": "00:39:38",
+          "end": "00:44:08"
+        },
+        {
+          "start": "00:44:08",
+          "end": "00:45:42"
+        },
+        {
+          "start": "00:45:42",
+          "end": "00:47:04"
+        },
+        {
+          "start": "00:47:04",
+          "end": "00:52:05"
+        },
+        {
+          "start": "00:52:05",
+          "end": "00:56:25"
+        },
+        {
+          "start": "00:56:25",
+          "end": "01:00:38"
+        },
+        {
+          "start": "01:00:38",
+          "end": "01:02:52"
+        },
+        {
+          "start": "01:02:52",
+          "end": "01:06:21"
+        },
+        {
+          "start": "01:06:21",
+          "end": "01:10:44"
+        },
+        {
+          "start": "01:10:44",
+          "end": "01:15:39"
+        },
+        {
+          "start": "01:15:39",
+          "end": "01:19:07"
+        },
+        {
+          "start": "01:19:07",
+          "end": "01:23:20"
+        },
+        {
+          "start": "01:23:20",
+          "end": "01:25:26"
+        },
+        {
+          "start": "01:25:26",
+          "end": "01:26:38"
+        },
+        {
+          "start": "01:26:38",
+          "end": "01:30:07"
+        },
+        {
+          "start": "01:30:07",
+          "end": "01:34:29"
+        },
+        {
+          "start": "01:34:29",
+          "end": "01:36:13"
+        },
+        {
+          "start": "01:36:13",
+          "end": "01:39:19"
+        },
+        {
+          "start": "01:39:19",
+          "end": "01:41:56"
+        },
+        {
+          "start": "01:41:56",
+          "end": "01:44:54"
+        },
+        {
+          "start": "01:44:54",
+          "end": "01:49:39"
+        }
+      ],
+      "model": "Qwen/Qwen3.5-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-15T11:45:06.617891+00:00",
+      "prompt_hash": "c6bb00a3",
+      "stats": {
+        "duration_seconds": 275.37335443496704,
+        "reasoning_content": 9315
+      },
+      "usage": {
+        "prompt_tokens": 13598,
+        "total_tokens": 19009,
+        "completion_tokens": 5411,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 4285
+      }
+    },
+    "programs_3xinc-36-27B-FP8-v24k-nothink": {
+      "answer": [
+        {
+          "start": "00:00:02",
+          "end": "06:21:01"
+        },
+        {
+          "start": "06:24:06",
+          "end": "08:56:42"
+        },
+        {
+          "start": "08:57:23",
+          "end": "15:42:06"
+        },
+        {
+          "start": "15:43:01",
+          "end": "18:46:05"
+        },
+        {
+          "start": "18:46:55",
+          "end": "20:42:29"
+        },
+        {
+          "start": "20:43:15",
+          "end": "24:50:54"
+        },
+        {
+          "start": "24:52:39",
+          "end": "30:17:16"
+        },
+        {
+          "start": "30:19:09",
+          "end": "32:29:18"
+        },
+        {
+          "start": "32:34:53",
+          "end": "39:42:03"
+        },
+        {
+          "start": "39:45:18",
+          "end": "44:02:07"
+        },
+        {
+          "start": "44:04:02",
+          "end": "45:42:55"
+        },
+        {
+          "start": "45:43:26",
+          "end": "56:20:35"
+        },
+        {
+          "start": "56:25:39",
+          "end": "100:44:22"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-15T12:05:09.011111+00:00",
+      "prompt_hash": "5c454511",
+      "stats": {
+        "duration_seconds": 88.84885573387146,
+        "reasoning_content": 0
+      },
+      "usage": {
+        "prompt_tokens": 25120,
+        "total_tokens": 25624,
+        "completion_tokens": 504,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "programs_3xinc-36-27B-FP8-v24k-think": {
+      "answer": [
+        {
+          "start": "00:01",
+          "end": "06:14"
+        },
+        {
+          "start": "06:19",
+          "end": "09:23"
+        },
+        {
+          "start": "09:28",
+          "end": "16:32"
+        },
+        {
+          "start": "16:37",
+          "end": "18:39"
+        },
+        {
+          "start": "18:44",
+          "end": "24:58"
+        },
+        {
+          "start": "25:03",
+          "end": "30:21"
+        },
+        {
+          "start": "30:26",
+          "end": "32:33"
+        },
+        {
+          "start": "32:38",
+          "end": "33:38"
+        },
+        {
+          "start": "33:43",
+          "end": "34:52"
+        },
+        {
+          "start": "34:57",
+          "end": "38:54"
+        },
+        {
+          "start": "38:59",
+          "end": "44:02"
+        },
+        {
+          "start": "44:07",
+          "end": "45:44"
+        },
+        {
+          "start": "45:49",
+          "end": "46:52"
+        },
+        {
+          "start": "46:57",
+          "end": "48:30"
+        },
+        {
+          "start": "48:35",
+          "end": "51:56"
+        },
+        {
+          "start": "52:01",
+          "end": "53:09"
+        },
+        {
+          "start": "53:14",
+          "end": "56:29"
+        },
+        {
+          "start": "56:34",
+          "end": "60:42"
+        },
+        {
+          "start": "60:47",
+          "end": "62:00"
+        },
+        {
+          "start": "62:05",
+          "end": "63:03"
+        },
+        {
+          "start": "63:08",
+          "end": "66:20"
+        },
+        {
+          "start": "66:25",
+          "end": "68:53"
+        },
+        {
+          "start": "68:58",
+          "end": "70:45"
+        },
+        {
+          "start": "70:50",
+          "end": "75:42"
+        },
+        {
+          "start": "75:47",
+          "end": "79:05"
+        },
+        {
+          "start": "79:10",
+          "end": "83:23"
+        },
+        {
+          "start": "83:28",
+          "end": "86:36"
+        },
+        {
+          "start": "86:41",
+          "end": "89:57"
+        },
+        {
+          "start": "90:02",
+          "end": "100:01"
+        },
+        {
+          "start": "100:06",
+          "end": "109:39"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-27B-FP8",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-15T14:51:52.138026+00:00",
+      "prompt_hash": "d0cfc656",
+      "stats": {
+        "duration_seconds": 603.7870190143585,
+        "reasoning_content": 31169
+      },
+      "usage": {
+        "prompt_tokens": 25118,
+        "total_tokens": 39401,
+        "completion_tokens": 14283,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 13370
+      }
+    },
+    "programs_3xinc-35-27B-v24k-nothink": {
+      "answer": [
+        {
+          "start": "00:00:01",
+          "end": "00:06:17"
+        },
+        {
+          "start": "00:06:18",
+          "end": "00:09:29"
+        },
+        {
+          "start": "00:09:30",
+          "end": "00:11:31"
+        },
+        {
+          "start": "00:11:32",
+          "end": "00:16:30"
+        },
+        {
+          "start": "00:16:31",
+          "end": "00:18:40"
+        },
+        {
+          "start": "00:18:41",
+          "end": "00:20:40"
+        },
+        {
+          "start": "00:20:41",
+          "end": "00:24:54"
+        },
+        {
+          "start": "00:24:55",
+          "end": "00:30:16"
+        },
+        {
+          "start": "00:30:17",
+          "end": "00:32:30"
+        },
+        {
+          "start": "00:32:31",
+          "end": "00:39:41"
+        },
+        {
+          "start": "00:39:42",
+          "end": "00:44:06"
+        },
+        {
+          "start": "00:44:07",
+          "end": "00:45:43"
+        },
+        {
+          "start": "00:45:44",
+          "end": "00:49:53"
+        },
+        {
+          "start": "00:49:54",
+          "end": "00:56:25"
+        },
+        {
+          "start": "00:56:26",
+          "end": "00:56:30"
+        },
+        {
+          "start": "00:56:31",
+          "end": "01:00:41"
+        },
+        {
+          "start": "01:00:42",
+          "end": "01:03:30"
+        },
+        {
+          "start": "01:03:31",
+          "end": "01:06:21"
+        },
+        {
+          "start": "01:06:22",
+          "end": "01:10:42"
+        },
+        {
+          "start": "01:10:43",
+          "end": "01:15:45"
+        },
+        {
+          "start": "01:15:46",
+          "end": "01:19:07"
+        },
+        {
+          "start": "01:19:08",
+          "end": "01:23:25"
+        },
+        {
+          "start": "01:23:26",
+          "end": "01:25:40"
+        },
+        {
+          "start": "01:25:41",
+          "end": "01:32:56"
+        },
+        {
+          "start": "01:32:57",
+          "end": "01:36:15"
+        },
+        {
+          "start": "01:36:16",
+          "end": "01:38:01"
+        },
+        {
+          "start": "01:38:02",
+          "end": "01:43:35"
+        },
+        {
+          "start": "01:43:36",
+          "end": "01:46:14"
+        },
+        {
+          "start": "01:46:15",
+          "end": "01:49:29"
+        },
+        {
+          "start": "01:49:30",
+          "end": "01:51:58"
+        },
+        {
+          "start": "01:51:59",
+          "end": "01:55:22"
+        },
+        {
+          "start": "01:55:23",
+          "end": "01:57:50"
+        },
+        {
+          "start": "01:57:51",
+          "end": "02:00:09"
+        },
+        {
+          "start": "02:00:10",
+          "end": "02:02:34"
+        },
+        {
+          "start": "02:02:35",
+          "end": "02:05:45"
+        },
+        {
+          "start": "02:05:46",
+          "end": "02:09:18"
+        },
+        {
+          "start": "02:09:19",
+          "end": "02:11:04"
+        },
+        {
+          "start": "02:11:05",
+          "end": "02:13:05"
+        },
+        {
+          "start": "02:13:06",
+          "end": "02:15:05"
+        },
+        {
+          "start": "02:15:06",
+          "end": "02:18:35"
+        },
+        {
+          "start": "02:18:36",
+          "end": "02:19:25"
+        },
+        {
+          "start": "02:19:26",
+          "end": "02:20:02"
+        }
+      ],
+      "model": "Qwen/Qwen3.5-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-15T16:20:39.567614+00:00",
+      "prompt_hash": "c6bb00a3",
+      "stats": {
+        "duration_seconds": 129.76782035827637,
+        "reasoning_content": 0
+      },
+      "usage": {
+        "prompt_tokens": 25120,
+        "total_tokens": 26641,
+        "completion_tokens": 1521,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "programs_3xinc-35-27B-v24k-think": {
+      "answer": [
+        {
+          "start": "00:01",
+          "end": "06:18"
+        },
+        {
+          "start": "06:23",
+          "end": "09:35"
+        },
+        {
+          "start": "09:40",
+          "end": "11:40"
+        },
+        {
+          "start": "11:45",
+          "end": "16:32"
+        },
+        {
+          "start": "16:37",
+          "end": "18:38"
+        },
+        {
+          "start": "18:43",
+          "end": "20:41"
+        },
+        {
+          "start": "20:46",
+          "end": "24:55"
+        },
+        {
+          "start": "25:00",
+          "end": "30:16"
+        },
+        {
+          "start": "30:21",
+          "end": "32:36"
+        },
+        {
+          "start": "32:41",
+          "end": "33:42"
+        },
+        {
+          "start": "33:47",
+          "end": "34:57"
+        },
+        {
+          "start": "35:02",
+          "end": "39:44"
+        },
+        {
+          "start": "39:49",
+          "end": "44:11"
+        },
+        {
+          "start": "44:16",
+          "end": "45:44"
+        },
+        {
+          "start": "45:49",
+          "end": "46:59"
+        },
+        {
+          "start": "47:04",
+          "end": "49:20"
+        },
+        {
+          "start": "49:25",
+          "end": "51:51"
+        },
+        {
+          "start": "51:56",
+          "end": "53:42"
+        },
+        {
+          "start": "53:47",
+          "end": "54:42"
+        },
+        {
+          "start": "54:47",
+          "end": "55:17"
+        },
+        {
+          "start": "55:22",
+          "end": "56:27"
+        },
+        {
+          "start": "56:32",
+          "end": "01:00:44"
+        },
+        {
+          "start": "01:00:49",
+          "end": "01:03:31"
+        },
+        {
+          "start": "01:03:36",
+          "end": "01:06:21"
+        },
+        {
+          "start": "01:06:26",
+          "end": "01:10:46"
+        },
+        {
+          "start": "01:10:51",
+          "end": "01:15:48"
+        },
+        {
+          "start": "01:15:53",
+          "end": "01:19:11"
+        },
+        {
+          "start": "01:19:16",
+          "end": "01:23:27"
+        },
+        {
+          "start": "01:23:32",
+          "end": "01:25:31"
+        },
+        {
+          "start": "01:25:36",
+          "end": "01:26:21"
+        },
+        {
+          "start": "01:26:26",
+          "end": "01:30:01"
+        },
+        {
+          "start": "01:30:06",
+          "end": "01:31:34"
+        },
+        {
+          "start": "01:31:39",
+          "end": "01:34:20"
+        },
+        {
+          "start": "01:34:25",
+          "end": "01:35:46"
+        },
+        {
+          "start": "01:35:51",
+          "end": "01:36:10"
+        },
+        {
+          "start": "01:36:15",
+          "end": "01:36:55"
+        },
+        {
+          "start": "01:37:00",
+          "end": "01:37:15"
+        },
+        {
+          "start": "01:37:20",
+          "end": "01:40:00"
+        },
+        {
+          "start": "01:40:05",
+          "end": "01:41:16"
+        },
+        {
+          "start": "01:41:21",
+          "end": "01:42:41"
+        },
+        {
+          "start": "01:42:46",
+          "end": "01:43:36"
+        },
+        {
+          "start": "01:43:41",
+          "end": "01:45:11"
+        },
+        {
+          "start": "01:45:16",
+          "end": "01:46:40"
+        },
+        {
+          "start": "01:46:45",
+          "end": "01:49:41"
+        }
+      ],
+      "model": "Qwen/Qwen3.5-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-15T15:48:33.326397+00:00",
+      "prompt_hash": "c6bb00a3",
+      "stats": {
+        "duration_seconds": 548.6259119510651,
+        "reasoning_content": 20821
+      },
+      "usage": {
+        "prompt_tokens": 25118,
+        "total_tokens": 37292,
+        "completion_tokens": 12174,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 10709
+      }
+    },
+    "programs_3xinc-36-27B-v6k-nothink": {
+      "answer": [
+        {
+          "start": "00:00:04",
+          "end": "06:17:18"
+        },
+        {
+          "start": "06:17:19",
+          "end": "09:34:24"
+        },
+        {
+          "start": "09:34:25",
+          "end": "14:50:28"
+        },
+        {
+          "start": "14:50:29",
+          "end": "21:16:23"
+        },
+        {
+          "start": "21:16:24",
+          "end": "22:44:25"
+        },
+        {
+          "start": "22:44:26",
+          "end": "26:57:03"
+        },
+        {
+          "start": "26:57:04",
+          "end": "32:54:50"
+        },
+        {
+          "start": "32:54:51",
+          "end": "38:18:43"
+        },
+        {
+          "start": "38:18:44",
+          "end": "42:23:46"
+        },
+        {
+          "start": "42:23:47",
+          "end": "48:04:57"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-15T17:44:01.485548+00:00",
+      "prompt_hash": "5c454511",
+      "stats": {
+        "duration_seconds": 93.28011536598206,
+        "reasoning_content": 0
+      },
+      "usage": {
+        "prompt_tokens": 8992,
+        "total_tokens": 9381,
+        "completion_tokens": 389,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "programs_3xinc-36-27B-v12k-nothink": {
+      "answer": [
+        {
+          "start": "00:00:00",
+          "end": "06:16:24"
+        },
+        {
+          "start": "06:16:55",
+          "end": "08:59:35"
+        },
+        {
+          "start": "08:59:36",
+          "end": "10:04:59"
+        },
+        {
+          "start": "10:05:00",
+          "end": "11:42:27"
+        },
+        {
+          "start": "11:42:46",
+          "end": "18:58:58"
+        },
+        {
+          "start": "18:59:51",
+          "end": "20:36:46"
+        },
+        {
+          "start": "20:36:47",
+          "end": "23:08:30"
+        },
+        {
+          "start": "23:08:31",
+          "end": "24:50:26"
+        },
+        {
+          "start": "24:51:04",
+          "end": "30:33:09"
+        },
+        {
+          "start": "30:33:10",
+          "end": "32:23:47"
+        },
+        {
+          "start": "32:23:57",
+          "end": "35:37:49"
+        },
+        {
+          "start": "35:38:08",
+          "end": "39:41:29"
+        },
+        {
+          "start": "39:42:28",
+          "end": "46:19:40"
+        },
+        {
+          "start": "46:19:41",
+          "end": "56:21:16"
+        },
+        {
+          "start": "56:21:17",
+          "end": "60:38:54"
+        },
+        {
+          "start": "60:39:07",
+          "end": "63:33:11"
+        },
+        {
+          "start": "63:33:16",
+          "end": "66:21:27"
+        },
+        {
+          "start": "66:21:28",
+          "end": "71:29:24"
+        },
+        {
+          "start": "71:29:25",
+          "end": "73:10:10"
+        },
+        {
+          "start": "73:10:11",
+          "end": "79:21:07"
+        },
+        {
+          "start": "79:21:08",
+          "end": "83:05:56"
+        },
+        {
+          "start": "83:05:57",
+          "end": "85:07:38"
+        },
+        {
+          "start": "85:07:39",
+          "end": "89:37:57"
+        },
+        {
+          "start": "89:37:58",
+          "end": "101:49:40"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-15T18:21:37.387391+00:00",
+      "prompt_hash": "5c454511",
+      "stats": {
+        "duration_seconds": 115.3599853515625,
+        "reasoning_content": 0
+      },
+      "usage": {
+        "prompt_tokens": 13600,
+        "total_tokens": 14522,
+        "completion_tokens": 922,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "programs_3xinc-36-27B-v12k-think": {
+      "answer": [
+        {
+          "start": "00:01",
+          "end": "06:17"
+        },
+        {
+          "start": "06:18",
+          "end": "09:46"
+        },
+        {
+          "start": "09:47",
+          "end": "11:26"
+        },
+        {
+          "start": "11:27",
+          "end": "16:31"
+        },
+        {
+          "start": "16:32",
+          "end": "18:40"
+        },
+        {
+          "start": "18:41",
+          "end": "20:45"
+        },
+        {
+          "start": "20:46",
+          "end": "24:53"
+        },
+        {
+          "start": "24:54",
+          "end": "30:24"
+        },
+        {
+          "start": "30:25",
+          "end": "32:29"
+        },
+        {
+          "start": "32:30",
+          "end": "34:53"
+        },
+        {
+          "start": "34:54",
+          "end": "39:40"
+        },
+        {
+          "start": "39:41",
+          "end": "44:07"
+        },
+        {
+          "start": "44:08",
+          "end": "45:44"
+        },
+        {
+          "start": "45:45",
+          "end": "47:04"
+        },
+        {
+          "start": "47:05",
+          "end": "48:28"
+        },
+        {
+          "start": "48:29",
+          "end": "49:45"
+        },
+        {
+          "start": "49:46",
+          "end": "56:18"
+        },
+        {
+          "start": "56:19",
+          "end": "60:41"
+        },
+        {
+          "start": "60:42",
+          "end": "63:41"
+        },
+        {
+          "start": "63:42",
+          "end": "66:19"
+        },
+        {
+          "start": "66:20",
+          "end": "70:43"
+        },
+        {
+          "start": "70:44",
+          "end": "75:47"
+        },
+        {
+          "start": "75:48",
+          "end": "79:08"
+        },
+        {
+          "start": "79:09",
+          "end": "83:14"
+        },
+        {
+          "start": "83:15",
+          "end": "86:24"
+        },
+        {
+          "start": "86:25",
+          "end": "89:45"
+        },
+        {
+          "start": "89:46",
+          "end": "96:22"
+        },
+        {
+          "start": "96:23",
+          "end": "101:24"
+        },
+        {
+          "start": "101:25",
+          "end": "109:41"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-15T18:52:57.765087+00:00",
+      "prompt_hash": "5c454511",
+      "stats": {
+        "duration_seconds": 590.5162181854248,
+        "reasoning_content": 28494
+      },
+      "usage": {
+        "prompt_tokens": 13598,
+        "total_tokens": 27102,
+        "completion_tokens": 13504,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 12621
+      }
+    },
+    "programs_3xinc-35-27B-v32k-nothink": {
+      "answer": [
+        {
+          "start": "00:00:05",
+          "end": "00:06:20"
+        },
+        {
+          "start": "00:06:22",
+          "end": "00:09:26"
+        },
+        {
+          "start": "00:09:29",
+          "end": "00:11:30"
+        },
+        {
+          "start": "00:11:33",
+          "end": "00:15:36"
+        },
+        {
+          "start": "00:15:39",
+          "end": "00:18:38"
+        },
+        {
+          "start": "00:18:41",
+          "end": "00:20:40"
+        },
+        {
+          "start": "00:20:43",
+          "end": "00:24:54"
+        },
+        {
+          "start": "00:24:57",
+          "end": "00:30:20"
+        },
+        {
+          "start": "00:30:23",
+          "end": "00:32:30"
+        },
+        {
+          "start": "00:32:33",
+          "end": "00:34:14"
+        },
+        {
+          "start": "00:34:17",
+          "end": "00:39:42"
+        },
+        {
+          "start": "00:39:45",
+          "end": "00:44:03"
+        },
+        {
+          "start": "00:44:06",
+          "end": "00:45:42"
+        },
+        {
+          "start": "00:45:45",
+          "end": "00:49:52"
+        },
+        {
+          "start": "00:49:55",
+          "end": "00:56:25"
+        },
+        {
+          "start": "00:56:28",
+          "end": "01:00:40"
+        },
+        {
+          "start": "01:00:43",
+          "end": "01:03:31"
+        },
+        {
+          "start": "01:03:34",
+          "end": "01:06:20"
+        },
+        {
+          "start": "01:06:23",
+          "end": "01:10:44"
+        },
+        {
+          "start": "01:10:47",
+          "end": "01:15:44"
+        },
+        {
+          "start": "01:15:47",
+          "end": "01:19:10"
+        },
+        {
+          "start": "01:19:13",
+          "end": "01:23:20"
+        },
+        {
+          "start": "01:23:23",
+          "end": "01:26:25"
+        },
+        {
+          "start": "01:26:28",
+          "end": "01:36:11"
+        },
+        {
+          "start": "01:36:14",
+          "end": "01:39:50"
+        },
+        {
+          "start": "01:39:53",
+          "end": "01:42:51"
+        },
+        {
+          "start": "01:42:54",
+          "end": "01:49:36"
+        },
+        {
+          "start": "01:49:39",
+          "end": "01:52:59"
+        },
+        {
+          "start": "01:53:02",
+          "end": "01:56:10"
+        },
+        {
+          "start": "01:56:13",
+          "end": "02:00:08"
+        },
+        {
+          "start": "02:00:11",
+          "end": "02:03:00"
+        },
+        {
+          "start": "02:03:03",
+          "end": "02:09:36"
+        }
+      ],
+      "model": "Qwen/Qwen3.5-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-15T22:35:06.111062+00:00",
+      "prompt_hash": "c6bb00a3",
+      "stats": {
+        "duration_seconds": 120.34395051002502,
+        "reasoning_content": 0
+      },
+      "usage": {
+        "prompt_tokens": 35104,
+        "total_tokens": 36265,
+        "completion_tokens": 1161,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "programs_3xinc-36-35B-A3B-v12k-nothink": {
+      "answer": [
+        {
+          "start": "00:00:00",
+          "end": "00:10:28"
+        },
+        {
+          "start": "00:10:28",
+          "end": "00:33:46"
+        },
+        {
+          "start": "00:33:46",
+          "end": "00:43:09"
+        },
+        {
+          "start": "00:43:09",
+          "end": "00:48:23"
+        },
+        {
+          "start": "00:48:23",
+          "end": "00:48:52"
+        },
+        {
+          "start": "00:48:52",
+          "end": "00:59:54"
+        },
+        {
+          "start": "00:59:54",
+          "end": "01:08:08"
+        },
+        {
+          "start": "01:08:08",
+          "end": "01:11:10"
+        },
+        {
+          "start": "01:11:10",
+          "end": "01:31:16"
+        },
+        {
+          "start": "01:31:16",
+          "end": "01:48:53"
+        },
+        {
+          "start": "01:48:53",
+          "end": "01:48:57"
+        },
+        {
+          "start": "01:48:57",
+          "end": "01:49:14"
+        }
+      ],
+      "model": "Qwen/Qwen3.6-35B-A3B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      },
+      "updated": "2026-06-15T22:56:38.538537+00:00",
+      "prompt_hash": "f5390bd2",
+      "stats": {
+        "duration_seconds": 67.40290760993958,
+        "reasoning_content": 0
+      },
+      "usage": {
+        "prompt_tokens": 13600,
+        "total_tokens": 14036,
+        "completion_tokens": 436,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 0
+      }
+    },
+    "programs_3xinc-35-27B-v32k-think": {
+      "answer": [
+        {
+          "start": "00:00:01",
+          "end": "06:21:53"
+        },
+        {
+          "start": "06:21:54",
+          "end": "11:29:50"
+        },
+        {
+          "start": "11:29:52",
+          "end": "18:42:41"
+        },
+        {
+          "start": "18:42:43",
+          "end": "32:33:15"
+        },
+        {
+          "start": "32:33:17",
+          "end": "39:46:25"
+        },
+        {
+          "start": "39:46:27",
+          "end": "56:26:22"
+        },
+        {
+          "start": "56:26:24",
+          "end": "60:40:43"
+        },
+        {
+          "start": "60:40:45",
+          "end": "63:32:30"
+        },
+        {
+          "start": "63:32:32",
+          "end": "70:42:42"
+        },
+        {
+          "start": "70:42:44",
+          "end": "75:46:46"
+        },
+        {
+          "start": "75:46:48",
+          "end": "79:31:12"
+        },
+        {
+          "start": "79:31:14",
+          "end": "95:46:50"
+        },
+        {
+          "start": "95:46:52",
+          "end": "109:42:51"
+        }
+      ],
+      "model": "Qwen/Qwen3.5-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-15T23:06:45.586239+00:00",
+      "prompt_hash": "c6bb00a3",
+      "stats": {
+        "duration_seconds": 392.4424936771393,
+        "reasoning_content": 17223
+      },
+      "usage": {
+        "prompt_tokens": 35102,
+        "total_tokens": 43118,
+        "completion_tokens": 8016,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 7537
+      }
+    },
+    "programs_3xinc-35-27B-v12k-think-s43": {
+      "answer": [
+        {
+          "start": "00:00:00",
+          "end": "00:11:36"
+        },
+        {
+          "start": "00:11:36",
+          "end": "00:24:51"
+        },
+        {
+          "start": "00:24:51",
+          "end": "00:30:19"
+        },
+        {
+          "start": "00:30:19",
+          "end": "00:32:33"
+        },
+        {
+          "start": "00:32:33",
+          "end": "00:39:30"
+        },
+        {
+          "start": "00:39:30",
+          "end": "00:55:21"
+        },
+        {
+          "start": "00:55:21",
+          "end": "01:00:42"
+        },
+        {
+          "start": "01:00:42",
+          "end": "01:10:42"
+        },
+        {
+          "start": "01:10:42",
+          "end": "01:25:30"
+        }
+      ],
+      "model": "RedHatAI/Qwen3.8-27B-INT4",
+      "options": {
+        "model": "RedHatAI/Qwen3.8-27B-INT4",
+        "messages": [],
+        "max_tokens": 30720,
+        "num_ctx": 4096,
+        "seed": 43,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "top_k": 20,
+        "reasoning_effort": "xhigh",
+        "enable_thinking": true,
+        "stream": false,
+        "extra_body": {
+          "separate_reasoning": true,
+          "include_reasoning": false,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 0.05,
+            "size": {
+              "longest_edge": 134217728,
+              "shortest_edge": 4096
+            },
+            "max_frames": 8100
+          }
+        },
+        "mm_processor_kwargs": {
+          "fps": 0.05,
+          "size": {
+            "longest_edge": 134217728,
+            "shortest_edge": 4096
+          },
+          "max_frames": 8100
+        }
+      },
+      "updated": "2026-08-30T22:00:49.887706+00:00",
+      "prompt_hash": "649a4fba",
+      "stats": {
+        "duration_seconds": 260.3732032775879
+      },
+      "usage": {
+        "prompt_tokens": 67800,
+        "total_tokens": 73772,
+        "completion_tokens": 5972,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 5709
+        }
+      }
+    },
+    "programs_3xinc_sec-35-27B-v24k-think": {
+      "answer": [
+        {
+          "start": 1,
+          "end": 380
+        },
+        {
+          "start": 381,
+          "end": 577
+        },
+        {
+          "start": 578,
+          "end": 1493
+        },
+        {
+          "start": 1494,
+          "end": 1944
+        },
+        {
+          "start": 1945,
+          "end": 2383
+        },
+        {
+          "start": 2384,
+          "end": 2737
+        },
+        {
+          "start": 2738,
+          "end": 3386
+        },
+        {
+          "start": 3387,
+          "end": 3642
+        },
+        {
+          "start": 3643,
+          "end": 3811
+        },
+        {
+          "start": 3812,
+          "end": 3907
+        },
+        {
+          "start": 3908,
+          "end": 4244
+        },
+        {
+          "start": 4245,
+          "end": 4545
+        },
+        {
+          "start": 4546,
+          "end": 4750
+        },
+        {
+          "start": 4751,
+          "end": 5001
+        },
+        {
+          "start": 5002,
+          "end": 5188
+        },
+        {
+          "start": 5189,
+          "end": 5776
+        }
+      ],
+      "model": "Qwen/Qwen3.5-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-16T00:32:11.317496+00:00",
+      "prompt_hash": "1bce9a93",
+      "stats": {
+        "duration_seconds": 564.3169782161713,
+        "reasoning_content": 26820
+      },
+      "usage": {
+        "prompt_tokens": 25100,
+        "total_tokens": 37678,
+        "completion_tokens": 12578,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 12143
+      }
+    },
+    "programs_3xinc_sec-35-27B-v32k-think": {
+      "answer": [
+        {
+          "start": 0,
+          "end": 618
+        },
+        {
+          "start": 621,
+          "end": 927
+        },
+        {
+          "start": 930,
+          "end": 1134
+        },
+        {
+          "start": 1137,
+          "end": 1633
+        },
+        {
+          "start": 1636,
+          "end": 2045
+        },
+        {
+          "start": 2048,
+          "end": 2458
+        },
+        {
+          "start": 2501,
+          "end": 3021
+        },
+        {
+          "start": 3024,
+          "end": 3232
+        },
+        {
+          "start": 3235,
+          "end": 3533
+        },
+        {
+          "start": 3536,
+          "end": 3944
+        },
+        {
+          "start": 3947,
+          "end": 4410
+        },
+        {
+          "start": 4413,
+          "end": 4541
+        },
+        {
+          "start": 4544,
+          "end": 4952
+        },
+        {
+          "start": 4955,
+          "end": 5625
+        },
+        {
+          "start": 5628,
+          "end": 6044
+        },
+        {
+          "start": 6047,
+          "end": 6332
+        },
+        {
+          "start": 6335,
+          "end": 6620
+        },
+        {
+          "start": 6623,
+          "end": 7043
+        },
+        {
+          "start": 7046,
+          "end": 7547
+        },
+        {
+          "start": 7550,
+          "end": 7906
+        },
+        {
+          "start": 7909,
+          "end": 8321
+        },
+        {
+          "start": 8324,
+          "end": 8626
+        },
+        {
+          "start": 8629,
+          "end": 8950
+        },
+        {
+          "start": 8953,
+          "end": 9559
+        },
+        {
+          "start": 9602,
+          "end": 9611
+        },
+        {
+          "start": 9614,
+          "end": 9717
+        },
+        {
+          "start": 9720,
+          "end": 10007
+        },
+        {
+          "start": 10010,
+          "end": 10943
+        }
+      ],
+      "model": "Qwen/Qwen3.5-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-16T09:42:00.060955+00:00",
+      "prompt_hash": "1bce9a93",
+      "stats": {
+        "duration_seconds": 347.1021955013275,
+        "reasoning_content": 11212
+      },
+      "usage": {
+        "prompt_tokens": 35084,
+        "total_tokens": 40730,
+        "completion_tokens": 5646,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 4884
+      }
+    },
+    "programs_3xinc_sec-35-35B-A3B-FP8-v32k-think": {
+      "answer": [
+        {
+          "start": 5,
+          "end": 381
+        },
+        {
+          "start": 385,
+          "end": 571
+        },
+        {
+          "start": 575,
+          "end": 1028
+        },
+        {
+          "start": 1032,
+          "end": 1121
+        },
+        {
+          "start": 1125,
+          "end": 1355
+        },
+        {
+          "start": 1359,
+          "end": 1494
+        },
+        {
+          "start": 1498,
+          "end": 1827
+        },
+        {
+          "start": 1831,
+          "end": 1954
+        },
+        {
+          "start": 1958,
+          "end": 2026
+        },
+        {
+          "start": 2030,
+          "end": 2061
+        },
+        {
+          "start": 2065,
+          "end": 2097
+        },
+        {
+          "start": 2101,
+          "end": 2385
+        },
+        {
+          "start": 2389,
+          "end": 2649
+        },
+        {
+          "start": 2653,
+          "end": 2736
+        },
+        {
+          "start": 2740,
+          "end": 2817
+        },
+        {
+          "start": 2821,
+          "end": 2993
+        },
+        {
+          "start": 2997,
+          "end": 3237
+        },
+        {
+          "start": 3241,
+          "end": 3306
+        },
+        {
+          "start": 3310,
+          "end": 3341
+        },
+        {
+          "start": 3345,
+          "end": 3422
+        },
+        {
+          "start": 3426,
+          "end": 3645
+        },
+        {
+          "start": 3649,
+          "end": 3833
+        },
+        {
+          "start": 3837,
+          "end": 3985
+        },
+        {
+          "start": 3989,
+          "end": 4246
+        },
+        {
+          "start": 4250,
+          "end": 4552
+        },
+        {
+          "start": 4556,
+          "end": 4757
+        },
+        {
+          "start": 4761,
+          "end": 5005
+        },
+        {
+          "start": 5009,
+          "end": 5210
+        },
+        {
+          "start": 5214,
+          "end": 5391
+        },
+        {
+          "start": 5395,
+          "end": 5481
+        },
+        {
+          "start": 5485,
+          "end": 5657
+        },
+        {
+          "start": 5661,
+          "end": 5767
+        },
+        {
+          "start": 5771,
+          "end": 5930
+        },
+        {
+          "start": 5934,
+          "end": 6046
+        },
+        {
+          "start": 6050,
+          "end": 6238
+        },
+        {
+          "start": 6242,
+          "end": 6413
+        },
+        {
+          "start": 6417,
+          "end": 6684
+        }
+      ],
+      "model": "Qwen/Qwen3.5-35B-A3B-FP8",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-16T10:58:15.809624+00:00",
+      "prompt_hash": "053b3075",
+      "stats": {
+        "duration_seconds": 162.6927101612091,
+        "reasoning_content": 24086
+      },
+      "usage": {
+        "prompt_tokens": 35084,
+        "total_tokens": 46439,
+        "completion_tokens": 11355,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 10353
+      }
+    },
+    "programs_3xinc_sec-35-35B-A3B-FP8-v32k-think-s42": {
+      "answer": [
+        {
+          "start": 0,
+          "end": 383
+        },
+        {
+          "start": 383,
+          "end": 1199
+        },
+        {
+          "start": 1199,
+          "end": 1821
+        },
+        {
+          "start": 1821,
+          "end": 1954
+        },
+        {
+          "start": 1954,
+          "end": 2385
+        },
+        {
+          "start": 2385,
+          "end": 2648
+        },
+        {
+          "start": 2648,
+          "end": 3823
+        },
+        {
+          "start": 3823,
+          "end": 4244
+        },
+        {
+          "start": 4244,
+          "end": 4549
+        },
+        {
+          "start": 4549,
+          "end": 5350
+        },
+        {
+          "start": 5350,
+          "end": 6590
+        }
+      ],
+      "model": "Qwen/Qwen3.5-35B-A3B-FP8",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 43,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-06-16T11:59:27.691828+00:00",
+      "prompt_hash": "053b3075",
+      "stats": {
+        "duration_seconds": 115.13191270828247,
+        "reasoning_content": 4974
+      },
+      "usage": {
+        "prompt_tokens": 35084,
+        "total_tokens": 37273,
+        "completion_tokens": 2189,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 1887
+      }
+    },
+    "programs_3xinc_sec-35-27B-v12k-think": {
+      "answer": [
+        {
+          "start": 9,
+          "end": 1134
+        },
+        {
+          "start": 1140,
+          "end": 3444
+        },
+        {
+          "start": 3450,
+          "end": 3819
+        },
+        {
+          "start": 3822,
+          "end": 5566
+        },
+        {
+          "start": 5569,
+          "end": 6570
+        }
+      ],
+      "model": "Qwen/Qwen3.8-27B",
+      "options": {
+        "num_ctx": 4096,
+        "seed": 3407,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "extra_body": {
+          "separate_reasoning": true,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "fps": 2,
+            "do_sample_frames": true,
+            "size": {
+              "longest_edge": 25165824,
+              "shortest_edge": 4096
+            }
+          },
+          "enable_thinking": true,
+          "chat_template_kwargs": {
+            "enable_thinking": true
+          }
+        }
+      },
+      "updated": "2026-08-25T00:33:40.884313+00:00",
+      "prompt_hash": "05122122",
+      "stats": {
+        "duration_seconds": 380.8858892917633
+      },
+      "usage": {
+        "prompt_tokens": 13622,
+        "total_tokens": 20514,
+        "completion_tokens": 6892,
+        "prompt_tokens_details": null,
+        "reasoning_tokens": 6740
+      }
+    },
+    "prg1": {
+      "answer": [
+        {
+          "start": "00:00:04",
+          "end": "00:25:04"
+        },
+        {
+          "start": "00:25:12",
+          "end": "00:30:18"
+        },
+        {
+          "start": "00:30:26",
+          "end": "00:39:20"
+        },
+        {
+          "start": "00:39:28",
+          "end": "00:41:27"
+        },
+        {
+          "start": "00:41:35",
+          "end": "00:57:49"
+        },
+        {
+          "start": "00:57:57",
+          "end": "01:09:39"
+        }
+      ],
+      "model": "RedHatAI/Qwen3.8-27B-INT4",
+      "options": {
+        "model": "RedHatAI/Qwen3.8-27B-INT4",
+        "messages": [],
+        "max_tokens": 30720,
+        "num_ctx": 4096,
+        "seed": 1234,
+        "temperature": 1.0,
+        "presence_penalty": 0.5,
+        "repetition_penalty": 1.1,
+        "top_p": 0.8,
+        "top_k": 20,
+        "reasoning_effort": "xhigh",
+        "enable_thinking": true,
+        "stream": false,
+        "extra_body": {
+          "separate_reasoning": true,
+          "include_reasoning": false,
+          "top_k": 20,
+          "mm_processor_kwargs": {
+            "size": {
+              "longest_edge": 25165824,
+              "shortest_edge": 4096
+            }
+          }
+        },
+        "mm_processor_kwargs": {
+          "size": {
+            "longest_edge": 25165824,
+            "shortest_edge": 4096
+          }
+        },
+        "media_io_kwargs": {
+          "video": {
+            "fps": 1.0,
+            "num_frames": -1,
+            "max_frames": 768
+          }
+        }
+      },
+      "updated": "2026-09-02T21:56:04.899691+00:00",
+      "prompt_hash": "329e765f",
+      "stats": {
+        "duration_seconds": 198.14978432655334
+      },
+      "usage": {
+        "prompt_tokens": 13656,
+        "total_tokens": 16496,
+        "completion_tokens": 2840,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2661
+        }
+      }
+    }
+  },
+  "meta": {}
+}
