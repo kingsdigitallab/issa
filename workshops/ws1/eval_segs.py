@@ -41,6 +41,7 @@ def main() -> None:
         segments_predict = data["data"].get(args.q, {}).get("answer", None)
         
         result = compare_segments(segments_true, segments_predict)
+        # result = compare_segments_old(segments_true, segments_predict)
         result["F"] = subdir.name
         rows.append(result)
         

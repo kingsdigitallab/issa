@@ -99,7 +99,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
     # 1. score all combinations of segments
     for sp in segments_predict:
         # best_true_segment = None
-        sp['score'] = -1
+        sp['score'] = -1e6
         for st in segments_true:
             score = score_segment_pair(st, sp)
             if score > sp['score']:
@@ -107,6 +107,7 @@ def compare_segments(segments_true, segments_predict, is_separator=False):
                 sp['true'] = st
                 # best_true_segment = st
         length = sp['true']['endTime'] - sp['true']['startTime']
+        sp['score'] = max(0, sp['score'])
         ret['score'] += sp['score'] * length
 
     ret['score'] /= sum([st['endTime'] - st['startTime'] for st in segments_true])
@@ -144,7 +145,7 @@ def score_segment_pair(segment_true, segment_predict):
     ret = 0.5
     length = segment_true['endTime'] - segment_true['startTime']
     ret = 1 - abs(segment_true['startTime'] - segment_predict['startTime']) / length - abs(segment_true['endTime'] - segment_predict['endTime']) / length
-    ret = max(0, ret)
+    # ret = max(0, ret)
     return ret
 
 def get_default_comparison(segments_true):
@@ -160,6 +161,10 @@ def get_default_comparison(segments_true):
     }
 
 def compare_segments_old(segments_true, segments_predict, is_separator=False):
+    '''
+    Scoring based on number of prog covered by at least one prediction.
+    Tends to be too generous in individual scoring for partial overlap.
+    '''
     segments_true = convert_segments_to_seconds(segments_true)
     if is_separator:
         segments_true = convert_segments_from_programs_to_separators(segments_true)
