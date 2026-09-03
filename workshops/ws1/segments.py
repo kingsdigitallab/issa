@@ -78,7 +78,79 @@ def get_segs_intersection(seg1, seg2):
     endTime = min(seg1['endTime'], seg2['endTime'])
     return [startTime, endTime]
 
-def compare_segments(segments_true, segments_predict, is_separator=False):
+def compare_segments(segments_true, segments_predict, is_separator=False, version=3):
+    fct_name = f'compare_segments_v{version}'
+    return globals()[fct_name](segments_true, segments_predict, is_separator=is_separator)
+
+def compare_segments_v3(segments_true, segments_predict, is_separator=False):
+    '''
+    This method is based on proportionality of coverage of matching segment.
+    It penalises distance to true boundaries proportionally to the length of the true segment
+    '''
+    segments_true = convert_segments_to_seconds(segments_true)
+    if is_separator:
+        segments_true = convert_segments_from_programs_to_separators(segments_true)
+    segments_predict = convert_segments_to_seconds(segments_predict)
+
+    ret = get_default_comparison(segments_true)
+
+    total_st_len = 0
+    for st in segments_true:
+        st['len'] = st['endTime'] - st['startTime']
+        total_st_len += st['len']
+
+    # 1. match & score
+    for st in sorted(segments_true, key=lambda s: s['len'], reverse=True):
+        st['score'] = 0
+        st['pred'] = None
+        largest_overlap = -1
+        for sp in segments_predict:
+            if sp.get('true', None): continue
+
+            inter = get_segs_intersection(st, sp)
+            overlap = inter[1] - inter[0]
+            if overlap > largest_overlap:
+                largest_overlap = overlap
+                st['pred'] = sp
+
+        if st['pred']:
+            st['pred']['true'] = st
+            st['score'] = max(0, score_segment_pair(st, st['pred']))
+            ret['score'] += st['score'] * st['len']
+
+    if ret['score']:
+        ret['score'] /= total_st_len
+    ret['matched'] = len([st for st in segments_true if st['pred']])
+
+    # how many extra segs?
+    ret['extra'] = max(0, len(segments_predict) - len(segments_true))
+    if ret['extra'] > 0:
+        # penalty ./. number of extra segs
+        ret['score'] /= ret['extra']
+
+    # penalty for hallucinated time beyond end of video
+    if segments_predict:
+        beyond = segments_predict[-1]['endTime'] / segments_true[-1]['endTime']
+        if beyond > 1:
+            ret['score'] /= beyond
+            ret['beyond'] = beyond
+            ret['duration_diff_ratio'] = beyond
+
+    # 2. generate difference report
+    diff = []
+    for st in segments_true:
+        st_str = f'{get_hms_from_secs(st["startTime"])} - {get_hms_from_secs(st["endTime"])}'
+        if st['pred']:
+            diff.append(f'{int(st["score"]*100):>3d}% {get_hms_from_secs(st['pred']["startTime"])} - {get_hms_from_secs(st['pred']["endTime"])}  /  {st_str}')
+            st_str = ''
+        if st_str:
+            diff.append(f'{int(st["score"]*100):>3d}% {" "*19}  /  {st_str}')
+    ret['diff'] = '\n'.join(diff)
+
+    return ret
+
+
+def compare_segments_v2(segments_true, segments_predict, is_separator=False):
     '''
     This method is based on proportionality of coverage of matching segment.
     It penalises distance to true boundaries proportionally to the length of the true segment
@@ -157,10 +229,11 @@ def get_default_comparison(segments_true):
         "matched": 0,
         "expected": len(segments_true),
         "duration_diff_ratio": 1,
-        "extra": 0
+        "extra": 0,
+        "diff": ''
     }
 
-def compare_segments_old(segments_true, segments_predict, is_separator=False):
+def compare_segments_v1(segments_true, segments_predict, is_separator=False):
     '''
     Scoring based on number of prog covered by at least one prediction.
     Tends to be too generous in individual scoring for partial overlap.

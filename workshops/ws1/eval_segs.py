@@ -2,7 +2,7 @@ import argparse
 import json
 import re
 from pathlib import Path
-from segments import compare_segments, compare_segments_old, load_segments, validate_segments
+from segments import compare_segments, load_segments, validate_segments
 
 SOURCE_DIR = Path("./sample11")
 SEGMENTS_TRUE_DIR = Path("./segments_true")
@@ -12,7 +12,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", action="store_true", help="print diffs for all F")
     parser.add_argument("-q", default="prog1", help="question key to evaluate (default: prog1)")
-    parser.add_argument("-f", default="", help="only consider video which name contains this filter")
+    parser.add_argument("-f", default="", help="only consider videos which name contains this filter")
     args = parser.parse_args()
 
     rows = []
@@ -40,8 +40,7 @@ def main() -> None:
             data = json.load(f)
         segments_predict = data["data"].get(args.q, {}).get("answer", None)
         
-        result = compare_segments(segments_true, segments_predict)
-        # result = compare_segments_old(segments_true, segments_predict)
+        result = compare_segments(segments_true, segments_predict, version=3)
         result["F"] = subdir.name
         rows.append(result)
         
