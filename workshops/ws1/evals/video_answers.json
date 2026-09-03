@@ -2741,5 +2741,397 @@
         "reasoning_tokens": 9441
       }
     }
+  },
+  "fps-1.5-vctx-12-re-xhigh-s-43": {
+    "answer": [
+      {
+        "start": "00:00:06",
+        "end": "00:06:19"
+      },
+      {
+        "start": "00:06:24",
+        "end": "00:09:28"
+      },
+      {
+        "start": "00:09:32",
+        "end": "00:11:30"
+      },
+      {
+        "start": "00:11:35",
+        "end": "00:16:28"
+      },
+      {
+        "start": "00:16:33",
+        "end": "00:24:51"
+      },
+      {
+        "start": "00:24:56",
+        "end": "00:30:15"
+      },
+      {
+        "start": "00:30:20",
+        "end": "00:44:35"
+      },
+      {
+        "start": "00:44:40",
+        "end": "01:49:42"
+      }
+    ],
+    "model": "RedHatAI/Qwen3.8-27B-INT4",
+    "options": {
+      "model": "RedHatAI/Qwen3.8-27B-INT4",
+      "messages": [],
+      "max_tokens": 30720,
+      "num_ctx": 4096,
+      "seed": 43,
+      "temperature": 1.0,
+      "presence_penalty": 0.5,
+      "repetition_penalty": 1.1,
+      "top_p": 0.8,
+      "top_k": 20,
+      "reasoning_effort": "xhigh",
+      "enable_thinking": true,
+      "stream": false,
+      "extra_body": {
+        "separate_reasoning": true,
+        "include_reasoning": false,
+        "top_k": 20,
+        "mm_processor_kwargs": {
+          "size": {
+            "longest_edge": 25165824,
+            "shortest_edge": 4096
+          }
+        }
+      },
+      "mm_processor_kwargs": {
+        "size": {
+          "longest_edge": 25165824,
+          "shortest_edge": 4096
+        }
+      },
+      "media_io_kwargs": {
+        "video": {
+          "fps": 1.5,
+          "num_frames": -1,
+          "max_frames": 15000
+        }
+      }
+    },
+    "updated": "2026-09-03T22:09:55.945713+00:00",
+    "prompt_hash": "649a4fba",
+    "stats": {
+      "duration_seconds": 379.67829942703247
+    },
+    "usage": {
+      "prompt_tokens": 58693,
+      "total_tokens": 65792,
+      "completion_tokens": 7099,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 6864
+      }
+    }
+  },
+  "fps-1.5-vctx-12-re-xhigh-s-1234": {
+    "answer": [
+      {
+        "start": "00:00:06",
+        "end": "00:09:27"
+      },
+      {
+        "start": "00:09:30",
+        "end": "00:11:30"
+      },
+      {
+        "start": "00:11:35",
+        "end": "00:16:27"
+      },
+      {
+        "start": "00:16:32",
+        "end": "00:24:45"
+      },
+      {
+        "start": "00:24:52",
+        "end": "00:30:14"
+      },
+      {
+        "start": "00:30:21",
+        "end": "00:32:25"
+      },
+      {
+        "start": "00:32:30",
+        "end": "00:34:40"
+      },
+      {
+        "start": "00:34:47",
+        "end": "00:44:33"
+      },
+      {
+        "start": "00:44:38",
+        "end": "00:47:44"
+      },
+      {
+        "start": "00:47:49",
+        "end": "00:56:33"
+      },
+      {
+        "start": "00:56:38",
+        "end": "01:00:35"
+      },
+      {
+        "start": "01:00:40",
+        "end": "01:06:06"
+      },
+      {
+        "start": "01:06:11",
+        "end": "01:15:10"
+      },
+      {
+        "start": "01:15:17",
+        "end": "01:22:47"
+      },
+      {
+        "start": "01:22:53",
+        "end": "01:49:42"
+      }
+    ],
+    "model": "RedHatAI/Qwen3.8-27B-INT4",
+    "options": {
+      "model": "RedHatAI/Qwen3.8-27B-INT4",
+      "messages": [],
+      "max_tokens": 30720,
+      "num_ctx": 4096,
+      "seed": 1234,
+      "temperature": 1.0,
+      "presence_penalty": 0.5,
+      "repetition_penalty": 1.1,
+      "top_p": 0.8,
+      "top_k": 20,
+      "reasoning_effort": "xhigh",
+      "enable_thinking": true,
+      "stream": false,
+      "extra_body": {
+        "separate_reasoning": true,
+        "include_reasoning": false,
+        "top_k": 20,
+        "mm_processor_kwargs": {
+          "size": {
+            "longest_edge": 25165824,
+            "shortest_edge": 4096
+          }
+        }
+      },
+      "mm_processor_kwargs": {
+        "size": {
+          "longest_edge": 25165824,
+          "shortest_edge": 4096
+        }
+      },
+      "media_io_kwargs": {
+        "video": {
+          "fps": 1.5,
+          "num_frames": -1,
+          "max_frames": 15000
+        }
+      }
+    },
+    "updated": "2026-09-03T22:14:43.548550+00:00",
+    "prompt_hash": "329e765f",
+    "stats": {
+      "duration_seconds": 287.22950077056885
+    },
+    "usage": {
+      "prompt_tokens": 58693,
+      "total_tokens": 63777,
+      "completion_tokens": 5084,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 4653
+      }
+    }
+  },
+  "fps-1.5-vctx-32-re-xhigh-s-43": {
+    "answer": [
+      {
+        "start": "00:00:06",
+        "end": "06:19"
+      },
+      {
+        "start": "06:26",
+        "end": "09:27"
+      },
+      {
+        "start": "09:33",
+        "end": "11:30"
+      },
+      {
+        "start": "11:36",
+        "end": "16:26"
+      },
+      {
+        "start": "16:32",
+        "end": "20:38"
+      },
+      {
+        "start": "20:44",
+        "end": "24:49"
+      },
+      {
+        "start": "24:55",
+        "end": "30:13"
+      },
+      {
+        "start": "30:19",
+        "end": "34:39"
+      },
+      {
+        "start": "34:45",
+        "end": "01:49:42"
+      }
+    ],
+    "model": "RedHatAI/Qwen3.8-27B-INT4",
+    "options": {
+      "model": "RedHatAI/Qwen3.8-27B-INT4",
+      "messages": [],
+      "max_tokens": 30720,
+      "num_ctx": 4096,
+      "seed": 43,
+      "temperature": 1.0,
+      "presence_penalty": 0.5,
+      "repetition_penalty": 1.1,
+      "top_p": 0.8,
+      "top_k": 20,
+      "reasoning_effort": "xhigh",
+      "enable_thinking": true,
+      "stream": false,
+      "extra_body": {
+        "separate_reasoning": true,
+        "include_reasoning": false,
+        "top_k": 20,
+        "mm_processor_kwargs": {
+          "size": {
+            "longest_edge": 67108864,
+            "shortest_edge": 4096
+          }
+        }
+      },
+      "mm_processor_kwargs": {
+        "size": {
+          "longest_edge": 67108864,
+          "shortest_edge": 4096
+        }
+      },
+      "media_io_kwargs": {
+        "video": {
+          "fps": 1.5,
+          "num_frames": -1,
+          "max_frames": 15000
+        }
+      }
+    },
+    "updated": "2026-09-03T22:20:06.875981+00:00",
+    "prompt_hash": "649a4fba",
+    "stats": {
+      "duration_seconds": 322.93649554252625
+    },
+    "usage": {
+      "prompt_tokens": 73504,
+      "total_tokens": 78488,
+      "completion_tokens": 4984,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 4769
+      }
+    }
+  },
+  "fps-1.5-vctx-32-re-xhigh-s-1234": {
+    "answer": [
+      {
+        "start": "00:00:06",
+        "end": "06:19"
+      },
+      {
+        "start": "06:26",
+        "end": "09:27"
+      },
+      {
+        "start": "09:33",
+        "end": "11:30"
+      },
+      {
+        "start": "11:36",
+        "end": "16:26"
+      },
+      {
+        "start": "16:33",
+        "end": "24:47"
+      },
+      {
+        "start": "24:55",
+        "end": "39:45"
+      },
+      {
+        "start": "39:52",
+        "end": "44:50"
+      },
+      {
+        "start": "44:57",
+        "end": "69:40"
+      }
+    ],
+    "model": "RedHatAI/Qwen3.8-27B-INT4",
+    "options": {
+      "model": "RedHatAI/Qwen3.8-27B-INT4",
+      "messages": [],
+      "max_tokens": 30720,
+      "num_ctx": 4096,
+      "seed": 1234,
+      "temperature": 1.0,
+      "presence_penalty": 0.5,
+      "repetition_penalty": 1.1,
+      "top_p": 0.8,
+      "top_k": 20,
+      "reasoning_effort": "xhigh",
+      "enable_thinking": true,
+      "stream": false,
+      "extra_body": {
+        "separate_reasoning": true,
+        "include_reasoning": false,
+        "top_k": 20,
+        "mm_processor_kwargs": {
+          "size": {
+            "longest_edge": 67108864,
+            "shortest_edge": 4096
+          }
+        }
+      },
+      "mm_processor_kwargs": {
+        "size": {
+          "longest_edge": 67108864,
+          "shortest_edge": 4096
+        }
+      },
+      "media_io_kwargs": {
+        "video": {
+          "fps": 1.5,
+          "num_frames": -1,
+          "max_frames": 15000
+        }
+      }
+    },
+    "updated": "2026-09-03T22:28:46.397756+00:00",
+    "prompt_hash": "329e765f",
+    "stats": {
+      "duration_seconds": 519.2592530250549
+    },
+    "usage": {
+      "prompt_tokens": 73504,
+      "total_tokens": 90717,
+      "completion_tokens": 17213,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17023
+      }
+    }
   }
 }

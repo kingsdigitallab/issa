@@ -6,6 +6,7 @@ So we can create more systematic perf stats based on variations of settings.
 from pathlib import Path
 import json
 
+# SRC_PATH = 'sample11/139329389.32/video_answers.json'
 SRC_PATH = 'sample11/234552207.32/video_answers.json'
 DST_PATH = 'evals/video_answers.json'
 QST_NAME = 'prg1'
