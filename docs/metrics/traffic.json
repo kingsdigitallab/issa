@@ -88,6 +88,10 @@
       "2026-09-03": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-09-04": {
+        "count": 0,
+        "uniques": 0
       }
     },
     "referrers": {
@@ -153,6 +157,13 @@
         }
       ],
       "2026-09-04": [
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
+      ],
+      "2026-09-05": [
         {
           "count": 1,
           "referrer": "teams.public.onecdn.static.microsoft",
@@ -248,6 +259,10 @@
       "2026-09-03": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-09-04": {
+        "count": 2,
+        "uniques": 1
       }
     }
   },
@@ -259,6 +274,9 @@
       "visitors": 0
     },
     "2026-09-03": {
+      "visitors": 0
+    },
+    "2026-09-05": {
       "visitors": 0
     }
   },
@@ -350,6 +368,10 @@
       },
       "2026-09-03": {
         "count": 20,
+        "uniques": 7
+      },
+      "2026-09-04": {
+        "count": 14,
         "uniques": 7
       }
     },
@@ -526,6 +548,33 @@
         }
       ],
       "2026-09-04": [
+        {
+          "count": 19,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 9,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 3,
+          "referrer": "ukc-word-edit.officeapps.live.com",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "statics.teams.cdn.office.net",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
+      ],
+      "2026-09-05": [
         {
           "count": 19,
           "referrer": "Google",
@@ -641,6 +690,10 @@
       "2026-09-03": {
         "count": 4,
         "uniques": 2
+      },
+      "2026-09-04": {
+        "count": 1,
+        "uniques": 1
       }
     }
   }
