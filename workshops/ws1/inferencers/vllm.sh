@@ -5,7 +5,7 @@ SING_FILE="/scratch/prj/dh_issa/sglang/vllm-openai_v0.28.0-cu130.sif"
 # 224k video tokens max as explained on Qwen3.x model cards, see longest_edge
 # ((224 * 1024 = 229376))
 # 268435456 = 128k video context = 128 * 1024 * 2048 # tested ok
-# 298450944 = 144k # 331612160 = 160k # 397934592 = 192k # 431095808 = 208k
+# 298450944 = 144k # 331612160 = 160k # 397934592 = 192k # 431095808 = 208k # 464257024 = 224k
 PATCH_DIR=/scratch/prj/dh_issa/issa/workshops/ws1/inferencers/vllm-patches
 
 SINGULARITYENV_VLLM_LOGGING_LEVEL=DEBUG \
@@ -27,11 +27,11 @@ singularity exec --nv \
         --max-model-len $CONTEXT \
         --allowed-local-media-path "/scratch/prj/dh_issa/issa/workshops/ws1/sample11" \
         --enable-chunked-prefill --max-num-batched-tokens 4096 \
-        --mm-processor-kwargs '{"size": {"longest_edge": 298450944, "shortest_edge": 4096}, "max_frames": 8100}' \
+        --mm-processor-kwargs '{"size": {"longest_edge": 431095808, "shortest_edge": 4096}, "max_frames": 8100}' \
         --limit-mm-per-prompt '{"image": 0, "video": 1}' \
         --skip-mm-profiling \
         --mm-processor-cache-gb 0 \
-        --gpu-memory-utilization 0.70 \
+        --gpu-memory-utilization 0.65 \
         --max-num-seqs 8 \
         --media-io-kwargs '{"video": {"num_frames": -1}}'
 
