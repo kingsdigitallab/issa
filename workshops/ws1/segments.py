@@ -73,14 +73,67 @@ def convert_segments_from_programs_to_separators(segments):
         last_end = s['endTime']
     return ret
 
-def get_segs_intersection(seg1, seg2):
-    startTime = max(seg1['startTime'], seg2['startTime'])
-    endTime = min(seg1['endTime'], seg2['endTime'])
+def get_segs_intersection(seg1, seg2, paddings_in_seconds=0) -> [int, int]:
+    pis = paddings_in_seconds
+    startTime = max(seg1['startTime'] - pis, seg2['startTime'] - pis)
+    endTime = min(seg1['endTime'] + pis, seg2['endTime'] + pis)
     return [startTime, endTime]
 
 def compare_segments(segments_true, segments_predict, is_separator=False, version=3):
     fct_name = f'compare_segments_v{version}'
     return globals()[fct_name](segments_true, segments_predict, is_separator=is_separator)
+
+
+def compare_segments_v4(segments_true, segments_predict, is_separator=False):
+    '''
+    Total score = F1 score based on comparison between separators.
+    A predicted separator will match a true one if their respective intervals
+    extended both sides by 5 seconds overlap.
+    '''
+    ret = get_default_comparison(segments_true)
+
+    segments_true = convert_segments_to_seconds(segments_true)
+    segments_true = convert_segments_from_programs_to_separators(segments_true)
+    
+    segments_predict = convert_segments_to_seconds(segments_predict)
+
+    if segments_predict and not segments_predict[-1]['valid']:
+        return ret
+
+    if not is_separator:
+        segments_predict = convert_segments_from_programs_to_separators(segments_predict)
+
+    paddings_in_seconds = 5
+    
+    false_negatives = len(segments_true)
+    ret['extra'] = len(segments_predict)
+    for st in segments_true:
+        st['pred'] = None
+        for sp in segments_predict:
+            # TODO: add 5s padding
+            inter = get_segs_intersection(st, sp, paddings_in_seconds)
+            inter_len = max(0, inter[1] - inter[0])
+            if inter_len:
+                st['pred'] = sp
+                sp['true'] = st
+                # TP
+                ret['matched'] += 1
+                # FP
+                ret['extra'] -= 1
+                false_negatives -= 1
+                break
+
+    # F1
+    ret['score'] = 2 * ret['matched'] / (2 * ret['matched'] + ret['extra'] + false_negatives)
+
+    if segments_predict:
+        beyond = segments_predict[-1]['endTime'] / segments_true[-1]['endTime']
+        if beyond > 1:
+            # ret['score'] /= beyond
+            ret['beyond'] = beyond
+            ret['duration_diff_ratio'] = beyond
+
+    return ret
 
 def compare_segments_v3(segments_true, segments_predict, is_separator=False):
     '''
@@ -94,6 +147,9 @@ def compare_segments_v3(segments_true, segments_predict, is_separator=False):
 
     ret = get_default_comparison(segments_true)
 
+    if segments_predict and not segments_predict[-1]['valid']:
+        return ret
+
     total_st_len = 0
     for st in segments_true:
         st['len'] = st['endTime'] - st['startTime']
@@ -105,6 +161,7 @@ def compare_segments_v3(segments_true, segments_predict, is_separator=False):
         st['pred'] = None
         largest_overlap = -1
         for sp in segments_predict:
+            if not sp['valid']: continue
             if sp.get('true', None): continue
 
             inter = get_segs_intersection(st, sp)
@@ -223,12 +280,14 @@ def score_segment_pair(segment_true, segment_predict):
 def get_default_comparison(segments_true):
     return {
         "score": 0.0,
-        "summary": "invalid input format",
         "valid": True,
-        "beyond": 1,
-        "matched": 0,
-        "expected": len(segments_true),
         "duration_diff_ratio": 1,
+        "beyond": 1,
+        # true positives
+        "matched": 0,
+        # false negatives = expected - matched
+        "expected": len(segments_true),
+        # false positives
         "extra": 0,
         "diff": ''
     }
@@ -323,13 +382,7 @@ def compare_segments_v1(segments_true, segments_predict, is_separator=False):
 
     ret['score'] = int(ret['score'] * 100) / 100
 
-    # summary
-    ret['summary'] = f'{matched_count} / {len(segments_true)} matched'
-    excess = len(segments_predict) - len(segments_true)
-    if excess > 0:
-        ret['summary'] += f' ; {excess} extra predictions'
-    else:
-        excess = 0
+    excess = max(0, len(segments_predict) - len(segments_true))
     
     ret['predicted'] = len(segments_predict)
     ret['matched'] = matched_count
@@ -337,7 +390,6 @@ def compare_segments_v1(segments_true, segments_predict, is_separator=False):
     # Strong indicator of hallucinated times
     ret['duration_diff_ratio'] = segments_predict[-1]['endTime'] / segments_true[-1]['endTime']
     if ret['duration_diff_ratio'] > 1.5:
-        ret['summary'] += f' ; hallucinated end {ret["duration_diff_ratio"]:.2}'
         ret['score'] /= ret['duration_diff_ratio']
 
     # diff: display all (matched and unmatched) segments

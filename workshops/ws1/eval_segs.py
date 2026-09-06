@@ -40,7 +40,7 @@ def main() -> None:
             data = json.load(f)
         segments_predict = data["data"].get(args.q, {}).get("answer", None)
         
-        result = compare_segments(segments_true, segments_predict, version=3)
+        result = compare_segments(segments_true, segments_predict, version=4)
         result["F"] = subdir.name
         rows.append(result)
         
