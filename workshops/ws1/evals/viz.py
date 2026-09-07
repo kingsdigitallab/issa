@@ -14,6 +14,9 @@ stack of five horizontal bands (top to bottom):
 5. "predicted segments": thin bars of the predicted segments with vertical start/end
    timecodes (sample11/<video>/video_answers.json data[<key>], or, when -e is passed,
    evals/video_answers_<video prefix>.json [<key>])
+A subtitle under the title shows the F1 score (compare_segments v4 on separators), the
+number of matches, omissions (unmatched ground segments), unmatched predictions, and
+the model processing duration when recorded in the answers file.
 '''
 import argparse
 import base64
@@ -31,18 +34,22 @@ except ImportError:
     PilImage = None
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
-from segments import convert_segments_to_seconds, load_segments
+from segments import compare_segments, convert_segments_to_seconds, load_segments
 
 SOURCE_DIR = Path('./sample11')
 SEGMENTS_TRUE_DIR = Path('./segments_true')
 OUT_DIR = Path('./evals')
 VIDEO_PREFIX_LEN = 3
+METRIC_VERSION = 4
 
 SVG_WIDTH = 1600
 LEFT_MARGIN = 50
 TITLE_SIZE = 20
 TITLE_BASELINE = TITLE_SIZE + 4
 TITLE_HEIGHT = 34
+SUBTITLE_SIZE = 13
+SUBTITLE_BASELINE = TITLE_HEIGHT + SUBTITLE_SIZE - 4
+SUBTITLE_HEIGHT = 16
 GROUND_MID_FRAMES_GAP = 10
 MEDIUM_FRAME_WIDTH = 96
 GROUND_GAP_MID_FRAMES_GAP = 10
@@ -74,6 +81,7 @@ PREDICTED_SEGMENTS_LABEL_COLOR = '#9c5c1e'
 UNDETECTED_GAP_COLOR = '#cc0000'
 BORDER_WIDTH = 2
 TITLE_COLOR = '#333333'
+SUBTITLE_COLOR = '#666666'
 NOTE_COLOR = '#999999'
 
 LABEL_BAND_HEIGHT = 48
@@ -158,11 +166,13 @@ def get_gap_mid_and_width(gap_mids: list, idx: int, duration: float,
 
 
 def load_predictions(answers_file: Path, key: str) -> tuple:
-    '''(raw predicted segments, model name) for the answer key, empty when absent.
-    Entries are looked up under the top-level "data" object when present, otherwise at
-    the top level itself (evals video_answers_xxx.json files).'''
+    '''(raw predicted segments, model name, processing duration in seconds or None) for the
+    answer key, empty/None when absent. Entries are looked up under the top-level "data"
+    object when present, otherwise at the top level itself (evals video_answers_xxx.json
+    files).'''
     ret = []
     model = ''
+    processing_duration = None
     if answers_file.exists():
         with open(answers_file) as f:
             data = json.load(f)
@@ -171,7 +181,36 @@ def load_predictions(answers_file: Path, key: str) -> tuple:
         answer = entry.get('answer', [])
         if isinstance(answer, list):
             ret = answer
-    return ret, model
+        try:
+            processing_duration = float(entry['stats']['duration_seconds'])
+        except (KeyError, TypeError, ValueError):
+            processing_duration = None
+    return ret, model, processing_duration
+
+
+def format_duration(seconds: float) -> str:
+    '''Duration in seconds as 42s / 7m 16s / 1h 2m 3s, dropping leading zero parts.'''
+    ret = ''
+    total = int(round(seconds))
+    hours, rem = divmod(total, 3600)
+    minutes, secs = divmod(rem, 60)
+    if hours:
+        ret = f'{hours}h {minutes}m {secs}s'
+    elif minutes:
+        ret = f'{minutes}m {secs}s'
+    else:
+        ret = f'{secs}s'
+    return ret
+
+
+def build_subtitle(score: float, matched: int, expected: int, omissions: int,
+                   unmatched: int, processing_duration: float | None) -> str:
+    '''Metrics line for the SVG header; processing part omitted when duration is unknown.'''
+    ret = (f'F1: {score * 100:.0f}% · matches: {matched}/{expected} · '
+           f'omissions: {omissions} · unmatched predictions: {unmatched}')
+    if processing_duration is not None:
+        ret += f' · processing: {format_duration(processing_duration)}'
+    return ret
 
 
 def svg_rect(x: float, y: float, width: float, height: float, color: str, title: str = '') -> str:
@@ -276,11 +315,12 @@ def render_segments_band(segments: list, duration: float, y_bar: float, color: s
     return ret
 
 
-def build_svg(video: str, key: str, model: str, duration: float, ground_segments: list,
-              predicted_segments: list, ground_mid_frames: list,
+def build_svg(video: str, key: str, model: str, subtitle: str, duration: float,
+              ground_segments: list, predicted_segments: list, ground_mid_frames: list,
               ground_gap_mid_frames: list, false_predictions_gap_mid_frames: list) -> str:
     '''Assemble the complete SVG document. Frame lists are (mid_time, width, jpeg) tuples,
-    with a trailing undetected flag on the ground gap frames.'''
+    with a trailing undetected flag on the ground gap frames. The subtitle line is drawn
+    under the title when non-empty.'''
     ret = []
     x0 = LEFT_MARGIN
     x1 = SVG_WIDTH - LEFT_MARGIN
@@ -296,7 +336,7 @@ def build_svg(video: str, key: str, model: str, duration: float, ground_segments
                                         or [0])
     false_predictions_gap_mid_frames_height = max(
         [height for _, _, height, _ in false_predictions_gap_mid_items] or [0])
-    ground_mid_frames_top = TITLE_HEIGHT + GROUND_MID_FRAMES_GAP
+    ground_mid_frames_top = TITLE_HEIGHT + SUBTITLE_HEIGHT + GROUND_MID_FRAMES_GAP
     ground_mid_frames_bottom = ground_mid_frames_top + ground_mid_frames_height
     ground_segments_y = ground_mid_frames_bottom + LABEL_BAND_HEIGHT
     ground_gap_mid_frames_top = ground_segments_y + BAR_HEIGHT + GROUND_GAP_MID_FRAMES_GAP
@@ -317,6 +357,8 @@ def build_svg(video: str, key: str, model: str, duration: float, ground_segments
                f'font-family="sans-serif">')
     ret.append(svg_rect(0, 0, SVG_WIDTH, svg_height, BACKGROUND_COLOR))
     ret.append(svg_text(x0, TITLE_BASELINE, title, TITLE_COLOR, TITLE_SIZE))
+    if subtitle:
+        ret.append(svg_text(x0, SUBTITLE_BASELINE, subtitle, SUBTITLE_COLOR, SUBTITLE_SIZE))
     for mid, width, height, jpeg in ground_mid_items:
         cx = x0 + mid * px_per_sec
         ret.append(svg_image(cx - width / 2, ground_mid_frames_bottom - height,
@@ -369,17 +411,25 @@ def main() -> None:
     if not video_path.exists():
         sys.exit(f'ERROR: video not found: {video_path}')
 
-    ground_segments = [s for s in convert_segments_to_seconds(
-        load_segments(args.video, SEGMENTS_TRUE_DIR)) if s.get('valid')]
+    ground_raw = load_segments(args.video, SEGMENTS_TRUE_DIR)
+    ground_segments = [s for s in convert_segments_to_seconds(ground_raw)
+                       if s.get('valid')]
     if args.evals:
         answers_file = OUT_DIR / f'video_answers_{args.video[:VIDEO_PREFIX_LEN]}.json'
         if not answers_file.exists():
             sys.exit(f'ERROR: answers file not found: {answers_file}')
     else:
         answers_file = SOURCE_DIR / args.video / 'video_answers.json'
-    predictions_raw, model = load_predictions(answers_file, args.key)
+    predictions_raw, model, processing_duration = load_predictions(answers_file, args.key)
     predicted_segments = [s for s in convert_segments_to_seconds(predictions_raw)
-                          if s.get('valid')]
+                           if s.get('valid')]
+
+    subtitle = ''
+    if ground_raw:
+        metrics = compare_segments(ground_raw, predictions_raw, version=METRIC_VERSION)
+        omissions = metrics['expected'] - metrics['matched']
+        subtitle = build_subtitle(metrics['score'], metrics['matched'], metrics['expected'],
+                                  omissions, metrics['extra'], processing_duration)
 
     duration = get_video_duration(video_path, ffprobe_exe)
     if duration <= 0:
@@ -433,7 +483,7 @@ def main() -> None:
 
     undetected_count = sum(1 for frame in ground_gap_mid_frames if frame[3])
 
-    svg = build_svg(args.video, args.key, model, duration, ground_segments,
+    svg = build_svg(args.video, args.key, model, subtitle, duration, ground_segments,
                     predicted_segments, ground_mid_frames, ground_gap_mid_frames,
                     false_predictions_gap_mid_frames)
 
