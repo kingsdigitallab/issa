@@ -11,8 +11,9 @@ stack of five horizontal bands (top to bottom):
    overlap with any gap between predicted segments)
 4. "false predictions gap mid-frames": medium frame thumbnails from the middle of each
    gap between predicted segments with no time overlap with any ground-truth gap
-5. "predicted segments": thin bars of the predicted segments
-   (sample11/<video>/video_answers.json data[<key>]) with vertical start/end timecodes
+5. "predicted segments": thin bars of the predicted segments with vertical start/end
+   timecodes (sample11/<video>/video_answers.json data[<key>], or, when -e is passed,
+   evals/video_answers_<video prefix>.json [<key>])
 '''
 import argparse
 import base64
@@ -35,6 +36,7 @@ from segments import convert_segments_to_seconds, load_segments
 SOURCE_DIR = Path('./sample11')
 SEGMENTS_TRUE_DIR = Path('./segments_true')
 OUT_DIR = Path('./evals')
+VIDEO_PREFIX_LEN = 3
 
 SVG_WIDTH = 1600
 LEFT_MARGIN = 50
@@ -155,15 +157,16 @@ def get_gap_mid_and_width(gap_mids: list, idx: int, duration: float,
     return ret
 
 
-def load_predictions(video_dir: Path, key: str) -> tuple:
-    '''(raw predicted segments, model name) for the answer key, empty when absent.'''
+def load_predictions(answers_file: Path, key: str) -> tuple:
+    '''(raw predicted segments, model name) for the answer key, empty when absent.
+    Entries are looked up under the top-level "data" object when present, otherwise at
+    the top level itself (evals video_answers_xxx.json files).'''
     ret = []
     model = ''
-    answers_file = video_dir / 'video_answers.json'
     if answers_file.exists():
         with open(answers_file) as f:
             data = json.load(f)
-        entry = data.get('data', {}).get(key, {})
+        entry = data.get('data', data).get(key, {})
         model = entry.get('model', '')
         answer = entry.get('answer', [])
         if isinstance(answer, list):
@@ -349,8 +352,12 @@ def build_svg(video: str, key: str, model: str, duration: float, ground_segments
 def main() -> None:
     parser = argparse.ArgumentParser(
         description='Render an SVG timeline of true vs predicted programme intervals in a video.')
-    parser.add_argument('key', help="answer key in video_answers.json, e.g. prg1")
+    parser.add_argument('key', help='answer key in the answers file, e.g. prg1 '
+                                    '(with -e, e.g. fps-1.0-vctx-96-re-xhigh-s-2345)')
     parser.add_argument('video', help='video filename without extension, e.g. 139329389.32')
+    parser.add_argument('-e', '--evals', action='store_true',
+                        help=f'read the answer from {OUT_DIR}/video_answers_<video '
+                             f'prefix>.json instead of {SOURCE_DIR}/<video>/video_answers.json')
     parser.add_argument('-o', '--out', default=None,
                         help=f'output SVG path (default: {OUT_DIR}/<video>_<key>.svg)')
     args = parser.parse_args()
@@ -364,7 +371,13 @@ def main() -> None:
 
     ground_segments = [s for s in convert_segments_to_seconds(
         load_segments(args.video, SEGMENTS_TRUE_DIR)) if s.get('valid')]
-    predictions_raw, model = load_predictions(SOURCE_DIR / args.video, args.key)
+    if args.evals:
+        answers_file = OUT_DIR / f'video_answers_{args.video[:VIDEO_PREFIX_LEN]}.json'
+        if not answers_file.exists():
+            sys.exit(f'ERROR: answers file not found: {answers_file}')
+    else:
+        answers_file = SOURCE_DIR / args.video / 'video_answers.json'
+    predictions_raw, model = load_predictions(answers_file, args.key)
     predicted_segments = [s for s in convert_segments_to_seconds(predictions_raw)
                           if s.get('valid')]
 
