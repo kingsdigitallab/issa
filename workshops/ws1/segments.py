@@ -89,6 +89,9 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
     Total score = F1 score based on comparison between separators.
     A predicted separator will match a true one if their respective intervals
     extended both sides by 5 seconds overlap.
+    Weakness: a 10 minute separator will get full hit as long as it overlaps true predictor.
+    Bug: often a unmatched predicted separator after last programme 
+    (we should ignore it if attached to the end of the video; but we don't have that info here)
     '''
     ret = get_default_comparison(segments_true)
 
@@ -107,20 +110,28 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
     
     false_negatives = len(segments_true)
     ret['extra'] = len(segments_predict)
-    for st in segments_true:
-        st['pred'] = None
+    for s in segments_true:
+        s['is_true'] = True
+        s['pred'] = None
+        s['score'] = 0
         for sp in segments_predict:
-            # TODO: add 5s padding
-            inter = get_segs_intersection(st, sp, paddings_in_seconds)
-            inter_len = max(0, inter[1] - inter[0])
-            if inter_len:
-                st['pred'] = sp
-                sp['true'] = st
+            if sp.get('true', None):
+                continue
+
+            intersection_padded = get_segs_intersection(s, sp, paddings_in_seconds)
+            intersection_padded_len = max(0, intersection_padded[1] - intersection_padded[0])
+            if intersection_padded_len:
+                s['pred'] = sp
+                sp['true'] = s
                 # TP
                 ret['matched'] += 1
                 # FP
                 ret['extra'] -= 1
                 false_negatives -= 1
+                #
+                longest = max(s['endTime'] - s['startTime'], sp['endTime'] - sp['startTime'])
+                # TODO: no match if that score is < 10%
+                s['score'] = intersection_padded_len / (longest + 2 * paddings_in_seconds)
                 break
 
     # F1
@@ -133,6 +144,27 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
             ret['beyond'] = beyond
             ret['duration_diff_ratio'] = beyond
 
+    # 2. generate difference report
+    diff = []
+    for s in sorted(segments_true + segments_predict, key=lambda s: s['startTime']):
+        score = 0
+        s_str = f'{get_hms_from_secs(s["startTime"])} - {get_hms_from_secs(s["endTime"])}'
+        st_str = ''
+        sp_str = ''
+        if s.get('is_true'):
+            st_str = s_str
+            score = int(s["score"]*100)
+            if s['pred']:
+                sp_str = f'{get_hms_from_secs(s['pred']["startTime"])} - {get_hms_from_secs(s['pred']["endTime"])}'
+        else:
+            if not s.get('true'):
+                sp_str = s_str
+        
+        if sp_str or st_str:
+            diff.append(f'{score:>3d}% {sp_str:19}  /  {st_str:19}')
+
+    ret['diff'] = '\n'.join(diff)
+
     return ret
 
 def compare_segments_v3(segments_true, segments_predict, is_separator=False):
@@ -141,9 +173,9 @@ def compare_segments_v3(segments_true, segments_predict, is_separator=False):
     It penalises distance to true boundaries proportionally to the length of the true segment
     '''
     segments_true = convert_segments_to_seconds(segments_true)
-    if is_separator:
-        segments_true = convert_segments_from_programs_to_separators(segments_true)
     segments_predict = convert_segments_to_seconds(segments_predict)
+    if is_separator:
+        segments_predict = convert_segments_from_programs_to_separators(segments_predict)
 
     ret = get_default_comparison(segments_true)
 
@@ -194,6 +226,7 @@ def compare_segments_v3(segments_true, segments_predict, is_separator=False):
             ret['duration_diff_ratio'] = beyond
 
     # 2. generate difference report
+    # TODO: won't show unmatched predictions
     diff = []
     for st in segments_true:
         st_str = f'{get_hms_from_secs(st["startTime"])} - {get_hms_from_secs(st["endTime"])}'
