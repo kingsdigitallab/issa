@@ -90,8 +90,7 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
     A predicted separator will match a true one if their respective intervals
     extended both sides by 5 seconds overlap.
     Weakness: a 10 minute separator will get full hit as long as it overlaps true predictor.
-    Bug: often a unmatched predicted separator after last programme 
-    (we should ignore it if attached to the end of the video; but we don't have that info here)
+    We ignre the separator predicted after all programmes
     '''
     ret = get_default_comparison(segments_true)
 
@@ -100,8 +99,15 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
     
     segments_predict = convert_segments_to_seconds(segments_predict)
 
-    if segments_predict and not segments_predict[-1]['valid']:
+    if not segments_predict:
         return ret
+    
+    if not segments_predict[-1]['valid']:
+        return ret
+
+    if segments_predict[-1]['startTime'] >= segments_true[-1]['endTime']:
+        # ignore the separator predicted after all programmes, that's ok
+        segments_predict = segments_predict[:-1]
 
     if not is_separator:
         segments_predict = convert_segments_from_programs_to_separators(segments_predict)
