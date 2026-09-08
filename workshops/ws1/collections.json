@@ -18,6 +18,17 @@
                     }
                 }
             },
+            "answer_separators_vlm": {
+                "model": "Qwen/Qwen3.8-27B",
+                "seed": 1234,
+                "reasoning_effort": "low",
+                "max_tokens": "30k",
+                "questions": {
+                    "sep1": {
+                        "question": "List every separator between distinct programmes: any interruption between two different programmes, such as colour bars, test cards, station idents or logos, black screens, static or noise, countdown leaders, copyright or title slates, 'please stand by' slides, or any other interstitial, whatever the genre, the source or the decade of the programmes. Please ignore any other screen (title, chapter) within a programme."
+                    }
+                }
+            },
             "answer_videos_vlm": {
                 "model": "Qwen/Qwen3.8-27B",
                 "seed": 43,

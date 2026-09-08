@@ -12,7 +12,9 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", action="store_true", help="print diffs for all F")
     parser.add_argument("-q", default="prog1", help="question key to evaluate (default: prog1)")
+    parser.add_argument("-m", default=4, type=int, help="comparison metric version (default: 4)")
     parser.add_argument("-f", default="", help="only consider videos which name contains this filter")
+    parser.add_argument("-s", action="store_true", help="predictions are separators, not programmes")
     args = parser.parse_args()
 
     rows = []
@@ -40,7 +42,7 @@ def main() -> None:
             data = json.load(f)
         segments_predict = data["data"].get(args.q, {}).get("answer", None)
         
-        result = compare_segments(segments_true, segments_predict, version=4)
+        result = compare_segments(segments_true, segments_predict, is_separator=args.s, version=args.m)
         result["F"] = subdir.name
         rows.append(result)
         

@@ -9,7 +9,7 @@ import json
 # SRC_PATH = 'sample11/139329389.32/video_answers.json'
 SRC_PATH = 'sample11/234552207.32/video_answers.json'
 DST_PATH = 'evals/video_answers.json'
-QST_NAME = 'prg1'
+QST_NAME = 'sep1'
 
 dst_path = Path(DST_PATH)
 dst_path.parent.mkdir(exist_ok=1)

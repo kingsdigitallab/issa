@@ -8,14 +8,18 @@ from itertools import product
 from pathlib import Path
 import subprocess
 
-FPS_VALUES = [0.5, 1.0, 1.5, 2.0]
+# FPS_VALUES = [0.5, 1.0, 1.5, 2.0]
+FPS_VALUES = [1.5, 2.0]
 # FPS_VALUES = [1.5]
-VIDEO_TOKENS_VALUES = ["96k", "144k", "160k", "176k"]
+# VIDEO_TOKENS_VALUES = ["96k", "144k", "160k", "176k"]
 # VIDEO_TOKENS_VALUES = ['12k', '32k', '64k', '96k', '128k']
-ANSWER_SCRIPT = 'answer_videos_vlm.bash'
+VIDEO_TOKENS_VALUES = ['12k', '32k', '64k', '96k']
+# ANSWER_SCRIPT = 'answer_videos_vlm.bash'
+ANSWER_SCRIPT = 'answer_sep_vlm.bash'
 COPY_SCRIPT = 'cp_answer.py'
 # SEEDS=["43", "1234"]
-SEEDS=["43", "1234"]
+# SEEDS=["43", "1234"]
+SEEDS=["2345"]
 VIDEO="234"
 
 BASE_DIR = Path(__file__).resolve().parent

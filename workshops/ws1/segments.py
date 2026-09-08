@@ -198,7 +198,7 @@ def compare_segments_v3(segments_true, segments_predict, is_separator=False):
     for st in segments_true:
         st_str = f'{get_hms_from_secs(st["startTime"])} - {get_hms_from_secs(st["endTime"])}'
         if st['pred']:
-            diff.append(f'{int(st["score"]*100):>3d}% {get_hms_from_secs(st['pred']["startTime"])} - {get_hms_from_secs(st['pred']["endTime"])}  /  {st_str}')
+            diff.append(f'{int(st["score"]*100):>3d}% {get_hms_from_secs(st["pred"]["startTime"])} - {get_hms_from_secs(st["pred"]["endTime"])}  /  {st_str}')
             st_str = ''
         if st_str:
             diff.append(f'{int(st["score"]*100):>3d}% {" "*19}  /  {st_str}')
