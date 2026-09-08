@@ -3,7 +3,7 @@
         "type": "collection",
         "comment": "Two batches of videos from NLS, Grampian and others; 386 items",
         "pipelines": {
-            "part1-cpu": {
+            "default": {
                 "operations": [
                     {
                         "operator": "clip_full_video",
@@ -12,18 +12,14 @@
                     {
                         "operator": "extract_sound_ffmpeg",
                         "notes": "low resource (cpu); tested with 16 cores."
-                    }
-                ]
-            }, 
-            "part2-gpu": {
-                "operations": [                
+                    },
                     {
-                        "operator": "transcribe_speech_parakeet.disabled",
+                        "operator": "transcribe_speech_parakeet",
                         "params": {
                             "model": "nvidia/canary-1b-v2",
                             "cpu_only": 0
                         },
-                        "notes": "tested on 40+GB GPU & 40GB RAM; speed: 1/50 of real time"
+                        "notes": "tested on 40+GB GPU & 40GB RAM; speed: 1/50 of real time; cpu: 8"
                     }
                 ]
             }
