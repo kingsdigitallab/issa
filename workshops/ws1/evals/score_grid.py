@@ -2,6 +2,12 @@
 Script created by opencode:opencode/big-pickle
 Reads evals/video_answers.json, computes compare_segments_v2 scores against ground truth,
 and produces a CSV with fps x vctx grids stacked per seed.
+
+scp hpc:/scratch/prj/dh_issa/is
+sa/workshops/ws1/evals/video_answers.json video_answers_234.json
+
+python3 score_grid.py 234552207.32
+
 '''
 import argparse
 import csv
@@ -14,11 +20,11 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from segments import compare_segments
 
-# DEFAULT_VIDEO = '234552207.32'
-DEFAULT_VIDEO = '139329389.32'
+DEFAULT_VIDEO = '234552207.32'
+# DEFAULT_VIDEO = '139329389.32'
 SEGMENTS_TRUE_DIR = Path(__file__).resolve().parent.parent / 'segments_true'
 ANSWERS_FILE = Path(__file__).resolve().parent / 'video_answers_DEFAULT_VIDEO.json'
-METRIC_VERSION = 4
+DEFAULT_METRIC_VERSION = 4
 
 VCTX_DIVISOR = 2048 * 1024
 
@@ -55,6 +61,10 @@ def main():
                         help='output CSV path (default: evals/score_grid_<video>.csv)')
     parser.add_argument('-l', '--log', default=None,
                         help='output log path (default: evals/evals_<video>.txt)')
+    parser.add_argument('-s', '--sep', action='store_true',
+                        help='prediction timecodes are for separators (not programmes)')
+    parser.add_argument('-m', '--metric', default=DEFAULT_METRIC_VERSION, type=int,
+                        help='comparison metric version')
     args = parser.parse_args()
 
     gt_path = SEGMENTS_TRUE_DIR / f'{args.video}.json'
@@ -63,6 +73,7 @@ def main():
     ground_truth = json.loads(gt_path.read_text())
 
     answer_file = str(ANSWERS_FILE).replace('DEFAULT_VIDEO', args.video[:3])
+    print(f'READ {answer_file}')
     with open(answer_file) as f:
         answers = json.load(f)
 
@@ -81,7 +92,7 @@ def main():
                 continue
 
             predicted = parse_answer(entry.get('answer', []))
-            result = compare_segments(ground_truth, predicted, version=METRIC_VERSION)
+            result = compare_segments(ground_truth, predicted, is_separator=args.sep, version=args.metric)
             score = result.get('score', 0.0)
             grids[(seed, vctx, fps)] = score
             fps_set.add(fps)
@@ -106,7 +117,7 @@ def main():
                 log.write('diff: (none)\n')
             log.write('\n')
 
-    print(f'Written {log_path}')
+    print(f'WRITTEN {log_path}')
 
     fps_sorted = sorted(fps_set)
     vctx_sorted = sorted(vctx_set)
@@ -118,7 +129,7 @@ def main():
     with open(out_path, 'w', newline='') as f:
         writer = csv.writer(f)
         for seed in seeds:
-            writer.writerow([f'seed={seed}'])
+            writer.writerow([f'seed={seed}',f'metric={args.metric}'])
             writer.writerow(['vctx\\fps'] + [str(fps) for fps in fps_sorted])
             for vctx in vctx_sorted:
                 row = [str(vctx)]
@@ -128,7 +139,7 @@ def main():
                 writer.writerow(row)
             writer.writerow([])
 
-    print(f'Written {out_path}')
+    print(f'WRITTEN {out_path}')
 
 
 if __name__ == '__main__':
