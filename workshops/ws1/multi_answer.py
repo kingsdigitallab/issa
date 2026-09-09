@@ -19,7 +19,7 @@ ANSWER_SCRIPT = 'answer_sep_vlm.bash'
 COPY_SCRIPT = 'cp_answer.py'
 # SEEDS=["43", "1234"]
 # SEEDS=["43", "1234"]
-SEEDS=["2345"]
+SEEDS=["3456"]
 VIDEO="234"
 
 BASE_DIR = Path(__file__).resolve().parent
