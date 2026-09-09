@@ -11,7 +11,7 @@ SEGMENTS_TRUE_DIR = Path("./segments_true")
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", action="store_true", help="print diffs for all F")
-    parser.add_argument("-q", default="prog1", help="question key to evaluate (default: prog1)")
+    parser.add_argument("-q", default="sep1", help="question key to evaluate (default: sep1)")
     parser.add_argument("-m", default=4, type=int, help="comparison metric version (default: 4)")
     parser.add_argument("-f", default="", help="only consider videos which name contains this filter")
     parser.add_argument("-s", action="store_true", help="predictions are separators, not programmes")
