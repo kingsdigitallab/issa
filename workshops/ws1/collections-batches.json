@@ -19,7 +19,13 @@
                             "model": "nvidia/canary-1b-v2",
                             "cpu_only": 0
                         },
-                        "notes": "tested on 40+GB GPU & 40GB RAM; speed: 1/50 of real time; cpu: 8"
+                        "notes": "tested on 40+GB GPU & 40GB RAM; speed: 1/5 of real time; cpu: 8"
+                    },
+                    {
+                        "operator": "sub_clips_ffmpeg",
+                        "params": {
+                        },
+                        "notes": "low resource (cpu); cpu: 8; 12GB ram; 1/9.65 of real time (1 day)"
                     }
                 ]
             }
