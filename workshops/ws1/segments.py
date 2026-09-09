@@ -68,7 +68,8 @@ def convert_segments_from_programs_to_separators(segments):
         ret.append({
             'startTime': last_end,
             'endTime': s['startTime'],
-            'valid': 1
+            'valid': 1,
+            'tag': s.get('tag', '') or s.get('desc', '')
         })
         last_end = s['endTime']
     return ret
@@ -157,17 +158,22 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
         s_str = f'{get_hms_from_secs(s["startTime"])} - {get_hms_from_secs(s["endTime"])}'
         st_str = ''
         sp_str = ''
+        sp_tag = ''
+        st_tag = ''
         if s.get('is_true'):
             st_str = s_str
             score = int(s["score"]*100)
+            st_tag = s.get('tag', '')
             if s['pred']:
-                sp_str = f'{get_hms_from_secs(s['pred']["startTime"])} - {get_hms_from_secs(s['pred']["endTime"])}'
+                sp_str = f'{get_hms_from_secs(s["pred"]["startTime"])} - {get_hms_from_secs(s["pred"]["endTime"])}'
+                sp_tag = s['pred'].get('tag', '')
         else:
             if not s.get('true'):
                 sp_str = s_str
+                sp_tag = s.get('tag', '')
         
         if sp_str or st_str:
-            diff.append(f'{score:>3d}% {sp_str:19}  /  {st_str:19}')
+            diff.append(f'{score:>3d}% {sp_str:19}  /  {st_str:19}  |  {sp_tag} // {st_tag}')
 
     ret['diff'] = '\n'.join(diff)
 
