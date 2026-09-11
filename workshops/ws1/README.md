@@ -19,9 +19,23 @@ If not already there, place the sample videos under sample11/X.32/X.32.mp4. Wher
 ./answer_videos_vlm.bash
 ```
 
+# Metadata
+
+The NLS metadata (FILMS, Clips_Table, and their genre/series/personality/category
+lookup tables) lives on the ISSA RDS share, mirrored locally under
+`<repo-root>/data/input/NLS/batch2/NLS Metadata/` (gitignored). `copy-metadata.bash`
+pulls it down; `notebooks/nls_metadata_analysis.ipynb` joins it into one dataframe
+and reproduces the structural findings behind "programme = tape" vs "programme =
+shotlist item" and the "compilation" ambiguity. It builds on, and doesn't repeat,
+the descriptive stats and `sample-11.csv` generation already in `batch_analysis.ipynb`.
+
 # Scripts
 
 - `copy-videos.bash`: Copy the sample videos listed in `sample-11.txt` from the ISSA RDS data folder into `sample11/`
+- `copy-metadata.bash`: Copy the NLS metadata CSVs from the ISSA RDS data folder into `<repo-root>/data/input/NLS/batch2/NLS Metadata/`
+- `batch_analysis.ipynb`: Merge FILMS + Clips_Table, descriptive stats (duration/year/type distributions), and generates `sample-11.csv`
+- `notebooks/nls_metadata_analysis.ipynb`: Full relational join of all NLS metadata tables; reproduces the shotlist-timecode and "compilation" language findings; NLS review worklist; exports `metadata_hierarchy_data.json` for the dashboard below
+- `metadata_hierarchy.html` / `metadata_hierarchy_data.json`: Public dashboard (styled like `experiments/qwen3x/results.html`, served the same way via GitHub Pages) — the archive → collection → video file → programme → segment hierarchy, toggled between "as received from NLS" and "+ our analysis". Duplicate this pair per workshop as the data changes
 - `batches/vid-watcher.py`: Watch the current folder and compress every new `X.mp4` landing in it into `X/X.mp4`, removing the original on success (ffmpeg via the FrameSense singularity image)
 - `inferencers/vllm.sh`: Launch the vLLM server (Qwen3.8-27B-INT4, 256k context) with the diagnostic patches bind-mounted
 - `inferencers/vllm-patches/`: Diagnostic `[VIDEO DEBUG]` patches bind-mounted over the SIF's vLLM files (see its README)
