@@ -112,6 +112,10 @@
       "2026-09-09": {
         "count": 8,
         "uniques": 4
+      },
+      "2026-09-10": {
+        "count": 11,
+        "uniques": 7
       }
     },
     "referrers": {
@@ -229,6 +233,18 @@
           "referrer": "github.com",
           "uniques": 1
         }
+      ],
+      "2026-09-11": [
+        {
+          "count": 3,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -342,6 +358,10 @@
       },
       "2026-09-09": {
         "count": 1,
+        "uniques": 1
+      },
+      "2026-09-10": {
+        "count": 2,
         "uniques": 1
       }
     }
@@ -479,6 +499,10 @@
       "2026-09-09": {
         "count": 11,
         "uniques": 6
+      },
+      "2026-09-10": {
+        "count": 7,
+        "uniques": 7
       }
     },
     "referrers": {
@@ -816,6 +840,18 @@
           "referrer": "teams.public.onecdn.static.microsoft",
           "uniques": 1
         }
+      ],
+      "2026-09-11": [
+        {
+          "count": 10,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 3
+        },
+        {
+          "count": 2,
+          "referrer": "statics.teams.cdn.office.net",
+          "uniques": 2
+        }
       ]
     },
     "views": {
@@ -930,6 +966,10 @@
       "2026-09-09": {
         "count": 3,
         "uniques": 2
+      },
+      "2026-09-10": {
+        "count": 29,
+        "uniques": 5
       }
     }
   }
