@@ -25,8 +25,11 @@
                 "max_tokens": "30k",
                 "questions": {
                     "sep1": {
+                        "question": "List every full-screen separator between distinct programmes. A visual separator usually looks like SMPTE color bars, blank screen, production card, countdown leaders, static or white noise. It is always totally distinct in style from surrounding programmes, usually non-photographic and never intended for public audience. Compare with programmes on either side of the separator to confirm this. Return an empty list if the input doesn't contain any definite separator. Other screens within a programme like ending credits or chapter titles should not be reported as programme separators but may help finding/confirming nearby separators."
+                    },
+                    "sep1.2": {
                         "question": "List every separator between distinct programmes: any interruption between two different programmes, such as SMPTE colour bars, test cards, station idents or logos, black screens, static or noise, countdown leaders, production card, 'please stand by' slides, or any other interstitial. Ignore any other screen (title, chapter, credits, ...) that belong to a single programme. Separators look completely different from surrounding programmes, compare with both sides of the separator to confirm this. Return an empty list if the input doesn't contain any definite separator."
-                    }
+                    }                    
                 }
             },
             "answer_videos_vlm": {
