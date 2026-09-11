@@ -23,7 +23,7 @@ def main() -> None:
         if not subdir.is_dir():
             continue
         
-        if args.f not in str(subdir):
+        if not any([part in str(subdir) for part in args.f.split('|')]):
             continue
 
         answers_file = subdir / "video_answers.json"
