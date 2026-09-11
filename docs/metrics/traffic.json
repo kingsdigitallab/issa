@@ -104,6 +104,14 @@
       "2026-09-07": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-09-08": {
+        "count": 11,
+        "uniques": 6
+      },
+      "2026-09-09": {
+        "count": 8,
+        "uniques": 4
       }
     },
     "referrers": {
@@ -200,6 +208,25 @@
         {
           "count": 2,
           "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
+      ],
+      "2026-09-09": [
+        {
+          "count": 2,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
+      ],
+      "2026-09-10": [
+        {
+          "count": 2,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
           "uniques": 1
         }
       ]
@@ -308,6 +335,14 @@
       "2026-09-07": {
         "count": 11,
         "uniques": 2
+      },
+      "2026-09-08": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-09-09": {
+        "count": 1,
+        "uniques": 1
       }
     }
   },
@@ -325,6 +360,9 @@
       "visitors": 0
     },
     "2026-09-08": {
+      "visitors": 0
+    },
+    "2026-09-10": {
       "visitors": 0
     }
   },
@@ -433,6 +471,14 @@
       "2026-09-07": {
         "count": 6,
         "uniques": 5
+      },
+      "2026-09-08": {
+        "count": 6,
+        "uniques": 3
+      },
+      "2026-09-09": {
+        "count": 11,
+        "uniques": 6
       }
     },
     "referrers": {
@@ -726,6 +772,40 @@
           "referrer": "ukc-word-edit.officeapps.live.com",
           "uniques": 1
         },
+        {
+          "count": 2,
+          "referrer": "statics.teams.cdn.office.net",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
+      ],
+      "2026-09-09": [
+        {
+          "count": 9,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 3,
+          "referrer": "ukc-word-edit.officeapps.live.com",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "statics.teams.cdn.office.net",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
+      ],
+      "2026-09-10": [
         {
           "count": 2,
           "referrer": "statics.teams.cdn.office.net",
@@ -842,6 +922,14 @@
       "2026-09-07": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-09-08": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-09-09": {
+        "count": 3,
+        "uniques": 2
       }
     }
   }
