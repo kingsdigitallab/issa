@@ -93,25 +93,50 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
     Weakness: a 10 minute separator will get full hit as long as it overlaps true predictor.
     We ignre the separator predicted after all programmes
     '''
-    ret = get_default_comparison(segments_true)
 
     segments_true = convert_segments_to_seconds(segments_true)
+#     print(segments_true)
     segments_true = convert_segments_from_programs_to_separators(segments_true)
+#     print(segments_true)
     
     segments_predict = convert_segments_to_seconds(segments_predict)
 
-    if not segments_predict:
-        return ret
+    ret = get_default_comparison(segments_true)
+    
+#     if is_separator and len(segments_true) == 1:
+#         # only one programme, so no true separator
+#         # we don't want to penalise separators at the edge of the programme
+#         print('h1')
+#         print(segments_predict)
+#         if len(segments_predict) and segments_predict[0]['startTime'] == 0 and segments_predict[0]['endTime'] < 10:
+#             print('h2')
+#             segments_predict.pop(0)
+#         
+#         if len(segments_predict) == 0:
+#             ret['score'] = 1.0
+#             return ret
+
+    if not is_separator:
+        segments_predict = convert_segments_from_programs_to_separators(segments_predict)
+        
+    if len(segments_predict) < 1 or segments_predict[0]['startTime'] > 0:
+        segments_predict = [
+            {
+                "startTime": 0,
+                "endTime": 0,
+                "tag": "START",
+                "valid": 1,
+            }
+        ] + segments_predict
+    
+    print(segments_predict)
     
     if not segments_predict[-1]['valid']:
-        return ret
+        return ret    
 
     if segments_predict[-1]['startTime'] >= segments_true[-1]['endTime']:
         # ignore the separator predicted after all programmes, that's ok
         segments_predict = segments_predict[:-1]
-
-    if not is_separator:
-        segments_predict = convert_segments_from_programs_to_separators(segments_predict)
 
     paddings_in_seconds = 5
     
