@@ -1,6 +1,7 @@
 MODEL_NAME="RedHatAI/Qwen3.8-27B-INT4"
 CONTEXT="256k"
-COLLECTION_PATH=/scratch/prj/dh_issa/issa/workshops/ws1/sample11
+# COLLECTION_PATH=/scratch/prj/dh_issa/issa/workshops/ws1/sample11
+COLLECTION_PATH=/scratch/prj/dh_issa/issa/workshops/ws1/batches
 SING_FILE="/scratch/prj/dh_issa/sglang/vllm-openai_v0.28.0-cu130.sif"
 # 224k video tokens max as explained on Qwen3.x model cards, see longest_edge
 # ((224 * 1024 = 229376))
@@ -25,7 +26,7 @@ singularity exec --nv \
         --port 30000 \
         --tensor-parallel-size 1 \
         --max-model-len $CONTEXT \
-        --allowed-local-media-path "/scratch/prj/dh_issa/issa/workshops/ws1/sample11" \
+        --allowed-local-media-path "$COLLECTION_PATH" \
         --enable-chunked-prefill --max-num-batched-tokens 4096 \
         --mm-processor-kwargs '{"size": {"longest_edge": 431095808, "shortest_edge": 4096}, "max_frames": 8100}' \
         --limit-mm-per-prompt '{"image": 0, "video": 1}' \

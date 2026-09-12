@@ -26,6 +26,12 @@
                         "params": {
                         },
                         "notes": "low resource (cpu); cpu: 8; 12GB ram; 1/9.65 of real time (1 day)"
+                    },
+                    {
+                        "operator": "answer_separators_vlm2",
+                        "params": {
+                        },
+                        "notes": "80gb vram, 8 cpu, 80gb ram"
                     }
                 ]
             }
@@ -33,6 +39,20 @@
         "params": {
             "transcribe_speech_parakeet": {
                 "model": "nvidia/canary-1b-v2"
+            },
+            "answer_separators_vlm": {
+                "model": "RedHatAI/Qwen3.8-27B-INT4",
+                "seed": 1234,
+                "reasoning_effort": "xhigh",
+                "video_tokens": "64k",
+                "max_tokens": "30k",
+                "max_fps": 2,
+                "api_base": "http://localhost:30000/v1",
+                "questions": {
+                    "sep1": {
+                        "question": "List every full-screen separator between distinct programmes. A visual separator usually looks like SMPTE color bars, blank screen, production card, countdown leaders, static or white noise. It is always totally distinct in style from surrounding programmes, usually non-photographic and never intended for public audience. Compare with programmes on either side of the separator to confirm this. Return an empty list if the input doesn't contain any definite separator. Other screens within a programme like ending credits or chapter titles should not be reported as programme separators but may help finding/confirming nearby separators."
+                    }
+                }
             },
             "answer_frames_ollama": {
                 "ollama_host": "http://localhost:11434",
@@ -119,6 +139,8 @@
                 "filters": {
                     "first": "74959583.32",
                     "sample11": "100194707.32|103008963.32|106033956.32|139329389.32|140833800.32|234552207.32|260522455.32|75247299.32|82814521.32|83972061.32|91174079.32",
+                    "sample14": "75247299.32|82814521.32|83972061.32|85060728.32|91174079.32|100194707.32|103008963.32|106033956.32|139329389.32|140179431.32|140180335.32|140833800.32|144133880.32|231298910.32|234552207.32|260522455.32",
+                    "sample50": "139482741.32|91388341.32|237296874.32|75247333.32|139439541.32|103246421.32|141345565.32|139439559.32|139930798.32|141349031.32|78295433.32|266661940.32|141345573.32|139482735.32|141345571.32|139482801.32|94815554.32|139439561.32|139439519.32|139439531.32|91578577.32|141335401.32|141349035.32|211130350.32|139482793.32|141339775.32|139439551.32|139482747.32|139482733.32|141349045.32|139930733.32|138905145.32|139482729.32|106033956.32|139439573.32|103092474.32|101728380.32|223380012.32|141349041.32|239450428.32|227726889.32|139329415.32|141349033.32|78299341.32|78293831.32|139482682.32|227726885.32|139482709.32|139930727.32|99394646.32",
                     "234-25": "234552207.32"
                 }
             }            
