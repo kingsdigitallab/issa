@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISSA – NLS Metadata Hierarchy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #ffffff;
+      color: #111;
+      font-size: 15px;
+      line-height: 1.65;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+
+    /* ── Typography ─────────────────────────────────────────────────── */
+    h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+    h2 { font-size: 1.15rem; font-weight: 700; margin: 2.4rem 0 0.8rem; text-transform: uppercase;
+         letter-spacing: 0.05em; color: #333; border-bottom: 1px solid #ddd; padding-bottom: 0.35rem; }
+    h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; color: #222; }
+    p  { margin-bottom: 0.8rem; color: #333; }
+    .site-title {
+      font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: #888; margin-bottom: 1.2rem;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────── */
+    header { margin-bottom: 1.8rem; }
+    .subtitle { font-size: 1.05rem; color: #555; font-style: italic; margin-bottom: 0.5rem; }
+    .meta-row { display: flex; gap: 2rem; font-size: 0.82rem; color: #777; font-family: monospace; flex-wrap: wrap; }
+    .meta-row a { color: #2a78d6; text-decoration: none; }
+    .meta-row a:hover { text-decoration: underline; }
+
+    /* ── Controls ───────────────────────────────────────────────────── */
+    .controls {
+      display: flex; gap: 1.2rem; flex-wrap: wrap; align-items: center;
+      margin: 1rem 0 1.6rem;
+      padding: 0.8rem 1rem;
+      background: #f8f8f8;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+    }
+    .toggle-group { display: inline-flex; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; }
+    .toggle-group button {
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem;
+      padding: 0.4rem 0.9rem; border: none; background: #fff; color: #555; cursor: pointer;
+    }
+    .toggle-group button + button { border-left: 1px solid #ccc; }
+    .toggle-group button.active { background: #2a78d6; color: #fff; font-weight: 700; }
+    .controls-note { color: #888; font-size: 0.8rem; }
+
+    /* ── Chart card ─────────────────────────────────────────────────── */
+    .chart-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 1.2rem 1.3rem 1rem;
+      background: #fff;
+    }
+
+    /* ── Shared legend ───────────────────────────────────────────────── */
+    .shared-legend {
+      display: flex; gap: 1.6rem; flex-wrap: wrap;
+      margin: 0.6rem 0 1.4rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem; color: #333;
+    }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; }
+    .legend-swatch { width: 22px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+    .legend-swatch.solid-grampian   { background: #2a78d6; }
+    .legend-swatch.solid-nongrampian{ background: #eb6834; }
+    .legend-swatch.hatch-grampian    { background: repeating-linear-gradient(45deg, #2a78d6, #2a78d6 4px, #bcd6f2 4px, #bcd6f2 8px); }
+    .legend-swatch.hatch-nongrampian { background: repeating-linear-gradient(45deg, #eb6834, #eb6834 4px, #f7d0bb 4px, #f7d0bb 8px); }
+    .legend-swatch.unknown { background: #e5e5e2; border: 1px dashed #b5b5b0; }
+
+    /* ── Hierarchy bands ─────────────────────────────────────────────── */
+    .hierarchy { margin: 0.4rem 0 0.6rem; }
+    .band-row { display: flex; align-items: stretch; margin-bottom: 8px; }
+    .band-label {
+      width: 108px; flex-shrink: 0; padding-right: 0.8rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.76rem;
+      color: #777; text-transform: uppercase; letter-spacing: 0.05em;
+      display: flex; align-items: center; text-align: right; justify-content: flex-end;
+    }
+    .band-track {
+      flex: 1; display: flex; gap: 3px; height: 46px;
+    }
+    .band-segment {
+      position: relative; display: flex; overflow: hidden;
+      border-radius: 3px;
+    }
+    .segment-fill {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; font-weight: 700;
+      color: #fff; white-space: nowrap; overflow: hidden;
+      cursor: default;
+      border-right: 2px solid #fff;
+    }
+    .segment-fill:last-child { border-right: none; }
+    .segment-fill.unknown-fill {
+      background: #e5e5e2 !important; color: #999; font-weight: 400; font-style: italic;
+      border: 1px dashed #b5b5b0;
+    }
+    .segment-fill.status-warning { color: #111; }
+    .segment-fill { min-width: 3px; }
+
+    /* ── Sample band (discrete unit markers, not proportional area) ───── */
+    .sample-track { height: auto; min-height: 46px; align-items: center; }
+    .sample-group {
+      display: flex; flex-wrap: wrap; align-content: center; gap: 4px;
+      padding: 6px 8px; height: 100%;
+      background: #fafaf9; border: 1px dashed #d8d7d2; border-radius: 3px;
+    }
+    .sample-dot {
+      width: 15px; height: 15px; border-radius: 3px; flex-shrink: 0; cursor: default;
+    }
+
+    /* ── Tooltip ─────────────────────────────────────────────────────── */
+    #viz-tooltip {
+      position: fixed; pointer-events: none; z-index: 1000;
+      background: #111; color: #fff; font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.78rem; line-height: 1.4; padding: 0.5rem 0.7rem; border-radius: 4px;
+      max-width: 280px; opacity: 0; transition: opacity 0.1s ease;
+    }
+    #viz-tooltip.visible { opacity: 1; }
+    #viz-tooltip strong { color: #fff; }
+
+    /* ── Observations ────────────────────────────────────────────────── */
+    .obs-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 2rem;
+      margin-top: 0.6rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.87rem;
+    }
+    .obs-item { padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; color: #333; }
+    .obs-item strong { color: #111; }
+
+    .table-hint {
+      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem;
+      color: #777; margin-top: 0.4rem;
+    }
+    #status-bar {
+      font-family: monospace; font-size: 0.8rem; color: #888;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 700px) {
+      .obs-grid { grid-template-columns: 1fr; }
+      .band-label { width: 72px; font-size: 0.68rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="site-title">ISSA workshop 1 — NLS</div>
+
+<header>
+  <h1>NLS Metadata Hierarchy</h1>
+  <p class="subtitle">Archive → Collection → Video file → Programme → Segment — what's catalogued vs what we've worked out since</p>
+  <div class="meta-row">
+    <span>Generated: <strong id="meta-generated">—</strong></span>
+    <span>Films: <strong id="meta-films">—</strong></span>
+    <span>Collections: <strong id="meta-collections">—</strong></span>
+    <span><a href="https://github.com/kingsdigitallab/issa/blob/main/workshops/ws1/notebooks/nls_metadata_analysis.ipynb" target="_blank" rel="noopener">View the analysis notebook →</a></span>
+  </div>
+</header>
+
+<section>
+  <p>
+    NLS shared 400 catalogue records with us, split cleanly into two collections by how they're
+    described: Grampian TV news tapes and everything else. The diagram below follows FrameSense's
+    own hierarchy — archive → collection → video file → programme → segment — and shows, at each
+    level, what NLS's own metadata actually establishes versus what we've since been able to work
+    out (and where that stops). Toggle the bottom two rows to see the difference.
+  </p>
+</section>
+
+<div class="controls">
+  <div class="toggle-group" id="view-toggle">
+    <button data-view="catalogued" class="active">As received from NLS</button>
+    <button data-view="analysis">+ Our analysis</button>
+  </div>
+  <span class="controls-note" id="toggle-caption">Programme and Segment aren't structured fields in NLS's catalogue — both collections show as undetermined.</span>
+</div>
+
+<div id="status-bar">Loading metadata_hierarchy_data.json…</div>
+
+<section>
+  <h2>Hierarchy</h2>
+
+  <div class="shared-legend">
+    <div class="legend-item"><div class="legend-swatch solid-grampian"></div>Grampian — verified</div>
+    <div class="legend-item"><div class="legend-swatch hatch-grampian"></div>Grampian — estimated / assumed</div>
+    <div class="legend-item"><div class="legend-swatch solid-nongrampian"></div>non-Grampian — verified</div>
+    <div class="legend-item"><div class="legend-swatch hatch-nongrampian"></div>non-Grampian — estimated / assumed</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#fab219"></div>⚠ Needs human check</div>
+    <div class="legend-item"><div class="legend-swatch unknown"></div>Not yet determined</div>
+  </div>
+
+  <div class="chart-card">
+    <div class="hierarchy" id="hierarchy-root"></div>
+    <p class="table-hint">Band width = share of the 400 films, except "Working sample" — each square there is one specific film from the hand-picked 16-film sample (solid = annotated, hatched = still pending), positioned under the collection it belongs to. Hover a segment or square for the numbers behind it.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Observations</h2>
+  <div class="obs-grid" id="obs-grid">
+    <div class="obs-item no-data">Loading…</div>
+  </div>
+</section>
+
+<div id="viz-tooltip"></div>
+
+<script>
+const COLORS = {
+  grampian: '#2a78d6',
+  grampian_light: '#bcd6f2',
+  non_grampian: '#eb6834',
+  non_grampian_light: '#f7d0bb',
+  unknown: '#e5e5e2',
+  /* Reserved status color (never themed, never reused as a series hue) —
+     this is a state ("needs human review"), not a third collection. */
+  warning: '#fab219',
+};
+
+function hatch(hue, light) {
+  return `repeating-linear-gradient(45deg, ${hue}, ${hue} 4px, ${light} 4px, ${light} 8px)`;
+}
+
+const tooltip = document.getElementById('viz-tooltip');
+function showTooltip(evt, html) {
+  tooltip.innerHTML = html;
+  tooltip.classList.add('visible');
+  moveTooltip(evt);
+}
+function moveTooltip(evt) {
+  const pad = 14;
+  let x = evt.clientX + pad, y = evt.clientY + pad;
+  if (x + 300 > window.innerWidth) x = evt.clientX - 300 - pad;
+  if (y + 90 > window.innerHeight) y = evt.clientY - 90 - pad;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+function hideTooltip() { tooltip.classList.remove('visible'); }
+
+/* absPct = this segment's share of the FULL track width (not just its
+   parent), used only to decide whether the label fits — nested segments
+   compound their parent's widthPct, so a "20%-of-a-half" segment is really
+   10% of the page and can't be judged from its own widthPct alone. Below
+   the threshold the label is dropped and the number lives in the tooltip
+   only, rather than rendering as clipped, unreadable text. */
+function seg(widthPct, fill, label, tooltipHtml, extraClass, absPct) {
+  const div = document.createElement('div');
+  div.className = 'segment-fill' + (extraClass ? ' ' + extraClass : '');
+  div.style.flex = `0 0 ${widthPct}%`;
+  div.style.background = fill;
+  div.textContent = (absPct === undefined || absPct >= 6) ? label : '';
+  div.addEventListener('mouseenter', e => showTooltip(e, tooltipHtml));
+  div.addEventListener('mousemove', moveTooltip);
+  div.addEventListener('mouseleave', hideTooltip);
+  return div;
+}
+
+function band(labelText, segments, extraTrackClass) {
+  const row = document.createElement('div');
+  row.className = 'band-row';
+
+  const label = document.createElement('div');
+  label.className = 'band-label';
+  label.textContent = labelText;
+  row.appendChild(label);
+
+  const track = document.createElement('div');
+  track.className = 'band-track' + (extraTrackClass ? ' ' + extraTrackClass : '');
+  segments.forEach(s => {
+    const wrap = document.createElement('div');
+    wrap.className = 'band-segment';
+    wrap.style.flex = `0 0 ${s.widthPct}%`;
+    s.subsegments.forEach(sub => wrap.appendChild(sub));
+    track.appendChild(wrap);
+  });
+  row.appendChild(track);
+  return row;
+}
+
+/* Geoffroy's 16-film working sample, shown as discrete unit markers rather
+   than a proportional-width fill — 16/400 would be an invisible sliver if
+   drawn to scale, and the point here is "which specific films", not "what
+   share of the collection". */
+function sampleGroup(items, wantGrampian) {
+  const group = document.createElement('div');
+  group.className = 'sample-group';
+  items
+    .filter(item => item.is_grampian === wantGrampian)
+    .forEach(item => {
+      const dot = document.createElement('div');
+      const done = item.progs > 0;
+      const base = wantGrampian ? COLORS.grampian : COLORS.non_grampian;
+      const light = wantGrampian ? COLORS.grampian_light : COLORS.non_grampian_light;
+      dot.className = 'sample-dot';
+      dot.style.background = done ? base : hatch(base, light);
+      dot.addEventListener('mouseenter', e => showTooltip(e,
+        `<strong>${item.title}</strong><br>DOD ${item.dod} · ref ${item.ref_no}<br>${
+          done ? `${item.progs} programme${item.progs === 1 ? '' : 's'} annotated` : 'not yet annotated (progs = 0)'
+        }`));
+      dot.addEventListener('mousemove', moveTooltip);
+      dot.addEventListener('mouseleave', hideTooltip);
+      group.appendChild(dot);
+    });
+  return group;
+}
+
+let currentView = 'catalogued';
+
+function render(data) {
+  document.getElementById('meta-generated').textContent = data.generated_at;
+  document.getElementById('meta-films').textContent =
+    data.collections.reduce((a, c) => a + c.file_count, 0);
+  document.getElementById('meta-collections').textContent = data.collections.length;
+
+  const grampian = data.collections.find(c => c.id === 'grampian');
+  const nonGrampian = data.collections.find(c => c.id === 'non_grampian');
+  const total = grampian.file_count + nonGrampian.file_count;
+  const gPct = (grampian.file_count / total) * 100;
+  const nPct = (nonGrampian.file_count / total) * 100;
+
+  const root = document.getElementById('hierarchy-root');
+  root.innerHTML = '';
+
+  /* Archive — single band, not split */
+  root.appendChild(band('Archive', [
+    { widthPct: 100, subsegments: [
+      seg(100, '#555', `NLS (${total} films in this batch)`,
+        `<strong>NLS archive</strong><br>${total} catalogue records shared with ISSA so far.`),
+    ]},
+  ]));
+
+  /* Collection */
+  root.appendChild(band('Collection', [
+    { widthPct: gPct, subsegments: [
+      seg(100, COLORS.grampian, `Grampian (${grampian.file_count})`,
+        `<strong>Grampian</strong><br>${grampian.file_count} tv news tapes.`),
+    ]},
+    { widthPct: nPct, subsegments: [
+      seg(100, COLORS.non_grampian, `non-Grampian (${nonGrampian.file_count})`,
+        `<strong>non-Grampian</strong><br>${nonGrampian.file_count} films across all other catalogued types.`),
+    ]},
+  ]));
+
+  /* File — same cardinality as Collection at this stage */
+  root.appendChild(band('Video file', [
+    { widthPct: gPct, subsegments: [
+      seg(100, COLORS.grampian, `${grampian.file_count} files`,
+        `<strong>Grampian files</strong><br>One video file per catalogue record.`),
+    ]},
+    { widthPct: nPct, subsegments: [
+      seg(100, COLORS.non_grampian, `${nonGrampian.file_count} files`,
+        `<strong>non-Grampian files</strong><br>One video file per catalogue record.`),
+    ]},
+  ]));
+
+  /* Working sample — Geoffroy's 16-film hand-picked sample, shown as
+     discrete markers (solid = has a progs count, hatched = still pending)
+     rather than a proportional fill. Only rendered if the JSON carries it
+     (older exports won't have `items` yet). */
+  const sampleItems = data.sample_worklist && data.sample_worklist.items;
+  if (sampleItems && sampleItems.length) {
+    root.appendChild(band('Working sample', [
+      { widthPct: gPct, subsegments: [sampleGroup(sampleItems, true)] },
+      { widthPct: nPct, subsegments: [sampleGroup(sampleItems, false)] },
+    ], 'sample-track'));
+  }
+
+  /* Programme */
+  const programmeSegs = [];
+  if (currentView === 'catalogued') {
+    programmeSegs.push(
+      { widthPct: gPct, subsegments: [
+        seg(100, COLORS.unknown, 'not a structured field',
+          `<strong>Grampian — programme</strong><br>NLS's catalogue has no dedicated programme-count field. All we get is free-text \`shotlist\` and \`type\`.`,
+          'unknown-fill'),
+      ]},
+      { widthPct: nPct, subsegments: [
+        seg(100, COLORS.unknown, 'not a structured field',
+          `<strong>non-Grampian — programme</strong><br>Same gap — no dedicated field states "one programme."`,
+          'unknown-fill'),
+      ]},
+    );
+  } else {
+    const gVerifiedPct = (grampian.programme.verified_file_count / grampian.file_count) * 100;
+    const gEstPct = 100 - gVerifiedPct;
+    const nExceptions = nonGrampian.programme.known_exception_ref_no.length;
+    const nVerifiedPct = (nonGrampian.programme.verified_file_count / nonGrampian.file_count) * 100;
+    const nExceptionsPct = (nExceptions / nonGrampian.file_count) * 100;
+    const nAssumedPct = 100 - nVerifiedPct - nExceptionsPct;
+
+    programmeSegs.push(
+      { widthPct: gPct, subsegments: [
+        seg(gVerifiedPct, COLORS.grampian, 'verified',
+          `<strong>Grampian — programme (verified)</strong><br>${grampian.programme.verified_file_count}/${grampian.file_count} tapes have a human-checked programme count, e.g. ${
+            Object.entries(grampian.programme.estimated_count_distribution).map(([k,v]) => `${v}×${k}`).join(', ')
+          } items.`, null, gPct * gVerifiedPct / 100),
+        seg(gEstPct, hatch(COLORS.grampian, COLORS.grampian_light), 'estimated / pending',
+          `<strong>Grampian — programme (pending)</strong><br>${grampian.file_count - grampian.programme.verified_file_count}/${grampian.file_count} tapes: shotlist has the right timecoded shape to estimate a count, but it's not yet confirmed one line = one broadcast programme, and not yet counted at population scale.`, null, gPct * gEstPct / 100),
+      ]},
+      { widthPct: nPct, subsegments: [
+        seg(nVerifiedPct, COLORS.non_grampian, 'verified: 1',
+          `<strong>non-Grampian — programme (verified)</strong><br>${nonGrampian.programme.verified_file_count}/${nonGrampian.file_count} confirmed as a single programme.`, null, nPct * nVerifiedPct / 100),
+        seg(nExceptionsPct, COLORS.warning, '⚠ needs check',
+          `<strong>non-Grampian — programme (exceptions)</strong><br>${nExceptions} files use "compilation" language despite looking structurally single-programme: ref no ${nonGrampian.programme.known_exception_ref_no.join(', ')}. Needs an eyes-on-video check.`,
+          'status-warning', nPct * nExceptionsPct / 100),
+        seg(nAssumedPct, hatch(COLORS.non_grampian, COLORS.non_grampian_light), 'assumed: 1',
+          `<strong>non-Grampian — programme (assumed)</strong><br>Remaining files default to "one programme per file" — not individually verified.`, null, nPct * nAssumedPct / 100),
+      ]},
+    );
+  }
+  root.appendChild(band('Programme', programmeSegs));
+
+  /* Segment */
+  const segmentSegs = [];
+  if (currentView === 'catalogued') {
+    segmentSegs.push(
+      { widthPct: gPct, subsegments: [
+        seg(100, COLORS.unknown, 'not a structured field',
+          `<strong>Grampian — segment</strong><br>No dedicated segment/shot field.`, 'unknown-fill'),
+      ]},
+      { widthPct: nPct, subsegments: [
+        seg(100, COLORS.unknown, 'not a structured field',
+          `<strong>non-Grampian — segment</strong><br>No dedicated segment/shot field.`, 'unknown-fill'),
+      ]},
+    );
+  } else {
+    segmentSegs.push(
+      { widthPct: gPct, subsegments: [
+        seg(100, COLORS.unknown, 'unknown',
+          `<strong>Grampian — segment</strong><br>${grampian.segment.note}`, 'unknown-fill'),
+      ]},
+      { widthPct: nPct, subsegments: [
+        seg(100, hatch(COLORS.non_grampian, COLORS.non_grampian_light), 'shotlist prose (unvalidated)',
+          `<strong>non-Grampian — segment</strong><br>${nonGrampian.segment.note}`),
+      ]},
+    );
+  }
+  root.appendChild(band('Segment', segmentSegs));
+
+  renderObservations(data, grampian, nonGrampian);
+}
+
+/* Each bullet is independent: if the JSON's shape ever drifts (a field
+   renamed, a section dropped from an older export), one missing field
+   should skip that one line, not blank the whole observations panel — a
+   safe(fn) call returns null on any error and gets filtered out below. */
+function safe(fn) {
+  try { return fn(); } catch { return null; }
+}
+
+function renderObservations(data, grampian, nonGrampian) {
+  const grid = document.getElementById('obs-grid');
+  const items = [];
+
+  items.push(safe(() =>
+    `<strong>${grampian.programme.verified_file_count}/${grampian.file_count}</strong> Grampian tapes have a verified programme count so far.`));
+  items.push(safe(() =>
+    `<strong>${nonGrampian.programme.verified_file_count}/${nonGrampian.file_count}</strong> non-Grampian files verified as single-programme.`));
+  items.push(safe(() =>
+    `<strong>${nonGrampian.programme.known_exception_ref_no.length} known exceptions</strong> — "compilation" language despite single-programme structure: ref no ${nonGrampian.programme.known_exception_ref_no.join(', ')}.`));
+  items.push(safe(() =>
+    `<strong>${data.compilation_language_check.grampian_files_not_using_the_word}</strong> Grampian tapes never use the word "compilation" despite matching the multi-item structure — the shotlist pattern is the reliable signal, not the language.`));
+  items.push(safe(() => {
+    const pending = data.sample_worklist.total - data.sample_worklist.with_progs;
+    return `<strong>${pending}/${data.sample_worklist.total}</strong> files in the working sample still need a programme count: ${data.sample_worklist.pending_dod.join(', ')}.`;
+  }));
+  Object.entries(data.coverage || {}).forEach(([name, c]) => {
+    items.push(safe(() => {
+      const pct = Math.round((c.films_with_at_least_one / c.total_films) * 100);
+      return `<strong>${name}</strong>: ${c.films_with_at_least_one}/${c.total_films} films (${pct}%) have at least one — these lookup tables are archive-wide, not scoped to our batch.`;
+    }));
+  });
+
+  grid.innerHTML = items.filter(Boolean).map(html => `<div class="obs-item">${html}</div>`).join('')
+    || '<div class="obs-item no-data">No observations available.</div>';
+}
+
+let LOADED_DATA = null;
+
+/* Deep-linkable toggle state, e.g. metadata_hierarchy.html?view=analysis */
+const requestedView = new URLSearchParams(location.search).get('view');
+if (requestedView === 'analysis') {
+  currentView = 'analysis';
+  document.querySelectorAll('#view-toggle button').forEach(b =>
+    b.classList.toggle('active', b.dataset.view === 'analysis'));
+  document.getElementById('toggle-caption').textContent =
+    "Programme and Segment now show what our analysis has worked out — verified counts, estimates, and known exceptions.";
+}
+
+fetch('metadata_hierarchy_data.json')
+  .then(r => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  })
+  .then(data => {
+    LOADED_DATA = data;
+    render(data);
+    document.getElementById('status-bar').textContent = '';
+  })
+  .catch(err => {
+    document.getElementById('status-bar').textContent =
+      `⚠ Could not load metadata_hierarchy_data.json — ${err.message}. Serve this file from a local web server (e.g. python -m http.server), or view it via GitHub Pages.`;
+  });
+
+document.getElementById('view-toggle').addEventListener('click', e => {
+  const btn = e.target.closest('button[data-view]');
+  if (!btn) return;
+  currentView = btn.dataset.view;
+  document.querySelectorAll('#view-toggle button').forEach(b => b.classList.toggle('active', b === btn));
+  document.getElementById('toggle-caption').textContent = currentView === 'catalogued'
+    ? "Programme and Segment aren't structured fields in NLS's catalogue — both collections show as undetermined."
+    : "Programme and Segment now show what our analysis has worked out — verified counts, estimates, and known exceptions.";
+  if (LOADED_DATA) render(LOADED_DATA);
+});
+</script>
+</body>
+</html>

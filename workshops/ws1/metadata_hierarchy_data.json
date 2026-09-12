@@ -1,0 +1,220 @@
+{
+  "generated_at": "2026-09-11T19:09",
+  "archive": "NLS",
+  "collections": [
+    {
+      "id": "grampian",
+      "name": "Grampian (tv news)",
+      "file_count": 200,
+      "programme": {
+        "status": "estimated_pending_verification",
+        "note": "Count of discrete timecoded shotlist lines per tape \u2014 a strong candidate for programme count, not yet confirmed that one line always equals one broadcast programme.",
+        "estimated_count_distribution": {
+          "1": 2,
+          "3": 3,
+          "4": 2,
+          "5": 5,
+          "6": 11,
+          "7": 17,
+          "8": 18,
+          "9": 21,
+          "10": 24,
+          "11": 16,
+          "12": 21,
+          "13": 15,
+          "14": 13,
+          "15": 9,
+          "16": 10,
+          "17": 3,
+          "18": 3,
+          "19": 1,
+          "20": 1,
+          "26": 1,
+          "30": 1,
+          "32": 1,
+          "38": 1,
+          "101": 1
+        },
+        "verified_file_count": 3
+      },
+      "segment": {
+        "status": "unknown",
+        "note": "No segment-level ground truth exists yet for Grampian items."
+      }
+    },
+    {
+      "id": "non_grampian",
+      "name": "non-Grampian (single programme)",
+      "file_count": 200,
+      "programme": {
+        "status": "assumed_one_per_file",
+        "note": "Default assumption; known exceptions listed below.",
+        "known_exception_ref_no": [
+          1493,
+          7340,
+          7726
+        ],
+        "verified_file_count": 10
+      },
+      "segment": {
+        "status": "shotlist_prose_unvalidated",
+        "note": "Shotlist gives prose shot descriptions \u2014 usable as inner-segmentation ground truth, not yet validated."
+      }
+    }
+  ],
+  "coverage": {
+    "genres": {
+      "films_with_at_least_one": 179,
+      "total_films": 400
+    },
+    "series": {
+      "films_with_at_least_one": 22,
+      "total_films": 400
+    },
+    "personalities": {
+      "films_with_at_least_one": 100,
+      "total_films": 400
+    },
+    "categories": {
+      "films_with_at_least_one": 179,
+      "total_films": 400
+    }
+  },
+  "sparse_fields_non_null_rate": {
+    "TV Episode Title": 0.0025,
+    "Tx Date": 0.0,
+    "Producer (tv)": 0.005,
+    "Certificate": 0.005
+  },
+  "sample_worklist": {
+    "total": 16,
+    "with_progs": 12,
+    "pending_dod": [
+      "140179431",
+      "140180335",
+      "144133880",
+      "231298910"
+    ],
+    "items": [
+      {
+        "dod": "75247299",
+        "ref_no": 79,
+        "title": "CANALS IN SCOTLAND",
+        "is_grampian": false,
+        "progs": 1
+      },
+      {
+        "dod": "82814521",
+        "ref_no": 2912,
+        "title": "SISYPHUS",
+        "is_grampian": false,
+        "progs": 1
+      },
+      {
+        "dod": "83972061",
+        "ref_no": 3814,
+        "title": "LES BETES NOIRES",
+        "is_grampian": false,
+        "progs": 1
+      },
+      {
+        "dod": "85060728",
+        "ref_no": 7340,
+        "title": "[MAGAZINE - LOOKING BACK]",
+        "is_grampian": false,
+        "progs": 1
+      },
+      {
+        "dod": "91174079",
+        "ref_no": 1102,
+        "title": "CLEAN FOOD",
+        "is_grampian": false,
+        "progs": 1
+      },
+      {
+        "dod": "100194707",
+        "ref_no": 105,
+        "title": "AMATEUR CINEMATOGRAPHY",
+        "is_grampian": false,
+        "progs": 1
+      },
+      {
+        "dod": "103008963",
+        "ref_no": 1111,
+        "title": "ROBOT THREE",
+        "is_grampian": false,
+        "progs": 1
+      },
+      {
+        "dod": "106033956",
+        "ref_no": 7726,
+        "title": "(GLASGOW STREET SCENES / \"KILL THE BILL\" DEMONSTRATION)",
+        "is_grampian": false,
+        "progs": 1
+      },
+      {
+        "dod": "139329389",
+        "ref_no": 10748,
+        "title": "[GRAMPIAN TELEVISION NEWS TAPE L0139]",
+        "is_grampian": true,
+        "progs": 6
+      },
+      {
+        "dod": "140179431",
+        "ref_no": 10807,
+        "title": "[GRAMPIAN TELEVISION NEWS TAPE L0103]",
+        "is_grampian": true,
+        "progs": 0
+      },
+      {
+        "dod": "140180335",
+        "ref_no": 10777,
+        "title": "[GRAMPIAN TELEVISION NEWS TAPE L0144]",
+        "is_grampian": true,
+        "progs": 0
+      },
+      {
+        "dod": "140833800",
+        "ref_no": 10973,
+        "title": "[GRAMPIAN TELEVISION NEWS TAPE L0337]",
+        "is_grampian": true,
+        "progs": 4
+      },
+      {
+        "dod": "144133880",
+        "ref_no": 12043,
+        "title": "[GRAMPIAN TELEVISION NEWS TAPE L0858]",
+        "is_grampian": true,
+        "progs": 0
+      },
+      {
+        "dod": "231298910",
+        "ref_no": 9071,
+        "title": "[MAC MOVIES ARCHIVE COMPILATION 3]",
+        "is_grampian": false,
+        "progs": 0
+      },
+      {
+        "dod": "234552207",
+        "ref_no": 13044,
+        "title": "[GRAMPIAN TELEVISION NEWS TAPE L1355]",
+        "is_grampian": true,
+        "progs": 25
+      },
+      {
+        "dod": "260522455",
+        "ref_no": 157,
+        "title": "(ANTI-GAS PRECAUTIONS IN GLASGOW)",
+        "is_grampian": false,
+        "progs": 1
+      }
+    ]
+  },
+  "compilation_language_check": {
+    "total_films_mentioning_compilation": 172,
+    "inside_grampian_group": 169,
+    "outside_grampian_group": 3,
+    "grampian_files_not_using_the_word": 31,
+    "known_blind_spot": "Search only scanned synopsis/additionalAndContextualInformation, not title \u2014 e.g. ref 9071 'MAC MOVIES ARCHIVE COMPILATION 3' is missed."
+  }
+}
