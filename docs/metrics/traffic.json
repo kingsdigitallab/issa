@@ -120,6 +120,10 @@
       "2026-09-11": {
         "count": 4,
         "uniques": 2
+      },
+      "2026-09-12": {
+        "count": 5,
+        "uniques": 5
       }
     },
     "referrers": {
@@ -261,6 +265,18 @@
           "referrer": "teams.public.onecdn.static.microsoft",
           "uniques": 1
         }
+      ],
+      "2026-09-13": [
+        {
+          "count": 3,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -383,6 +399,10 @@
       "2026-09-11": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-09-12": {
+        "count": 0,
+        "uniques": 0
       }
     }
   },
@@ -530,6 +550,10 @@
       "2026-09-11": {
         "count": 5,
         "uniques": 2
+      },
+      "2026-09-12": {
+        "count": 13,
+        "uniques": 6
       }
     },
     "referrers": {
@@ -901,6 +925,28 @@
           "referrer": "Google",
           "uniques": 1
         }
+      ],
+      "2026-09-13": [
+        {
+          "count": 11,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 3
+        },
+        {
+          "count": 3,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "statics.teams.cdn.office.net",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1023,6 +1069,10 @@
       "2026-09-11": {
         "count": 12,
         "uniques": 3
+      },
+      "2026-09-12": {
+        "count": 0,
+        "uniques": 0
       }
     }
   }
