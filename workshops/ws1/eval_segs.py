@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from segments import compare_segments, load_segments, validate_segments
 
-SOURCE_DIR = Path("./sample11")
+SOURCE_DIR = Path("./batches")
 SEGMENTS_TRUE_DIR = Path("./segments_true")
 
 

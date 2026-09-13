@@ -12,11 +12,14 @@ stack of five horizontal bands (top to bottom):
 4. "false predictions gap mid-frames": medium frame thumbnails from the middle of each
    gap between predicted segments with no time overlap with any ground-truth gap
 5. "predicted segments": thin bars of the predicted segments with vertical start/end
-   timecodes (sample11/<video>/video_answers.json data[<key>], or, when -e is passed,
-   evals/video_answers_<video prefix>.json [<key>])
-A subtitle under the title shows the F1 score (compare_segments v4 on separators), the
-number of matches, omissions (unmatched ground segments), unmatched predictions, and
-the model processing duration when recorded in the answers file.
+   timecodes (batches/<video>/video_answers.json data[<key>], or, when -e is passed,
+   evals/video_answers_<video prefix>.json [<key>]); when -s is passed, the predictions
+   are separators instead and this band shows the programmes they imply (the intervals
+   between consecutive separators, closed by the video start and end)
+A subtitle under the title shows the F1 score (compare_segments v4 on separators, with
+is_separator set when -s is passed), the number of matches, omissions (unmatched ground
+segments), unmatched predictions, and the model processing duration when recorded in the
+answers file.
 '''
 import argparse
 import base64
@@ -34,9 +37,10 @@ except ImportError:
     PilImage = None
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
-from segments import compare_segments, convert_segments_to_seconds, load_segments
+from segments import (compare_segments, convert_segments_to_seconds, get_hms_from_secs,
+                      load_segments)
 
-SOURCE_DIR = Path('./sample11')
+SOURCE_DIR = Path('./batches')
 SEGMENTS_TRUE_DIR = Path('./segments_true')
 OUT_DIR = Path('./evals')
 VIDEO_PREFIX_LEN = 3
@@ -186,6 +190,33 @@ def load_predictions(answers_file: Path, key: str) -> tuple:
         except (KeyError, TypeError, ValueError):
             processing_duration = None
     return ret, model, processing_duration
+
+
+def make_program(start_time: float, end_time: float) -> dict:
+    '''One programme segment with float times and HH:MM:SS timecode labels.'''
+    ret = {
+        'startTime': start_time,
+        'endTime': end_time,
+        'start': get_hms_from_secs(start_time),
+        'end': get_hms_from_secs(end_time),
+        'valid': 1,
+    }
+    return ret
+
+
+def convert_separators_to_programs(segments: list, duration: float) -> list:
+    '''Programmes implied by separator segments: the intervals between consecutive
+    separators, from the video start to the first separator, and from the last separator
+    to the video end. Expects segments already converted to seconds.'''
+    ret = []
+    last_end = 0.0
+    for sep in sorted(segments, key=lambda s: s['startTime']):
+        if sep['startTime'] > last_end:
+            ret.append(make_program(last_end, sep['startTime']))
+        last_end = max(last_end, sep['endTime'])
+    if duration > last_end:
+        ret.append(make_program(last_end, duration))
+    return ret
 
 
 def format_duration(seconds: float) -> str:
@@ -395,11 +426,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description='Render an SVG timeline of true vs predicted programme intervals in a video.')
     parser.add_argument('key', help='answer key in the answers file, e.g. prg1 '
-                                    '(with -e, e.g. fps-1.0-vctx-96-re-xhigh-s-2345)')
+                                    '(with -e, e.g. fps-1.0-vctx-96-re-xhigh-s-2345; '
+                                    'with -s, e.g. sep1)')
     parser.add_argument('video', help='video filename without extension, e.g. 139329389.32')
     parser.add_argument('-e', '--evals', action='store_true',
                         help=f'read the answer from {OUT_DIR}/video_answers_<video '
                              f'prefix>.json instead of {SOURCE_DIR}/<video>/video_answers.json')
+    parser.add_argument('-s', '--separators', action='store_true',
+                        help='predictions are separators, not programmes; the predicted '
+                             'segments band shows the programmes they imply')
     parser.add_argument('-o', '--out', default=None,
                         help=f'output SVG path (default: {OUT_DIR}/<video>_<key>.svg)')
     args = parser.parse_args()
@@ -426,7 +461,8 @@ def main() -> None:
 
     subtitle = ''
     if ground_raw:
-        metrics = compare_segments(ground_raw, predictions_raw, version=METRIC_VERSION)
+        metrics = compare_segments(ground_raw, predictions_raw,
+                                   is_separator=args.separators, version=METRIC_VERSION)
         omissions = metrics['expected'] - metrics['matched']
         subtitle = build_subtitle(metrics['score'], metrics['matched'], metrics['expected'],
                                   omissions, metrics['extra'], processing_duration)
@@ -437,6 +473,9 @@ def main() -> None:
                         if 'endTime' in s] or [0])
     if duration <= 0:
         sys.exit('ERROR: could not determine the video duration')
+
+    if args.separators:
+        predicted_segments = convert_separators_to_programs(predicted_segments, duration)
 
     px_per_sec = (SVG_WIDTH - 2 * LEFT_MARGIN) / duration
 

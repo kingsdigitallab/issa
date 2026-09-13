@@ -96,6 +96,9 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
 
     segments_true = convert_segments_to_seconds(segments_true)
 #     print(segments_true)
+    last_prog_time = 0
+    if segments_true:
+        last_prog_time = segments_true[-1]['endTime']
     segments_true = convert_segments_from_programs_to_separators(segments_true)
 #     print(segments_true)
     
@@ -134,7 +137,7 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
     if not segments_predict[-1]['valid']:
         return ret    
 
-    if segments_predict[-1]['startTime'] >= segments_true[-1]['endTime']:
+    if segments_predict[-1]['startTime'] >= last_prog_time:
         # ignore the separator predicted after all programmes, that's ok
         segments_predict = segments_predict[:-1]
 
@@ -169,8 +172,8 @@ def compare_segments_v4(segments_true, segments_predict, is_separator=False):
     # F1
     ret['score'] = 2 * ret['matched'] / (2 * ret['matched'] + ret['extra'] + false_negatives)
 
-    if segments_predict:
-        beyond = segments_predict[-1]['endTime'] / segments_true[-1]['endTime']
+    if segments_predict and last_prog_time:
+        beyond = segments_predict[-1]['endTime'] / last_prog_time
         if beyond > 1:
             # ret['score'] /= beyond
             ret['beyond'] = beyond
