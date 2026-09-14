@@ -12,6 +12,7 @@ print(f'{"file":40s} {"sep":3s} {"err":3s}')
 
 sep_types = Counter()
 
+files_count = 0
 for file_path in files:
     data = json.loads(file_path.read_text())['data']
     sep1 = data['sep1']
@@ -25,7 +26,13 @@ for file_path in files:
         err_count_str = str(err_count_str) if err_count_str else ''
         print(f'{str(file_path):40s} {len(seps):3d} {err_count_str:3s}')
 
+    files_count += 1
+
 print()
 
 for type_count in sep_types.most_common(50):
     print(f'{type_count[1]} {type_count[0]}')
+
+print()
+
+print(f'{files_count} files;')
