@@ -20,6 +20,8 @@ A subtitle under the title shows the F1 score (compare_segments v4 on separators
 is_separator set when -s is passed), the number of matches, omissions (unmatched ground
 segments), unmatched predictions, and the model processing duration when recorded in the
 answers file.
+A missing segments_true/<video>.json is treated as ground truth consisting of a single
+programme spanning the whole video.
 '''
 import argparse
 import base64
@@ -45,6 +47,7 @@ SEGMENTS_TRUE_DIR = Path('./segments_true')
 OUT_DIR = Path('./evals')
 VIDEO_PREFIX_LEN = 3
 METRIC_VERSION = 4
+NO_GROUND_TRUTH_DESC = 'single programme (no ground truth file)'
 
 SVG_WIDTH = 1600
 LEFT_MARGIN = 50
@@ -446,7 +449,12 @@ def main() -> None:
     if not video_path.exists():
         sys.exit(f'ERROR: video not found: {video_path}')
 
-    ground_raw = load_segments(args.video, SEGMENTS_TRUE_DIR)
+    duration = get_video_duration(video_path, ffprobe_exe)
+    ground_file = SEGMENTS_TRUE_DIR / f'{args.video}.json'
+    if ground_file.exists():
+        ground_raw = load_segments(args.video, SEGMENTS_TRUE_DIR)
+    else:
+        ground_raw = []
     ground_segments = [s for s in convert_segments_to_seconds(ground_raw)
                        if s.get('valid')]
     if args.evals:
@@ -459,6 +467,18 @@ def main() -> None:
     predicted_segments = [s for s in convert_segments_to_seconds(predictions_raw)
                            if s.get('valid')]
 
+    if duration <= 0:
+        duration = max([s['endTime'] for s in ground_segments + predicted_segments
+                        if 'endTime' in s] or [0])
+    if duration <= 0:
+        sys.exit('ERROR: could not determine the video duration')
+
+    if not ground_file.exists():
+        ground_raw = [make_program(0.0, duration)]
+        ground_raw[0]['desc'] = NO_GROUND_TRUTH_DESC
+        ground_segments = [s for s in convert_segments_to_seconds(ground_raw)
+                           if s.get('valid')]
+
     subtitle = ''
     if ground_raw:
         metrics = compare_segments(ground_raw, predictions_raw,
@@ -466,13 +486,6 @@ def main() -> None:
         omissions = metrics['expected'] - metrics['matched']
         subtitle = build_subtitle(metrics['score'], metrics['matched'], metrics['expected'],
                                   omissions, metrics['extra'], processing_duration)
-
-    duration = get_video_duration(video_path, ffprobe_exe)
-    if duration <= 0:
-        duration = max([s['endTime'] for s in ground_segments + predicted_segments
-                        if 'endTime' in s] or [0])
-    if duration <= 0:
-        sys.exit('ERROR: could not determine the video duration')
 
     if args.separators:
         predicted_segments = convert_separators_to_programs(predicted_segments, duration)
