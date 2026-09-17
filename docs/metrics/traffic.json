@@ -136,6 +136,10 @@
       "2026-09-15": {
         "count": 11,
         "uniques": 6
+      },
+      "2026-09-16": {
+        "count": 1,
+        "uniques": 1
       }
     },
     "referrers": {
@@ -340,6 +344,23 @@
           "referrer": "teams.public.onecdn.static.microsoft",
           "uniques": 1
         }
+      ],
+      "2026-09-17": [
+        {
+          "count": 3,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -476,6 +497,10 @@
         "uniques": 0
       },
       "2026-09-15": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-09-16": {
         "count": 0,
         "uniques": 0
       }
@@ -644,6 +669,10 @@
       "2026-09-15": {
         "count": 13,
         "uniques": 8
+      },
+      "2026-09-16": {
+        "count": 5,
+        "uniques": 4
       }
     },
     "referrers": {
@@ -1103,6 +1132,28 @@
           "referrer": "kingsdigitallab.github.io",
           "uniques": 1
         }
+      ],
+      "2026-09-17": [
+        {
+          "count": 14,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 5
+        },
+        {
+          "count": 3,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1241,6 +1292,10 @@
       "2026-09-15": {
         "count": 40,
         "uniques": 6
+      },
+      "2026-09-16": {
+        "count": 2,
+        "uniques": 2
       }
     }
   }
