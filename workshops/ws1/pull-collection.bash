@@ -15,7 +15,7 @@
 BASE_DIR="hpc:/scratch/prj/dh_issa/issa/workshops/ws1/batches"
 DEST_DIR="./batches"
 COLLECTIONS_FILE="collections-batches.json"
-EXCLUDES=(--exclude "chunks/" --exclude "*.wav")
+EXCLUDES=(--exclude "chunks/" --exclude "*.wav" --exclude "*sub.mp4")
 
 usage() {
     echo "usage: $(basename "$0") -f <filter>" >&2
