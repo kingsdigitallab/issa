@@ -48,7 +48,8 @@
                         "operator": "answer_separators_vlm",
                         "params": {
                         },
-                        "notes": "80gb vram, 8 cpu, 60gb ram"
+                        "notes": "80gb vram, 8 cpu, 60gb ram",
+                        "exclude": "-sub"
                     },
                     {
                         "operator": "separate_clips_ffmpeg",
@@ -68,6 +69,32 @@
             },
             "transcribe_speech_parakeet": {
                 "model": "nvidia/canary-1b-v2"
+            },
+            "answer_clips_vlm": {
+                "model": "RedHatAI/Qwen3.8-27B-INT4",
+                "seed": 1234,
+                "reasoning_effort": "xhigh",
+                "video_tokens": "64k",
+                "max_tokens": "30k",
+                "max_fps": 1,
+                "api_base": "http://localhost:30000/v1",
+                "questions": {
+                    "misc1": {
+                        "question_MULTILINES": [
+                            "The attached video is a single programme from a national archive. Returns a json dictionary with the following keys:", 
+                            "* year (the year the programme was made, if specified),",
+                            "* place (name of one region or specific place where this takes place),",
+                            "* title (the title of the programme, if specified),",
+                            "* segments (if present in the programme, list of main chapters or segments, for each a `title` and a `starting` timecode),",
+                            "* synopsis (one short sentence summary of the content of the programme),",
+                            "* colour (either: black-and-white or colour or sepia or colour-and-balck-and-white),",
+                            "* fiction (yes if fiction, no otherwise),",
+                            "* types (one or more values from tv news, amateur, educational, sponsored, documentary, promotional, fiction, drama, tv sports, instructional, religion, comedy),",
+                            "* keywords (10 characteristic topical keywords for this programme that could help for online search or finding related programmes),",
+                            "* credits (if specified)."
+                        ]
+                    }
+                }            
             },
             "answer_separators_vlm": {
                 "model": "RedHatAI/Qwen3.8-27B-INT4",
