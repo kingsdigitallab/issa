@@ -78,7 +78,24 @@
                 "max_tokens": "30k",
                 "max_fps": 1,
                 "api_base": "http://localhost:30000/v1",
+                "filter_questions": "misc2",
                 "questions": {
+                    "misc2": {
+                        "question_MULTILINES": [
+                            "The attached video is a single programme from a national archive. Returns a json dictionary with the following keys:", 
+                            "* year (the year the programme was made, only if specified and certain),",
+                            "* place (shortlist of regions or specific identifiable place names where this is filmed),",
+                            "* title (the title of the programme, if specified),",
+                            "* segments (list of main chapters or major segments, for each a `title` and a `starting` timecode),",
+                            "* summary (one very concise sentence summarising the content of the programme),",
+                            "* synopsis (one longer sentence summary of the content of the programme),",
+                            "* colour (either: black-and-white or colour or sepia or colour-and-black-and-white),",
+                            "* fiction (yes if definitively fiction, no otherwise),",
+                            "* types (one or more values from tv news, amateur, educational, sponsored, advertising, animation, documentary, promotional, fiction, drama, tv sports, instructional, religion, comedy, horror, home movie, scientific),",
+                            "* keywords (10 key topical or thematic tags for this programme; avoid overly specific tags like place names, people or objects),",
+                            "* credits (if specified)."
+                        ]
+                    },
                     "misc1": {
                         "question_MULTILINES": [
                             "The attached video is a single programme from a national archive. Returns a json dictionary with the following keys:", 
