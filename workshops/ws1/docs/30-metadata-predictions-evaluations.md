@@ -104,5 +104,7 @@ and as a second-chance programme detector for B (see doc 31).
 - Needs prompt/taxonomy work: types, splitting the segments field's dual use
   (programmes vs chapters, see doc 31), tape-item titles.
 - Unassessable: place, keywords (no ground truth).
+- Prompt and method recommendations for the next inference round: see
+  `32-improvement-recommendations.md`.
 - The per-clip CSV (`catalogue/predictions.v2.eval.csv`) supports drilling into any of
   these findings.

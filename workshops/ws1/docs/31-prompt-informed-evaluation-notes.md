@@ -208,7 +208,6 @@ identical per-clip scores to the metadata-16 xlsx for the sample films),
 parses concatenated GT type values, and scores the segments dual role
 (second-chance programme recall, per-segment window-matched title recall,
 multi-programme clip flags in `seg_second_chance` / `seg_prog_windows`).
-Remaining follow-ups: record the prompt changes (types list incl.
-`local topical`, descriptive titles for news items, `tv news` emphasis for
-news tapes, and the `programmes`/`chapters` field split) for the next
-inference round.
+Remaining follow-ups: the revised sep1/misc2 prompts and the pipeline method
+changes for the next inference round are specified in
+`32-improvement-recommendations.md`.
