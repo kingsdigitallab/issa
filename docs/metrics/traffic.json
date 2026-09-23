@@ -160,6 +160,10 @@
       "2026-09-21": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-09-22": {
+        "count": 0,
+        "uniques": 0
       }
     },
     "referrers": {
@@ -466,6 +470,23 @@
           "referrer": "teams.public.onecdn.static.microsoft",
           "uniques": 1
         }
+      ],
+      "2026-09-23": [
+        {
+          "count": 3,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -626,6 +647,10 @@
         "uniques": 0
       },
       "2026-09-21": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-09-22": {
         "count": 0,
         "uniques": 0
       }
@@ -824,6 +849,10 @@
       "2026-09-21": {
         "count": 3,
         "uniques": 3
+      },
+      "2026-09-22": {
+        "count": 4,
+        "uniques": 4
       }
     },
     "referrers": {
@@ -1415,6 +1444,33 @@
           "referrer": "kingsdigitallab.github.io",
           "uniques": 1
         }
+      ],
+      "2026-09-23": [
+        {
+          "count": 15,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 6
+        },
+        {
+          "count": 5,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1577,6 +1633,10 @@
       "2026-09-21": {
         "count": 13,
         "uniques": 2
+      },
+      "2026-09-22": {
+        "count": 10,
+        "uniques": 5
       }
     }
   }
