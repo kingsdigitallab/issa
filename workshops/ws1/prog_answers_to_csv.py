@@ -11,7 +11,7 @@ import json
 import re
 
 BATCHES_DIR = Path("batches")
-OUTPUT_PATH = Path("catalogue") / "predictions.v2.csv"
+OUTPUT_PATH = Path("catalogue") / "predictions-385.v2.csv"
 ANSWER_KEY = "misc2"
 DOD_PREFIX_COLUMN = "DODfilenameprefix"
 KDL_PROG_COLUMN = "kdl_prog"
