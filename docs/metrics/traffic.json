@@ -164,6 +164,10 @@
       "2026-09-22": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-09-23": {
+        "count": 1,
+        "uniques": 1
       }
     },
     "referrers": {
@@ -487,6 +491,23 @@
           "referrer": "teams.public.onecdn.static.microsoft",
           "uniques": 1
         }
+      ],
+      "2026-09-24": [
+        {
+          "count": 2,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -651,6 +672,10 @@
         "uniques": 0
       },
       "2026-09-22": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-09-23": {
         "count": 0,
         "uniques": 0
       }
@@ -853,6 +878,10 @@
       "2026-09-22": {
         "count": 4,
         "uniques": 4
+      },
+      "2026-09-23": {
+        "count": 10,
+        "uniques": 6
       }
     },
     "referrers": {
@@ -1471,6 +1500,38 @@
           "referrer": "kingsdigitallab.github.io",
           "uniques": 1
         }
+      ],
+      "2026-09-24": [
+        {
+          "count": 15,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 6
+        },
+        {
+          "count": 5,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "ukc-word-view.officeapps.live.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1637,6 +1698,10 @@
       "2026-09-22": {
         "count": 10,
         "uniques": 5
+      },
+      "2026-09-23": {
+        "count": 11,
+        "uniques": 8
       }
     }
   }
