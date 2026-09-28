@@ -26,8 +26,7 @@ lookup tables) lives on the ISSA RDS share, mirrored locally under
 `<repo-root>/data/input/NLS/batch2/NLS Metadata/` (gitignored). `copy-metadata.bash`
 pulls it down; `notebooks/nls_metadata_analysis.ipynb` joins it into one dataframe
 and reproduces the structural findings behind "programme = tape" vs "programme =
-shotlist item" and the "compilation" ambiguity. It builds on, and doesn't repeat,
-the descriptive stats and `sample-11.csv` generation already in `batch_analysis.ipynb`.
+shotlist item" and the "compilation" ambiguity. It builds on the descriptive stats and `sample-11.csv` generation already in `batch_analysis.ipynb`.
 
 # Scripts
 
