@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISSA – Workshop 1 – NLS</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --ink:#1a1a19; --muted:#6b6a66; --faint:#898781; --line:#e1e0d9; --soft:#f7f6f3; --bg:#fff;
+    --g:#2a78d6; --g-dark:#1c5cab; --g-light:#bcd6f2;
+    --n:#eb6834; --n-dark:#c4501f; --n-light:#f7d0bb;
+    --warn:#fab219; --outer:#0f7b6c; --inner:#7a4fb5;
+    --sans:'Helvetica Neue', Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:Georgia,'Times New Roman',serif; background:var(--bg); color:var(--ink); font-size:16px; line-height:1.6;
+         max-width:1120px; margin:0 auto; padding:2rem 2rem 4rem; }
+  a { color:var(--g); text-decoration:none; } a:hover { text-decoration:underline; }
+  p { margin-bottom:.8rem; color:#333; }
+  h1 { font-size:2rem; letter-spacing:-.02em; line-height:1.15; margin-bottom:.4rem; }
+  h2 { font-size:1.4rem; line-height:1.25; margin:0 0 .9rem; letter-spacing:-.01em; }
+  h3 { font-size:1rem; margin:1.4rem 0 .5rem; font-family:var(--sans); text-transform:uppercase; letter-spacing:.05em; color:var(--muted); }
+  .site-title { font:700 .82rem var(--sans); text-transform:uppercase; letter-spacing:.12em; color:var(--faint); margin-bottom:1rem; }
+  .subtitle { font-size:1.1rem; color:#555; font-style:italic; margin-bottom:.6rem; }
+  .meta-row { display:flex; gap:1.6rem; flex-wrap:wrap; font:.8rem monospace; color:var(--faint); }
+  .banner { margin:1.2rem 0 0; padding:.7rem 1rem; background:#fff8e1; border:1px solid #f0dca0; border-radius:4px; font:.9rem var(--sans); color:#5b4a10; }
+
+  nav { position:sticky; top:0; z-index:50; background:rgba(255,255,255,.96); backdrop-filter:blur(4px); border-bottom:1px solid var(--line);
+        margin:1.2rem -2rem 0; padding:.55rem 2rem; display:flex; gap:.2rem 1rem; flex-wrap:wrap; font:.8rem var(--sans); }
+  nav a { color:var(--muted); padding:.15rem .1rem; border-bottom:2px solid transparent; } nav a:hover { color:var(--ink); text-decoration:none; border-color:var(--ink); }
+  nav a b { color:var(--faint); font-weight:400; margin-right:.25rem; }
+
+  section { padding-top:2.6rem; scroll-margin-top:3rem; }
+  section > .kicker { font:700 .75rem var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:.3rem; }
+  .lede { font-size:1.05rem; color:#444; max-width:62rem; }
+
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:1.6rem; }
+  .tile { border:1px solid var(--line); border-radius:6px; padding:.9rem 1rem; background:var(--soft); }
+  .tile .v { font:700 2rem var(--sans); letter-spacing:-.02em; line-height:1.1; } .tile .l { font:.82rem var(--sans); color:var(--muted); margin-top:.25rem; }
+
+  .cards { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin:1rem 0 1.4rem; }
+  .card { border:1px solid var(--line); border-radius:6px; padding:1rem 1.1rem; background:#fff; font:.92rem/1.5 var(--sans); }
+  .card h4 { font:700 1rem var(--sans); margin-bottom:.4rem; } .card .dot { display:inline-block; width:.8rem; height:.8rem; border-radius:2px; margin-right:.4rem; vertical-align:-.05rem; }
+  .card p { font:inherit; color:#333; margin-bottom:.4rem; }
+  .chartcard { border:1px solid var(--line); border-radius:6px; padding:1rem 1.1rem .8rem; background:#fff; }
+  .chartcard h4 { font:700 .95rem var(--sans); margin-bottom:.15rem; } .chartcard .sub { font:.8rem var(--sans); color:var(--muted); margin-bottom:.6rem; }
+  .cb { position:relative; height:280px; } .cb.tall { height:340px; } .cb.short { height:240px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.2rem; }
+  .cap { font:.88rem/1.5 var(--sans); color:#444; margin-top:.55rem; }
+  .callout { border-left:4px solid var(--g); background:var(--soft); padding:.8rem 1.1rem; margin:1.2rem 0; font:.92rem/1.55 var(--sans); border-radius:0 4px 4px 0; }
+  .callout.warn { border-color:var(--warn); background:#fffaf0; } .callout.q { border-color:var(--inner); }
+  .callout strong { font-weight:700; }
+  .qs li { margin:.35rem 0 .35rem 1.1rem; }
+
+  table { width:100%; border-collapse:collapse; font:.88rem/1.45 var(--sans); margin:.6rem 0 1rem; }
+  th { text-align:left; background:var(--soft); border-bottom:2px solid #ccc; padding:.5rem .7rem; font-weight:700; vertical-align:bottom; }
+  td { border-bottom:1px solid var(--line); padding:.5rem .7rem; vertical-align:top; } td:first-child { font-weight:700; white-space:nowrap; }
+  .tw { overflow-x:auto; }
+
+  /* hierarchy diagram (as in the earlier dashboard) */
+  .controls { display:flex; gap:1rem; flex-wrap:wrap; align-items:center; margin:.6rem 0 1rem; padding:.7rem 1rem; background:var(--soft); border:1px solid var(--line); border-radius:4px; font:.85rem var(--sans); }
+  .toggle { display:inline-flex; border:1px solid #ccc; border-radius:4px; overflow:hidden; }
+  .toggle button { font:.82rem var(--sans); padding:.4rem .9rem; border:0; background:#fff; color:#555; cursor:pointer; } .toggle button + button { border-left:1px solid #ccc; }
+  .toggle button.on { background:var(--g); color:#fff; font-weight:700; } .note { color:var(--faint); font-size:.8rem; }
+  .legend { display:flex; gap:.4rem 1.4rem; flex-wrap:wrap; font:.8rem var(--sans); color:#333; margin:.4rem 0 1rem; } .legend span { display:flex; align-items:center; gap:.45rem; }
+  .sw { width:22px; height:14px; border-radius:2px; flex-shrink:0; } .sw.unk { background:#e5e5e2; border:1px dashed #b5b5b0; }
+  .band-row { display:flex; align-items:stretch; margin-bottom:8px; }
+  .band-label { width:108px; flex-shrink:0; padding-right:.8rem; font:.74rem var(--sans); color:#777; text-transform:uppercase; letter-spacing:.05em; display:flex; align-items:center; justify-content:flex-end; text-align:right; }
+  .band-track { flex:1; display:flex; gap:3px; height:46px; } .band-track.sample-track { height:auto; min-height:46px; align-items:center; }
+  .band-seg { display:flex; overflow:hidden; border-radius:3px; }
+  .fill { display:flex; align-items:center; justify-content:center; font:700 .76rem var(--sans); color:#fff; white-space:nowrap; overflow:hidden; border-right:2px solid #fff; min-width:3px; cursor:default; }
+  .fill:last-child { border-right:0; } .fill.unk { background:#e5e5e2 !important; color:#999; font-weight:400; font-style:italic; border:1px dashed #b5b5b0; } .fill.warn { color:#111; }
+  .sample-group { display:flex; flex-wrap:wrap; align-content:center; gap:4px; padding:6px 8px; background:#fafaf9; border:1px dashed #d8d7d2; border-radius:3px; height:100%; }
+  .dot { width:15px; height:15px; border-radius:3px; flex-shrink:0; cursor:default; }
+  #tip { position:fixed; z-index:1000; pointer-events:none; background:#111; color:#fff; font:.78rem/1.4 var(--sans); padding:.5rem .7rem; border-radius:4px; max-width:290px; opacity:0; transition:opacity .1s; } #tip.on { opacity:1; }
+
+  /* task ladder */
+  .ladder { display:grid; grid-template-columns:230px 1fr 1fr; grid-template-rows:repeat(5,46px); gap:6px 14px; margin:1rem 0 1.2rem; font:.85rem var(--sans); }
+  .lv { display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding:0 .9rem; border:1px solid var(--line); border-radius:4px; background:var(--soft); grid-column:1; }
+  .lv b { font-size:.9rem; } .lv small { color:var(--muted); font-size:.75rem; text-align:right; }
+  .br { grid-row-end:span 2; display:flex; flex-direction:column; justify-content:center; padding:.5rem 1rem; border-radius:4px; border:2px solid; line-height:1.35; }
+  .br.outer { grid-column:2; border-color:var(--outer); background:#eaf6f4; } .br.inner { grid-column:3; border-color:var(--inner); background:#f3eefa; border-style:dashed; }
+  .br b { font-size:.95rem; } .br span { color:#444; font-size:.82rem; }
+  .br.outer b { color:var(--outer); } .br.inner b { color:var(--inner); }
+  .flow { display:grid; grid-template-columns:1fr 34px 1.25fr 34px 1fr; align-items:stretch; gap:.4rem; margin:1rem 0 1.4rem; font:.88rem/1.45 var(--sans); }
+  .fbox { border:1px solid var(--line); border-radius:6px; padding:.8rem 1rem; background:var(--soft); } .fbox b { display:block; margin-bottom:.2rem; font-size:.95rem; }
+  .fbox.mid { border-color:#b9c9df; background:#eef3fa; } .arrow { display:flex; align-items:center; justify-content:center; color:var(--faint); font-size:1.4rem; }
+  .chips { display:flex; flex-wrap:wrap; gap:.35rem; margin:.4rem 0 .8rem; } .chip { font:.78rem var(--sans); padding:.15rem .55rem; border-radius:99px; background:var(--soft); border:1px solid var(--line); }
+  svg.tl text { font-family:var(--sans); }
+
+  .three { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-top:1rem; }
+  .col { border:1px solid var(--line); border-top-width:4px; border-radius:6px; padding:.9rem 1.1rem 1rem; font:.9rem/1.5 var(--sans); background:#fff; }
+  .col.k { border-top-color:#2e7d32; } .col.c { border-top-color:var(--g); } .col.h { border-top-color:var(--warn); }
+  .col h3 { margin:.1rem 0 .6rem; color:var(--ink); } .col ul { margin-left:1.1rem; } .col li { margin:.4rem 0; }
+  .topics { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; counter-reset:t; }
+  .topic { border:1px solid var(--line); border-radius:6px; padding:.9rem 1.1rem; font:.9rem/1.5 var(--sans); background:#fff; counter-increment:t; }
+  .topic h4 { font:700 .98rem var(--sans); margin-bottom:.35rem; } .topic h4::before { content:counter(t); display:inline-block; width:1.5rem; height:1.5rem; line-height:1.5rem; text-align:center; border-radius:50%; background:var(--ink); color:#fff; font-size:.78rem; margin-right:.5rem; }
+  .topic p { font:inherit; margin-bottom:.35rem; } .topic .why { color:var(--muted); font-size:.83rem; }
+  details { margin:.6rem 0 1rem; border:1px solid var(--line); border-radius:6px; padding:.6rem 1rem; font:.9rem var(--sans); } summary { cursor:pointer; font-weight:700; }
+  footer { margin-top:3.5rem; padding-top:1.2rem; border-top:1px solid var(--line); font:.82rem/1.6 var(--sans); color:var(--muted); } footer a { color:var(--g); }
+  #err { display:none; margin:1rem 0; padding:.7rem 1rem; background:#fdecea; border:1px solid #f5c2bd; border-radius:4px; font:.85rem var(--sans); color:#7a1f14; }
+  @media (max-width:820px) { .tiles,.cards,.grid2,.three,.topics { grid-template-columns:1fr; } .flow { grid-template-columns:1fr; } .arrow { transform:rotate(90deg); } .ladder { grid-template-columns:150px 1fr; } .br.outer,.br.inner { grid-column:2; grid-row-end:auto; } }
+</style>
+</head>
+<body>
+
+<div class="site-title">ISSA workshop 1 — NLS</div>
+<header>
+  <h1>From catalogue to first-pass segmentation</h1>
+  <p>This interactive analysis page was produced with Claude coding assistant. All content has been checked by a human reviewer. Errors or inconsistencies can be reported to <a href="mailto:issa@kcl.ac.uk">issa@kcl.ac.uk</a></p>
+  <p>Data to drive this page is generated by the predictions_analysis.ipynb notebook</p>
+  <p class="subtitle">What NLS shared, the two segmentation tasks, and what the first pipeline run produced</p>
+  <div class="tiles">
+    <div class="tile"><div class="v" data-n="tiles.films">400</div><div class="l">catalogue films in two collections</div></div>
+    <div class="tile"><div class="v" data-p="totals.files" data-f="int">—</div><div class="l">videos processed (<span data-p="totals.by_collection.Grampian.files"></span> Grampian tapes + <span data-p="totals.by_collection.non-Grampian.files"></span> other films)</div></div>
+    <div class="tile"><div class="v" data-p="totals.programmes" data-f="int">—</div><div class="l">programmes proposed by the pipeline</div></div>
+    <div class="tile"><div class="v" data-p="totals.segment_items" data-f="int">—</div><div class="l">segments proposed inside those programmes</div></div>
+  </div>
+  <div class="banner"><b>First pass.</b> Everything the pipeline produced is shown here as it came out. We spot-checked a few items, but for the most part <b>the outputs have not been checked against the videos</b>.</div>
+</header>
+
+<nav>
+  <a href="#s1"><b>1</b>Data</a><a href="#s2"><b>2</b>Two tasks</a><a href="#s3"><b>3</b>Processed</a><a href="#s4"><b>4</b>Outer segmentation</a>
+  <a href="#s5"><b>5</b>Metadata &amp; inner</a><a href="#s6"><b>6</b>Data quality</a><a href="#s7"><b>7</b>Know / could know / check</a>
+  <a href="#s8"><b>8</b>Review plan</a><a href="#s9"><b>9</b>Discussion</a>
+</nav>
+<div id="err"></div>
+
+<!-- ───────────────────────── 1 ───────────────────────── -->
+<section id="s1">
+  <div class="kicker">1 · The data NLS shared</div>
+  <h2>Two collections, each catalogued in its own way</h2>
+  <p class="lede">NLS shared 400 video files and their catalogue records. The two collections are described differently, so they raise different questions for segmentation.</p>
+  <div class="cards">
+    <div class="card"><h4><span class="dot" style="background:var(--g)"></span>Grampian — <span data-n="collections.0.file_count"></span> tapes</h4>
+      <p>Grampian Television news tapes. One catalogue record per tape; its <i>shotlist</i> field lists items with start and end timecodes — the only item-level structure NLS holds for these tapes.</p></div>
+    <div class="card"><h4><span class="dot" style="background:var(--n)"></span>Non-Grampian — <span data-n="collections.1.file_count"></span> films</h4>
+      <p>Films of many kinds (amateur, sponsored, educational, advertising, fiction…). One catalogue record per film; its <i>shotlist</i> is a prose, shot-by-shot description of a single film.</p></div>
+  </div>
+
+  <h3>Hierarchical organisation</h3>
+  <p>Mapping onto the design of <a href="https://github.com/kingsdigitallab/framesense">FrameSense</a>, we organised the collections hierarchically: archive → collection → video file → programme → segment. The bands below show, at each level, what the catalogue establishes on its own.</p>
+  <div class="controls"><div class="toggle" id="hview"><button data-v="catalogued" class="on">As received from NLS</button><button data-v="analysis">+ Our analysis</button></div>
+    <span class="note" id="hnote"></span></div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--g)"></i>Grampian — verified</span><span><i class="sw" style="background:repeating-linear-gradient(45deg,#2a78d6,#2a78d6 4px,#bcd6f2 4px,#bcd6f2 8px)"></i>Grampian — estimated / assumed</span>
+    <span><i class="sw" style="background:var(--n)"></i>non-Grampian — verified</span><span><i class="sw" style="background:repeating-linear-gradient(45deg,#eb6834,#eb6834 4px,#f7d0bb 4px,#f7d0bb 8px)"></i>non-Grampian — estimated / assumed</span>
+    <span><i class="sw" style="background:var(--warn)"></i>⚠ Needs human check</span><span><i class="sw unk"></i>Not yet determined</span></div>
+  <div class="chartcard"><div id="hier"></div>
+    <p class="cap" style="margin-bottom:0">Band width = share of the 400 films, except “Working sample”: each square is one film from the hand-picked 16-film sample (solid = annotated by hand, hatched = not yet). Hover for numbers.</p></div>
+
+  <h3>How much structured metadata is there?</h3>
+  <div class="chartcard"><h4>Share of the 400 films with a value</h4><div class="sub">Linked vocabularies (top four) versus item-level fields (bottom four)</div>
+    <div class="cb short"><canvas id="c-meta"></canvas></div>
+    <p class="cap">Outside the shotlist there is almost no item-level structure: transmission date, episode title, producer and certificate are empty for practically every film. Genre and category terms cover under half the films, series terms very few.</p></div>
+</section>
+
+<!-- ───────────────────────── 2 ───────────────────────── -->
+<section id="s2">
+  <div class="kicker">2 · The two tasks</div>
+  <h2>Outer segmentation finds the programmes in a video file; inner segmentation divides a programme into parts, sections, chapters, chunks of some kind...</h2>
+  <div class="ladder" id="ladder">
+    <div class="lv" style="grid-row:1"><b>Archive</b><small>NLS</small></div>
+    <div class="lv" style="grid-row:2"><b>Collection</b><small>Grampian · non-Grampian</small></div>
+    <div class="lv" style="grid-row:3"><b>Video file</b><small><span data-p="totals.files" data-f="int"></span> processed</small></div>
+    <div class="lv" style="grid-row:4"><b>Programme</b><small><span data-p="totals.programmes" data-f="int"></span> proposed</small></div>
+    <div class="lv" style="grid-row:5"><b>Segment</b><small><span data-p="totals.segment_items" data-f="int"></span> proposed</small></div>
+    <div class="br outer" style="grid-row-start:3"><b>Outer segmentation</b><span>Given a video file, find each programme in it: where it starts and where it ends.</span></div>
+    <div class="br inner" style="grid-row-start:4"><b>Inner segmentation</b><span>Given a programme, divide it into meaningful sections, each with its own timing and description.</span></div>
+  </div>
+
+  <h3>What we have to compare against, per task</h3>
+  <div class="tw"><table>
+    <tr><th></th><th>Grampian tapes</th><th>Non-Grampian films</th></tr>
+    <tr><td>Outer</td><td>Timed shotlist lines in the catalogue (consistent, but what a line stands for is unconfirmed). Hand-annotated programme boundaries for <b data-n="collections.0.programme.verified_file_count"></b> tapes.</td>
+        <td>The catalogue implies one programme per film, with a few “compilation” exceptions. Hand-annotated boundaries for <b data-n="collections.1.programme.verified_file_count"></b> films.</td></tr>
+    <tr><td>Inner</td><td>None yet: the timed lines describe items, not the parts inside a programme.</td>
+        <td>Prose shot-by-shot descriptions — usable, but not yet validated.</td></tr>
+  </table></div>
+
+  <h3>What output looks like</h3>
+  <p>One example of each, drawn from the first-pass output: a typical Grampian tape (top), and a typical other film (bottom). Blocks are proposed programmes; the zoomed row shows one programme with its proposed segments. Only timings are shown — <b>we have only checked against a handful of videos</b>.</p>
+  <div class="chartcard"><div id="tl-g"></div></div>
+  <div class="chartcard" style="margin-top:1rem"><div id="tl-n"></div></div>
+</section>
+
+<!-- ───────────────────────── 3 ───────────────────────── -->
+<section id="s3">
+  <div class="kicker">3 · What we processed</div>
+  <h2><span data-p="totals.files"></span> videos went through a vision-language pipeline</h2>
+  <div class="flow">
+    <div class="fbox"><b>Input</b><span data-p="totals.by_collection.Grampian.files"></span> Grampian tapes and <span data-p="totals.by_collection.non-Grampian.files"></span> non-Grampian films, as delivered by NLS. (15 further non-Grampian films were not part of this run.)</div>
+    <div class="arrow">→</div>
+    <div class="fbox mid"><b>Pipeline</b>KDL’s FrameSense pipeline drives an open vision-language model (Qwen3.8-27B) that watches each video and answers questions about it. Run on KCL’s research computing cluster. </div>
+    <div class="arrow">→</div>
+    <div class="fbox"><b>Output</b>One record per proposed programme, with its timing, descriptive fields and a segment list.</div>
+  </div>
+
+  <div class="cards">
+    <div class="card"><h4>Model card — Qwen3.8-27B</h4>
+      <div class="tw"><table style="margin:.3rem 0 0;font-size:.84rem">
+        <tr><td>Developer</td><td>Qwen (Alibaba)</td></tr>
+        <tr><td>Type</td><td>Dense vision-language model, 27 billion parameters; accepts text, images and video</td></tr>
+        <tr><td>Build used</td><td>4-bit quantised build (W4A16 GPTQ) published by RedHatAI, from <a href="https://huggingface.co/Qwen/Qwen3.8-27B">Qwen/Qwen3.8-27B</a></td></tr>
+        <tr><td>Licence</td><td>Apache 2.0</td></tr>
+        <tr><td>Runs on</td><td>KCL’s research computing cluster (not a commercial API)</td></tr>
+        <tr><td>Settings</td><td>Video sampling, prompts and inference environment: see more technical details in<a href="https://github.com/kingsdigitallab/issa/blob/main/workshops/ws1/docs/01-video_sampling_analysis.md"> our notes on video sampling</a></td></tr>
+      </table></div>
+      <p class="note" style="margin-top:.5rem">Model pages: <a href="https://huggingface.co/Qwen/Qwen3.8-27B">Qwen/Qwen3.8-27B</a> · <a href="https://huggingface.co/RedHatAI/Qwen3.8-27B-INT4">RedHatAI/Qwen3.8-27B-INT4</a> (as read on 24 Sept 2026).</p></div>
+    <div class="card"><h4>What comes out, per programme</h4>
+      <p>These were the field targeted in the first pass, as agreed on the prioritisation according to usefulness for NLS:</p>
+      <div class="chips"><span class="chip">start &amp; duration</span><span class="chip">title</span><span class="chip">year</span><span class="chip">place</span><span class="chip">colour</span><span class="chip">type(s)</span><span class="chip">fiction / non-fiction</span><span class="chip">summary</span><span class="chip">synopsis</span><span class="chip">segment list (timecodes + labels)</span><span class="chip">credits</span><span class="chip">keywords</span></div>
+      <p>The output covers programme boundaries (outer) and a list of parts inside each programme (partially inner), plus descriptive metadata for each programme.</p></div>
+  </div>
+</section>
+
+<!-- ───────────────────────── 4 ───────────────────────── -->
+<section id="s4">
+  <div class="kicker">4 · Results: outer segmentation</div>
+  <h2>Tape files tend to be cut into many programmes (titles), non-Grampian files almost always map to a single programme (title) — and almost every video is accounted for from start to end</h2>
+
+  <div class="grid2">
+    <div class="chartcard"><h4>Programmes per Grampian file</h4><div class="sub">Median <b data-p="programmes_per_file.Grampian.median"></b>, mean <b data-p="programmes_per_file.Grampian.mean"></b>, largest <b data-p="programmes_per_file.Grampian.max"></b></div><div class="cb"><canvas id="c-ppf-g"></canvas></div></div>
+    <div class="chartcard"><h4>Programmes per non-Grampian file</h4><div class="sub"><b data-p="totals.non_grampian_single_programme_files"></b> of <b data-p="totals.by_collection.non-Grampian.files"></b> films came out as a single programme</div><div class="cb"><canvas id="c-ppf-n"></canvas></div></div>
+  </div>
+  <div class="grid2">
+    <div class="chartcard"><h4>Programme duration — Grampian</h4><div class="sub">Median <b data-p="duration.Grampian.median_min"></b> min · <b data-p="duration.Grampian.over_30_min"></b> longer than 30 min (not shown) · <b data-p="duration.Grampian.under_10_s"></b> under 10 s</div><div class="cb"><canvas id="c-dur-g"></canvas></div></div>
+    <div class="chartcard"><h4>Programme duration — non-Grampian</h4><div class="sub">Median <b data-p="duration.non-Grampian.median_min"></b> min · <b data-p="duration.non-Grampian.over_30_min"></b> longer than 30 min (not shown) · <b data-p="duration.non-Grampian.under_10_s"></b> under 10 s</div><div class="cb"><canvas id="c-dur-n"></canvas></div></div>
+  </div>
+  <div class="grid2">
+    <div class="chartcard"><h4>How much of each video the programmes account for</h4><div class="sub">Median <b data-p="coverage.median" data-f="pct1r"></b>; lowest <b data-p="coverage.min" data-f="pct1r"></b>; <b data-p="coverage.files_below_95pct"></b> files below 95%</div><div class="cb"><canvas id="c-cov"></canvas></div></div>
+    <div class="chartcard"><h4>Gap between consecutive programmes</h4><div class="sub">Median <b data-p="gaps.median_s"></b> s · smallest <b data-p="gaps.min_s"></b> s · <b data-p="gaps.overlaps"></b> overlaps · <b data-p="gaps.over_30_s"></b> gaps over 30 s (not shown)</div><div class="cb"><canvas id="c-gap"></canvas></div></div>
+  </div>
+  <div class="callout">The pattern matches what the catalogue led us to expect, the cuts never overlap, and they are separated by a few seconds — consistent with the pipeline finding the breaks between programmes. <strong>It doesn't tell us if the cuts fall in the right places.</strong>.</div>
+</section>
+
+<!-- ───────────────────────── 5 ───────────────────────── -->
+<section id="s5">
+  <div class="kicker">5 · Results: descriptive metadata and inner segments</div>
+  <h2>Descriptions are nearly complete; titles and years mostly are not; labels do not yet match the catalogue</h2>
+
+  <div class="grid2">
+    <div class="chartcard"><h4>Fields left empty</h4><div class="sub">Share of programmes with no value</div><div class="cb tall"><canvas id="c-miss"></canvas></div></div>
+    <div class="chartcard"><h4>Segments per programme</h4><div class="sub">Share of programmes · median <b data-p="segments.Grampian.median"></b> (Grampian), <b data-p="segments.non-Grampian.median"></b> (non-Grampian)</div><div class="cb tall"><canvas id="c-seg"></canvas></div></div>
+  </div>
+  <div class="grid2">
+    <div class="chartcard"><h4>Most frequent types</h4><div class="sub">A programme can carry several types</div><div class="cb tall"><canvas id="c-types"></canvas></div></div>
+    <div class="chartcard"><h4>Most frequent places</h4><div class="sub">Places split into separate names; a programme can carry several</div><div class="cb tall"><canvas id="c-places"></canvas></div></div>
+  </div>
+
+  <div class="tiles" style="grid-template-columns:repeat(3,1fr)">
+    <div class="tile"><div class="v" data-p="news_labelling.grampian_tv_news_pct" data-f="pct0"></div><div class="l">of Grampian programmes are labelled “tv news”</div></div>
+    <div class="tile"><div class="v" data-p="news_labelling.grampian_documentary_pct" data-f="pct0"></div><div class="l">of Grampian programmes are labelled “documentary”</div></div>
+    <div class="tile"><div class="v" data-p="news_labelling.grampian_tapes_without_news_label"></div><div class="l">of <span data-p="news_labelling.grampian_tapes"></span> Grampian tapes have no programme labelled “tv news”</div></div>
+  </div>
+</section>
+
+<!-- ───────────────────────── 6 ───────────────────────── -->
+<section id="s6">
+  <div class="kicker">6 · Data quality</div>
+  <h2>The output needs tidying before it can be used in downstream tasks.</h2>
+  <details><summary>Data cleaning notes</summary>
+    <div class="tw"><table>
+      <tr><th>Issue</th><th>What we found</th><th>What we did</th></tr>
+      <tr><td>Segment timecodes</td><td>Three styles, two of which look identical (<code>HH:MM:SS</code> and <code>MM:SS:00</code>). Read naively, <b data-p="quality.programmes_with_ambiguous_timecodes"></b> programmes get segment times of hours inside programmes of under an hour.</td><td>Resolved per programme by checking against the programme’s own duration; a few programmes mix both styles and stay approximate.</td></tr>
+      <tr><td>Places</td><td>Free text with mixed delimiters and order: <b data-p="quality.place_distinct_raw"></b> distinct strings, <b data-p="quality.place_distinct_sets"></b> once order is ignored, <b data-p="quality.place_distinct_tokens"></b> distinct names — town, region and country mixed in one string.</td><td>Split into names. A proper place field needs an authority list.</td></tr>
+      <tr><td>Sparse fields</td><td>Year and title are empty for most programmes (see section 5).</td><td>Left empty; whether to generate them at all is a discussion point.</td></tr>
+      <tr><td>Unreadable items</td><td><b data-p="quality.unparseable_segment_items"></b> segment entries had no readable timecode.</td><td>Kept, flagged.</td></tr>
+      <tr><td>File encoding</td><td>Windows-1252, not UTF-8.</td><td>Read accordingly.</td></tr>
+    </table></div>
+  </details>
+</section>
+
+<!-- ───────────────────────── 7 ───────────────────────── -->
+<section id="s7">
+  <div class="kicker">7 · Findings</div>
+  <h2>What we now know, what we could know with more development, and what needs a human first</h2>
+  <div class="three">
+    <div class="col k"><h3>What we now know</h3><ul>
+      <li>The pipeline ran end to end on <b data-p="totals.files"></b> videos and produced <b data-p="totals.programmes" data-f="int"></b> programmes with <b data-p="totals.segment_items" data-f="int"></b> segments and descriptions.</li>
+      <li><b data-p="review.files_no_flag"></b> of <b data-p="review.files_total"></b> files trip none of our checks — which doesn't mean they are correct but are at least consistent.</li></ul></div>
+    <div class="col c"><h3>What we could know with more development</h3><ul>
+      <li>Which errors are systematic (by collection, tape length, era) — and whether a re-run gives the same cuts.</li>
+      <li>Consistent labels: mapping types to NLS’s vocabulary and places to an authority list (e.g. a gazetteer).</li></ul></div>
+    <div class="col h"><h3>What needs human checks before more development</h3><ul>
+      <li>Whether the cuts are right on the flagged files: too many, too few, fragments, hour-long “programmes”, long gaps.</li>
+      <li>Whether the type labels can be trusted (news tapes labelled documentary).</li>
+      <li>Whether summaries, places and years are factually right.</li>
+      <li>A few unflagged files as a control.</li></ul></div>
+  </div>
+</section>
+
+<!-- ───────────────────────── 8 ───────────────────────── -->
+<section id="s8">
+  <div class="kicker">8 · Suggested human review plan</div>
+  <h2><span id="nflags">Sixteen</span> kinds of oddity, ordered make the most of human watching</h2>
+  <p class="lede">We turned the checks into simple rules and ranked the files that trip them. <b data-p="review.files_flagged"></b> of <b data-p="review.files_total"></b> files raise at least one flag (<b data-p="review.files_p1"></b> high priority, <b data-p="review.files_p2"></b> medium); <b data-p="review.programmes_flagged"></b> programmes (<span id="pf-pct"></span>) and <b data-p="review.gaps_flagged"></b> gaps are flagged individually.</p>
+  <div class="chartcard"><h4>What is flagged, by rule</h4><div class="sub">Darker = look first. Units differ by rule: programmes, gaps or files.</div>
+    <div class="cb tall" style="height:420px"><canvas id="c-flags"></canvas></div>
+    <div class="legend" id="flag-legend" style="margin-bottom:0"></div></div>
+  <div class="callout">How the order is chosen: Each next file is the one that adds the most problem types not yet seen (a rule’s first few example files count in full, repeats only a little), so <strong>a reviewer meets every kind of problem early instead of the same one twenty times</strong>. The top 20 mix <b data-p="review.top20.Grampian"></b> Grampian and <b data-p="review.top20.non-Grampian"></b> non-Grampian files. Note that a flag means “worth a look”, not necessarily “wrong”.</div>
+</section>
+
+<!-- ───────────────────────── 9 ───────────────────────── -->
+<section id="s9">
+  <div class="kicker">9 · For discussion at WS1</div>
+  <h2>Topics we think are worth discussing together</h2>
+  <div class="topics">
+    <div class="topic"><h4>What counts as a programme?</h4><p>A news item? A section of a tape? Each part of a compilation?</p></div>
+    <div class="topic"><h4>What is a timed line in a Grampian shotlist, and how was this field created?</h4><p>Could those lines seed or check programme boundaries — or do they mean something else?</p></div>
+    <div class="topic"><h4>What should be produced at each level?</h4><p>Which fields do we want per programme, and which per segment?</p></div>
+    <div class="topic"><h4>How do we judge quality?</h4><p>How many seconds of error is acceptable at a boundary? Is there a reference for this or can we can agree on a benchmark?</p></div>
+    <div class="topic"><h4>What to do with non-programme material?</h4><p>Dead air, bars, test signals, very short fragments: keep, label or drop?</p></div>
+    <div class="topic"><h4>Shared vocabulary</h4><p>NLS’s terms versus the model’s (for example “tv sport” and “tv sports”); places against an authority list; keywords controlled or free?</p></div>
+    <div class="topic"><h4>How will corrections flow back?</h4><p>What should a review interface let staff do — adjust in and out points, split or merge programmes, link segments to rights information?</p></div>
+  </div>
+</section>
+
+<footer>
+  <div>Sources: <a href="https://github.com/kingsdigitallab/issa/blob/main/workshops/ws1/notebooks/nls_metadata_analysis.ipynb">NLS metadata analysis</a> · <a href="https://github.com/kingsdigitallab/issa/blob/main/workshops/ws1/notebooks/predictions_analysis.ipynb">pipeline predictions analysis</a> · <a href="https://github.com/kingsdigitallab/issa/tree/main/workshops/ws1">workshop code</a>.</div>
+  <div>Data files: <code>metadata_hierarchy_data.json</code> (NLS catalogue aggregates) and <code>issa_ws1_predictions.json</code> (pipeline aggregates). Aggregates only — no model-written text about individual films.</div>
+</footer>
+<div id="tip"></div>
+
+<script>
+/* ───────────────────────── setup ───────────────────────── */
+const C = { g:'#2a78d6', gd:'#1c5cab', gl:'#bcd6f2', n:'#eb6834', nd:'#c4501f', nl:'#f7d0bb', ink:'#1a1a19', muted:'#898781', grid:'#e1e0d9', warn:'#fab219', unk:'#e5e5e2' };
+Chart.defaults.font.family = "'Helvetica Neue', Arial, sans-serif";
+Chart.defaults.font.size = 12; Chart.defaults.color = '#6b6a66'; Chart.defaults.animation = false;
+Chart.defaults.maintainAspectRatio = false;
+
+Chart.register({
+  id: 'valueLabels',
+  afterDatasetsDraw(chart, args, opt) {
+    if (!opt || !opt.mode) return;
+    const ctx = chart.ctx, horiz = chart.options.indexAxis === 'y', fmt = opt.fmt || (v => String(v));
+    ctx.save(); ctx.font = '11px Helvetica Neue, Arial, sans-serif'; ctx.fillStyle = '#1a1a19'; ctx.textBaseline = 'middle';
+    if (opt.mode === 'each') {
+      chart.data.datasets.forEach((ds, di) => chart.getDatasetMeta(di).data.forEach((bar, i) => {
+        const v = ds.data[i]; if (v == null || (v === 0 && !opt.zero)) return;
+        if (horiz) { ctx.textAlign = 'left'; ctx.fillText(fmt(v), bar.x + 4, bar.y); } else { ctx.textAlign = 'center'; ctx.fillText(fmt(v), bar.x, bar.y - 8); }
+      }));
+    } else if (opt.mode === 'total') {
+      const last = chart.data.datasets.length - 1;
+      chart.data.labels.forEach((_, i) => {
+        const tot = chart.data.datasets.reduce((a, ds) => a + (ds.data[i] || 0), 0), bar = chart.getDatasetMeta(last).data[i];
+        ctx.textAlign = 'left'; ctx.fillText(fmt(tot), bar.x + 4, bar.y);
+      });
+    }
+    ctx.restore();
+  }
+});
+
+const FMT = {
+  int: v => Number(v).toLocaleString('en-GB'), pct0: v => Math.round(v) + '%', pct1: v => Number(v).toFixed(1) + '%',
+  pct1r: v => (v * 100).toFixed(1) + '%', pct0r: v => Math.round(v * 100) + '%'
+};
+const get = (o, p) => p.split('.').reduce((a, k) => a == null ? a : a[k], o);
+let N = null, P = null;
+
+function bindAll() {
+  document.querySelectorAll('[data-n],[data-p]').forEach(el => {
+    const isP = el.dataset.p !== undefined, v = get(isP ? P : N, isP ? el.dataset.p : el.dataset.n);
+    if (v == null) return;
+    el.textContent = el.dataset.f ? FMT[el.dataset.f](v) : (typeof v === 'number' ? FMT.int(v) : v);
+  });
+  document.querySelectorAll('[data-flag]').forEach(el => {
+    const fl = P.review.flags.find(x => x.flag === el.dataset.flag); if (fl) el.textContent = fl.n;
+  });
+  document.querySelector('[data-n="tiles.films"]').textContent = N.collections.reduce((a, c) => a + c.file_count, 0);
+  document.getElementById('nflags').textContent = P.review.flags.length;
+  document.getElementById('pf-pct').textContent = (P.review.programmes_flagged / P.review.programmes_total * 100).toFixed(1) + '% of all programmes';
+  for (const el of document.querySelectorAll('[data-n="generated_at"],[data-p="generated_at"]')) el.textContent = el.textContent.replace('T', ' ');
+}
+
+/* ───────────────────────── tooltip + hierarchy (as in the earlier dashboard) ───────────────────────── */
+const tip = document.getElementById('tip');
+const showTip = (e, h) => { tip.innerHTML = h; tip.classList.add('on'); moveTip(e); };
+const moveTip = e => { let x = e.clientX + 14, y = e.clientY + 14; if (x + 300 > innerWidth) x = e.clientX - 314; if (y + 90 > innerHeight) y = e.clientY - 104; tip.style.left = x + 'px'; tip.style.top = y + 'px'; };
+const hideTip = () => tip.classList.remove('on');
+const hatch = (a, b) => `repeating-linear-gradient(45deg, ${a}, ${a} 4px, ${b} 4px, ${b} 8px)`;
+
+function seg(widthPct, fill, label, html, cls, absPct) {
+  const d = document.createElement('div'); d.className = 'fill' + (cls ? ' ' + cls : ''); d.style.flex = `0 0 ${widthPct}%`; d.style.background = fill;
+  d.textContent = (absPct === undefined || absPct >= 6) ? label : '';
+  d.addEventListener('mouseenter', e => showTip(e, html)); d.addEventListener('mousemove', moveTip); d.addEventListener('mouseleave', hideTip); return d;
+}
+function band(label, segs, trackCls) {
+  const row = document.createElement('div'); row.className = 'band-row';
+  const l = document.createElement('div'); l.className = 'band-label'; l.textContent = label; row.appendChild(l);
+  const t = document.createElement('div'); t.className = 'band-track' + (trackCls ? ' ' + trackCls : '');
+  segs.forEach(s => { const w = document.createElement('div'); w.className = 'band-seg'; w.style.flex = `0 0 ${s.w}%`; s.sub.forEach(x => w.appendChild(x)); t.appendChild(w); });
+  row.appendChild(t); return row;
+}
+function sampleGroup(items, wantG) {
+  const g = document.createElement('div'); g.className = 'sample-group';
+  items.filter(i => i.is_grampian === wantG).forEach(i => {
+    const d = document.createElement('div'), done = i.progs > 0, base = wantG ? C.g : C.n, light = wantG ? C.gl : C.nl;
+    d.className = 'dot'; d.style.background = done ? base : hatch(base, light);
+    d.addEventListener('mouseenter', e => showTip(e, `<strong>${i.title}</strong><br>DOD ${i.dod} · ref ${i.ref_no}<br>${done ? i.progs + ' programme' + (i.progs === 1 ? '' : 's') + ' annotated' : 'not yet annotated'}`));
+    d.addEventListener('mousemove', moveTip); d.addEventListener('mouseleave', hideTip); g.appendChild(d);
+  }); return g;
+}
+let hview = 'catalogued';
+function renderHierarchy() {
+  const g = N.collections.find(c => c.id === 'grampian'), n = N.collections.find(c => c.id === 'non_grampian');
+  const tot = g.file_count + n.file_count, gp = g.file_count / tot * 100, np_ = n.file_count / tot * 100, root = document.getElementById('hier'); root.innerHTML = '';
+  root.appendChild(band('Archive', [{ w: 100, sub: [seg(100, '#555', `NLS (${tot} films in this batch)`, `<strong>NLS archive</strong><br>${tot} catalogue records shared with ISSA.`)] }]));
+  root.appendChild(band('Collection', [{ w: gp, sub: [seg(100, C.g, `Grampian (${g.file_count})`, `<strong>Grampian</strong><br>${g.file_count} tv news tapes.`)] }, { w: np_, sub: [seg(100, C.n, `non-Grampian (${n.file_count})`, `<strong>non-Grampian</strong><br>${n.file_count} films of other types.`)] }]));
+  root.appendChild(band('Video file', [{ w: gp, sub: [seg(100, C.g, `${g.file_count} files`, `<strong>Grampian files</strong><br>One video file per catalogue record.`)] }, { w: np_, sub: [seg(100, C.n, `${n.file_count} files`, `<strong>non-Grampian files</strong><br>One video file per catalogue record.`)] }]));
+  const items = N.sample_worklist && N.sample_worklist.items;
+  if (items && items.length) root.appendChild(band('Working sample', [{ w: gp, sub: [sampleGroup(items, true)] }, { w: np_, sub: [sampleGroup(items, false)] }], 'sample-track'));
+  const P1 = [], S1 = [];
+  if (hview === 'catalogued') {
+    P1.push({ w: gp, sub: [seg(100, C.unk, 'not a structured field', '<strong>Grampian — programme</strong><br>The catalogue has no programme-count field; only free-text shotlist and type.', 'unk')] },
+            { w: np_, sub: [seg(100, C.unk, 'not a structured field', '<strong>non-Grampian — programme</strong><br>No field states “one programme”.', 'unk')] });
+    S1.push({ w: gp, sub: [seg(100, C.unk, 'not a structured field', '<strong>Grampian — segment</strong><br>No dedicated segment field.', 'unk')] },
+            { w: np_, sub: [seg(100, C.unk, 'not a structured field', '<strong>non-Grampian — segment</strong><br>No dedicated segment field.', 'unk')] });
+  } else {
+    const gv = g.programme.verified_file_count / g.file_count * 100, nx = n.programme.known_exception_ref_no.length, nv = n.programme.verified_file_count / n.file_count * 100, ne = nx / n.file_count * 100;
+    P1.push({ w: gp, sub: [seg(gv, C.g, 'verified', `<strong>Grampian — programme (verified)</strong><br>${g.programme.verified_file_count}/${g.file_count} tapes have a hand-checked programme count.`, null, gp * gv / 100),
+                           seg(100 - gv, hatch(C.g, C.gl), 'estimated / pending', `<strong>Grampian — programme (pending)</strong><br>The shotlist has the right timed shape to estimate a count, but it is not confirmed that one line = one programme.`, null, gp * (100 - gv) / 100)] },
+           { w: np_, sub: [seg(nv, C.n, 'verified: 1', `<strong>non-Grampian — programme (verified)</strong><br>${n.programme.verified_file_count}/${n.file_count} confirmed as a single programme.`, null, np_ * nv / 100),
+                           seg(ne, C.warn, '⚠ needs check', `<strong>non-Grampian — exceptions</strong><br>${nx} films use “compilation” language despite a single-programme structure: ref ${n.programme.known_exception_ref_no.join(', ')}.`, 'warn', np_ * ne / 100),
+                           seg(100 - nv - ne, hatch(C.n, C.nl), 'assumed: 1', '<strong>non-Grampian — programme (assumed)</strong><br>Defaults to one programme per file; not individually verified.', null, np_ * (100 - nv - ne) / 100)] });
+    S1.push({ w: gp, sub: [seg(100, C.unk, 'unknown', `<strong>Grampian — segment</strong><br>${g.segment.note}`, 'unk')] },
+            { w: np_, sub: [seg(100, hatch(C.n, C.nl), 'shotlist prose (unvalidated)', `<strong>non-Grampian — segment</strong><br>${n.segment.note}`)] });
+  }
+  root.appendChild(band('Programme', P1)); root.appendChild(band('Segment', S1));
+  document.getElementById('hnote').textContent = hview === 'catalogued'
+    ? 'Programme and Segment are not structured fields in the catalogue — both collections show as undetermined.'
+    : 'Programme and Segment now show what our analysis of the catalogue has worked out — before any pipeline output.';
+}
+
+/* ───────────────────────── example timelines (SVG) ───────────────────────── */
+function fmtT(s) { s = Math.round(s); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(x).padStart(2, '0'); }
+function drawTimeline(elId, ex, name, col, colDark) {
+  const W = 1000, pad = 14, total = ex.file_seconds, X = t => pad + (W - 2 * pad) * t / total, z = ex.zoom, prog = ex.programmes[z.programme_no - 1];
+  const step = total > 2400 ? 600 : total > 900 ? 300 : 120;
+  let s = `<svg class="tl" viewBox="0 0 ${W} 240" width="100%" role="img" aria-label="Example timeline: ${name}">`;
+  s += `<text x="${pad}" y="16" font-size="13" font-weight="700" fill="#1a1a19">${name}</text><text x="${W - pad}" y="16" font-size="12" fill="#6b6a66" text-anchor="end">video file${ex.dod ? ' ' + ex.dod : ''} · ${fmtT(total)} · ${ex.programmes.length} proposed programme${ex.programmes.length === 1 ? '' : 's'}</text>`;
+  ex.programmes.forEach((p, i) => {
+    const x0 = X(p.start), w = Math.max(2, X(p.start + p.duration) - x0), sel = (i + 1 === z.programme_no);
+    s += `<rect x="${x0}" y="28" width="${w}" height="34" rx="2" fill="${i % 2 ? colDark : col}" stroke="${sel ? '#1a1a19' : '#fff'}" stroke-width="${sel ? 2.5 : 1}"><title>Programme ${i + 1}: ${fmtT(p.start)} – ${fmtT(p.start + p.duration)}</title></rect>`;
+    if (w > 22) s += `<text x="${x0 + w / 2}" y="50" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">${i + 1}</text>`;
+  });
+  for (let t = 0; t <= total; t += step) s += `<line x1="${X(t)}" x2="${X(t)}" y1="62" y2="68" stroke="#898781"/><text x="${X(t)}" y="82" font-size="10.5" fill="#6b6a66" text-anchor="middle">${t === 0 ? '0' : Math.round(t / 60) + ' min'}</text>`;
+  const x0 = X(prog.start), x1 = X(prog.start + prog.duration), zy = 128;
+  s += `<path d="M${x0} 62 L${pad} ${zy} M${x1} 62 L${W - pad} ${zy}" stroke="#898781" stroke-dasharray="3 3" fill="none"/>`;
+  s += `<rect x="${pad}" y="${zy}" width="${W - 2 * pad}" height="34" rx="2" fill="${col}" opacity=".28"/>`;
+  z.segment_starts.forEach((t, i) => {
+    const x = pad + (W - 2 * pad) * t / z.duration; s += `<line x1="${x}" x2="${x}" y1="${zy}" y2="${zy + 34}" stroke="${colDark}" stroke-width="2"/><circle cx="${x}" cy="${zy + 52}" r="9" fill="${colDark}"><title>Segment ${i + 1} starts at ${fmtT(t)}</title></circle><text x="${x}" y="${zy + 56}" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">${i + 1}</text>`;
+  });
+  s += `<text x="${pad}" y="${zy + 96}" font-size="10.5" fill="#6b6a66">0:00</text><text x="${W - pad}" y="${zy + 96}" font-size="10.5" fill="#6b6a66" text-anchor="end">${fmtT(z.duration)}</text>`;
+  s += `<text x="${W / 2}" y="${zy + 96}" font-size="12" fill="#1a1a19" text-anchor="middle"><tspan font-weight="700">Zoom: programme ${z.programme_no}</tspan><tspan fill="#6b6a66"> · ${fmtT(z.duration)} long · ${z.segment_starts.length} proposed segments</tspan></text></svg>`;
+  document.getElementById(elId).innerHTML = s;
+}
+
+/* ───────────────────────── charts ───────────────────────── */
+const axes = (xt, yt, o = {}) => ({
+  x: { title: xt ? { display: true, text: xt } : undefined, grid: { display: false }, border: { display: false }, ...(o.x || {}) },
+  y: { title: yt ? { display: true, text: yt } : undefined, grid: { color: C.grid }, border: { display: false }, beginAtZero: true, ...(o.y || {}) }
+});
+const ds = (label, data, color, extra = {}) => ({ label, data, backgroundColor: color, borderColor: '#fff', borderWidth: 1, ...extra });
+const legendTop = { display: true, position: 'top', align: 'start', labels: { boxWidth: 12, boxHeight: 12, padding: 14 } };
+const mk = (id, cfg) => new Chart(document.getElementById(id), cfg);
+const hist = { barPercentage: 1, categoryPercentage: 0.96 };
+
+function renderCharts() {
+  /* 1 · metadata coverage */
+  const cov = N.coverage, sp = N.sparse_fields_non_null_rate, pct = (a, b) => a / b * 100;
+  const rows = [
+    ['Genre terms', pct(cov.genres.films_with_at_least_one, cov.genres.total_films)], ['Category terms', pct(cov.categories.films_with_at_least_one, cov.categories.total_films)],
+    ['Personalities', pct(cov.personalities.films_with_at_least_one, cov.personalities.total_films)], ['Series', pct(cov.series.films_with_at_least_one, cov.series.total_films)],
+    ['Certificate', sp['Certificate'] * 100], ['Producer (tv)', sp['Producer (tv)'] * 100], ['TV episode title', sp['TV Episode Title'] * 100], ['Transmission date', sp['Tx Date'] * 100]];
+  mk('c-meta', { type: 'bar', data: { labels: rows.map(r => r[0]), datasets: [{ data: rows.map(r => r[1]), backgroundColor: rows.map((_, i) => i < 4 ? '#6b6a66' : '#b5b4ae'), borderColor: '#fff', borderWidth: 1 }] },
+    options: { indexAxis: 'y', layout: { padding: { right: 44 } }, plugins: { legend: { display: false }, valueLabels: { mode: 'each', zero: true, fmt: v => (v < 10 ? v.toFixed(1) : Math.round(v)) + '%' }, tooltip: { callbacks: { label: c => c.parsed.x.toFixed(2) + '% of films' } } },
+      scales: { x: { min: 0, max: 100, grid: { color: C.grid }, border: { display: false }, ticks: { callback: v => v + '%' } }, y: { grid: { display: false }, border: { display: false } } } } });
+
+  /* 4 · outer */
+  const pg = P.programmes_per_file.Grampian, pn = P.programmes_per_file['non-Grampian'];
+  mk('c-ppf-g', { type: 'bar', data: { labels: pg.labels, datasets: [ds('tapes', pg.counts, C.g, hist)] }, options: { plugins: { legend: { display: false }, tooltip: { callbacks: { title: i => i[0].label + ' programmes', label: c => c.parsed.y + ' tapes' } } }, scales: axes('programmes in the tape (last bar: 31 or more)', 'tapes') } });
+  mk('c-ppf-n', { type: 'bar', data: { labels: pn.labels, datasets: [ds('films', pn.counts, C.n)] }, options: { layout: { padding: { top: 16 } }, plugins: { legend: { display: false }, valueLabels: { mode: 'each', zero: true }, tooltip: { callbacks: { title: i => i[0].label + ' programme(s)', label: c => c.parsed.y + ' films' } } }, scales: axes('programmes in the film', 'films') } });
+  const minLabels = Array.from({ length: 30 }, (_, i) => i);
+  [['c-dur-g', 'Grampian', C.g], ['c-dur-n', 'non-Grampian', C.n]].forEach(([id, k, col]) => mk(id, { type: 'bar', data: { labels: minLabels, datasets: [ds('programmes', P.duration[k].counts, col, hist)] },
+    options: { plugins: { legend: { display: false }, tooltip: { callbacks: { title: i => i[0].label + '–' + (Number(i[0].label) + 1) + ' min', label: c => c.parsed.y + ' programmes' } } },
+      scales: axes('duration (minutes, up to 30)', 'programmes', { x: { ticks: { autoSkip: false, maxRotation: 0, minRotation: 0, callback: (v, i) => i % 5 === 0 ? i : '' } } }) } }));
+  const ce = P.coverage.edges, cl = ce.slice(0, -1).map((e, i) => Math.round(e * 100) + '–' + Math.round(ce[i + 1] * 100) + '%');
+  mk('c-cov', { type: 'bar', data: { labels: cl, datasets: [ds('Grampian', P.coverage.counts.Grampian, C.g), ds('non-Grampian', P.coverage.counts['non-Grampian'], C.n)] },
+    options: { plugins: { legend: legendTop, tooltip: { callbacks: { title: i => 'covers ' + i[0].label + ' of the video' } } }, scales: axes('share of the video covered by programmes', 'files', { x: { stacked: true }, y: { stacked: true } }) } });
+  mk('c-gap', { type: 'bar', data: { labels: Array.from({ length: 31 }, (_, i) => i), datasets: [ds('programme pairs', P.gaps.counts, '#555555', hist)] },
+    options: { plugins: { legend: { display: false }, tooltip: { callbacks: { title: i => i[0].label + ' s', label: c => c.parsed.y + ' programme pairs' } } }, scales: axes('gap to the next programme (seconds, up to 30)', 'programme pairs', { x: { ticks: { autoSkip: false, maxRotation: 0, minRotation: 0, callback: (v, i) => i % 5 === 0 ? i : '' } } }) } });
+
+  /* 5 · metadata + inner */
+  const fields = Object.keys(P.completeness).sort((a, b) => P.completeness[b].Grampian - P.completeness[a].Grampian);
+  mk('c-miss', { type: 'bar', data: { labels: fields, datasets: [ds('Grampian', fields.map(f => P.completeness[f].Grampian), C.g), ds('non-Grampian', fields.map(f => P.completeness[f]['non-Grampian']), C.n)] },
+    options: { indexAxis: 'y', layout: { padding: { right: 34 } }, plugins: { legend: legendTop, valueLabels: { mode: 'each', zero: true, fmt: v => Math.round(v) + '%' } }, scales: { x: { min: 0, max: 100, grid: { color: C.grid }, border: { display: false }, ticks: { callback: v => v + '%' } }, y: { grid: { display: false }, border: { display: false } } } } });
+  mk('c-seg', { type: 'bar', data: { labels: P.segments.labels, datasets: [ds('Grampian', P.segments.Grampian.share_pct, C.g), ds('non-Grampian', P.segments['non-Grampian'].share_pct, C.n)] },
+    options: { plugins: { legend: legendTop, tooltip: { callbacks: { title: i => i[0].label + ' segments', label: c => c.dataset.label + ': ' + c.parsed.y + '% of programmes' } } }, scales: axes('segments in the programme (last bar: 13 or more)', '% of programmes') } });
+  [['c-types', P.types_top], ['c-places', P.places_top]].forEach(([id, rows], k) => mk(id, { type: 'bar',
+    data: { labels: rows.map(r => r.label), datasets: [ds('Grampian', rows.map(r => r.Grampian), C.g), ds('non-Grampian', rows.map(r => r['non-Grampian']), C.n)] },
+    options: { indexAxis: 'y', layout: { padding: { right: 40 } }, plugins: { legend: k === 0 ? legendTop : { display: false }, valueLabels: { mode: 'total', fmt: FMT.int } }, scales: { x: { stacked: true, grid: { color: C.grid }, border: { display: false } }, y: { stacked: true, grid: { display: false }, border: { display: false } } } } }));
+
+  /* 8 · flags */
+  const nice = f => f.replace(/_/g, ' ').replace(/non grampian/, 'non-Grampian').replace(/grampian/, 'Grampian');
+  const rank = { high: 3, medium: 2, low: 1 }, tier = { high: '#1a1a19', medium: '#6b6a66', low: '#b5b4ae' };
+  const fl = [...P.review.flags].sort((a, b) => rank[b.priority] - rank[a.priority] || b.n - a.n), unit = { programme: 'programmes', gap: 'gaps', file: 'files' };
+  mk('c-flags', { type: 'bar', data: { labels: fl.map(f => nice(f.flag)), datasets: [{ data: fl.map(f => f.n), backgroundColor: fl.map(f => tier[f.priority]), borderColor: '#fff', borderWidth: 1 }] },
+    options: { indexAxis: 'y', layout: { padding: { right: 90 } }, plugins: { legend: { display: false }, valueLabels: { mode: 'each', zero: true, fmt: v => v }, tooltip: { callbacks: { title: i => nice(fl[i[0].dataIndex].flag), label: c => c.parsed.x + ' ' + unit[fl[c.dataIndex].level], afterLabel: c => fl[c.dataIndex].meaning } } },
+      scales: { x: { grid: { color: C.grid }, border: { display: false } }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } } } },
+    plugins: [{ id: 'units', afterDatasetsDraw(ch) { const c = ch.ctx; c.save(); c.font = '11px Helvetica Neue, Arial'; c.fillStyle = '#898781'; c.textBaseline = 'middle'; ch.getDatasetMeta(0).data.forEach((b, i) => c.fillText(unit[fl[i].level], b.x + 30, b.y)); c.restore(); } }] });
+  document.getElementById('flag-legend').innerHTML = ['high', 'medium', 'low'].map(k => `<span><i class="sw" style="background:${tier[k]}"></i>${k} priority</span>`).join('');
+}
+
+/* ───────────────────────── boot ───────────────────────── */
+Promise.all([fetch('metadata_hierarchy_data.json'), fetch('issa_ws1_predictions.json')].map(p => p.then(r => { if (!r.ok) throw new Error(r.url + ' → HTTP ' + r.status); return r.json(); })))
+  .then(([n, p]) => {
+    N = n; P = p; bindAll(); renderHierarchy(); renderCharts();
+    drawTimeline('tl-g', P.examples.Grampian, 'Example · Grampian tape', C.g, C.gd);
+    drawTimeline('tl-n', P.examples['non-Grampian'], 'Example · non-Grampian film', C.n, C.nd);
+  })
+  .catch(e => { const el = document.getElementById('err'); el.style.display = 'block'; el.textContent = '⚠ Could not load the data files — ' + e.message + '. Serve this page from a web server (e.g. python -m http.server) or view it on GitHub Pages.'; });
+document.getElementById('hview').addEventListener('click', e => {
+  const b = e.target.closest('button[data-v]'); if (!b) return; hview = b.dataset.v;
+  document.querySelectorAll('#hview button').forEach(x => x.classList.toggle('on', x === b)); if (N) renderHierarchy();
+});
+</script>
+</body>
+</html>

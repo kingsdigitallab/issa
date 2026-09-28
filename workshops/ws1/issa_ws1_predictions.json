@@ -1,0 +1,694 @@
+{
+ "generated_at": "2026-09-25T00:17",
+ "totals": {
+  "files": 385,
+  "programmes": 1975,
+  "segment_items": 9015,
+  "by_collection": {
+   "Grampian": {
+    "files": 200,
+    "programmes": 1774
+   },
+   "non-Grampian": {
+    "files": 185,
+    "programmes": 201
+   }
+  },
+  "non_grampian_single_programme_files": 176
+ },
+ "programmes_per_file": {
+  "Grampian": {
+   "labels": [
+    "1\u20132",
+    "3\u20134",
+    "5\u20136",
+    "7\u20138",
+    "9\u201310",
+    "11\u201312",
+    "13\u201314",
+    "15\u201316",
+    "17\u201318",
+    "19\u201320",
+    "21\u201322",
+    "23\u201324",
+    "25\u201326",
+    "27\u201328",
+    "29\u201330",
+    "31+"
+   ],
+   "counts": [
+    27,
+    26,
+    29,
+    30,
+    22,
+    27,
+    14,
+    13,
+    4,
+    3,
+    0,
+    0,
+    1,
+    1,
+    0,
+    3
+   ],
+   "median": 7.0,
+   "mean": 8.9,
+   "max": 102
+  },
+  "non-Grampian": {
+   "labels": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "counts": [
+    176,
+    6,
+    1,
+    1,
+    0,
+    1
+   ],
+   "median": 1.0,
+   "max": 6
+  }
+ },
+ "duration": {
+  "Grampian": {
+   "counts": [
+    250,
+    280,
+    208,
+    161,
+    145,
+    134,
+    96,
+    75,
+    57,
+    57,
+    36,
+    23,
+    29,
+    24,
+    16,
+    15,
+    13,
+    23,
+    18,
+    12,
+    11,
+    9,
+    11,
+    3,
+    6,
+    3,
+    3,
+    3,
+    4,
+    3
+   ],
+   "over_30_min": 46,
+   "under_10_s": 88,
+   "median_min": 3.9,
+   "n": 1774
+  },
+  "non-Grampian": {
+   "counts": [
+    9,
+    12,
+    8,
+    10,
+    6,
+    11,
+    4,
+    8,
+    6,
+    9,
+    8,
+    6,
+    6,
+    12,
+    8,
+    11,
+    6,
+    9,
+    8,
+    10,
+    4,
+    2,
+    4,
+    1,
+    2,
+    3,
+    2,
+    3,
+    1,
+    0
+   ],
+   "over_30_min": 12,
+   "under_10_s": 4,
+   "median_min": 12.9,
+   "n": 201
+  }
+ },
+ "coverage": {
+  "edges": [
+   0.8,
+   0.82,
+   0.84,
+   0.86,
+   0.88,
+   0.9,
+   0.92,
+   0.94,
+   0.96,
+   0.98,
+   1.0
+  ],
+  "counts": {
+   "Grampian": [
+    0,
+    1,
+    1,
+    0,
+    1,
+    3,
+    4,
+    5,
+    38,
+    147
+   ],
+   "non-Grampian": [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    1,
+    0,
+    3,
+    180
+   ]
+  },
+  "median": 0.996,
+  "min": 0.821,
+  "files_below_95pct": 15
+ },
+ "gaps": {
+  "counts": [
+   0,
+   256,
+   223,
+   158,
+   296,
+   317,
+   119,
+   26,
+   26,
+   25,
+   24,
+   8,
+   13,
+   10,
+   8,
+   4,
+   3,
+   6,
+   4,
+   7,
+   6,
+   2,
+   0,
+   4,
+   1,
+   3,
+   1,
+   0,
+   1,
+   1,
+   2
+  ],
+  "over_30_s": 36,
+  "median_s": 4.0,
+  "min_s": 1.0,
+  "pairs": 1590,
+  "overlaps": 0
+ },
+ "completeness": {
+  "title": {
+   "Grampian": 93.8,
+   "non-Grampian": 19.4
+  },
+  "year": {
+   "Grampian": 90.0,
+   "non-Grampian": 74.1
+  },
+  "place": {
+   "Grampian": 13.1,
+   "non-Grampian": 5.5
+  },
+  "types": {
+   "Grampian": 3.5,
+   "non-Grampian": 0.5
+  },
+  "segments": {
+   "Grampian": 5.5,
+   "non-Grampian": 1.5
+  },
+  "credits": {
+   "Grampian": 96.4,
+   "non-Grampian": 37.3
+  },
+  "keywords": {
+   "Grampian": 0.8,
+   "non-Grampian": 0.5
+  },
+  "synopsis": {
+   "Grampian": 0.1,
+   "non-Grampian": 0.0
+  }
+ },
+ "types_top": [
+  {
+   "label": "documentary",
+   "Grampian": 1236,
+   "non-Grampian": 152
+  },
+  {
+   "label": "tv news",
+   "Grampian": 586,
+   "non-Grampian": 6
+  },
+  {
+   "label": "educational",
+   "Grampian": 174,
+   "non-Grampian": 73
+  },
+  {
+   "label": "promotional",
+   "Grampian": 125,
+   "non-Grampian": 70
+  },
+  {
+   "label": "amateur",
+   "Grampian": 138,
+   "non-Grampian": 34
+  },
+  {
+   "label": "tv sports",
+   "Grampian": 135,
+   "non-Grampian": 6
+  },
+  {
+   "label": "instructional",
+   "Grampian": 65,
+   "non-Grampian": 20
+  },
+  {
+   "label": "home movie",
+   "Grampian": 40,
+   "non-Grampian": 16
+  },
+  {
+   "label": "comedy",
+   "Grampian": 30,
+   "non-Grampian": 10
+  },
+  {
+   "label": "drama",
+   "Grampian": 17,
+   "non-Grampian": 12
+  },
+  {
+   "label": "advertising",
+   "Grampian": 9,
+   "non-Grampian": 10
+  },
+  {
+   "label": "scientific",
+   "Grampian": 17,
+   "non-Grampian": 2
+  }
+ ],
+ "places_top": [
+  {
+   "label": "Scotland",
+   "Grampian": 954,
+   "non-Grampian": 156
+  },
+  {
+   "label": "United Kingdom",
+   "Grampian": 477,
+   "non-Grampian": 21
+  },
+  {
+   "label": "Aberdeen",
+   "Grampian": 171,
+   "non-Grampian": 8
+  },
+  {
+   "label": "England",
+   "Grampian": 122,
+   "non-Grampian": 8
+  },
+  {
+   "label": "Dundee",
+   "Grampian": 90,
+   "non-Grampian": 6
+  },
+  {
+   "label": "Glasgow",
+   "Grampian": 32,
+   "non-Grampian": 42
+  },
+  {
+   "label": "Aberdeenshire",
+   "Grampian": 68,
+   "non-Grampian": 2
+  },
+  {
+   "label": "Scottish Highlands",
+   "Grampian": 60,
+   "non-Grampian": 7
+  },
+  {
+   "label": "Edinburgh",
+   "Grampian": 42,
+   "non-Grampian": 24
+  },
+  {
+   "label": "Inverness",
+   "Grampian": 37,
+   "non-Grampian": 3
+  },
+  {
+   "label": "Perth",
+   "Grampian": 23,
+   "non-Grampian": 6
+  },
+  {
+   "label": "London",
+   "Grampian": 22,
+   "non-Grampian": 4
+  }
+ ],
+ "segments": {
+  "Grampian": {
+   "share_pct": [
+    5.5,
+    10.7,
+    12.3,
+    14.8,
+    15.7,
+    14.5,
+    9.5,
+    7.2,
+    4.7,
+    2.3,
+    1.0,
+    0.7,
+    0.4,
+    0.8
+   ],
+   "median": 4.0,
+   "mean": 4.1,
+   "programmes_without": 97,
+   "n": 1774
+  },
+  "non-Grampian": {
+   "share_pct": [
+    1.5,
+    0.5,
+    3.5,
+    5.0,
+    6.0,
+    7.0,
+    10.9,
+    9.0,
+    10.0,
+    9.0,
+    11.4,
+    10.4,
+    5.5,
+    10.4
+   ],
+   "median": 8.0,
+   "mean": 8.3,
+   "programmes_without": 3,
+   "n": 201
+  },
+  "labels": [
+   "0",
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "8",
+   "9",
+   "10",
+   "11",
+   "12",
+   "13+"
+  ],
+  "total_items": 9015
+ },
+ "news_labelling": {
+  "grampian_tv_news_pct": 33.0,
+  "grampian_documentary_pct": 69.7,
+  "grampian_tv_sports_pct": 7.6,
+  "grampian_tapes_without_news_label": 30,
+  "grampian_tapes": 200,
+  "non_grampian_programmes_labelled_news": 6
+ },
+ "quality": {
+  "timecode_styles": {
+   "MM:SS": 1386,
+   "HH:MM:SS": 352,
+   "MM:SS:00": 121,
+   "none": 109,
+   "MM:SS:00 (mixed)": 7
+  },
+  "programmes_with_ambiguous_timecodes": 128,
+  "place_distinct_raw": 745,
+  "place_distinct_sets": 668,
+  "place_distinct_tokens": 719,
+  "place_missing": 243,
+  "unparseable_segment_items": 9,
+  "encoding": "cp1252"
+ },
+ "review": {
+  "flags": [
+   {
+    "flag": "mixed_timecodes",
+    "level": "programme",
+    "priority": "high",
+    "meaning": "segment timecodes mix two styles inside one programme, so the times are approximate",
+    "n": 7
+   },
+   {
+    "flag": "non_ascending_segments",
+    "level": "programme",
+    "priority": "high",
+    "meaning": "segment timecodes go backwards",
+    "n": 3
+   },
+   {
+    "flag": "very_long",
+    "level": "programme",
+    "priority": "high",
+    "meaning": "programme longer than 60 min \u2014 probably several programmes merged",
+    "n": 6
+   },
+   {
+    "flag": "news_label_outside_grampian",
+    "level": "programme",
+    "priority": "high",
+    "meaning": "labelled 'tv news' although the file is not in the Grampian collection",
+    "n": 6
+   },
+   {
+    "flag": "long_gap_after",
+    "level": "gap",
+    "priority": "high",
+    "meaning": "more than 30 s before the next programme \u2014 dead air or a missed programme?",
+    "n": 36
+   },
+   {
+    "flag": "non_grampian_multi_programme",
+    "level": "file",
+    "priority": "high",
+    "meaning": "non-Grampian file split into several programmes (the catalogue treats these as one) \u2014 real compilation or over-segmentation?",
+    "n": 9
+   },
+   {
+    "flag": "grampian_many_programmes",
+    "level": "file",
+    "priority": "high",
+    "meaning": "far more programmes than a typical Grampian tape (above the upper outlier fence) \u2014 over-segmentation?",
+    "n": 5
+   },
+   {
+    "flag": "very_short",
+    "level": "programme",
+    "priority": "medium",
+    "meaning": "programme shorter than 10 s \u2014 fragment, or a separator kept as a programme?",
+    "n": 92
+   },
+   {
+    "flag": "long_for_news",
+    "level": "programme",
+    "priority": "medium",
+    "meaning": "Grampian programme longer than 30 min \u2014 several news items merged?",
+    "n": 40
+   },
+   {
+    "flag": "unparsed_segment",
+    "level": "programme",
+    "priority": "medium",
+    "meaning": "segment list contains an item whose timecode could not be read",
+    "n": 9
+   },
+   {
+    "flag": "no_segments",
+    "level": "programme",
+    "priority": "medium",
+    "meaning": "programme of 60 s or more with no usable segment list (empty, or none of it could be parsed)",
+    "n": 16
+   },
+   {
+    "flag": "grampian_few_programmes",
+    "level": "file",
+    "priority": "medium",
+    "meaning": "Grampian tape with 2 programmes or fewer \u2014 items merged?",
+    "n": 27
+   },
+   {
+    "flag": "grampian_no_news_label",
+    "level": "file",
+    "priority": "medium",
+    "meaning": "Grampian tape in which no programme is labelled 'tv news'",
+    "n": 30
+   },
+   {
+    "flag": "low_coverage",
+    "level": "file",
+    "priority": "medium",
+    "meaning": "programmes cover less than 85% of the file's span \u2014 a large stretch left unaccounted for",
+    "n": 3
+   },
+   {
+    "flag": "late_first_start",
+    "level": "file",
+    "priority": "medium",
+    "meaning": "first programme starts after 30 s",
+    "n": 3
+   },
+   {
+    "flag": "incomplete_output",
+    "level": "programme",
+    "priority": "low",
+    "meaning": "the model returned no synopsis or no keywords",
+    "n": 17
+   }
+  ],
+  "files_total": 385,
+  "files_flagged": 154,
+  "files_no_flag": 231,
+  "files_p1": 64,
+  "files_p2": 90,
+  "programmes_total": 1975,
+  "programmes_flagged": 172,
+  "gaps_flagged": 36,
+  "top20": {
+   "Grampian": 16,
+   "non-Grampian": 4,
+   "P1": 19
+  }
+ },
+ "examples": {
+  "Grampian": {
+   "dod": "141349033",
+   "file_seconds": 3573,
+   "programmes": [
+    {
+     "start": 9,
+     "duration": 813
+    },
+    {
+     "start": 828,
+     "duration": 1408
+    },
+    {
+     "start": 2240,
+     "duration": 182
+    },
+    {
+     "start": 2427,
+     "duration": 223
+    },
+    {
+     "start": 2654,
+     "duration": 34
+    },
+    {
+     "start": 2691,
+     "duration": 246
+    },
+    {
+     "start": 2940,
+     "duration": 633
+    }
+   ],
+   "zoom": {
+    "programme_no": 2,
+    "duration": 1408,
+    "segment_starts": [
+     0,
+     56,
+     308,
+     678,
+     1140
+    ]
+   }
+  },
+  "non-Grampian": {
+   "dod": "95752476",
+   "file_seconds": 818,
+   "programmes": [
+    {
+     "start": 0,
+     "duration": 818
+    }
+   ],
+   "zoom": {
+    "programme_no": 1,
+    "duration": 818,
+    "segment_starts": [
+     0,
+     68,
+     89,
+     217,
+     255,
+     300,
+     383,
+     424,
+     502,
+     585,
+     667,
+     704,
+     813
+    ]
+   }
+  }
+ }
+}
