@@ -1,3 +1,9 @@
+This is a technical document for the processing of WS1 with National Library of Scotland. 
+
+For a summary of the workshop see the [WS1 ISSA wiki page](https://github.com/kingsdigitallab/issa/wiki/WS1-%E2%80%95National-Library-of-Scotland). 
+For a high-level analysis of the outputs see [this interactive analysis page](https://kingsdigitallab.github.io/issa/workshops/ws1/issa_ws1.html). 
+For a rigorous quantitative evaluation on a subset of annotated examples see [this file](https://github.com/kingsdigitallab/issa/blob/main/workshops/ws1/catalogue/eval_predictions_v2.py).
+
 # Notebook
 
 ```bash
