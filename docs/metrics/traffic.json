@@ -192,6 +192,10 @@
       "2026-09-29": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-09-30": {
+        "count": 0,
+        "uniques": 0
       }
     },
     "referrers": {
@@ -629,6 +633,18 @@
           "referrer": "teams.public.onecdn.static.microsoft",
           "uniques": 1
         }
+      ],
+      "2026-10-01": [
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -823,6 +839,10 @@
       "2026-09-29": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-09-30": {
+        "count": 1,
+        "uniques": 1
       }
     }
   },
@@ -1057,6 +1077,10 @@
       "2026-09-29": {
         "count": 23,
         "uniques": 15
+      },
+      "2026-09-30": {
+        "count": 24,
+        "uniques": 14
       }
     },
     "referrers": {
@@ -1904,6 +1928,53 @@
           "referrer": "ukc-word-view.officeapps.live.com",
           "uniques": 1
         }
+      ],
+      "2026-10-01": [
+        {
+          "count": 3,
+          "referrer": "kcl.ac.uk",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "DuckDuckGo",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "movingpixel.net",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "ukc-word-view.officeapps.live.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -2098,6 +2169,10 @@
       "2026-09-29": {
         "count": 27,
         "uniques": 1
+      },
+      "2026-09-30": {
+        "count": 49,
+        "uniques": 5
       }
     }
   }
