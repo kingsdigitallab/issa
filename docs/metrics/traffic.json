@@ -204,6 +204,10 @@
       "2026-10-02": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-10-03": {
+        "count": 0,
+        "uniques": 0
       }
     },
     "referrers": {
@@ -677,6 +681,13 @@
           "referrer": "teams.public.onecdn.static.microsoft",
           "uniques": 1
         }
+      ],
+      "2026-10-04": [
+        {
+          "count": 2,
+          "referrer": "avindh.org",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -883,6 +894,10 @@
       "2026-10-02": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-10-03": {
+        "count": 0,
+        "uniques": 0
       }
     }
   },
@@ -1132,6 +1147,10 @@
       "2026-10-02": {
         "count": 4,
         "uniques": 4
+      },
+      "2026-10-03": {
+        "count": 24,
+        "uniques": 17
       }
     },
     "referrers": {
@@ -2125,6 +2144,53 @@
           "referrer": "ukc-word-view.officeapps.live.com",
           "uniques": 1
         }
+      ],
+      "2026-10-04": [
+        {
+          "count": 6,
+          "referrer": "kcl.ac.uk",
+          "uniques": 4
+        },
+        {
+          "count": 4,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "DuckDuckGo",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "movingpixel.net",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "ukc-onenote.officeapps.live.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "ukc-word-view.officeapps.live.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -2331,6 +2397,10 @@
       "2026-10-02": {
         "count": 4,
         "uniques": 3
+      },
+      "2026-10-03": {
+        "count": 0,
+        "uniques": 0
       }
     }
   }
