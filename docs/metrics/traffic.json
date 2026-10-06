@@ -212,6 +212,10 @@
       "2026-10-04": {
         "count": 2,
         "uniques": 2
+      },
+      "2026-10-05": {
+        "count": 0,
+        "uniques": 0
       }
     },
     "referrers": {
@@ -694,6 +698,13 @@
         }
       ],
       "2026-10-05": [
+        {
+          "count": 2,
+          "referrer": "avindh.org",
+          "uniques": 1
+        }
+      ],
+      "2026-10-06": [
         {
           "count": 2,
           "referrer": "avindh.org",
@@ -913,6 +924,10 @@
       "2026-10-04": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-10-05": {
+        "count": 2,
+        "uniques": 2
       }
     }
   },
@@ -954,6 +969,9 @@
       "visitors": 3
     },
     "2026-10-02": {
+      "visitors": 4
+    },
+    "2026-10-06": {
       "visitors": 4
     }
   },
@@ -1170,6 +1188,10 @@
       "2026-10-04": {
         "count": 22,
         "uniques": 17
+      },
+      "2026-10-05": {
+        "count": 11,
+        "uniques": 7
       }
     },
     "referrers": {
@@ -2212,6 +2234,53 @@
         }
       ],
       "2026-10-05": [
+        {
+          "count": 6,
+          "referrer": "kcl.ac.uk",
+          "uniques": 4
+        },
+        {
+          "count": 4,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "DuckDuckGo",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "movingpixel.net",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "ukc-onenote.officeapps.live.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "ukc-word-view.officeapps.live.com",
+          "uniques": 1
+        }
+      ],
+      "2026-10-06": [
         {
           "count": 6,
           "referrer": "kcl.ac.uk",
@@ -2471,6 +2540,10 @@
       "2026-10-04": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-10-05": {
+        "count": 6,
+        "uniques": 2
       }
     }
   }
