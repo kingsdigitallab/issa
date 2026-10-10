@@ -228,6 +228,10 @@
       "2026-10-08": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-10-09": {
+        "count": 0,
+        "uniques": 0
       }
     },
     "referrers": {
@@ -748,6 +752,18 @@
           "referrer": "avindh.org",
           "uniques": 1
         }
+      ],
+      "2026-10-10": [
+        {
+          "count": 2,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -978,6 +994,10 @@
       "2026-10-08": {
         "count": 4,
         "uniques": 4
+      },
+      "2026-10-09": {
+        "count": 2,
+        "uniques": 2
       }
     }
   },
@@ -1257,6 +1277,10 @@
       "2026-10-08": {
         "count": 2,
         "uniques": 2
+      },
+      "2026-10-09": {
+        "count": 3,
+        "uniques": 3
       }
     },
     "referrers": {
@@ -2522,6 +2546,43 @@
           "referrer": "ukc-onenote.officeapps.live.com",
           "uniques": 1
         }
+      ],
+      "2026-10-10": [
+        {
+          "count": 4,
+          "referrer": "kcl.ac.uk",
+          "uniques": 3
+        },
+        {
+          "count": 3,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "movingpixel.net",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "ukc-onenote.officeapps.live.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -2752,6 +2813,10 @@
       "2026-10-08": {
         "count": 6,
         "uniques": 4
+      },
+      "2026-10-09": {
+        "count": 2,
+        "uniques": 2
       }
     }
   }
