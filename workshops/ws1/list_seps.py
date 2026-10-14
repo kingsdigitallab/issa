@@ -6,7 +6,7 @@ from collections import Counter
 base_dir = Path('batches')
 
 # Find all files ending in .y (e.g., X.y) recursively
-files = base_dir.rglob('video_answers.json')
+files = base_dir.rglob('*-full/clip_answers.json')
 
 sep_types = Counter()
 
@@ -14,8 +14,10 @@ missing_progs = 0
 
 files_count = 0
 for file_path in sorted(list(files)):
+    files_count += 1
     data = json.loads(file_path.read_text())['data']
-    sep1 = data['sep1']
+    sep1 = data.get('sep1', None)
+    if not sep1: continue
     seps = sep1['answer']
     errors = [c['error'] for c in sep1['stats']['chunks'] if c['error']]
     
@@ -31,8 +33,6 @@ for file_path in sorted(list(files)):
     
     if progs_count == 0:
         missing_progs += 1
-
-    files_count += 1
 
 print()
 
