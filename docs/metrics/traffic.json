@@ -244,6 +244,10 @@
       "2026-10-12": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-10-13": {
+        "count": 2,
+        "uniques": 2
       }
     },
     "referrers": {
@@ -812,6 +816,18 @@
           "referrer": "avindh.org",
           "uniques": 1
         }
+      ],
+      "2026-10-14": [
+        {
+          "count": 3,
+          "referrer": "github.com",
+          "uniques": 3
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1058,6 +1074,10 @@
       "2026-10-12": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-10-13": {
+        "count": 0,
+        "uniques": 0
       }
     }
   },
@@ -1356,6 +1376,10 @@
       "2026-10-12": {
         "count": 18,
         "uniques": 12
+      },
+      "2026-10-13": {
+        "count": 3,
+        "uniques": 3
       }
     },
     "referrers": {
@@ -2764,6 +2788,38 @@
           "referrer": "ukc-onenote.officeapps.live.com",
           "uniques": 1
         }
+      ],
+      "2026-10-14": [
+        {
+          "count": 4,
+          "referrer": "kcl.ac.uk",
+          "uniques": 3
+        },
+        {
+          "count": 3,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "movingpixel.net",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "ukc-onenote.officeapps.live.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -3010,6 +3066,10 @@
       "2026-10-12": {
         "count": 5,
         "uniques": 3
+      },
+      "2026-10-13": {
+        "count": 2,
+        "uniques": 1
       }
     }
   }
