@@ -147,7 +147,15 @@
                     "sample4": "NWFA 58 |NWFA 57 |N_6977195_|N_6975894_",                
                     "sample2": "NWFA 58 |N_6977195_",                
                     "sample1": "NWFA 58 ",
-                    "sample1b": "N_6977195_"
+                    "sample1b": "N_6977195_",
+                    "part1": "N_696",
+                    "part2": "N_6975",
+                    "part3": "N_6977",
+                    "part4": "N_6978",
+                    "part5": "NWFA 4",
+                    "part6": "NWFA 5",
+                    "part7": "NWFA 6"
+
                 }
             }            
         }
