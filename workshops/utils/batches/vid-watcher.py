@@ -6,13 +6,21 @@ the structure expected by FrameSense.
 The landed video is removed after its successful compression.
 Videos whose compressed copy already exists are skipped,
 so the script can be interrupted and restarted safely.
+Processing can be restricted with -f/--filter FILTER, a key of the
+data[i].attributes.filters dictionary of ../collections.json: only
+mp4s whose name contains one of the filter's pipe-separated ids are
+processed.  With --once the script exits after compressing the videos
+already present, instead of waiting for more of them to come in.
 '''
 
 # Script created by opencode:e-research/arc:apex
 # Prompt summary: new script watching the current folder that compresses every
 # new <X>.mp4 into <X>/<X>.mp4, adapting the ffmpeg-on-singularity compression command.
 
+import argparse
+import json
 import subprocess
+import sys
 import time
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -27,6 +35,8 @@ DATA_MOUNT = '/data'    # bind-mount destination of the watched folder inside th
 TMP_SUFFIX = '.tmp'     # suffix of the in-progress compressed file, renamed on completion
 POLL_INTERVAL = 2.0     # seconds between two scans of the watched folder
 SETTLE_SECONDS = 10.0   # a video counts as fully landed once its size stayed unchanged this long
+COLLECTIONS_FILE = Path('../collections.json')  # ids[...].filters of the collection, one level above the watched folder
+FILTER_IDS_SEP = '|'    # separator of the video ids inside a filter value
 
 
 def list_videos() -> List[Path]:
@@ -86,13 +96,65 @@ def process(video: Path) -> None:
         print(f'FAILED {video.name}: {err}', flush=True)
 
 
+def parse_args() -> argparse.Namespace:
+    '''Return the parsed command line arguments.'''
+    parser = argparse.ArgumentParser(
+        description=f'Watch the current folder for new {VIDEO_EXT} videos and compress each into <X>/<X>.mp4'
+    )
+    parser.add_argument(
+        '-f', '--filter',
+        help=f'key of data[i].attributes.filters in {COLLECTIONS_FILE}; only videos whose name contains '
+             f"one of the filter's {FILTER_IDS_SEP}-separated ids are processed",
+    )
+    parser.add_argument(
+        '--once',
+        action='store_true',
+        help='exit once all matching videos currently present have been processed, instead of watching for new ones',
+    )
+    ret = parser.parse_args()
+    return ret
+
+
+def load_filter_ids(filter_name: str) -> List[str]:
+    '''Return the video ids listed under data[i].attributes.filters[filter_name]
+    in ../collections.json, exiting with an error if the file or the filter is unknown.'''
+    ret = []
+    try:
+        with open(COLLECTIONS_FILE) as f:
+            data = json.load(f)['data']
+    except OSError:
+        print(f'{COLLECTIONS_FILE} not found (run from the batches folder)', file=sys.stderr)
+        sys.exit(1)
+    for entry in data:
+        ids = entry.get('attributes', {}).get('filters', {}).get(filter_name)
+        if ids is not None:
+            ret = [i for i in ids.split(FILTER_IDS_SEP) if i]
+            break
+    else:
+        available = sorted({k for e in data for k in e.get('attributes', {}).get('filters', {})})
+        print(f'Unknown filter: {filter_name}. Available filters: {", ".join(available)}', file=sys.stderr)
+        sys.exit(1)
+    return ret
+
+
+def matches_filter(name: str, ids: List[str]) -> bool:
+    '''Return True if name contains one of the filter ids.'''
+    ret = any(i for i in ids if i in name)
+    return ret
+
+
 def main() -> None:
+    args = parse_args()
+    filter_ids = load_filter_ids(args.filter) if args.filter else None
     done = set()    # names of videos already compressed or skipped
     pending = {}    # name -> (size, time when that size was first seen)
 
-    print(f'Watching {WATCH_DIR.resolve()} for new {VIDEO_EXT} files, compressing with {SIF_PATH}', flush=True)
+    scope = f' matching filter {args.filter}' if filter_ids is not None else ''
+    print(f'Watching {WATCH_DIR.resolve()} for new {VIDEO_EXT} files{scope}, compressing with {SIF_PATH}', flush=True)
     while True:
         for video in list_videos():
+            if filter_ids is not None and not matches_filter(video.name, filter_ids):
+                continue
             if video.name in done or target_path(video).exists():
                 done.add(video.name)
                 continue
@@ -104,6 +166,9 @@ def main() -> None:
             if landed:
                 process(video)
                 done.add(video.name)
+        if args.once and not pending:
+            print('All present videos processed, exiting (--once)', flush=True)
+            break
         time.sleep(POLL_INTERVAL)
 
 
