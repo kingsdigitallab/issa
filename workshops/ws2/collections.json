@@ -154,8 +154,9 @@
                     "part4": "N_6978",
                     "part5": "NWFA 4",
                     "part6": "NWFA 5",
-                    "part7": "NWFA 6"
-
+                    "part7": "NWFA 6",
+                    "half1": "NWFA ",
+                    "half2": "N_6"
                 }
             }            
         }
