@@ -6,7 +6,6 @@
             "default": {
                 "operations": [
                     {
-                        "stop": 1,
                         "operator": "clip_full_video",
                         "notes": "low resource (cpu) & fast"
                     },
@@ -139,7 +138,7 @@
                 "collector": "NWFA",
                 "description": "400 videos from NWFA: 200 from Channel M + 200 from rest of collection",
                 "origin": "various",
-                "path": "/scratch/prj/dh_issa/issa/workshops/ws2/batches",
+                "path": "./batches",
                 "annotations_path": "",
                 "filters": {
                     "sample20": "N_6975886_|N_6970722_|NWFA 543 |NWFA 58 |NWFA 473 |N_6966411_|NWFA 611 |N_6975894_|N_6977195_|NWFA 7257 |NWFA 4220 |N_6967905_|NWFA 143 |NWFA 7766 |NWFA 57 |NWFA 5775 |NWFA 9280 |N_6970720_|N_6967906_|N_6975915_",

@@ -12,9 +12,9 @@
 # workshop folder into ./batches/, restricted to the IDs of a -f filter
 # from collections-batches.json.
 
-BASE_DIR="hpc:/scratch/prj/dh_issa/issa/workshops/ws1/batches"
+BASE_DIR="hpc:/scratch/prj/dh_issa/issa/workshops/ws2/batches"
 DEST_DIR="./batches"
-COLLECTIONS_FILE="collections-batches.json"
+COLLECTIONS_FILE="collections.json"
 EXCLUDES=(--exclude "chunks/" --exclude "*.wav" --exclude "*sub.mp4")
 
 usage() {
@@ -71,7 +71,7 @@ mkdir -p "$DEST_DIR"
 
 FAILED=0
 for id in "${IDS[@]}"; do
-    if rsync -av --size-only "${EXCLUDES[@]}" "${BASE_DIR}/${id}/" "${DEST_DIR}/${id}/"; then
+    if rsync -av --size-only "${EXCLUDES[@]}" "${BASE_DIR}/${id}*" "${DEST_DIR}/"; then
         echo "Copied: ${BASE_DIR}/${id}/"
     else
         echo "FAILED: ${BASE_DIR}/${id}/" >&2
