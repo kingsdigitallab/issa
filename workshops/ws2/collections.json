@@ -1,11 +1,12 @@
 {
     "meta": {
         "type": "collection",
-        "comment": "Two batches of videos from NLS, Grampian and others; 386 items",
+        "comment": "Two batches of videos from NWFA; 400 items",
         "pipelines": {
             "default": {
                 "operations": [
                     {
+                        "stop": 1,
                         "operator": "clip_full_video",
                         "notes": "low resource (cpu) & fast"
                     },
@@ -15,19 +16,19 @@
                         "exclude": "-sub"
                     },
                     {
+                        "operator": "detect_speech_vad",
+                        "params": {
+                        },
+                        "notes": "low resource (1 cpu core); cpu: 1; 12GB ram; 1/25 of real time (10 hours)",
+                        "exclude": "-sub"
+                    },
+                    {
                         "operator": "transcribe_speech_parakeet",
                         "params": {
                             "model": "nvidia/canary-1b-v2",
                             "cpu_only": 0
                         },
                         "notes": "tested on 40+GB GPU & 40GB RAM; speed: 1/5 of real time; cpu: 8",
-                        "exclude": "-sub"
-                    },
-                    {
-                        "operator": "detect_speech_vad",
-                        "params": {
-                        },
-                        "notes": "low resource (1 cpu core); cpu: 1; 12GB ram; 1/25 of real time (10 hours)",
                         "exclude": "-sub"
                     },
                     {
