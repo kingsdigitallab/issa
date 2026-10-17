@@ -256,6 +256,10 @@
       "2026-10-15": {
         "count": 4,
         "uniques": 4
+      },
+      "2026-10-16": {
+        "count": 21,
+        "uniques": 8
       }
     },
     "referrers": {
@@ -860,6 +864,13 @@
           "referrer": "avindh.org",
           "uniques": 1
         }
+      ],
+      "2026-10-17": [
+        {
+          "count": 3,
+          "referrer": "github.com",
+          "uniques": 3
+        }
       ]
     },
     "views": {
@@ -1118,6 +1129,10 @@
       "2026-10-15": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-10-16": {
+        "count": 9,
+        "uniques": 1
       }
     }
   },
@@ -1171,6 +1186,9 @@
       "visitors": 4
     },
     "2026-10-15": {
+      "visitors": 4
+    },
+    "2026-10-17": {
       "visitors": 4
     }
   },
@@ -1431,6 +1449,10 @@
       "2026-10-15": {
         "count": 40,
         "uniques": 18
+      },
+      "2026-10-16": {
+        "count": 28,
+        "uniques": 15
       }
     },
     "referrers": {
@@ -2910,6 +2932,18 @@
           "referrer": "ukc-onenote.officeapps.live.com",
           "uniques": 1
         }
+      ],
+      "2026-10-17": [
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -3168,6 +3202,10 @@
       "2026-10-15": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-10-16": {
+        "count": 0,
+        "uniques": 0
       }
     }
   }
