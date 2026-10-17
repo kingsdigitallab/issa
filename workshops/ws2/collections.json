@@ -56,7 +56,14 @@
                         "params": {
                         },
                         "notes": "low resource (cpu); cpu 8, 8g ram; 1/34 RT (7h)",
-                        "exclude": "full.mp4"
+                        "exclude": "-full.mp4"
+                    },
+                    {
+                        "operator": "answer_clips_vlm",
+                        "params": {
+                        },
+                        "notes": "80G VRAM, 40G RAM, 8 cpu, 1/6 RT",
+                        "exclude": "-full.mp4|-sub.mp4"
                     }
                 ]
             }
