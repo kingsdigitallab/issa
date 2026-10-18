@@ -202,3 +202,8 @@ workshops/ws1/batches
 workshops/ws1/evals
 *.sif
 
+catalogue
+tmp
+assets
+batches
+framesense
