@@ -268,6 +268,10 @@
       "2026-10-18": {
         "count": 24,
         "uniques": 6
+      },
+      "2026-10-19": {
+        "count": 20,
+        "uniques": 7
       }
     },
     "referrers": {
@@ -898,6 +902,18 @@
           "referrer": "search.brave.com",
           "uniques": 1
         }
+      ],
+      "2026-10-20": [
+        {
+          "count": 3,
+          "referrer": "github.com",
+          "uniques": 3
+        },
+        {
+          "count": 1,
+          "referrer": "search.brave.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1168,6 +1184,10 @@
       "2026-10-18": {
         "count": 13,
         "uniques": 1
+      },
+      "2026-10-19": {
+        "count": 0,
+        "uniques": 0
       }
     }
   },
@@ -1224,6 +1244,9 @@
       "visitors": 4
     },
     "2026-10-17": {
+      "visitors": 4
+    },
+    "2026-10-20": {
       "visitors": 4
     }
   },
@@ -1496,6 +1519,10 @@
       "2026-10-18": {
         "count": 22,
         "uniques": 12
+      },
+      "2026-10-19": {
+        "count": 17,
+        "uniques": 10
       }
     },
     "referrers": {
@@ -3021,6 +3048,23 @@
           "referrer": "kdl.kcl.ac.uk",
           "uniques": 1
         }
+      ],
+      "2026-10-20": [
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -3289,6 +3333,10 @@
         "uniques": 1
       },
       "2026-10-18": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-10-19": {
         "count": 0,
         "uniques": 0
       }
