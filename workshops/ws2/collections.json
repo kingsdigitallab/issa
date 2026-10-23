@@ -22,7 +22,7 @@
                         "exclude": "-sub"
                     },
                     {
-                        "operator": "transcribe_speech_parakeet",
+                        "operator": "transcribe_vad_parakeet",
                         "params": {
                             "model": "nvidia/canary-1b-v2",
                             "cpu_only": 0
@@ -90,18 +90,17 @@
                     "misc3": {
                         "question_MULTILINES": [
                             "The attached video is a single programme from a very diverse collection at a national screen archive.",
-                            "It may contain raw unedited rushes or content that went on air.", 
-                            "Focus on the programme's actual content and disregard any non-programme material at the start (such as colour bars, blank frames, or other incidental visuals).", 
+                            "Sometimes a professional programme can contain raw unedited rushes with outtakes or retakes.", 
                             "Returns a json dictionary with the following keys:",
                             "* year (the year the programme was made, only if specified and certain),",
-                            "* title (the title of the programme, if specified),",
-                            "* place (regions and main specific identifiable place names where this was filmed, if certain),",
+                            "* title (the title of the programme, only if specified and certain),",
+                            "* places (unique toponyms where the programme takes place; only if certain and mentioned on a sign or in subtitles),",
                             "* segments (list of main chapters or major segments, for each a `title` and a `starting` timecode),",
                             "* summary (one very concise sentence summarising the content of the programme),",
-                            "* synopsis (short paragraph summarising the content of the programme),",
+                            "* synopsis (short paragraph summarising the content of the programme; don't mention possible visual transitions at the start),",
                             "* colour (either: black-and-white or colour or sepia or colour-and-black-and-white),",
-                            "* fiction (yes if definitively fiction, no otherwise),",
-                            "* types (one or more values from tv news, amateur, educational, sponsored, advertising, animation, documentary, promotional, fiction, drama, tv sports, instructional, religion, comedy, horror, home movie, scientific),",
+                            "* category (one or more values from: Travel and transportation; Home and family; Sport and leisure; Landscape and buildings; Industry and occupations; Wartime; Culture and traditions; Health, Welfare and Education; No idea),",
+                            "* category2 (one or more values from: Cinema Newsreel; Local Cinema Topicals; Promotional/Advertising; Educational/Training; Scientific; Factual Record; Fiction; Home Movies; Special Interest; Amateur),",
                             "* keywords (10 key topical or thematic tags for this programme; avoid overly specific tags like place names, people or objects),",
                             "* credits (if specified; use a dictionary with keys for roles and name(s) for values)."
                         ]
@@ -174,10 +173,10 @@
                     "sample20": "N_6975886_|N_6970722_|NWFA 543 |NWFA 58 |NWFA 473 |N_6966411_|NWFA 611 |N_6975894_|N_6977195_|NWFA 7257 |NWFA 4220 |N_6967905_|NWFA 143 |NWFA 7766 |NWFA 57 |NWFA 5775 |NWFA 9280 |N_6970720_|N_6967906_|N_6975915_",
                     "sample15": "N_6975915_|NWFA 57 |NWFA 473 |NWFA 543 |N_6966411_|N_6967905_|N_6970722_|N_6975886_|N_6977195_|N_6975894_|NWFA 58 |NWFA 7766 |NWFA 4220 |NWFA 143 |N_6970720_",
                     "sample10": "NWFA 58 |NWFA 57 |N_6977195_|N_6975894_|N_6975915_|N_6966411_|NWFA 4220 |NWFA 143 |N_6967905_|NWFA 473 ",
-                    "sample4": "NWFA 58 |NWFA 57 |N_6977195_|N_6975894_",                
-                    "sample2": "NWFA 58 |N_6977195_",                
+                    "sample4": "NWFA 58 |NWFA 57 |N_6975915_|N_6975894_",                
+                    "sample2": "NWFA 58 |N_6975915_",                
                     "sample1": "NWFA 58 ",
-                    "sample1b": "N_6977195_",
+                    "sample1b": "N_6975915_",
                     "part1": "N_696",
                     "part2": "N_6975",
                     "part3": "N_6977",
@@ -186,7 +185,10 @@
                     "part6": "NWFA 5",
                     "part7": "NWFA 6",
                     "half1": "NWFA ",
-                    "half2": "N_6"
+                    "half2": "N_6",
+                    "replay1": "N_6977100_",
+                    "replay31": "N_6966471_|N_6967854_|N_6969237_|N_6970565_|N_6970721_|N_6970722_|N_6970744_|N_6970779_|N_6972167_|N_6972180_|N_6975850_|N_6975863_|N_6975913_|N_6975915_|N_6975916_|N_6975928_|N_6975932_|N_6977100_|N_6977116_|N_6977153_|N_6977156_|N_6977244_|N_6977245_|N_6978625_|N_6978635_|N_6978661_|N_6978666_|N_6978692_|N_6978693_|N_6978701_|N_6997954_",
+                    "replay10": "N_6966471_|N_6967854_|N_6969237_|N_6970565_|N_6970721_|N_6970722_|N_6970744_|N_6970779_|N_6972167_|N_6977100_"
                 }
             }            
         }
