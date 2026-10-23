@@ -280,6 +280,10 @@
       "2026-10-21": {
         "count": 2,
         "uniques": 2
+      },
+      "2026-10-22": {
+        "count": 16,
+        "uniques": 6
       }
     },
     "referrers": {
@@ -946,6 +950,23 @@
           "referrer": "search.brave.com",
           "uniques": 1
         }
+      ],
+      "2026-10-23": [
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "linkedin.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "search.brave.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1228,6 +1249,10 @@
       "2026-10-21": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-10-22": {
+        "count": 1,
+        "uniques": 1
       }
     }
   },
@@ -1574,6 +1599,10 @@
       "2026-10-21": {
         "count": 3,
         "uniques": 3
+      },
+      "2026-10-22": {
+        "count": 15,
+        "uniques": 8
       }
     },
     "referrers": {
@@ -3140,6 +3169,13 @@
           "referrer": "github.com",
           "uniques": 1
         }
+      ],
+      "2026-10-23": [
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -3422,6 +3458,10 @@
       "2026-10-21": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-10-22": {
+        "count": 1,
+        "uniques": 1
       }
     }
   }
