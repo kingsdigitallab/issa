@@ -284,6 +284,10 @@
       "2026-10-22": {
         "count": 16,
         "uniques": 6
+      },
+      "2026-10-23": {
+        "count": 7,
+        "uniques": 6
       }
     },
     "referrers": {
@@ -967,6 +971,28 @@
           "referrer": "search.brave.com",
           "uniques": 1
         }
+      ],
+      "2026-10-24": [
+        {
+          "count": 2,
+          "referrer": "linkedin.com",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "search.brave.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1253,6 +1279,10 @@
       "2026-10-22": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-10-23": {
+        "count": 3,
+        "uniques": 2
       }
     }
   },
@@ -1315,6 +1345,9 @@
       "visitors": 4
     },
     "2026-10-22": {
+      "visitors": 4
+    },
+    "2026-10-24": {
       "visitors": 4
     }
   },
@@ -1603,6 +1636,10 @@
       "2026-10-22": {
         "count": 15,
         "uniques": 8
+      },
+      "2026-10-23": {
+        "count": 5,
+        "uniques": 3
       }
     },
     "referrers": {
@@ -3176,6 +3213,13 @@
           "referrer": "github.com",
           "uniques": 1
         }
+      ],
+      "2026-10-24": [
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -3462,6 +3506,10 @@
       "2026-10-22": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-10-23": {
+        "count": 0,
+        "uniques": 0
       }
     }
   }
