@@ -1,0 +1,254 @@
+===========================================================================
+prog: batches/N_6970744_01of01_Johnny Marr/00.00.33-166-full-sub-prog
+desc: An interviewer discusses artist Hannah Barton's large hand-drawn panel of audio cassettes, produced as an entry for the Noise Festival.
+true: [JOHNNY MARR ]
+       1. 48.7% similar to 'Music workshop, interview with Ed' (misattributed to N_5013439_01of01)
+       2. 44.1% similar to 'Great Northern Music Stage Right - Wide Tape 3' (misattributed to N_7035596_01of01)
+       3. 43.9% similar to 'Contact Theatre performance tape 2' (misattributed to N_4971235_01of01)
+       4. 43.5% similar to 'Merseyside Dockside Company Tapes' (misattributed to #N/A)
+       5. 40.7% similar to 'NEW TAPE' (misattributed to N_9487185_01of01)
+       6. 40.6% similar to 'Tape 3 - (Brickwall) Sports Quiz Final visit by punk rockers + Dave Eastwood' (misattributed to N_5013437_01of01)
+       7. 40.1% similar to 'Mercy Docks Tapes' (misattributed to #N/A)
+       8. 39.7% similar to 'Dave's Tape' (misattributed to N_4969543_01of01)
+       9. 39.6% similar to 'The World Tape 54. Crawford Arts' (misattributed to N_9381697_01of01)
+       10. 39.6% similar to 'Dolly 5pm-7pm D Percussion' (misattributed to N_7034997_01of01)
+---------------------------------------------------------------------------
+prog: batches/N_6970744_01of01_Johnny Marr/00.03.31-415-full-sub-prog
+desc: An author discusses his recently published unauthorized biography of guitarist Johnny Marr and the Smiths.
+true: [JOHNNY MARR ]
+  TRUE 1. 63.4% similar to 'Johnny Marr' (misattributed to N_6969257_01of01)
+       2. 37.4% similar to 'Johnny Foreigner' (misattributed to N_6947896_01of01)
+       3. 33.4% similar to 'Links in the Chains L13 - Ford Machinists (women & Dave)' (misattributed to #N/A)
+       4. 33.4% similar to 'Peter Smith' (misattributed to N_9419896_01of01)
+       5. 33.3% similar to 'Johnny Evans …' (misattributed to N_7060820_01of01)
+       6. 32.8% similar to 'In Memory of One Man's Craft, Geoffrey Wildman Bobbin-maker' (misattributed to #N/A)
+       7. 32.4% similar to 'Stephen Fretwell' (misattributed to N_6966529_01of01)
+       8. 32.0% similar to 'David Henry/Rebecca Atkins' (misattributed to N_6980129_01of01)
+       9. 31.3% similar to 'Spanner - docs: Vicar's wife - Lynn' (misattributed to N_5011627_01of01)
+       10. 31.3% similar to 'William Hill bookmakers clamping down on drug dealers' (misattributed to N_9426269_01of01)
+---------------------------------------------------------------------------
+prog: batches/N_6970744_01of01_Johnny Marr/00.14.59-547-full-sub-prog
+desc: A blank recording consisting entirely of a black screen with no visible or audible content.
+true: [JOHNNY MARR ]
+       1. 34.3% similar to 'NEW TAPE' (misattributed to N_9487185_01of01)
+       2. 30.8% similar to 'Liverpool Transition Show Record Copy' (misattributed to N_9381740_01of01)
+       3. 30.3% similar to 'News from Nowhere' (misattributed to N_9382968_01of01)
+       4. 29.4% similar to 'Open Eye - Tape 8' (misattributed to N_9376078_01of01)
+       5. 28.9% similar to 'Open Eye - Tape 9' (misattributed to N_9376048_01of01)
+       6. 28.8% similar to 'no label' (misattributed to N_6967853_01of01)
+       7. 28.8% similar to 'No label' (misattributed to N_5064868_01of01)
+       8. 28.8% similar to 'No label' (misattributed to N_5011998_01of01)
+       9. 28.8% similar to 'No label' (misattributed to N_5064853_01of01)
+       10. 28.8% similar to 'No label' (misattributed to N_5064724_01of01)
+===========================================================================
+prog: batches/N_6967854_01of01_Avondale High School GCSE Results/00.00.34-1211-full-sub-prog
+desc: Local television coverage of GCSE and A-level results day at Avondale High School in Stockport, where students react to what the school calls its best ever results.
+true: [AVONDALE HIGH SCHOOL GCSE RESULTS]
+       1. 70.4% similar to 'GCSE results Avondale High' (misattributed to N_6980119_01of01)
+       2. 46.0% similar to 'Stockport Air' (misattributed to N_7037741_01of01)
+       3. 45.5% similar to 'Rochdale Stockport' (misattributed to N_9447011_01of01)
+       4. 44.9% similar to 'Wigan Stockport' (misattributed to N_9445138_01of01)
+       5. 42.6% similar to 'A-level results Oldham sixth form' (misattributed to N_7034991_01of01)
+       6. 42.3% similar to 'Wigan Westfield School' (misattributed to N_9426341_01of01)
+       7. 41.7% similar to 'Radcliffe - schools' (misattributed to N_6978629_01of01)
+       8. 41.4% similar to 'Ed Balls Oasis Academy/Hope High School' (misattributed to N_7053335_01of01)
+       9. 41.2% similar to 'Rochdale & Stockport sport editors battle' (misattributed to N_7059609_01of01)
+       10. 41.2% similar to 'Salford Student Village' (misattributed to N_7287512_01of01)
+===========================================================================
+prog: batches/N_6977100_01of01_Shortage of NHS Dentists/00.00.17-1448-full-sub-prog
+desc: A Channel M News report on the NHS dentist shortage in Manchester, combining patient interviews and an official comment with numerous unedited bloopers and retakes.
+true: [SHORTAGE OF NHS DENTISTS]
+       1. 60.7% similar to 'Citizens Advice Bureau complains about NHS Dentists' (misattributed to N_9426502_01of01)
+       2. 50.0% similar to 'Dentists' (misattributed to N_7001584_01of01)
+       3. 50.0% similar to 'Dentists' (misattributed to N_7310534_01of01)
+       4. 48.0% similar to 'Shortage of Doctors' (misattributed to N_6991726_01of01)
+       5. 46.3% similar to 'NHS Database' (misattributed to N_6938535_01of01)
+       6. 45.6% similar to 'Vox NHS waiting times' (misattributed to N_6978687_01of01)
+       7. 45.4% similar to 'Bolton Ward Report' (misattributed to N_7311872_01of01)
+       8. 45.3% similar to 'News  Thurs Interviews' (misattributed to N_7023301_01of01)
+       9. 44.6% similar to 'Interview with the Unison Regional Officer 'Keep the NHS Working'' (misattributed to N_6975909_01of01)
+       10. 44.5% similar to 'NHS Pride preview' (misattributed to #N/A)
+===========================================================================
+prog: batches/N_6970722_01of01_Baby Rescued by Lifeguard/00.00.44-544-full-sub-prog
+desc: A Channel M local news feature in which a first-aid-trained gym employee uses CPR to revive a seven-week-old baby who had stopped breathing, and the grateful family names her the child's godmother.
+true: [BABY RESCUED BY LIFEGUARD]
+  TRUE 1. 52.2% similar to 'Baby rescued by lifeguard' (misattributed to N_6978692_01of01)
+       2. 49.2% similar to 'Channel M News' (misattributed to N_7024875_01of01)
+       3. 49.2% similar to 'Channel M News' (misattributed to N_7024710_01of01)
+       4. 46.3% similar to 'Baby hero - plasterer saves choking baby' (misattributed to N_6997965_01of01)
+       5. 44.6% similar to 'Channel M News  9pm' (misattributed to N_7008627_01of01)
+       6. 44.6% similar to 'Channel M News  9pm' (misattributed to N_9413350_01of01)
+       7. 44.6% similar to 'Channel M News  9pm' (misattributed to N_7023085_01of01)
+       8. 43.2% similar to 'Channel M News  5pm' (misattributed to N_9414785_01of01)
+       9. 43.2% similar to 'Channel M News  5pm' (misattributed to N_9419951_01of01)
+       10. 41.8% similar to 'Channel M News  5pm + 5:30' (misattributed to N_7023083_01of01)
+===========================================================================
+prog: batches/N_6975915_01of01_Online Shopping Safety and Security/00.00.41-1547-full-sub-prog
+desc: A woman discovers her withdrawn eBay advert for her customised Mini Cooper has been cloned by scammers, leading to a consumer-safety warning for online bargain hunters.
+true: [ONLINE SHOPPING SAFETY AND SECURITY]
+       1. 35.8% similar to 'Mini Cooper E-Bay' (misattributed to N_6981500_01of01)
+       2. 31.5% similar to 'Identity Fraud' (misattributed to N_6967906_01of01)
+       3. 30.9% similar to 'Girltalk (Copy)' (misattributed to N_5064833_01of01)
+       4. 29.3% similar to 'CCTV Digger thieves' (misattributed to N_7035610_01of01)
+       5. 28.9% similar to 'Cut Copy' (misattributed to N_7035605_01of01)
+       6. 28.6% similar to 'Stolen Xmas Lights 12/06' (misattributed to N_6975874_01of01)
+       7. 27.1% similar to 'Christmas present robbers' (misattributed to N_9419907_01of01)
+       8. 27.1% similar to 'Mini's Stockfrot Crime Mystery Car Winners' (misattributed to N_7317278_01of01)
+       9. 26.6% similar to 'Com Com AD' (misattributed to N_4988077_01of01)
+       10. 26.2% similar to 'Co-op Art sell off' (misattributed to N_7060495_01of01)
+===========================================================================
+prog: batches/N_6972167_01of01_Salford Telly Talk/00.00.46-1790-full-sub-prog
+desc: A local news feature demonstrates a new video-call ('teletalk') service linking a Salford library to council offices, complete with live demonstrations, grumbling customers and a blooper-riddled sign-off.
+true: [SALFORD TELLY TALK]
+  TRUE 1. 50.8% similar to 'Salford Telly Talk' (misattributed to N_6972080_01of01)
+       2. 49.4% similar to 'Salford PCT' (misattributed to N_6997965_01of01)
+       3. 47.4% similar to 'Salford Foundation' (misattributed to N_7062078_01of01)
+       4. 46.1% similar to 'Salford Student Village' (misattributed to N_7287512_01of01)
+       5. 45.9% similar to 'Salford Quays Barclays' (misattributed to #N/A)
+       6. 45.0% similar to 'Salford Documentaries: Journeys of Faith' (misattributed to N_9381725_01of01)
+       7. 44.7% similar to 'Salford Regeneration' (misattributed to N_6985720_01of01)
+       8. 44.7% similar to 'Salford regeneration' (misattributed to #N/A)
+       9. 44.6% similar to 'Salford Regen' (misattributed to N_6975919_01of01)
+       10. 44.5% similar to 'Salford nativity reunion' (misattributed to N_9419925_01of01)
+===========================================================================
+prog: batches/N_6970779_01of01_Bess Counselling Service, Benchill/00.00.48-784-full-sub-prog
+desc: A local Channel M news report on how the Bess counselling centre in Withenshaw, Manchester, was saved from imminent closure thanks to community and charitable fundraising.
+true: [BESS COUNSELLING SERVICE, BENCHILL]
+       1. 41.3% similar to 'Rochdale Infirmary Close Down meeting' (misattributed to N_6972179_01of01)
+       2. 39.6% similar to 'GVs of Accident & Emergency Manchester Infirmary' (misattributed to #N/A)
+       3. 38.6% similar to 'Oldham's witness care unit' (misattributed to #N/A)
+       4. 37.0% similar to 'Salford Hope Hospital Protest' (misattributed to N_6989452_01of01)
+       5. 36.2% similar to 'Salford Foundation' (misattributed to N_7062078_01of01)
+       6. 36.0% similar to 'Memorial garden for Tim Sutton 22/09' (misattributed to #N/A)
+       7. 35.6% similar to 'Dentist closed for a year Oldham' (misattributed to N_6981459_01of01)
+       8. 35.4% similar to 'Denton School Closure' (misattributed to N_6972133_01of01)
+       9. 35.4% similar to 'Heywood Floods Report' (misattributed to N_6981586_01of01)
+       10. 35.0% similar to 'Bolton Ward Report' (misattributed to N_7311872_01of01)
+===========================================================================
+prog: batches/N_6969237_01of01_Headspace at Bolton Library/00.41.58-34-full-sub-prog
+desc: A regional TV feature interviewing members of the public and customers about a local bookshop.
+true: [HEADSPACE AT BOLTON LIBRARY]
+       1. 38.6% similar to 'Community Productions Merseyside' (misattributed to N_9368813_01of01)
+       2. 37.8% similar to 'Library - Book bar (Bolton)' (misattributed to N_6996318_01of01)
+       3. 37.1% similar to 'City Life Social studio feed, parts 2 and 3' (misattributed to N_6961350_01of01)
+       4. 36.3% similar to 'Food Shop' (misattributed to N_7310496_01of01)
+       5. 35.0% similar to 'News  Thurs Interviews' (misattributed to N_7023301_01of01)
+       6. 34.6% similar to 'City Life Social studio feed, last ever show, Tape 1 of 2' (misattributed to N_6958253_01of01)
+       7. 33.8% similar to 'MSTV/DOC: Northern Lives: Postcards From Blackpool. Duration: 30 min' (misattributed to N_9377220_01of01)
+       8. 33.8% similar to 'The Great Northern Music Show' (misattributed to N_7303603_01of01)
+       9. 33.8% similar to 'The Great Northern Music Show' (misattributed to N_9434593_01of01)
+       10. 33.7% similar to 'Community Culture Playout' (misattributed to N_9439542_01of01)
+---------------------------------------------------------------------------
+prog: batches/N_6969237_01of01_Headspace at Bolton Library/00.00.44-2296-full-sub-prog
+desc: A Channel 11 local TV report on Bolton's new teen-focused 'headspace' book bar in the High Street Library, featuring an Olympic athlete, local youngsters, a magician and sceptical parents on plans to make reading cool again.
+true: [HEADSPACE AT BOLTON LIBRARY]
+       1. 66.8% similar to 'Library - Book bar (Bolton)' (misattributed to N_6996318_01of01)
+       2. 43.7% similar to 'Bolton Ward Report' (misattributed to N_7311872_01of01)
+       3. 41.2% similar to 'Bolton supersurgeries' (misattributed to #N/A)
+       4. 41.0% similar to 'Kid British… In Session studio feed' (misattributed to #N/A)
+       5. 40.9% similar to 'Bolton schools GVs' (misattributed to #N/A)
+       6. 40.7% similar to 'Bolton NUM HQ Occupation Solidarity  Open Eye Tape 3' (misattributed to N_7318749_01of01)
+       7. 39.9% similar to 'Bolton Care Home' (misattributed to N_6938535_01of01)
+       8. 39.3% similar to 'Every child a reader' (misattributed to N_7075143_01of01)
+       9. 38.8% similar to 'Christmas Choir Competition 2006 The Oaks Primary School Bolton' (misattributed to #N/A)
+       10. 38.8% similar to 'Christmas Choir Competition 2006 The Oaks Primary School Bolton' (misattributed to N_9425717_01of01)
+===========================================================================
+prog: batches/N_6966471_01of01_City Centre Social/00.33.47-530-full-sub-prog
+desc: A Manchester-based local music magazine show in which a presenter delivers Oasis-related news and announces a prize draw, followed by a live solo keyboard-and-vocal performance.
+true: CITY CENTRE SOCIAL 
+       1. 55.6% similar to 'Manchester Evening News Theatre Awards' (misattributed to N_7065152_01of01)
+       2. 48.1% similar to '4 Manchester EP: Wednesday,' (misattributed to N_6962404_01of01)
+       3. 48.0% similar to 'Manchester Literature Festival Launch' (misattributed to N_7059224_01of01)
+       4. 47.9% similar to 'Manchester Hero Awards' (misattributed to N_9419924_01of01)
+       5. 43.1% similar to 'Liverpool new music showcase - major major and 22 clever' (misattributed to N_9437584_01of01)
+       6. 40.9% similar to 'Manchester Business' (misattributed to N_6981561_01of01)
+       7. 40.7% similar to 'Wheel of Manchester' (misattributed to N_6994997_01of01)
+       8. 39.8% similar to 'Manchester City Centre' (misattributed to N_9426641_01of01)
+       9. 39.5% similar to 'Rally of Resistance - Manchester' (misattributed to #N/A)
+       10. 39.1% similar to 'The Great Northern Music Show' (misattributed to N_9434593_01of01)
+---------------------------------------------------------------------------
+prog: batches/N_6966471_01of01_City Centre Social/00.00.10-880-full-sub-prog
+desc: Pilot episode of the mock-local music show City Centre Social, in which host Jerry presents a live solo performance by Dog Walker and interviews indie-pop trio The Pipettes backstage.
+true: CITY CENTRE SOCIAL 
+       1. 55.9% similar to 'City Centre Social, Episode 7 (Monday Night)' (misattributed to N_6947897_01of01)
+       2. 55.1% similar to 'City Life Social studio feed, last ever show, Tape 1 of 2' (misattributed to N_6958253_01of01)
+       3. 54.5% similar to 'City Centre Social, Episode 2' (misattributed to N_6949500_01of01)
+       4. 45.9% similar to 'City Life Social studio feed, parts 2 and 3' (misattributed to N_6961350_01of01)
+       5. 45.9% similar to 'The Great Northern Music Show, Series 1 Episode 6' (misattributed to #N/A)
+       6. 44.5% similar to 'City Life Social studio feed' (misattributed to #N/A)
+       7. 44.5% similar to 'City Life Social studio feed' (misattributed to #N/A)
+       8. 44.5% similar to 'City Life Social studio feed' (misattributed to N_6962370_01of01)
+       9. 44.5% similar to 'City Life Social studio feed' (misattributed to N_6961483_01of01)
+       10. 44.5% similar to 'City Life Social studio feed' (misattributed to #N/A)
+---------------------------------------------------------------------------
+prog: batches/N_6966471_01of01_City Centre Social/00.31.18-143-full-sub-prog
+desc: A regional television magazine programme called City Centre Social, shown here with pre-roll bloopers before the host welcomes the audience to part three.
+true: CITY CENTRE SOCIAL 
+       1. 64.5% similar to 'City Life Social studio feed, parts 2 and 3' (misattributed to N_6961350_01of01)
+       2. 62.9% similar to 'City Life Social studio feed' (misattributed to #N/A)
+       3. 62.9% similar to 'City Life Social studio feed' (misattributed to N_6962370_01of01)
+       4. 62.9% similar to 'City Life Social studio feed' (misattributed to N_6961483_01of01)
+       5. 62.9% similar to 'City Life Social studio feed' (misattributed to #N/A)
+       6. 62.9% similar to 'City Life Social studio feed' (misattributed to #N/A)
+       7. 62.9% similar to 'City Life Social studio feed' (misattributed to #N/A)
+       8. 62.4% similar to 'City Centre Social, Episode 2' (misattributed to N_6949500_01of01)
+       9. 62.2% similar to 'City Centre Social, Episode 7 (Monday Night)' (misattributed to N_6947897_01of01)
+       10. 61.0% similar to 'City Centre Social: Headliners' (misattributed to N_6953836_01of01)
+---------------------------------------------------------------------------
+prog: batches/N_6966471_01of01_City Centre Social/00.43.03-791-full-sub-prog
+desc: A Channel M TV social-magazine episode combining a live acoustic set by Adam Curran, comic bits with costumed regular Frank, an interview with indie band Nephew, and music videos including Babyshambles' "Jamie Jones".
+true: CITY CENTRE SOCIAL 
+       1. 51.0% similar to 'Blair speech for Channel M' (misattributed to #N/A)
+       2. 50.8% similar to 'The Great Northern Music Show, Series 2 Episode 6: Gillian Edgar' (misattributed to N_6970776_01of01)
+       3. 50.5% similar to 'TGNMS, Series 2 Episode 2. Kev Fox, Onions, Keith' (misattributed to N_7035599_01of01)
+       4. 49.9% similar to 'Jesse James Murder Press Pack for Channel M' (misattributed to N_9430418_01of01)
+       5. 49.9% similar to 'Jesse James Murder Press Pack for Channel M' (misattributed to N_6938598_01of01)
+       6. 48.6% similar to 'Channel M News' (misattributed to N_7024710_01of01)
+       7. 48.6% similar to 'Channel M News' (misattributed to N_7024875_01of01)
+       8. 47.4% similar to 'The Great Northern Music Show, Series 1 Episode 6' (misattributed to #N/A)
+       9. 47.3% similar to 'm:usic:live 011: Liam Fray. Version 1 - pre watershed version' (misattributed to N_6966531_01of01)
+       10. 46.9% similar to 'm:usic:live 014: SWAP festival 2, inc. Paper Wives, Aiden Smith & Cherry Ghost. Post watershed, Part 3 at end opf tape' (misattributed to N_6949499_01of01)
+---------------------------------------------------------------------------
+prog: batches/N_6966471_01of01_City Centre Social/00.15.00-976-full-sub-prog
+desc: An episode of the music magazine show City Centre Social, in which the presenter interviews musician Rachael Kichenside about her gigs while live performances by Kichenside and solo artist Adam Gorman are shown.
+true: CITY CENTRE SOCIAL 
+       1. 58.8% similar to 'City Centre Social, Episode 7 (Monday Night)' (misattributed to N_6947897_01of01)
+       2. 57.8% similar to 'City Life Social studio feed, last ever show, Tape 1 of 2' (misattributed to N_6958253_01of01)
+       3. 57.2% similar to 'City Centre Social, Episode 2' (misattributed to N_6949500_01of01)
+       4. 51.8% similar to 'The Great Northern Music Show, Series 1 Episode 6' (misattributed to #N/A)
+       5. 51.5% similar to 'The Great Northern Music Show, Series 2 Episode 6: Gillian Edgar' (misattributed to N_6970776_01of01)
+       6. 51.3% similar to 'The Great Northern Music Show S1 Ep1. Rachel Kitchenside, Giddeon Conn, Snowfight in the City' (misattributed to #N/A)
+       7. 48.2% similar to 'The Great Northern Music Show, Series 2 Episode 5: Karima Francis' (misattributed to N_6966529_01of01)
+       8. 47.6% similar to 'The Great Northern Music Show' (misattributed to N_9434593_01of01)
+       9. 47.6% similar to 'The Great Northern Music Show' (misattributed to N_7303603_01of01)
+       10. 47.3% similar to 'City Life Social studio feed' (misattributed to N_6962370_01of01)
+===========================================================================
+prog: batches/N_6970721_01of01_Anti-War Rally/00.00.39-2054-full-sub-prog
+desc: A local television news report from Manchester covering anti-war campaigners and bereaved military families preparing a peace camp outside the incoming Labour Party conference.
+true: [ANTI-WAR RALLY ]
+       1. 50.1% similar to 'Anti-war meeting' (misattributed to N_6975898_01of01)
+       2. 44.5% similar to 'Bolton Ward Report' (misattributed to N_7311872_01of01)
+       3. 44.4% similar to 'War Protest' (misattributed to N_6970763_01of01)
+       4. 44.4% similar to 'War Rally' (misattributed to N_6967907_01of01)
+       5. 43.1% similar to 'Inside Story - National Front - BBC2 -' (misattributed to N_5011586_01of01)
+       6. 43.1% similar to 'Labour Rally' (misattributed to N_6978624_01of01)
+       7. 42.3% similar to 'Bury Tory vox' (misattributed to N_7037704_01of01)
+       8. 41.7% similar to 'Salford Muslim Meeting' (misattributed to N_6977197_01of01)
+       9. 40.8% similar to 'Peace week kids' (misattributed to #N/A)
+       10. 40.8% similar to 'Bolton NUM HQ Occupation Solidarity  Open Eye Tape 3' (misattributed to N_7318749_01of01)
+---------------------------------------------------------------------------
+prog: batches/N_6970721_01of01_Anti-War Rally/00.00.00-8-full-sub-prog
+desc: The programme displays no visible imagery, presenting only a continuous black screen.
+true: [ANTI-WAR RALLY ]
+       1. 29.3% similar to 'Open Eye Film Video & Animation' (misattributed to N_9445144_01of01)
+       2. 29.3% similar to 'Open Eye Film Video & Animation' (misattributed to N_9439395_01of01)
+       3. 25.1% similar to 'Rats in Chinatown NO FOOTAGE OF RATS' (misattributed to N_6932012_01of01)
+       4. 24.7% similar to 'Nine Black Alps: whole gig, no titles' (misattributed to N_7037493_01of01)
+       5. 24.6% similar to '"Animation" AGFA 553 Open Eye' (misattributed to #N/A)
+       6. 24.3% similar to 'S8 Film + Animation' (misattributed to N_9381693_01of01)
+       7. 23.9% similar to 'No label' (misattributed to N_5011998_01of01)
+       8. 23.9% similar to 'No label' (misattributed to N_5064907_01of01)
+       9. 23.9% similar to 'No label' (misattributed to N_5064724_01of01)
+       10. 23.9% similar to 'No label' (misattributed to N_5064742_01of01)
+
+10 files; 3 confirmed top-10 matches; 3 confirmed top-1 matches; model: all-MiniLM-L6-v2
