@@ -9,6 +9,7 @@ dependencies = ["paratext-cli @ git+https://github.com/nls-lst/paratext.git@vide
 
 [project.entry-points."paratext.projects"]
 issa-segments = "issa_segments:PROJECT"
+issa-ws2 = "issa_ws2:PROJECT"
 
 [build-system]
 requires = ["hatchling"]
@@ -18,7 +19,11 @@ build-backend = "hatchling.build"
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["issa_segments"]
+packages = ["issa_segments", "issa_ws2"]
 
 [dependency-groups]
-dev = ["pytest>=8.0"]
+dev = [
+    "openpyxl>=3.1.5",
+    "pandas>=3.1.0",
+    "pytest>=8.0",
+]

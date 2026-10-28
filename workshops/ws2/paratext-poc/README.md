@@ -82,3 +82,64 @@ see the conversation this PoC came out of for the options considered
 - If this graduates past PoC: depend on `paratext-cli` normally (pin a
   released version once `video-review` merges) rather than the git-branch
   pin in `pyproject.toml`, which is temporary.
+
+
+---
+
+# WS2 (NWFA) deep-dive project
+
+A second project, `issa-ws2`, serves the 10 NWFA sample videos for the workshop deep dive.
+NLS work above is unchanged.
+
+```bash
+python3 convert_ws2.py > records_ws2.jsonl          # system python: needs pandas + openpyxl
+uv run paratext package records_ws2.jsonl -p issa-ws2 --out review/issa-ws2-r1 --round 1 --fresh
+uv run python serve_ws2.py --no-open                # patched UI, see ui/README.md
+```
+
+- Inputs: `predictions-10.v3.xlsx`, the annotation template (catalogue facts), `ISSA FV Cat data.xlsx`,
+  Geoffroy's `semantic-matched-labels-10.docx`, and the compressed `NWFA_videos_sample/*.pocket.mp4`.
+- **Annotators:** put each returned `NWFA_annotation_<NAME>.xlsx` in `data/output/NWFA_metadata/` and re-run.
+  Two or more annotators give consensus tracks (programme boundaries within ±10 s count as agreed,
+  `TOL` in `convert_ws2.py`) plus a folded per-annotator breakdown.
+- **Comparison status** uses simple rules in `judge()` — a prompt for discussion, not a score.
+  Title, year, colour and place get ✓ ≈ ≠ (or ＋ added / ∅ missing). Synopsis, category and keywords are
+  free text of different kinds, so they get status `text`: no symbol, and the UI highlights the words
+  that appear on both sides (`overlapHtml` in `ui/static/app.js`).
+- **Separators** are derived from gaps between pipeline programmes (see `../README.md`).
+- Label matching is only available for the Channel M tapes Geoffroy ran; others show "—".
+
+## Reproducing the WS2 review on another machine
+
+Nothing in the code refers to RDS: every input is read from `data/output/` **inside the repo** (gitignored),
+so it does not matter where RDS is mounted, only that these files are copied there.
+
+| Copy to | Files |
+|---|---|
+| `data/output/NWFA_metadata/` | `predictions-10.v3.xlsx`, `NWFA_annotation_TEMPLATE_v0.1.xlsx`, `ISSA FV Cat data.xlsx`, and each returned `NWFA_annotation_<NAME>.xlsx` |
+| `data/output/` | `semantic-matched-labels-10.docx` (Geoffroy's label matches) |
+| `data/output/NWFA_videos_sample/` | the ten `*.pocket.mp4` compressed videos |
+
+Also needed: `ffprobe` on the PATH (video durations), `uv`, and system `python3` with `pandas` and `openpyxl`
+for the converter. The packaged data (`records_ws2.jsonl`, `review/issa-ws2-r1/`) is not committed, so build it with the three commands above.
+
+## WS2 status (as of 28 Oct 2026)
+
+**Done**
+- Converter (`convert_ws2.py`): predictions + catalogue facts + N annotators + label matches → one Paratext record per video; consensus (agreed/contested, ±10 s); 13 tests (`uv run pytest -q`).
+- Review UI (`ui/`, launched by `serve_ws2.py`): video, collection bar with prev/next (top and bottom), pipeline tracks with separators and playhead highlight, collapsed human-annotation breakdown, expandable programme/segment outlines with ▶ seek, mirrored archive-vs-pipeline grid with overlap highlighting, annotator notes beside the verdict (Good enough / Needs tweaking / Incorrect).
+- Verified in headless Chrome (layout, seek, expand/collapse, verdict + notes survive re-render).
+
+**Waiting on**
+- NWFA annotations (due back Mon 2 Nov) → drop `NWFA_annotation_<NAME>.xlsx` in `data/output/NWFA_metadata/`, re-run the three commands above.
+- Geoffroy: re-run label matching for N_6966411, N_6967905, N_6975894, N_6977195 (CSV preferred); today only N_6975915 overlaps his docx, so the "Label matches" row is mostly "—".
+- Template "file duration" is wrong for six tapes (N_6966411, N_6967905, N_6975894, N_6977195, NWFA 57, NWFA 58); NWFA should be told. Annotator timecodes come from the video, so they are unaffected.
+
+**Before the workshop (5 Nov)**
+- Delete `review/issa-ws2-r9` (dummy annotators) and regenerate `issa-ws2-r1` with the real annotators.
+- Rehearse offline on the presenting laptop; keep `../issa_ws2_nwfa.html` as fallback.
+- Sanity-check the `judge()` rules with Geoffroy (year within catalogued years, colour b/w normalisation, place/title similarity).
+
+**Later (not for the workshop)**
+- Field-level correction or "resolved record" (edit / accept predicted / keep existing) needs a sidecar store with per-field provenance; Paratext has only one verdict per sample.
+- Hosted private showcase with archive/collection selectors and compressed proxies; decide whether to upstream `ui/` changes to NLS.
