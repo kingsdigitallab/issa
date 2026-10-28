@@ -2,17 +2,17 @@
 
 A proof of concept for using [Paratext](https://github.com/nls-lst/paratext)
 (`video-review` branch — not yet released to PyPI) as the review/correction
-interface for ISSA's outer + inner segmentation, the way Mike Saunders (NLS)
-showed for the card-index and video-review work at WS1.
+interface for ISSA's outer + inner segmentation, inpsired by how Mike Saunders (NLS)
+showed for the card-index and video-review work at ISSA WS1.
 
 **Branch, not main.** This lives on `feat--ws2-paratext-poc` until it's had a
 look from Geoffroy (and ideally Mike, once we can see his actual NLS
 deployment — `paratext-nls` / `mikegsaunders/paratext-space` are both
-private). Nothing here has been merged.
+private). Nothing has been merged yet.
 
 ## What it demonstrates
 
-`convert_records.py` builds 3 real records — no fabricated data — from files
+`convert_records.py` builds 3 real records from files
 already in this repo:
 
 - **`139329389-outer`** — a Grampian tape, whole-file view. Two tracks:
@@ -33,14 +33,13 @@ Schema/view: `issa_segments/` — a "NLS catalogue record" panel next to a
 [review-views.md](https://github.com/nls-lst/paratext/blob/video-review/docs/review-views.md)'s
 compare-against-an-existing-record recipe.
 
-## Known limitation of this PoC
+## Limitations
 
 **No actual video bytes.** `media.src` points at where
 `workshops/ws1/copy-videos.bash` would put these two files
 (`sample11/<id>.32/<id>.32.mp4`) — the environment this was built in has no
 RDS mount, so the files aren't there. The review UI degrades exactly as
-documented: the player shows "couldn't be played, open it directly" instead
-of erroring, and the metadata panels work normally. **The track strips
+documented: the player shows "couldn't be played, open it directly", and the metadata panels work normally. **The track strips
 (the actual timeline visualisation) don't render without a loadable video**
 — they need the video element's duration to draw against. Run
 `copy-videos.bash` for `139329389` and `75247299` first (or point `video_src()`
@@ -60,27 +59,21 @@ uv run paratext package records.jsonl -p issa-segments
 uv run paratext review --no-open   # binds 127.0.0.1 only — see "Privacy" below
 ```
 
-Then open `http://127.0.0.1:5050` (facilitator's own machine, projected —
-this is deliberately Option C from the workshop discussion, not something
-attendees' own devices join).
+Then open `http://127.0.0.1:5050` (facilitator's own machine only).
 
 ## Privacy / video-serving (see the WS2 planning discussion)
 
 Paratext's review server has **no login of its own** — access control is
-entirely the network perimeter, by design. `--host` defaults to `127.0.0.1`;
-that default is exactly what keeps this private for now. Do not pass
-`--host 0.0.0.0` or otherwise put this on a shared network until a real
-decision is made about how WS4/5 (individual attendee devices) will work —
-see the conversation this PoC came out of for the options considered
-(air-gapped room LAN, a private mesh VPN, vs. a KCL network segment).
+entirely the network perimeter. `--host` defaults to `127.0.0.1`;
+that default is what keeps this private for now. Do not pass
+`--host 0.0.0.0` or otherwise put this on a shared network.
 
 ## Next steps
 
 - Real video files for these two IDs (or more), via `copy-videos.bash`.
-- Compare against Mike's actual NLS project/view once he can share it —
-  don't assume this PoC's field choices or track design match his.
+- Compare against Mike's actual NLS project/view once he can share it.
 - If this graduates past PoC: depend on `paratext-cli` normally (pin a
-  released version once `video-review` merges) rather than the git-branch
+  released version once `video-review` merges) instead of the git-branch
   pin in `pyproject.toml`, which is temporary.
 
 
