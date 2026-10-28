@@ -124,15 +124,11 @@ for the converter. The packaged data (`records_ws2.jsonl`, `review/issa-ws2-r1/`
 - Verified in headless Chrome (layout, seek, expand/collapse, verdict + notes survive re-render).
 
 **Waiting on**
-- NWFA annotations (due back Mon 2 Nov) → drop `NWFA_annotation_<NAME>.xlsx` in `data/output/NWFA_metadata/`, re-run the three commands above.
-- Geoffroy: re-run label matching for N_6966411, N_6967905, N_6975894, N_6977195 (CSV preferred); today only N_6975915 overlaps his docx, so the "Label matches" row is mostly "—".
-- Template "file duration" is wrong for six tapes (N_6966411, N_6967905, N_6975894, N_6977195, NWFA 57, NWFA 58); NWFA should be told. Annotator timecodes come from the video, so they are unaffected.
+- NWFA annotations → drop `NWFA_annotation_<NAME>.xlsx` in `data/output/NWFA_metadata/`, re-run the three commands above.
 
 **Before the workshop (5 Nov)**
 - Delete `review/issa-ws2-r9` (dummy annotators) and regenerate `issa-ws2-r1` with the real annotators.
-- Rehearse offline on the presenting laptop; keep `../issa_ws2_nwfa.html` as fallback.
-- Sanity-check the `judge()` rules with Geoffroy (year within catalogued years, colour b/w normalisation, place/title similarity).
+- Check the `judge()` heuristics with Geoffroy (year within catalogued years, colour b/w normalisation, place/title similarity).
 
 **Later (not for the workshop)**
-- Field-level correction or "resolved record" (edit / accept predicted / keep existing) needs a sidecar store with per-field provenance; Paratext has only one verdict per sample.
-- Hosted private showcase with archive/collection selectors and compressed proxies; decide whether to upstream `ui/` changes to NLS.
+- Hosted private showcase with archive/collection selectors and compressed proxies; decide whether to upstream `ui/` changes to NLS if they want them.
