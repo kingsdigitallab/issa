@@ -12,13 +12,21 @@ EMBEDDINGS_FILE_NAME = 'embeds.json'
 # all-MiniLM-L6-v2 (23M, 384d, CPU-friendly)
 # BAAI/bge-small-en-v1.5 (33M, 384d, CPU-friendly)
 # NovaSearch/stella_en_400M_v5 (400M)
-# BAAI/BGE-M3 (568M, 1024d, GPU-friendly)
+# BAAI/BGE-M3 (568M, 1024d, GPU-friendly, multilingual => not needed)
 # Best Efficiency & High Throughput: BAAI/bge-large-en-v1.5
-# Best Overall Performance: Qwen3-Embedding (or NV-Embed-v2): 8B
+# Best Overall Performance: Qwen3-Embedding (or nvidia/NV-Embed-v2): 8B
+# Qwen/Qwen3-Embedding-0.6B
+# google/embeddinggemma-2
 
-MODEL_NAME = "all-MiniLM-L6-v2"
+# MODEL_NAME = "all-MiniLM-L6-v2"
 # MODEL_NAME = "NovaSearch/stella_en_400M_v5" # needs xformers
 # MODEL_NAME = "BAAI/bge-small-en-v1.5" # not as good as all-MiniLM-L6-v2
+# MODEL_NAME = "BAAI/bge-m3" # need 4+GB VRAM
+# MODEL_NAME = "BAAI/bge-base-en-v1.5" # similar quality to "all-MiniLM-L6-v2"
+# MODEL_NAME = "BAAI/bge-large-en-v1.5" # better and worse than base model (e.g. v. specific summary matches all "Channel M News" for a couple of tapes)
+# MODEL_NAME = "google/embeddinggemma-2" # 0.7b, multimodal, looks inferior to "all-MiniLM-L6-v2"
+# MODEL_NAME = "Qwen/Qwen3-Embedding-0.6B" # slightly inferior to "all-MiniLM-L6-v2", misses doctor shortage, baby rescued ranked 4th
+MODEL_NAME = "Qwen/Qwen3-Embedding-4B" #
 
 class SemanticMatcher:
 
@@ -183,7 +191,7 @@ class SemanticMatcher:
             print(sep * 75)
             print('prog:', entry['id'])
             print('desc:', entry['to_embed'])
-            print('true:', correct_label)
+            print('replay:', correct_label)
 
             # Cosine similarity (equivalent to dot product when normalised)
             scores = labels_embeds @ np.array(entry['embed'], dtype=np.float32)
@@ -191,9 +199,9 @@ class SemanticMatcher:
             # Top 5
             top5_idx = np.argsort(scores)[::-1][:10]
             for rank, i in enumerate(top5_idx, 1):
-                status = '    '
+                status = '      '
                 if self.normalise_label(labels[i]['to_embed']) == self.normalise_label(correct_label):
-                    status = 'TRUE'
+                    status = 'REPLAY'
                     if not has_confirmed_match:
                         has_confirmed_match = True
                         # TODO: should only +1 per file, not per prog
