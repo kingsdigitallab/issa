@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>paratext review</title>
+    <!-- Relative href, like every other asset URL here, so it survives being
+         served behind a prefix (e.g. /verify/). Prevents the browser's default
+         /favicon.ico request escaping to the origin root. -->
+    <link rel="icon" href="favicon.svg" />
+    <link rel="stylesheet" href="oat.min.css" />
+    <!-- Apply the stored theme before first paint, so a dark-mode user doesn't
+         get a flash of light. -->
+    <script>
+      var t = localStorage.getItem("theme");
+      if (t) {
+        document.documentElement.style.colorScheme = t;
+        document.documentElement.setAttribute("data-theme", t);
+      }
+    </script>
+    <style>
+      /* Layout-only — let Oat style everything else. */
+      /* Oat's top nav is a single non-wrapping flex row, so a long sample id
+         plus the buttons pushed it past the viewport and scrolled the page
+         sideways. Let it wrap, and let the sample label shrink. */
+      nav[data-topnav] { flex-wrap: wrap; row-gap: .375rem; max-width: 100%; }
+      #progress { min-width: 0; display: inline-flex; align-items: center; gap: .5rem; }
+      /* The id truncates; the button beside it must not. */
+      #progress .sample-label { min-width: 0; overflow: hidden;
+        text-overflow: ellipsis; white-space: nowrap; }
+      #progress button { flex-shrink: 0; }
+      #theme-toggle { flex-shrink: 0; }
+      #dataset-picker-host { min-width: 0; }
+      .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .thumbs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+      .thumbs a { display: inline-block; }
+      .media-player { margin-bottom: 1rem; }
+      .media-player video { width: 100%; max-width: 960px; max-height: 60vh; background: #000; }
+      .media-timeline { position: relative; max-width: 960px; margin-top: .4rem; }
+      /* ISSA WS2: the track name sits above its strip, small, so long names fit */
+      .media-track { margin-top: .35rem; }
+      .media-track-name { font-size: .72rem; line-height: 1.1; margin-bottom: .15rem; color: var(--muted-foreground); }
+      .media-range { position: relative; height: 1.25rem; background: var(--muted);
+        border-radius: var(--radius-small); cursor: pointer; }
+      .media-range-prog { position: absolute; top: 0; bottom: 0; background: var(--primary); opacity: .35; }
+      .media-seg { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--foreground); }
+      .media-seg.active { background: var(--foreground); opacity: .3; }
+      .media-seg.playing { background: color-mix(in srgb, var(--foreground) 35%, transparent); outline: 1px solid var(--foreground); outline-offset: -1px; z-index: 1; }
+      .media-range-head { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px;
+        background: var(--danger); z-index: 1; }
+      .media-tip { position: absolute; z-index: 10; max-width: 28rem; pointer-events: none;
+        padding: var(--space-2) var(--space-3); font-size: .8rem; line-height: 1.35;
+        background: var(--foreground); color: var(--background); border-radius: var(--radius-medium); }
+      .media-range-label { max-width: 960px; margin: .25rem 0 0; font-size: .85rem; color: var(--muted-foreground); }
+
+      /* ── ISSA WS2 ───────────────────────────────────────────────────────
+         Colour code: teal = existing record / human annotation,
+         purple = pipeline prediction; blue / amber = collection (F&V / Channel M). */
+      :root {
+        --c-existing: #0f766e; --c-pred: #7e22ce;
+        --c-fv: #1e40af; --c-chm: #b45309; --c-other: #475569;
+        --st-match: #15803d; --st-close: #a16207; --st-differs: #b91c1c;
+      }
+      .grp-human .media-track-name { color: var(--c-existing); font-weight: 600; }
+      .grp-pipe .media-track-name { color: var(--c-pred); font-weight: 600; }
+      .grp-human .media-range { background: color-mix(in srgb, var(--c-existing) 10%, var(--muted)); }
+      .grp-pipe .media-range { background: color-mix(in srgb, var(--c-pred) 10%, var(--muted)); }
+      .grp-human .media-seg { border-left-color: var(--c-existing); }
+      .grp-pipe .media-seg { border-left-color: var(--c-pred); }
+      .grp-human .media-seg.block { background: color-mix(in srgb, var(--c-existing) 38%, transparent); border: 1px solid var(--c-existing); }
+      .grp-pipe .media-seg.block { background: color-mix(in srgb, var(--c-pred) 38%, transparent); border: 1px solid var(--c-pred); }
+      .grp-ann .media-seg.block { background: color-mix(in srgb, var(--c-existing) 22%, transparent); border: 1px dashed var(--c-existing); }
+      .media-seg.kind-sep { background: repeating-linear-gradient(45deg, var(--foreground) 0 2px, transparent 2px 5px) !important;
+        opacity: .55; border: 0 !important; }
+      .media-seg.kind-contested { border-style: dashed !important; }
+      .ann-breakdown { margin-top: .4rem; }
+      .ann-breakdown > summary { font-size: .75rem; cursor: pointer; color: var(--muted-foreground); }
+      .legend { margin-left: .75rem; white-space: nowrap; }
+      .legend i { display: inline-block; width: .9rem; height: .6rem; margin: 0 .25rem 0 .6rem; vertical-align: middle; border: 1px solid var(--foreground); }
+      .legend i.k-sep { background: repeating-linear-gradient(45deg, var(--foreground) 0 2px, transparent 2px 5px); }
+      .legend i.k-agreed { background: color-mix(in srgb, var(--c-existing) 38%, transparent); border-color: var(--c-existing); }
+      .legend i.k-contested { background: color-mix(in srgb, var(--c-existing) 38%, transparent); border: 1px dashed var(--c-existing); }
+
+      .collection-bar { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .75rem;
+        max-width: 960px; margin: .5rem 0; padding: .4rem .6rem; border-radius: var(--radius-medium); color: #fff; }
+      .collection-bar .coll-info { display: flex; flex-direction: column; text-align: center; line-height: 1.25; min-width: 0; }
+      .collection-bar .coll-info span { font-size: .8rem; opacity: .9; overflow-wrap: anywhere; }
+      .collection-bar button, .collection-bar .button { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.5); }
+      .collection-bar button:disabled { opacity: .35; }
+      .coll-fv { background: var(--c-fv); } .coll-chm { background: var(--c-chm); } .coll-other { background: var(--c-other); }
+      section > .collection-bar:last-child, .score-row + .collection-bar { margin-top: 1.25rem; }
+
+      .compare, .outlines, .score-row { max-width: 1200px; margin: 1.25rem 0; }
+      .cmp-head, .cmp-row, .outline-cols, .score-row { display: grid; gap: .5rem; }
+      .cmp-head, .cmp-row { grid-template-columns: minmax(0,1fr) 2rem minmax(0,1fr); }
+      .outline-cols, .score-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1rem; }
+      .cmp-head h3, .outlines h4, .score-row h4 { margin: 0; font-size: 1rem; }
+      .cmp-head small, .outlines h4 small { color: var(--muted-foreground); font-weight: 400; }
+      .cmp-head .cmp-ex, .outline-cols > .cmp-ex > h4 { border-bottom: 3px solid var(--c-existing); color: var(--c-existing); padding-bottom: .2rem; }
+      .cmp-head .cmp-pr, .outline-cols > .cmp-pr > h4 { border-bottom: 3px solid var(--c-pred); color: var(--c-pred); padding-bottom: .2rem; }
+      .score-row > .cmp-ex > h4 { color: var(--c-existing); } .score-row > .cmp-pr > h4 { color: var(--c-pred); }
+      .cmp-row { align-items: stretch; margin-top: .3rem; }
+      .cmp-cell { padding: .3rem .5rem; border-radius: var(--radius-small); min-width: 0; }
+      .cmp-ex.cmp-cell { background: color-mix(in srgb, var(--c-existing) 9%, transparent); border-left: 3px solid var(--c-existing); }
+      .cmp-pr.cmp-cell { background: color-mix(in srgb, var(--c-pred) 9%, transparent); border-left: 3px solid var(--c-pred); }
+      .cmp-k { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .03em; color: var(--muted-foreground); }
+      .cmp-val { white-space: pre-wrap; max-height: 7rem; overflow: auto; overflow-wrap: anywhere; }
+      .cmp-val mark { background: color-mix(in srgb, var(--c-pred) 50%, transparent); color: inherit; font-weight: 600; border-radius: 2px; padding: 0 2px; box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-pred) 45%, transparent); }
+      .cmp-key mark { background: color-mix(in srgb, var(--c-pred) 50%, transparent); color: inherit; }
+      .cmp-val.empty { color: var(--muted-foreground); }
+      .cmp-st { align-self: center; text-align: center; font-weight: 700; font-size: 1.1rem; }
+      .st-match .cmp-st { color: var(--st-match); } .st-close .cmp-st { color: var(--st-close); }
+      .st-differs .cmp-st { color: var(--st-differs); } .st-added .cmp-st { color: var(--c-pred); }
+      .st-match .cmp-pr.cmp-cell { border-left-color: var(--st-match); } .st-close .cmp-pr.cmp-cell { border-left-color: var(--st-close); }
+      .st-differs .cmp-pr.cmp-cell { border-left-color: var(--st-differs); }
+      .cmp-sub { margin: .9rem 0 .1rem; font-size: .8rem; font-weight: 600; color: var(--c-pred); text-transform: uppercase; letter-spacing: .03em; }
+      .cmp-key { margin: .6rem 0 0; font-size: .75rem; color: var(--muted-foreground); }
+      .cmp-key span { margin-right: .6rem; white-space: nowrap; }
+      .cmp-key .st-match b { color: var(--st-match); } .cmp-key .st-close b { color: var(--st-close); }
+      .cmp-key .st-differs b { color: var(--st-differs); } .cmp-key .st-added b { color: var(--c-pred); }
+
+      .outline-tools { display: flex; gap: .5rem; align-items: center; margin-bottom: .5rem; }
+      .outline-tools h3 { margin: 0 auto 0 0; }
+      .outline-prog { border-bottom: 1px solid var(--border); }
+      .outline-prog > summary, .outline-prog .flat-head { display: flex; gap: .4rem; align-items: baseline; padding: .25rem .2rem; cursor: pointer; list-style: none; }
+      .outline-prog > summary::-webkit-details-marker { display: none; }
+      .outline-prog > summary::after { content: "▾"; color: var(--muted-foreground); margin-left: auto; padding-left: .3rem; position: static; transform: none; }
+      .outline-prog[open] > summary::after { content: "▴"; }
+      .outline-prog .o-title { flex: 1; min-width: 0; }
+      #media-error[hidden] { display: none; }
+      .ann-breakdown { border: 0; padding: 0; background: none; box-shadow: none; }
+      .ann-breakdown > summary { padding: .1rem 0; }
+      .outline-prog.flat .flat-head { cursor: default; }
+      .outline-seg { display: grid; grid-template-columns: 1.6rem auto 1fr; gap: .4rem; padding: .15rem .2rem .15rem 1.6rem; font-size: .9rem; }
+      .outline-prog.playing > summary, .outline-prog.flat.playing, .outline-seg.playing { background: color-mix(in srgb, var(--foreground) 12%, transparent); }
+      .outline-seg.playing .o-title, .outline-prog.playing .o-title { font-weight: 600; }
+      .o-time { font-variant-numeric: tabular-nums; color: var(--muted-foreground); font-size: .8rem; white-space: nowrap; }
+      .o-count { font-size: .75rem; color: var(--muted-foreground); }
+      .outline-empty { color: var(--muted-foreground); font-size: .9rem; }
+      button.seek { padding: 0; width: 1.4rem; height: 1.4rem; line-height: 1; font-size: .65rem; border-radius: 50%; }
+      .chip { font-size: .7rem; padding: 0 .4rem; border-radius: 1rem; border: 1px solid currentColor; white-space: nowrap; }
+      .chip.k-agreed { color: var(--st-match); } .chip.k-contested { color: var(--st-differs); }
+      .score-row ul { margin: .3rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
+      @media (max-width: 820px) { .outline-cols, .score-row { grid-template-columns: 1fr; } }
+      .entry-table td.seek { cursor: pointer; text-decoration: underline dotted; }
+      .thumbs img { max-width: 440px; max-height: 600px; object-fit: contain; border: 1px solid var(--border); }
+      /* Split layout: image pinned beside the model output (schemas with no
+         ground truth, e.g. index-cards). */
+      .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+      .split-content { min-width: 0; }
+      /* Oat's top nav is sticky at top:0, so anything else sticky must clear it.
+         The nav wraps, so its height is measured into --nav-h at runtime. */
+      .split-media { position: sticky; top: calc(var(--nav-h, 3rem) + .75rem); }
+      .split-media a { display: block; }
+      .split-media a + a { margin-top: .5rem; }
+      .split-media img { width: 100%; max-height: calc(92vh - var(--nav-h, 3rem));
+        object-fit: contain; border: 1px solid var(--border); }
+      /* Editable entries grid: long cell values (folios, descriptions) wrap and
+         grow the row (autogrow textareas) instead of clipping past the edge. */
+      .entries-editor .entry-table { table-layout: auto; width: 100%; }
+      .entries-editor .entry-table th, .entries-editor .entry-table td { vertical-align: top; }
+      .entries-editor .entry-table td > textarea {
+        width: 100%; min-width: 8ch; box-sizing: border-box; resize: vertical;
+        overflow: hidden; line-height: 1.35; }
+      .entries-editor .entry-table td.entry-del { width: 2.25rem; }
+      @media (max-width: 820px) {
+        .split { grid-template-columns: 1fr; }
+        .split-media { position: static; }
+      }
+      .field-row { display: grid; grid-template-columns: 10rem 1fr; gap: .5rem; padding: .25rem 0; }
+      .field-row dt { font-weight: 600; }
+      .field-row dd { margin: 0; word-break: break-word; }
+      .controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+        margin-top: 1rem; margin-bottom: 2rem; }
+      /* The number input sizes to its content box, which is far too wide for 1-8. */
+      .ws-cards { display: inline-flex; align-items: center; gap: .5rem; margin: 0; }
+      .ws-cards input { width: 5rem; }
+      button.selected { outline: 3px solid var(--success); outline-offset: 2px; }
+      button.selected.no { outline-color: var(--danger); }
+      button.selected.mid { outline-color: var(--warning); }
+      .kbd {
+        display: inline-block;
+        font-family: monospace;
+        font-size: .75em;
+        line-height: 1;
+        padding: .1em .35em;
+        border: 1px solid currentColor;
+        border-radius: 3px;
+        opacity: .65;
+        vertical-align: .1em;
+      }
+      /* Verdict / status colours (used in panes and the stats table). Oat's
+         semantic tokens rather than fixed hex — they're light-dark() pairs, so
+         these follow the theme. */
+      .ok { color: var(--success); }
+      .warn { color: var(--warning); }
+      .bad { color: var(--danger); }
+      .score-col { min-width: 9rem; }
+      .row-link { cursor: pointer; }
+      .note-cell { white-space: pre-wrap; font-size: .875rem; color: var(--muted-foreground); }
+      .readonly-banner {
+        display: block;
+        padding: .625rem .875rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--muted);
+        border-radius: .25rem;
+        background: var(--muted);
+        color: var(--muted-foreground);
+        font-size: .875rem;
+      }
+      .readonly-banner a { margin-left: .5rem; }
+      /* Eval / correction editor. */
+      .eval-head { margin-bottom: 1rem; font-size: .9rem; }
+      .edit-field { display: grid; grid-template-columns: 10rem 1fr; gap: .5rem;
+        padding: .5rem 0; align-items: start; border-top: 1px solid var(--muted); }
+      .edit-field > label.k { font-weight: 600; padding-top: .35rem; }
+      .edit-field .hint { display: block; font-size: .75rem; color: var(--muted-foreground);
+        margin-top: .2rem; word-break: break-word; }
+      .edit-field.changed > label.k::after { content: " ●"; color: var(--warning); }
+      .gold-badge { color: var(--success); font-weight: 600; }
+      /* Oat's [role=alert] does the styling; these only place it. The note says
+         why the record is in the queue, so it stays pinned above the scan while
+         the image scrolls past it. */
+      .eval-note { margin-bottom: .75rem; }
+      /* Homepage only: reference material, set apart from the task. */
+      .page-foot { margin-top: 3rem; padding-top: 1rem;
+        border-top: 1px solid var(--border); font-size: .8125rem;
+        color: var(--muted-foreground); }
+      .prompt-text { white-space: pre-wrap; font-size: .8125rem; max-height: 30rem;
+        overflow-y: auto; }
+      /* Results closes the loop, so it sits apart from the two doing-steps. */
+      .nav-results { margin-left: .5rem; }
+      /* Eval-set call to action: important, but off to the side of the review
+         flow, so it sits opposite the heading rather than interrupting the
+         numbers. The hover ring is a conic gradient rotated through a
+         registered @property — a plain gradient cannot be animated. */
+      .results-head { display: flex; flex-wrap: wrap; align-items: flex-start;
+        justify-content: space-between; gap: 1rem; }
+      .results-head h2 { margin-block: 0; }
+      .eval-cta { text-align: right; }
+      .eval-cta-row { display: flex; flex-wrap: wrap; justify-content: flex-end;
+        align-items: center; gap: .5rem; }
+      .eval-cta-note { font-size: var(--text-8); margin: .5rem 0 0; }
+      /* The ring lives on a wrapper, not on the button. Oat translates a button
+         by 1px while it is held down, and a transform creates a stacking
+         context, which would make the z-index:-1 gradient paint over the
+         button face instead of behind it. */
+      .gold-ring { position: relative; display: inline-flex;
+        border-radius: var(--radius-medium); }
+      /* Oat's default button metrics, so it matches Export beside it. The
+         emphasis comes from being the primary variant and from the ring. */
+      .gold-cta { display: inline-flex; align-items: center; gap: .5rem; }
+      .gold-cta .gold-count { font-variant-numeric: tabular-nums; font-weight: 700;
+        background: rgb(255 255 255 / .18); border-radius: var(--radius-small);
+        padding: .0625rem .5rem; }
+      @property --gold-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+      .gold-ring::before {
+        content: ""; position: absolute; inset: -2px; border-radius: inherit; z-index: -1;
+        background: conic-gradient(from var(--gold-angle),
+          transparent 0turn .45turn, #b8860b .62turn, #ffd76e .75turn,
+          #fff3c4 .8turn, #ffd76e .85turn, #b8860b .95turn, transparent 1turn);
+        opacity: 0; transition: opacity .18s ease;
+      }
+      .gold-ring:hover::before, .gold-ring:has(:focus-visible)::before {
+        opacity: 1; animation: gold-sweep 2.2s linear infinite;
+      }
+      @keyframes gold-sweep { to { --gold-angle: 1turn; } }
+      @media (prefers-reduced-motion: reduce) {
+        .gold-ring:hover::before, .gold-ring:has(:focus-visible)::before { animation: none; }
+      }
+      /* Export modal. Oat styles the dialog (pads > header / > div / > footer, the
+         body div scrolls) plus inputs, selects, switches and tables. Inline CSS is
+         UNLAYERED and beats Oat's @layer rules, so this stays narrow: the bespoke
+         records-scope selector, and the few things Oat leaves to the app. */
+      dialog.export-dialog[open] { display: flex; flex-direction: column;
+        width: min(100% - 2rem, 46rem); }
+      .export-dialog > header { flex-direction: row; align-items: center;
+        justify-content: space-between; gap: 1rem;
+        border-bottom: 1px solid var(--border); padding-block-end: var(--space-4); }
+      .export-dialog > header h3 { margin: 0; }
+      .export-dialog > div { flex: 1; min-height: 0; }   /* the scroll region */
+      .export-dialog > footer { align-items: center;
+        border-top: 1px solid var(--border); padding-block-start: var(--space-4); }
+      .export-dialog > footer .grow { margin-left: auto; }
+      .ex-note { font-size: var(--text-8); color: var(--muted-foreground); }
+      .fname { font-family: var(--font-mono); }
+      /* Records-scope selector — a bespoke segmented tier control (no Oat equivalent). */
+      .ex-scope { margin-bottom: 1rem; }
+      .ex-scope-label { font-size: var(--text-8); font-weight: 600; letter-spacing: .04em;
+        text-transform: uppercase; color: var(--muted-foreground); display: block; margin-bottom: .4rem; }
+      .ex-scope-btns { display: flex; gap: .5rem; flex-wrap: wrap; }
+      .ex-scope-btns button { display: inline-flex; align-items: center; gap: .5rem;
+        padding: .45rem .75rem; font: inherit; font-weight: 500;
+        border: 1px solid var(--border); background: var(--background); color: var(--foreground);
+        border-radius: var(--radius-medium); cursor: pointer; }
+      .ex-scope-btns button[aria-pressed="true"] { border-color: var(--primary);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 25%, transparent); }
+      .ex-scope-btns .dots { display: inline-grid; gap: .13rem; justify-items: center; }
+      .ex-scope-btns .dots.d2, .ex-scope-btns .dots.d3 { grid-template-columns: auto auto; }
+      .ex-scope-btns .dots.d3 span:first-child { grid-column: 1 / -1; }
+      .ex-scope-btns .dots span { width: .42rem; height: .42rem; border-radius: var(--radius-full); }
+      .ex-scope-btns .n { font-variant-numeric: tabular-nums; font-weight: 600; font-size: var(--text-8);
+        color: var(--muted-foreground); background: var(--muted); padding: .05rem .45rem; border-radius: var(--radius-full); }
+      /* Mapping table: Oat styles th/td/inputs/selects/switch. Only column tweaks. */
+      .ex-map input.marc { width: 6rem; }  /* Oat inputs are width:100% */
+      .ex-map td.skip, .ex-map th.skip { text-align: center; width: 4rem; }
+      .ex-map .skipped .fname, .ex-map .skipped select { opacity: .5; text-decoration: line-through; }
+      /* AI-assistance note. Oat styles the checkbox and input; layout only. */
+      .ex-ainote { margin-top: 1rem; display: flex; flex-direction: column; gap: .5rem; }
+      .ex-ainote-toggle { display: flex; align-items: center; gap: .5rem;
+        font-size: var(--text-8); font-weight: 600; }
+      .ex-ainote-toggle .hint { font-weight: 400; color: var(--muted-foreground); }
+      .ex-ainote-text[disabled] { opacity: .5; }
+      /* Hugging Face tab. */
+      .ex-hf { display: flex; flex-direction: column; gap: 1rem; }
+      .ex-hf-id { display: flex; align-items: center; gap: .75rem; margin: 0; }
+      .ex-hf-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .75rem 1rem; }
+      .ex-hf-form label { display: flex; flex-direction: column; gap: .25rem;
+        font-size: var(--text-8); font-weight: 600; }
+      .ex-hf-form label.ex-hf-vis { flex-direction: row; align-items: center; gap: .5rem; align-self: end; }
+      .ex-hf-status { margin: 0; font-size: var(--text-8); color: var(--muted-foreground); min-height: 1.2em; }
+      .ex-hf-status.bad { color: var(--danger); }
+      .ex-hf-status.warn { color: var(--warning); }
+    </style>
+  </head>
+  <body>
+    <nav data-topnav>
+      <a href="#/select"><strong>paratext</strong></a>
+      <!-- Workflow order: edit, run, look at what came back. The Prompt editor
+           is inserted here by the app when the server runs in workshop mode. -->
+      <a href="#/review" id="nav-review" class="button outline small">Review</a>
+      <a href="#/stats" id="nav-stats" class="button outline small nav-results">Results</a>
+      <span id="progress" style="margin-left:auto; font-size:.875rem;"></span>
+      <!-- aria-label, NOT title: Oat converts every [title] into a data-tooltip
+           whose ::after is absolutely positioned and centred on the element. On
+           the right-most nav item that tooltip runs past the viewport, and since
+           it is visibility:hidden rather than display:none it still counts
+           toward scrollWidth — a permanent horizontal scrollbar at every window
+           size. Same applies to anything else placed at the right edge. -->
+      <button id="theme-toggle" class="outline small" aria-label="Toggle dark/light mode">&#9789;</button>
+    </nav>
+    <main>
+      <div class="container">
+        <section id="view"></section>
+      </div>
+    </main>
+    <script src="oat.min.js"></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

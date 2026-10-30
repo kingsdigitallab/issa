@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+uv-cache/
+
+# Local review state (SQLite) — per-reviewer, not meant to be shared via git.
+# The packaged dataset itself (review/*/samples.json, view.json, provenance.json)
+# is committed — it's small and reproducible, and is the point of the PoC.
+review/annotations.db

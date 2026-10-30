@@ -1,0 +1,113 @@
+{
+ "generated_at": "2026-10-21T19:56",
+ "status": "pending",
+ "proposed_fields": [
+  {
+   "field": "label_matches_content",
+   "collections": [
+    "channelm"
+   ],
+   "why": "The only field that addresses the barcode error. One verdict per tape."
+  },
+  {
+   "field": "nb_progs",
+   "collections": [
+    "channelm",
+    "fv"
+   ],
+   "why": "No source holds this. The core outer-segmentation reference."
+  },
+  {
+   "field": "prog_timecodes",
+   "collections": [
+    "channelm",
+    "fv"
+   ],
+   "why": "No source holds this. Lets us score boundary placement, not just counts."
+  },
+  {
+   "field": "machine_text_verdict",
+   "collections": [
+    "channelm",
+    "fv"
+   ],
+   "why": "Accept / amend / reject on the machine summary, with a reason."
+  },
+  {
+   "field": "year",
+   "collections": [
+    "channelm"
+   ],
+   "why": "Catalogued for Film & Video already; only needed for Channel M."
+  },
+  {
+   "field": "colour",
+   "collections": [
+    "channelm"
+   ],
+   "why": "As above."
+  },
+  {
+   "field": "sound",
+   "collections": [
+    "channelm"
+   ],
+   "why": "As above."
+  }
+ ],
+ "returned": 0,
+ "expected": 10,
+ "agreement": [],
+ "items": [
+  {
+   "prefix": "N_6966411",
+   "batch": "H22",
+   "fields_answered": 0
+  },
+  {
+   "prefix": "N_6967905",
+   "batch": "H22",
+   "fields_answered": 0
+  },
+  {
+   "prefix": "N_6975894",
+   "batch": "H22",
+   "fields_answered": 0
+  },
+  {
+   "prefix": "N_6975915",
+   "batch": "H22",
+   "fields_answered": 0
+  },
+  {
+   "prefix": "N_6977195",
+   "batch": "H22",
+   "fields_answered": 0
+  },
+  {
+   "prefix": "NWFA 143",
+   "batch": "FV",
+   "fields_answered": 0
+  },
+  {
+   "prefix": "NWFA 4220",
+   "batch": "FV",
+   "fields_answered": 0
+  },
+  {
+   "prefix": "NWFA 473",
+   "batch": "FV",
+   "fields_answered": 0
+  },
+  {
+   "prefix": "NWFA 57",
+   "batch": "FV",
+   "fields_answered": 0
+  },
+  {
+   "prefix": "NWFA 58",
+   "batch": "FV",
+   "fields_answered": 0
+  }
+ ]
+}
