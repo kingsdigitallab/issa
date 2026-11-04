@@ -1,7 +1,9 @@
 """Script created by opencode:e-research/arc:apex
-Creates catalogue/predictions.csv from the misc1 answers found under
-./batches/**/clip_answers.json: one row per answered clip, with the misc1
-keys and values as columns alongside DODfilenameprefix and kdl_prog.
+Creates catalogue/predictions-400.v3.csv from the misc3 answers found under
+./batches/**/clip_answers.json: one row per answered clip, with the misc3
+keys and values as columns alongside DODfilenameprefix and kdl_prog. The
+secondpass1 programme, bands and environment sub-answers are added as extra
+columns.
 """
 
 from pathlib import Path
@@ -11,8 +13,11 @@ import json
 import re
 
 BATCHES_DIR = Path("batches")
-OUTPUT_PATH = Path("catalogue") / "predictions-10.v3.csv"
+OUTPUT_PATH = Path("catalogue") / "predictions-400.v3.csv"
 ANSWER_KEY = "misc3"
+SECOND_PASS_KEY = "secondpass1"
+SECOND_PASS_COLUMNS = ("programme", "bands", "environment")
+NODATA = "NODATA"
 DOD_PREFIX_COLUMN = "DODfilenameprefix"
 KDL_PROG_COLUMN = "kdl_prog"
 FIELDNAMES = [
@@ -30,11 +35,14 @@ FIELDNAMES = [
     "segments",
     "credits",
     "keywords",
+    *SECOND_PASS_COLUMNS,
 ]
 # SYNOPSIS_KEY_VARIANTS = ("Synopsis", " synopsis", "summary")
 LIST_SEPARATOR = "; "
 SEGMENT_SEPARATOR = "; "
 CREDIT_SEPARATOR = "; "
+BAND_SEPARATOR = "; "
+ACTIVITY_SEPARATOR = "; "
 FENCE_PATTERN = re.compile(r"^\s*```[A-Za-z0-9_-]*\s*|\s*```\s*$")
 
 
@@ -80,6 +88,8 @@ def format_value(values, field=None) -> str:
     ret = values
     if field == 'segments':
         ret = format_segments(values)
+    elif field == 'bands':
+        ret = format_bands(values)
     else:
         if isinstance(ret, dict):
             ret = [f"{key}: {format_value(v)}" for key, v in ret.items()]
@@ -98,6 +108,28 @@ def format_segments(segments) -> str:
     return ret
 
 
+def format_bands(bands) -> str:
+    """Band dicts as 'name (activity; activity)' entries joined with the band separator."""
+    ret = ""
+    if isinstance(bands, list):
+        entries = []
+        for band in bands:
+            if not isinstance(band, dict):
+                entries.append(format_value(band))
+                continue
+            name = band.get("name") or ""
+            activities = band.get("activities", [])
+            if isinstance(activities, list):
+                activity_text = ACTIVITY_SEPARATOR.join(format_value(a) for a in activities)
+            else:
+                activity_text = format_value(activities)
+            entries.append(f"{name} ({activity_text})" if activity_text else str(name))
+        ret = BAND_SEPARATOR.join(entries)
+    else:
+        ret = format_value(bands)
+    return ret
+
+
 # def format_credits(credits) -> str:
 #     """Credits as readable text: dict to 'key: value' pairs, list joined, str as-is."""
 #     ret = format_value(credits)
@@ -109,11 +141,19 @@ def format_segments(segments) -> str:
 #     return ret
 
 
-def row_for(path: Path, answer: dict) -> dict:
-    """One CSV row for a clip answer file: clip identity columns plus misc1 fields."""
+def row_for(path: Path, answer: dict, second_answer: dict | None = None) -> dict:
+    """One CSV row for a clip answer file: clip identity columns plus misc3 and secondpass1 fields."""
     ret = {}
     for col in FIELDNAMES:
-        ret[col] = format_value(answer.get(col, None), col)
+        if col in SECOND_PASS_COLUMNS:
+            value = second_answer.get(col, NODATA) if isinstance(second_answer, dict) else NODATA
+            if value is None:
+                value = NODATA
+        else:
+            value = answer.get(col, None)
+        if col == "programme" and isinstance(value, bool):
+            value = str(value).lower()
+        ret[col] = format_value(value, col)
     ret[DOD_PREFIX_COLUMN] = path.parent.parent.name.removesuffix(".32")
     ret[KDL_PROG_COLUMN] = "-".join(path.parent.name.split("-")[:2])
 
@@ -121,7 +161,7 @@ def row_for(path: Path, answer: dict) -> dict:
 
 
 def main() -> int:
-    """Write catalogue/predictions.csv from the misc1 answers and report the outcome."""
+    """Write catalogue/predictions-400.v3.csv from the misc3 and secondpass1 answers and report the outcome."""
     ret = 0
     rows = 0
     seen = 0
@@ -152,7 +192,17 @@ def main() -> int:
             elif not isinstance(answer, dict):
                 invalid += 1
                 continue
-            writer.writerow(row_for(path, normalize_answer(answer)))
+            second = data.get("data", {}).get(SECOND_PASS_KEY)
+            second_answer = second.get("answer") if isinstance(second, dict) else None
+            if isinstance(second_answer, str):
+                second_answer = salvage_answer(second_answer)
+            if not isinstance(second_answer, dict):
+                second_answer = None
+            writer.writerow(row_for(
+                path,
+                normalize_answer(answer),
+                normalize_answer(second_answer) if second_answer else None,
+            ))
             rows += 1
     print(f"written {rows} rows to {OUTPUT_PATH} ({missing} of {seen} files without {ANSWER_KEY}); {salvaged} salvaged, {invalid} invalid json")
     return ret
