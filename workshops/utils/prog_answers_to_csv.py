@@ -1,9 +1,9 @@
 """Script created by opencode:e-research/arc:apex
 Creates catalogue/predictions-400.v3.csv from the misc3 answers found under
 ./batches/**/clip_answers.json: one row per answered clip, with the misc3
-keys and values as columns alongside DODfilenameprefix and kdl_prog. The
-secondpass1 programme, bands and environment sub-answers are added as extra
-columns.
+keys and values as columns alongside DODfilenameprefix, kdl_prog and the
+per-video progIndex. The secondpass1 programme, bands and environment
+sub-answers are added as extra columns.
 """
 
 from pathlib import Path
@@ -29,9 +29,11 @@ STATUS_INVALID = "invalid"
 NODATA = "NODATA"
 DOD_PREFIX_COLUMN = "DODfilenameprefix"
 KDL_PROG_COLUMN = "kdl_prog"
+PROG_INDEX_COLUMN = "progIndex"
 FIELDNAMES = [
     DOD_PREFIX_COLUMN,
     KDL_PROG_COLUMN,
+    PROG_INDEX_COLUMN,
     "title",
     "year",
     "places",
@@ -184,18 +186,25 @@ def format_bands(bands) -> str:
 #     return ret
 
 
-def row_for(path: Path, answer: dict, second_answer: dict | None = None) -> dict:
+def row_for(path: Path, answer: dict, second_answer: dict | None = None, prog_index: int | None = None) -> dict:
     """One CSV row for a clip answer file: clip identity columns plus misc3 and secondpass1 fields."""
     ret = {
         DOD_PREFIX_COLUMN: path.parent.parent.name.removesuffix(".32"),
         KDL_PROG_COLUMN: "-".join(path.parent.name.split("-")[:2]),
+        PROG_INDEX_COLUMN: prog_index if prog_index is not None else NODATA,
     }
     for col in FIELDNAMES:
         if col in ret:
             continue
         source = second_answer if col in SECOND_PASS_COLUMNS else answer
-        value = source.get(col) if isinstance(source, dict) else None
-        if value is None or not is_valid_value(col, value):
+        if not isinstance(source, dict) or col not in source:
+            ret[col] = NODATA
+            continue
+        value = source[col]
+        if value is None:
+            ret[col] = NODATA if col in SECOND_PASS_COLUMNS else format_value(value, col)
+            continue
+        if not is_valid_value(col, value):
             ret[col] = NODATA
             continue
         if col == PROGRAMME_COLUMN:
@@ -219,6 +228,7 @@ def main() -> int:
     second_missing = 0
     second_salvaged = 0
     second_invalid = 0
+    prog_counts = {}
     with open(OUTPUT_PATH, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
         writer.writeheader()
@@ -242,7 +252,10 @@ def main() -> int:
                 second_salvaged += 1
             elif second_status == STATUS_INVALID:
                 second_invalid += 1
-            writer.writerow(row_for(path, answer or {}, second_answer))
+            video_key = path.parent.parent
+            prog_index = prog_counts.get(video_key, 0) + 1
+            prog_counts[video_key] = prog_index
+            writer.writerow(row_for(path, answer or {}, second_answer, prog_index))
             rows += 1
     print(f"written {rows} rows to {OUTPUT_PATH} ({missing} of {seen} files without {ANSWER_KEY}, {invalid} invalid; {second_missing} without {SECOND_PASS_KEY}, {second_invalid} invalid; {salvaged} + {second_salvaged} salvaged)")
     return ret
