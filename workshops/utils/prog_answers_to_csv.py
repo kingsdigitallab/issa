@@ -16,7 +16,16 @@ BATCHES_DIR = Path("batches")
 OUTPUT_PATH = Path("catalogue") / "predictions-400.v3.csv"
 ANSWER_KEY = "misc3"
 SECOND_PASS_KEY = "secondpass1"
-SECOND_PASS_COLUMNS = ("programme", "bands", "environment")
+PROGRAMME_COLUMN = "programme"
+BANDS_COLUMN = "bands"
+ENVIRONMENT_COLUMN = "environment"
+SECOND_PASS_COLUMNS = (PROGRAMME_COLUMN, BANDS_COLUMN, ENVIRONMENT_COLUMN)
+PROGRAMME_TRUE = "true"
+PROGRAMME_FALSE = "false"
+STATUS_OK = "ok"
+STATUS_SALVAGED = "salvaged"
+STATUS_MISSING = "missing"
+STATUS_INVALID = "invalid"
 NODATA = "NODATA"
 DOD_PREFIX_COLUMN = "DODfilenameprefix"
 KDL_PROG_COLUMN = "kdl_prog"
@@ -77,6 +86,40 @@ def salvage_answer(answer: str) -> dict | None:
         if isinstance(parsed, dict):
             ret = parsed
             break
+    return ret
+
+
+def extract_answer(data: dict, key: str) -> tuple[dict | None, str]:
+    """Normalised answer dict and its status for a question key."""
+    ret = (None, STATUS_MISSING)
+    misc = data.get("data", {}).get(key)
+    answer = misc.get("answer") if isinstance(misc, dict) else None
+    if answer is None:
+        return ret
+    status = STATUS_OK
+    if isinstance(answer, str):
+        answer = salvage_answer(answer)
+        status = STATUS_SALVAGED if answer is not None else STATUS_INVALID
+    elif not isinstance(answer, dict):
+        status = STATUS_INVALID
+    if isinstance(answer, dict):
+        ret = (normalize_answer(answer), status)
+    else:
+        ret = (None, status)
+    return ret
+
+
+def is_valid_value(column: str, value) -> bool:
+    """True if a non-None value has the expected type for its answer column."""
+    ret = True
+    if column == PROGRAMME_COLUMN:
+        ret = isinstance(value, bool) or (
+            isinstance(value, str) and value.strip().lower() in (PROGRAMME_TRUE, PROGRAMME_FALSE)
+        )
+    elif column == BANDS_COLUMN:
+        ret = isinstance(value, list)
+    elif column == ENVIRONMENT_COLUMN:
+        ret = isinstance(value, str)
     return ret
 
 
@@ -143,19 +186,24 @@ def format_bands(bands) -> str:
 
 def row_for(path: Path, answer: dict, second_answer: dict | None = None) -> dict:
     """One CSV row for a clip answer file: clip identity columns plus misc3 and secondpass1 fields."""
-    ret = {}
+    ret = {
+        DOD_PREFIX_COLUMN: path.parent.parent.name.removesuffix(".32"),
+        KDL_PROG_COLUMN: "-".join(path.parent.name.split("-")[:2]),
+    }
     for col in FIELDNAMES:
-        if col in SECOND_PASS_COLUMNS:
-            value = second_answer.get(col, NODATA) if isinstance(second_answer, dict) else NODATA
-            if value is None:
-                value = NODATA
-        else:
-            value = answer.get(col, None)
-        if col == "programme" and isinstance(value, bool):
-            value = str(value).lower()
+        if col in ret:
+            continue
+        source = second_answer if col in SECOND_PASS_COLUMNS else answer
+        value = source.get(col) if isinstance(source, dict) else None
+        if value is None or not is_valid_value(col, value):
+            ret[col] = NODATA
+            continue
+        if col == PROGRAMME_COLUMN:
+            if isinstance(value, bool):
+                value = str(value).lower()
+            else:
+                value = value.strip().lower()
         ret[col] = format_value(value, col)
-    ret[DOD_PREFIX_COLUMN] = path.parent.parent.name.removesuffix(".32")
-    ret[KDL_PROG_COLUMN] = "-".join(path.parent.name.split("-")[:2])
 
     return ret
 
@@ -168,6 +216,9 @@ def main() -> int:
     missing = 0
     salvaged = 0
     invalid = 0
+    second_missing = 0
+    second_salvaged = 0
+    second_invalid = 0
     with open(OUTPUT_PATH, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
         writer.writeheader()
@@ -177,34 +228,23 @@ def main() -> int:
             seen += 1
             with open(path) as jf:
                 data = json.load(jf)
-            misc = data.get("data", {}).get(ANSWER_KEY)
-            answer = misc.get("answer") if isinstance(misc, dict) else None
-            if answer is None:
+            answer, answer_status = extract_answer(data, ANSWER_KEY)
+            if answer_status == STATUS_MISSING:
                 missing += 1
-                continue
-            if isinstance(answer, str):
-                salvaged_answer = salvage_answer(answer)
-                if salvaged_answer is None:
-                    invalid += 1
-                    continue
-                answer = salvaged_answer
+            elif answer_status == STATUS_SALVAGED:
                 salvaged += 1
-            elif not isinstance(answer, dict):
+            elif answer_status == STATUS_INVALID:
                 invalid += 1
-                continue
-            second = data.get("data", {}).get(SECOND_PASS_KEY)
-            second_answer = second.get("answer") if isinstance(second, dict) else None
-            if isinstance(second_answer, str):
-                second_answer = salvage_answer(second_answer)
-            if not isinstance(second_answer, dict):
-                second_answer = None
-            writer.writerow(row_for(
-                path,
-                normalize_answer(answer),
-                normalize_answer(second_answer) if second_answer else None,
-            ))
+            second_answer, second_status = extract_answer(data, SECOND_PASS_KEY)
+            if second_status == STATUS_MISSING:
+                second_missing += 1
+            elif second_status == STATUS_SALVAGED:
+                second_salvaged += 1
+            elif second_status == STATUS_INVALID:
+                second_invalid += 1
+            writer.writerow(row_for(path, answer or {}, second_answer))
             rows += 1
-    print(f"written {rows} rows to {OUTPUT_PATH} ({missing} of {seen} files without {ANSWER_KEY}); {salvaged} salvaged, {invalid} invalid json")
+    print(f"written {rows} rows to {OUTPUT_PATH} ({missing} of {seen} files without {ANSWER_KEY}, {invalid} invalid; {second_missing} without {SECOND_PASS_KEY}, {second_invalid} invalid; {salvaged} + {second_salvaged} salvaged)")
     return ret
 
 
