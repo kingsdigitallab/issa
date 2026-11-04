@@ -26,7 +26,8 @@ EMBEDDINGS_FILE_NAME = 'embeds.json'
 # MODEL_NAME = "BAAI/bge-large-en-v1.5" # better and worse than base model (e.g. v. specific summary matches all "Channel M News" for a couple of tapes)
 # MODEL_NAME = "google/embeddinggemma-2" # 0.7b, multimodal, looks inferior to "all-MiniLM-L6-v2"
 # MODEL_NAME = "Qwen/Qwen3-Embedding-0.6B" # slightly inferior to "all-MiniLM-L6-v2", misses doctor shortage, baby rescued ranked 4th
-MODEL_NAME = "Qwen/Qwen3-Embedding-4B" #
+# MODEL_NAME = "Qwen/Qwen3-Embedding-4B" # 8GB VRAM, slightly less good than all-minilm
+# MODEL_NAME = "Qwen/Qwen3-Embedding-8B" # 16GB VRAM, less good than 4b
 
 class SemanticMatcher:
 
