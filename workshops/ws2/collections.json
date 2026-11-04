@@ -64,6 +64,14 @@
                         },
                         "notes": "80G VRAM, 40G RAM, 8 cpu, 1/6 RT",
                         "exclude": "-full.mp4|-sub.mp4"
+                    },
+                    {
+                        "operator": "answer_clips_vlm",
+                        "params": {
+                            "filter_questions": "secondpass1"
+                        },
+                        "notes": "80G VRAM, 40G RAM, 8 cpu, 1/6 RT",
+                        "exclude": "-full.mp4|-sub.mp4"
                     }
                 ]
             }
@@ -87,6 +95,16 @@
                 "api_base": "http://localhost:30000/v1",
                 "filter_questions": "misc3",
                 "questions": {
+                    "secondpass1": {
+                        "question_MULTILINES": [
+                            "The attached video is a single programme from a very diverse collection at a national screen archive.",
+                            "Sometimes a professional programme can contain raw unedited rushes with outtakes or retakes.", 
+                            "Returns a valid JSON dictionary with the following keys:",
+                            "* programme ('true' if this is an actual programme with meaningful content that can be broadcast; 'false' if this is mostly visual markers like blank screen, color bars, white noise),",
+                            "* bands (a list of music bands featuring in this programme, for each one its `name` and a list of `activities` such as 'music video', 'studio performance', 'concert performance', 'interview', 'other'; [] if no band in the programme),",
+                            "* environment (in two words maximum, the primary type of environment the programme takes place in, such as `forest`, `street`, `studio`, `school`)"
+                        ]
+                    },
                     "misc3": {
                         "question_MULTILINES": [
                             "The attached video is a single programme from a very diverse collection at a national screen archive.",
