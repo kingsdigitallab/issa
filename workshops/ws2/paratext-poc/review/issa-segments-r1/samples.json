@@ -1,0 +1,246 @@
+[
+  {
+    "id": "139329389-outer",
+    "document_id": "139329389-outer",
+    "model_output": {
+      "title": null,
+      "year": null,
+      "colour": "colour",
+      "types": [
+        "documentary",
+        "educational"
+      ],
+      "summary": "Pipeline split this tape into 3 programmes (predicted); NLS's own shotlist has 6 timed items. See the two tracks below for where they agree and disagree."
+    },
+    "images": [],
+    "media": {
+      "src": "/home/daniel/Projects/issa/workshops/ws1/sample11/139329389.32/139329389.32.mp4",
+      "type": "file",
+      "start": 0,
+      "end": 1940,
+      "label": "Whole tape (outer segmentation)",
+      "tracks": [
+        {
+          "name": "Predicted programmes (outer)",
+          "items": [
+            {
+              "start": 16,
+              "text": "Programme 1: documentary",
+              "end": 1151
+            },
+            {
+              "start": 1152,
+              "text": "Programme 2: documentary",
+              "end": 1521
+            },
+            {
+              "start": 1522,
+              "text": "Programme 3: educational; documentary",
+              "end": 1940
+            }
+          ]
+        },
+        {
+          "name": "NLS shotlist (ground truth, outer)",
+          "items": [
+            {
+              "start": 16,
+              "text": "Aberdeen Grammar School (static & black screen)",
+              "end": 193
+            },
+            {
+              "start": 194,
+              "text": "Summerhill Academy, Aberdeen (static)",
+              "end": 301
+            },
+            {
+              "start": 303,
+              "text": "Dundee University honorary graduates (cut)",
+              "end": 1151
+            },
+            {
+              "start": 1152,
+              "text": "Dundee University centenary (cut)",
+              "end": 1341
+            },
+            {
+              "start": 1342,
+              "text": "Hercules the bear at Bucksburn School (cut)",
+              "end": 1520
+            },
+            {
+              "start": 1523,
+              "text": "Nursery kids in Aberdeen, classroom activity (color-bar)",
+              "end": 1940
+            }
+          ],
+          "note": "hand-annotated from the archive shotlist, not a model output"
+        }
+      ]
+    },
+    "schema": "issa-segments",
+    "prompt": "",
+    "prompt_hash": "",
+    "ground_truth": {
+      "title": "[GRAMPIAN TELEVISION NEWS TAPE L0139]",
+      "year": "1982",
+      "colour": "col",
+      "types": [
+        "tv news"
+      ]
+    }
+  },
+  {
+    "id": "139329389-prog1-inner",
+    "document_id": "139329389-prog1-inner",
+    "model_output": {
+      "title": null,
+      "year": null,
+      "colour": "colour",
+      "types": [
+        "documentary"
+      ],
+      "summary": "Archival television coverage of a Scottish university investiture, opening with exterior shots of local schools and showing the procession, chancellors' speeches and the awarding of honorary doctorates."
+    },
+    "images": [],
+    "media": {
+      "src": "/home/daniel/Projects/issa/workshops/ws1/sample11/139329389.32/139329389.32.mp4",
+      "type": "file",
+      "start": 16,
+      "end": 1151,
+      "label": "Programme 1 (inner segmentation)",
+      "tracks": [
+        {
+          "name": "Predicted segments (inner)",
+          "items": [
+            {
+              "start": 16,
+              "text": "Exterior views of grammar school and academy buildings"
+            },
+            {
+              "start": 303,
+              "text": "Investiture congregation and academic procession"
+            },
+            {
+              "start": 447,
+              "text": "Addresses by chancellors and speakers"
+            },
+            {
+              "start": 912,
+              "text": "Conferral of honorary degrees"
+            },
+            {
+              "start": 1106,
+              "text": "Procession down the aisle"
+            }
+          ]
+        }
+      ]
+    },
+    "schema": "issa-segments",
+    "prompt": "",
+    "prompt_hash": "",
+    "ground_truth": {
+      "title": "[GRAMPIAN TELEVISION NEWS TAPE L0139]",
+      "year": "1982",
+      "colour": "col",
+      "types": [
+        "tv news"
+      ]
+    }
+  },
+  {
+    "id": "75247299-file",
+    "document_id": "75247299-file",
+    "model_output": {
+      "title": "Canals in Scotland",
+      "year": null,
+      "colour": "black-and-white",
+      "types": [
+        "educational",
+        "documentary",
+        "instructional"
+      ],
+      "summary": "An early educational film explaining how Scotland's three canals operate, using animated maps and live footage of locks, bridges and cargo handling."
+    },
+    "images": [],
+    "media": {
+      "src": "/home/daniel/Projects/issa/workshops/ws1/sample11/75247299.32/75247299.32.mp4",
+      "type": "file",
+      "start": 0,
+      "end": 557,
+      "label": "Whole file — single programme (outer + inner in one clip)",
+      "tracks": [
+        {
+          "name": "Predicted programme (outer)",
+          "items": [
+            {
+              "start": 0,
+              "text": "Programme 1: educational, documentary, instructional",
+              "end": 557
+            }
+          ]
+        },
+        {
+          "name": "NLS catalogue (ground truth, outer)",
+          "items": [
+            {
+              "start": 0,
+              "text": "",
+              "end": 557
+            }
+          ],
+          "note": "catalogue treats this as one programme, matching the prediction"
+        },
+        {
+          "name": "Predicted segments (inner)",
+          "items": [
+            {
+              "start": 0,
+              "text": "Opening titles and producer logo"
+            },
+            {
+              "start": 31,
+              "text": "Scotland has three canals (animated map)"
+            },
+            {
+              "start": 81,
+              "text": "How canals work – water supply and level above sea"
+            },
+            {
+              "start": 128,
+              "text": "Locks, lock-gates and sluices demonstrated with a boat"
+            },
+            {
+              "start": 267,
+              "text": "Bridges: old & new (bascule/lift bridge operation)"
+            },
+            {
+              "start": 330,
+              "text": "Freight carried – timber, oil, sand for glass-making"
+            },
+            {
+              "start": 468,
+              "text": "Canals make excellent short cuts (route comparison map)"
+            },
+            {
+              "start": 498,
+              "text": "Passenger/excursion traffic and closing titles"
+            }
+          ]
+        }
+      ]
+    },
+    "schema": "issa-segments",
+    "prompt": "",
+    "prompt_hash": "",
+    "ground_truth": {
+      "title": "CANALS IN SCOTLAND",
+      "year": "1938",
+      "colour": "bw",
+      "types": [
+        "educational"
+      ]
+    }
+  }
+]

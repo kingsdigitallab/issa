@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISSA – Workshop 2 – NWFA</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --ink:#1a1a19; --muted:#6b6a66; --faint:#898781; --line:#e1e0d9; --soft:#f7f6f3; --bg:#fff;
+    /* c = Channel M, f = Film & Video — the two NWFA batches */
+    --c:#2a78d6; --c-dark:#1c5cab; --c-light:#bcd6f2;
+    --f:#eb6834; --f-dark:#c4501f; --f-light:#f7d0bb;
+    --archive:#55534e; --warn:#fab219; --outer:#0f7b6c; --inner:#7a4fb5; --bad:#c0392b;
+    --sans:'Helvetica Neue', Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:Georgia,'Times New Roman',serif; background:var(--bg); color:var(--ink); font-size:16px; line-height:1.6;
+         max-width:1120px; margin:0 auto; padding:2rem 2rem 4rem; }
+  a { color:var(--c); text-decoration:none; } a:hover { text-decoration:underline; }
+  p { margin-bottom:.8rem; color:#333; }
+  h1 { font-size:2rem; letter-spacing:-.02em; line-height:1.15; margin-bottom:.4rem; }
+  h2 { font-size:1.4rem; line-height:1.25; margin:0 0 .9rem; letter-spacing:-.01em; }
+  h3 { font-size:1rem; margin:1.4rem 0 .5rem; font-family:var(--sans); text-transform:uppercase; letter-spacing:.05em; color:var(--muted); }
+  .site-title { font:700 .82rem var(--sans); text-transform:uppercase; letter-spacing:.12em; color:var(--faint); margin-bottom:1rem; }
+  .subtitle { font-size:1.1rem; color:#555; font-style:italic; margin-bottom:.6rem; }
+  .banner { margin:1.2rem 0 0; padding:.7rem 1rem; background:#fff8e1; border:1px solid #f0dca0; border-radius:4px; font:.9rem var(--sans); color:#5b4a10; }
+
+  .stage { display:inline-flex; align-items:center; gap:.45rem; font:700 .72rem var(--sans); text-transform:uppercase; letter-spacing:.08em;
+           padding:.25rem .6rem; border-radius:99px; border:1px solid var(--line); background:var(--soft); color:var(--muted); vertical-align:.15rem; }
+  .stage::before { content:''; width:.5rem; height:.5rem; border-radius:50%; background:var(--warn); }
+  .stage.validated::before { background:var(--c); } .stage.full::before { background:var(--outer); }
+  .sbadge { font:700 .64rem var(--sans); text-transform:uppercase; letter-spacing:.07em; padding:.1rem .45rem; border-radius:3px;
+            background:#fff8e1; border:1px solid #f0dca0; color:#8a6d10; vertical-align:.12rem; margin-left:.45rem; white-space:nowrap; }
+  .sbadge.done { background:#eaf6f4; border-color:#a9d6ce; color:#0f7b6c; }
+  .pending { border:1px dashed #cfcec8; border-radius:6px; padding:1.1rem 1.2rem; background:#fcfcfa; font:.9rem/1.55 var(--sans); color:#555; }
+  .pending b { color:var(--ink); }
+
+  nav { position:sticky; top:0; z-index:50; background:rgba(255,255,255,.96); backdrop-filter:blur(4px); border-bottom:1px solid var(--line);
+        margin:1.2rem -2rem 0; padding:.55rem 2rem; display:flex; gap:.2rem 1rem; flex-wrap:wrap; font:.8rem var(--sans); }
+  nav a { color:var(--muted); padding:.15rem .1rem; border-bottom:2px solid transparent; } nav a:hover { color:var(--ink); text-decoration:none; border-color:var(--ink); }
+  nav a b { color:var(--faint); font-weight:400; margin-right:.25rem; }
+
+  section { padding-top:2.6rem; scroll-margin-top:3rem; }
+  section > .kicker { font:700 .75rem var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:.3rem; }
+  .lede { font-size:1.05rem; color:#444; max-width:62rem; }
+
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:1.6rem; }
+  .tile { border:1px solid var(--line); border-radius:6px; padding:.9rem 1rem; background:var(--soft); }
+  .tile .v { font:700 2rem var(--sans); letter-spacing:-.02em; line-height:1.1; } .tile .l { font:.82rem var(--sans); color:var(--muted); margin-top:.25rem; }
+  .tile.alert { background:#fdf3f2; border-color:#f0cdc8; } .tile.alert .v { color:var(--bad); }
+
+  .cards { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin:1rem 0 1.4rem; }
+  .card { border:1px solid var(--line); border-radius:6px; padding:1rem 1.1rem; background:#fff; font:.92rem/1.5 var(--sans); }
+  .card h4 { font:700 1rem var(--sans); margin-bottom:.4rem; }
+  .card .dot { display:inline-block; width:.8rem; height:.8rem; border-radius:2px; margin-right:.4rem; vertical-align:-.05rem; }
+  .card p { font:inherit; color:#333; margin-bottom:.4rem; }
+  .card .caveat { margin-top:.6rem; padding:.5rem .7rem; background:#fdf3f2; border-left:3px solid var(--bad); border-radius:0 3px 3px 0; font-size:.86rem; color:#6d2a21; }
+  .card dl { display:grid; grid-template-columns:auto 1fr; gap:.15rem .7rem; margin-top:.6rem; font-size:.84rem; }
+  .card dt { color:var(--muted); } .card dd { font-weight:700; }
+
+  .chartcard { border:1px solid var(--line); border-radius:6px; padding:1rem 1.1rem .8rem; background:#fff; }
+  .chartcard h4 { font:700 .95rem var(--sans); margin-bottom:.15rem; } .chartcard .sub { font:.8rem var(--sans); color:var(--muted); margin-bottom:.6rem; }
+  .cb { position:relative; height:280px; } .cb.tall { height:360px; } .cb.short { height:230px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.2rem; }
+  .cap { font:.88rem/1.5 var(--sans); color:#444; margin-top:.55rem; }
+  .callout { border-left:4px solid var(--c); background:var(--soft); padding:.8rem 1.1rem; margin:1.2rem 0; font:.92rem/1.55 var(--sans); border-radius:0 4px 4px 0; }
+  .callout.warn { border-color:var(--warn); background:#fffaf0; } .callout.q { border-color:var(--inner); }
+  .callout.bad { border-color:var(--bad); background:#fdf3f2; }
+  .callout.good { border-color:var(--outer); background:#eff8f6; }
+  .callout strong { font-weight:700; }
+  blockquote { border-left:3px solid var(--line); margin:.8rem 0; padding:.2rem 0 .2rem 1rem; color:#444; font-style:italic; }
+  blockquote cite { display:block; font:.82rem var(--sans); font-style:normal; color:var(--faint); margin-top:.35rem; }
+  .qs li { margin:.35rem 0 .35rem 1.1rem; }
+
+  table { width:100%; border-collapse:collapse; font:.88rem/1.45 var(--sans); margin:.6rem 0 1rem; }
+  th { text-align:left; background:var(--soft); border-bottom:2px solid #ccc; padding:.5rem .7rem; font-weight:700; vertical-align:bottom; }
+  td { border-bottom:1px solid var(--line); padding:.5rem .7rem; vertical-align:top; } td:first-child { font-weight:700; }
+  td.nw, th.nw { white-space:nowrap; }
+  .tw { overflow-x:auto; }
+  .v-match { color:var(--outer); font-weight:700; } .v-near { color:#b07d08; font-weight:700; } .v-miss { color:var(--bad); font-weight:700; }
+  .mono { font:.84rem ui-monospace,SFMono-Regular,Menlo,monospace; }
+
+  .controls { display:flex; gap:1rem; flex-wrap:wrap; align-items:center; margin:.6rem 0 1rem; padding:.7rem 1rem; background:var(--soft); border:1px solid var(--line); border-radius:4px; font:.85rem var(--sans); }
+  .legend { display:flex; gap:.4rem 1.4rem; flex-wrap:wrap; font:.8rem var(--sans); color:#333; margin:.4rem 0 1rem; } .legend span { display:flex; align-items:center; gap:.45rem; }
+  .sw { width:22px; height:14px; border-radius:2px; flex-shrink:0; } .sw.unk { background:#e5e5e2; border:1px dashed #b5b5b0; }
+  .band-row { display:flex; align-items:stretch; margin-bottom:8px; }
+  .band-label { width:108px; flex-shrink:0; padding-right:.8rem; font:.74rem var(--sans); color:#777; text-transform:uppercase; letter-spacing:.05em; display:flex; align-items:center; justify-content:flex-end; text-align:right; }
+  .band-track { flex:1; display:flex; gap:3px; height:46px; } .band-track.sample-track { height:auto; min-height:46px; align-items:center; }
+  .band-seg { display:flex; overflow:hidden; border-radius:3px; }
+  .fill { display:flex; align-items:center; justify-content:center; font:700 .76rem var(--sans); color:#fff; white-space:nowrap; overflow:hidden; border-right:2px solid #fff; min-width:3px; cursor:default; padding:0 .3rem; }
+  .fill:last-child { border-right:0; }
+  .fill.unk { background:#e5e5e2 !important; color:#999; font-weight:400; font-style:italic; border:1px dashed #b5b5b0; }
+  .fill.warn { color:#111; }
+  .fill.assumed { text-shadow:0 1px 2px rgba(0,0,0,.65), 0 0 3px rgba(0,0,0,.45); }
+  .sample-group { display:flex; flex-wrap:wrap; align-content:center; gap:4px; padding:6px 8px; background:#fafaf9; border:1px dashed #d8d7d2; border-radius:3px; height:100%; }
+  .sdot { width:15px; height:15px; border-radius:3px; flex-shrink:0; cursor:default; }
+  #tip { position:fixed; z-index:1000; pointer-events:none; background:#111; color:#fff; font:.78rem/1.4 var(--sans); padding:.5rem .7rem; border-radius:4px; max-width:290px; opacity:0; transition:opacity .1s; } #tip.on { opacity:1; }
+
+  .ladder { display:grid; grid-template-columns:230px 1fr 1fr; grid-template-rows:repeat(5,46px); gap:6px 14px; margin:1rem 0 1.2rem; font:.85rem var(--sans); }
+  .lv { display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding:0 .9rem; border:1px solid var(--line); border-radius:4px; background:var(--soft); grid-column:1; }
+  .lv b { font-size:.9rem; } .lv small { color:var(--muted); font-size:.75rem; text-align:right; }
+  .br { grid-row-end:span 2; display:flex; flex-direction:column; justify-content:center; padding:.5rem 1rem; border-radius:4px; border:2px solid; line-height:1.35; }
+  .br.outer { grid-column:2; border-color:var(--outer); background:#eaf6f4; } .br.inner { grid-column:3; border-color:var(--inner); background:#f3eefa; border-style:dashed; }
+  .br b { font-size:.95rem; } .br span { color:#444; font-size:.82rem; }
+  .br.outer b { color:var(--outer); } .br.inner b { color:var(--inner); }
+
+  .pipe { display:flex; flex-wrap:wrap; align-items:stretch; gap:.4rem; margin:1rem 0 1.2rem; font:.84rem/1.4 var(--sans); }
+  .pstep { flex:1 1 150px; border:1px solid var(--line); border-radius:6px; padding:.7rem .85rem; background:var(--soft); position:relative; }
+  .pstep b { display:block; font-size:.88rem; margin-bottom:.2rem; } .pstep small { color:var(--muted); font-size:.76rem; }
+  .pstep.gpu { border-color:#b9c9df; background:#eef3fa; } .pstep.new::after { content:'new for WS2'; position:absolute; top:-.55rem; right:.5rem; font:700 .6rem var(--sans); text-transform:uppercase; letter-spacing:.05em; background:var(--warn); color:#3d2f00; padding:.08rem .3rem; border-radius:2px; }
+  .parrow { display:flex; align-items:center; color:var(--faint); font-size:1.2rem; }
+  .chips { display:flex; flex-wrap:wrap; gap:.35rem; margin:.4rem 0 .8rem; } .chip { font:.78rem var(--sans); padding:.15rem .55rem; border-radius:99px; background:var(--soft); border:1px solid var(--line); }
+  svg.tl { width:100%; display:block; } svg.tl text { font-family:var(--sans); }
+
+  .three { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-top:1rem; }
+  .col { border:1px solid var(--line); border-top-width:4px; border-radius:6px; padding:.9rem 1.1rem 1rem; font:.9rem/1.5 var(--sans); background:#fff; }
+  .col.k { border-top-color:#2e7d32; } .col.c { border-top-color:var(--c); } .col.h { border-top-color:var(--warn); }
+  .col h3 { margin:.1rem 0 .6rem; color:var(--ink); } .col ul { margin-left:1.1rem; } .col li { margin:.4rem 0; }
+  .topics { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; counter-reset:t; }
+  .topic { border:1px solid var(--line); border-radius:6px; padding:.9rem 1.1rem; font:.9rem/1.5 var(--sans); background:#fff; counter-increment:t; }
+  .topic h4 { font:700 .98rem var(--sans); margin-bottom:.35rem; }
+  .topic h4::before { content:counter(t); display:inline-block; width:1.5rem; height:1.5rem; line-height:1.5rem; text-align:center; border-radius:50%; background:var(--ink); color:#fff; font-size:.78rem; margin-right:.5rem; }
+  .topic p { font:inherit; margin-bottom:.35rem; } .topic .why { color:var(--muted); font-size:.83rem; }
+  .topic .dec { font-size:.83rem; color:var(--outer); font-weight:700; margin-top:.35rem; }
+  details { margin:.6rem 0 1rem; border:1px solid var(--line); border-radius:6px; padding:.6rem 1rem; font:.9rem var(--sans); } summary { cursor:pointer; font-weight:700; }
+  details pre { margin-top:.6rem; padding:.7rem .8rem; background:var(--soft); border-radius:4px; font:.8rem/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; white-space:pre-wrap; color:#333; }
+  footer { margin-top:3.5rem; padding-top:1.2rem; border-top:1px solid var(--line); font:.82rem/1.6 var(--sans); color:var(--muted); } footer a { color:var(--c); }
+  #err { display:none; margin:1rem 0; padding:.7rem 1rem; background:#fdecea; border:1px solid #f5c2bd; border-radius:4px; font:.85rem var(--sans); color:#7a1f14; }
+  @media (max-width:820px) { .tiles,.cards,.grid2,.three,.topics { grid-template-columns:1fr; } .ladder { grid-template-columns:150px 1fr; } .br.outer,.br.inner { grid-column:2; grid-row-end:auto; } .parrow { display:none; } }
+</style>
+</head>
+<body>
+
+<div class="site-title">ISSA workshop 2</div>
+<header>
+  <h1>Northwest Film Archive <span class="stage" id="stagebadge">First pass</span></h1>
+  <p>This interactive analysis page was produced with Claude coding assistant. All content has been checked by a human reviewer. Errors or inconsistencies can be reported to <a href="mailto:issa@kcl.ac.uk">issa@kcl.ac.uk</a></p>
+  <p>Data to drive this page is generated by <a href="https://github.com/kingsdigitallab/issa/blob/main/workshops/ws2/make_ws2_data.py">make_ws2_data.py</a>. It is re-run at each stage; the page is not edited between runs.</p>
+  <div class="tiles" style="grid-template-columns:repeat(3,1fr)">
+    <div class="tile"><div class="v" data-n="totals.files" data-f="int">—</div><div class="l">catalogue records in two batches of <span data-n="totals.channelm"></span></div></div>
+    <div class="tile"><div class="v" data-p="totals.files" data-f="int">—</div><div class="l">videos processed so far (of <span data-p="scale.of"></span>)</div></div>
+    <div class="tile"><div class="v" data-p="totals.programmes" data-f="int">—</div><div class="l">programmes proposed, from <span data-p="totals.separators"></span> detected separators</div></div>
+  </div>
+  <div class="banner"><b>First pass.</b> Everything the pipeline produced is represented here as it came out. A handful of items were spot-checked against the videos; <b>beyond those, the outputs have not been verified</b>.</div>
+</header>
+
+<nav>
+  <a href="#s1"><b>1</b>Data</a><a href="#s2"><b>2</b>The labels</a><a href="#s3"><b>3</b>Two tasks</a><a href="#s4"><b>4</b>Processed</a>
+  <a href="#s5"><b>5</b>Outer segmentation</a><a href="#s6"><b>6</b>Description</a><a href="#s7"><b>7</b>Vocabularies</a>
+  <a href="#s8"><b>8</b>Data quality</a><a href="#s9"><b>9</b>Human truth</a><a href="#s10"><b>10</b>Findings</a><a href="#s11"><b>11</b>Discussion</a>
+</nav>
+<div id="err"></div>
+
+<!-- ───────────────────────── 1 ───────────────────────── -->
+<section id="s1">
+  <div class="kicker">1 · The data NWFA shared</div>
+  <h2>Two batches of 200, at opposite ends of the cataloguing spectrum</h2>
+  <p class="lede">NWFA shared 400 video files in two deliberately different batches. One is a broad, richly catalogued cross-section of the main collection. The other is a near-undescribed television archive whose only content clue is known to be unreliable.</p>
+
+  <div class="cards">
+    <div class="card">
+      <h4><span class="dot" style="background:var(--c)"></span>Channel M — <span data-n="collections.0.file_count"></span> files</h4>
+      <p data-n="collections.0.blurb"></p>
+      <dl>
+        <dt>Metadata columns</dt><dd><span data-n="channelm.columns_populated"></span> populated, <span data-n="channelm.columns_empty"></span> empty of <span data-n="channelm.columns_total"></span></dd>
+        <dt>Descriptive fields</dt><dd><span data-n="channelm.descriptive_columns_empty"></span> of <span data-n="channelm.descriptive_columns_checked"></span> entirely empty</dd>
+        <dt>Only content clue</dt><dd>label transcription, median <span data-n="channelm.label.words.median"></span> words</dd>
+        <dt>Carrier</dt><dd id="cm-format">—</dd>
+        <dt>Digitised</dt><dd><span data-n="channelm.digitisation_dates.0"></span> → <span id="cm-lastdate">—</span></dd>
+      </dl>
+      <div class="caveat" data-n="collections.0.caveat"></div>
+    </div>
+    <div class="card">
+      <h4><span class="dot" style="background:var(--f)"></span>Film &amp; Video — <span data-n="collections.1.file_count"></span> files</h4>
+      <p data-n="collections.1.blurb"></p>
+      <dl>
+        <dt>Metadata columns</dt><dd><span data-n="fv.columns_populated"></span> populated (<span data-n="fv.columns_full"></span> complete) of <span data-n="fv.columns_total"></span></dd>
+        <dt>Synopsis</dt><dd>200 of 200, median <span data-n="fv.synopsis_words.median"></span> words</dd>
+        <dt>Index terms</dt><dd>200 of 200, median <span data-n="fv.index_terms_count.median"></span> terms</dd>
+        <dt>Span</dt><dd><span data-n="fv.years.min" data-f="raw"></span>–<span data-n="fv.years.max" data-f="raw"></span>, <span data-n="fv.runtime_hours_total"></span> hours total</dd>
+        <dt>Mix</dt><dd id="fv-mix">—</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="callout warn"><strong>The asymmetry is also a processing cost.</strong> Film &amp; Video is <span data-n="fv.runtime_hours_total"></span> hours of material, median <span data-n="fv.runtime_minutes.median"></span> minutes per item. Channel M carries no durations in its metadata at all, but the tapes are Mini DV and DVCAM and the sampled ones run to <span id="cm-longest">—</span> minutes, so the batch is plausibly <b>three to four times the hours of Film &amp; Video</b> with none of the reference metadata. That shapes both the compute budget and where human attention is worth spending.</div>
+
+  <h3>How much descriptive metadata is there?</h3>
+  <div class="chartcard"><h4>Share of each batch's 200 records with a value</h4>
+    <div class="sub">Comparable descriptive fields, mapped onto each catalogue's own column names</div>
+    <div class="cb tall"><canvas id="c-complete"></canvas></div>
+    <p class="cap">Every descriptive field in the Channel M export is empty for all 200 records — the columns exist in the Heritage 2022 template but were never filled, because this material was never catalogued. Film &amp; Video is complete or near-complete on all ten.</p></div>
+
+  <h3>Hierarchical organisation</h3>
+  <p>Mapping onto the design of <a href="https://github.com/kingsdigitallab/framesense">FrameSense</a>, we organise the collections hierarchically: archive → collection → video file → programme → segment. The bands below show what the catalogue establishes on its own at each level, before any processing.</p>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--archive)"></i>NWFA — whole archive</span>
+    <span><i class="sw" style="background:var(--c)"></i>Channel M — verified</span>
+    <span><i class="sw" style="background:repeating-linear-gradient(45deg,#2a78d6,#2a78d6 4px,#bcd6f2 4px,#bcd6f2 8px)"></i>Channel M — assumed</span>
+    <span><i class="sw" style="background:var(--f)"></i>Film &amp; Video — verified</span>
+    <span><i class="sw" style="background:repeating-linear-gradient(45deg,#eb6834,#eb6834 4px,#f7d0bb 4px,#f7d0bb 8px)"></i>Film &amp; Video — assumed</span>
+    <span><i class="sw" style="background:var(--warn)"></i>⚠ Needs human check</span>
+    <span><i class="sw unk"></i>Not yet determined</span></div>
+  <div class="chartcard"><div id="hier"></div>
+    <p class="cap" style="margin-bottom:0">Band width = share of the 400 records. The working sample row shows one square per sampled video (solid = annotated by hand, hatched = not yet). Hover for detail. Note that below <i>video file</i> the catalogue stops being able to help: Channel M has a label it cannot vouch for, and Film &amp; Video has a prose synopsis with no timecodes in it.</p></div>
+</section>
+
+<!-- ───────────────────────── 2 ───────────────────────── -->
+<section id="s2">
+  <div class="kicker">2 · The labels</div>
+  <h2>A printing error broke the link between tape labels and tape content. Can machine description measure it? <span class="sbadge" id="b-s2">sample of 5</span></h2>
+  <p>NWFA has flagged that a printing error on the barcodes means the label information in the Heritage 2022 metadata does not match up with the file content.</p>
+
+  <p>The label is the only content description these 200 files have. If it cannot be trusted, the files are effectively unreachable: you cannot search them, select them for a compilation, or answer an enquiry about them. Before any of the segmentation work matters, this is the practical problem.</p>
+
+  <p>A description generated from the pictures and sound does not depend on the barcode at all, so comparing it against the label gives a per-tape verdict — and across <span data-n="collections.0.file_count"></span> tapes, a measurement.</p>
+
+  <div class="chartcard"><h4>Label against machine description</h4>
+    <div class="sub">Label transcription from the Heritage 2022 metadata; description from the pipeline, which never saw the label</div>
+    <div id="lm-summary"></div>
+    <div class="tw"><table id="t-labels"><thead><tr>
+      <th class="nw">File</th><th>Label says</th><th>Pipeline says the content is</th><th class="nw">Verdict</th>
+    </tr></thead><tbody></tbody></table></div>
+    <p class="cap" id="cap-labels">—</p></div>
+
+  <div class="callout good"><b>"AI recovers an access layer that a printing error took away"</b>, where the alternative is 200 mislabelled tapes. The verdicts in that table are cheap for an archivist to assign (one judgement per tape, no timecoding), and they scale to a number that can be reported.</div>
+
+  <div class="callout q">If the printing error has a <i>shape</i> — labels offset by one, or two crates transposed — then machine descriptions across all <span data-n="collections.0.file_count"></span> files could let us <b>re-pair</b> labels to files rather than just flagging the mismatches. That would be a far better outcome than correcting them one at a time, and it is only testable at scale. The two crates in this batch (<span id="cm-crates">—</span>) are an obvious thing to check first.</div>
+</section>
+
+<!-- ───────────────────────── 3 ───────────────────────── -->
+<section id="s3">
+  <div class="kicker">3 · The two tasks</div>
+  <h2>Outer segmentation finds the programmes in a video file; inner segmentation divides a programme into parts</h2>
+  <div class="ladder">
+    <div class="lv" style="grid-row:1"><b>Archive</b><small>NWFA</small></div>
+    <div class="lv" style="grid-row:2"><b>Collection</b><small>Channel M · Film &amp; Video</small></div>
+    <div class="lv" style="grid-row:3"><b>Video file</b><small><span data-p="totals.files" data-f="int"></span> processed</small></div>
+    <div class="lv" style="grid-row:4"><b>Programme</b><small><span data-p="totals.programmes" data-f="int"></span> proposed</small></div>
+    <div class="lv" style="grid-row:5"><b>Segment</b><small><span data-p="totals.segment_items" data-f="int"></span> proposed</small></div>
+    <div class="br outer" style="grid-row-start:3"><b>Outer segmentation</b><span>Given a video file, find each programme in it: where it starts and where it ends.</span></div>
+    <div class="br inner" style="grid-row-start:4"><b>Inner segmentation</b><span>Given a programme, divide it into parts, chapters, sections — chunks of some kind.</span></div>
+  </div>
+
+  <h3>What we have to compare against, per task</h3>
+  <div class="tw"><table><thead><tr><th>Task</th><th>Channel M</th><th>Film &amp; Video</th></tr></thead><tbody>
+    <tr><td>Outer segmentation</td>
+        <td><b>Nothing.</b> No duration, no programme count, no content description. The label sometimes names more than one item, but it cannot be relied on to name even one correctly.</td>
+        <td><b>An assumption.</b> One catalogue record per film, so the working assumption is one file = one programme — but compilation reels break it, and our sample already contains one that does.</td></tr>
+    <tr><td>Inner segmentation</td>
+        <td><b>Nothing.</b></td>
+        <td><b>Prose only.</b> The synopsis describes the film shot by shot in <span data-n="fv.synopsis_words.median"></span> words at the median, with no timecodes anywhere, so it can support a judgement about <i>what</i> the parts are but not <i>where</i> they are.</td></tr>
+    <tr><td>Descriptive metadata</td>
+        <td><b>Nothing</b> beyond the label.</td>
+        <td><b>Strong.</b> Year, colour, sound, duration, producer, place and index terms on essentially every record.</td></tr>
+  </tbody></table></div>
+
+  <div class="callout warn"><strong>The rushes problem.</strong> Most of Channel M is rushes and raw footage rather than transmitted programmes, and "programme" may be the wrong unit for it. One sampled tape is a reporter recording the same piece-to-camera over and over; the pipeline described it as a comic sketch about a reporter endlessly re-running his report, which is a fair account of what is on the screen. Whether NWFA wants the <i>story</i> (takes collapsed) or the <i>take</i> (takes separated) changes the output completely.</div>
+</section>
+
+<!-- ───────────────────────── 4 ───────────────────────── -->
+<section id="s4">
+  <div class="kicker">4 · What we processed</div>
+  <h2><span data-p="totals.files"></span> videos went through the pipeline</h2>
+  <p class="lede">Separators are detected first, the file is cut on them, and each resulting clip is then described on its own.</p>
+
+  <div class="pipe">
+    <div class="pstep"><b>Video file</b><small>one delivered file per tape or reel</small></div>
+    <div class="parrow">→</div>
+    <div class="pstep"><b>Audio chain</b><small>extract sound → voice activity detection → transcribe (Canary-1b-v2) → subtitles</small></div>
+    <div class="parrow">→</div>
+    <div class="pstep gpu"><b>Separator detection</b><small>VLM looks for colour bars, blank screen, production cards, countdown leaders</small></div>
+    <div class="parrow">→</div>
+    <div class="pstep"><b>Cut on separators</b><small>file split into clips</small></div>
+    <div class="parrow">→</div>
+    <div class="pstep gpu"><b>Describe each clip</b><small>VLM answers the metadata questions per clip</small></div>
+    <div class="parrow">→</div>
+    <div class="pstep"><b>One row per programme</b><small>11 fields + segment list</small></div>
+  </div>
+
+  <h3>Model</h3>
+  <div class="tw"><table><tbody>
+    <tr><td class="nw">Model</td><td class="mono">RedHatAI/Qwen3.8-27B-INT4</td></tr>
+    <tr><td class="nw">Type</td><td>Open-weights vision-language model, quantised build</td></tr>
+    <tr><td class="nw">Hosting</td><td>KCL CREATE HPC cluster — archive video never leaves KCL infrastructure</td></tr>
+    <tr><td class="nw">Settings</td><td class="mono">seed 1234 · reasoning_effort xhigh · video_tokens 64k · max_tokens 30k · max_fps 1 (clips) / 2 (separators)</td></tr>
+    <tr><td class="nw">Transcription</td><td class="mono">nvidia/canary-1b-v2</td></tr>
+    <tr><td class="nw">Prompt</td><td class="mono">misc3</td></tr>
+  </tbody></table></div>
+
+  <details><summary>The clip prompt, verbatim (<code>misc3</code>)</summary>
+    <pre>The attached video is a single programme from a very diverse collection at a national screen archive.
+It may contain raw unedited rushes or content that went on air.
+Focus on the programme's actual content and disregard any non-programme material at the start
+(such as colour bars, blank frames, or other incidental visuals).
+Returns a json dictionary with the following keys:
+* year (the year the programme was made, only if specified and certain),
+* title (the title of the programme, if specified),
+* place (regions and main specific identifiable place names where this was filmed, if certain),
+* segments (list of main chapters or major segments, for each a `title` and a `starting` timecode),
+* summary (one very concise sentence summarising the content of the programme),
+* synopsis (short paragraph summarising the content of the programme),
+* colour (either: black-and-white or colour or sepia or colour-and-black-and-white),
+* fiction (yes if definitively fiction, no otherwise),
+* types (one or more values from tv news, amateur, educational, sponsored, advertising, animation,
+  documentary, promotional, fiction, drama, tv sports, instructional, religion, comedy, horror,
+  home movie, scientific),
+* keywords (10 key topical or thematic tags for this programme; avoid overly specific tags like
+  place names, people or objects),
+* credits (if specified; use a dictionary with keys for roles and name(s) for values).</pre></details>
+
+  <details><summary>The separator prompt, verbatim (<code>sep1</code>)</summary>
+    <pre>List every full-screen separator between distinct programmes. A visual separator usually looks like
+SMPTE color bars, blank screen, production card, countdown leaders, static or white noise. It is
+always totally distinct in style from surrounding programmes, usually non-photographic and never
+intended for public audience. Compare with programmes on either side of the separator to confirm
+this. Return an empty list if the input doesn't contain any definite separator. Other screens within
+a programme like ending credits or chapter titles should not be reported as programme separators but
+may help finding/confirming nearby separators.</pre></details>
+
+  <p>Fields targeted per programme:</p>
+  <div class="chips"><span class="chip">title</span><span class="chip">year</span><span class="chip">place</span><span class="chip">colour</span><span class="chip">types</span><span class="chip">fiction</span><span class="chip">summary</span><span class="chip">synopsis</span><span class="chip">segments</span><span class="chip">credits</span><span class="chip">keywords</span></div>
+</section>
+
+<!-- ───────────────────────── 5 ───────────────────────── -->
+<section id="s5">
+  <div class="kicker">5 · Results: outer segmentation</div>
+  <h2>The separator detector works</h2>
+  <p class="lede">Across <span data-p="totals.files"></span> files the pipeline detected <span data-p="totals.separators"></span> separators and proposed <span data-p="totals.programmes"></span> programmes. The detection itself looks sound. The step that turns separators into clips is producing programmes that are not programmes.</p>
+
+  <div class="grid2">
+    <div class="chartcard"><h4>Programmes proposed per file</h4><div class="sub">By batch</div>
+      <div class="cb short"><canvas id="c-clips"></canvas></div>
+      <p class="cap">Film &amp; Video files mostly resolve to a single programme, as the catalogue assumption predicts — with one exception, a compilation reel of wartime government films that correctly came back as four. Channel M is where the structure is: median <span data-p="programmes_per_file.channelm.median"></span>, but one 60-minute tape fragmented into <span data-p="programmes_per_file.channelm.max"></span>.</p></div>
+    <div class="chartcard"><h4>Detected separator duration</h4><div class="sub">Seconds, all files</div>
+      <div class="cb short"><canvas id="c-sepdur"></canvas></div>
+      <p class="cap">Median <span data-p="separators.seconds.median"></span>s, range <span data-p="separators.seconds.min"></span>–<span data-p="separators.seconds.max"></span>s. <span data-p="separators.leading"></span> of <span data-p="totals.files"></span> files open with a separator, which is what you would expect from tape leader.</p></div>
+  </div>
+
+  <div class="chartcard"><h4>Share of each file covered by proposed programmes</h4><div class="sub">The remainder is separator material</div>
+    <div class="cb short"><canvas id="c-cov"></canvas></div>
+    <p class="cap">Median <span data-p="coverage.median" data-f="pct1"></span>, lowest <span data-p="coverage.min" data-f="pct1"></span>; <span data-p="coverage.files_below_95pct"></span> files fall below 95%. High coverage is good news for outer segmentation — very little of each file is being thrown away — but it says nothing about whether the cuts fall in the right places.</p></div>
+
+  <h3>Two files in full</h3>
+  <p>Proposed programmes in colour, detected separators in amber, suspected non-content clips hatched. These are the most structured file in each batch.</p>
+  <div class="chartcard"><div id="tl-cm"></div><div id="tl-fv" style="margin-top:1.4rem"></div>
+    <p class="cap" style="margin-bottom:0">Hover any block for its timecode. The Channel M tape shows the characteristic shape of this collection: four long programmes at the head, then a tail of short idents and trailers separated by bars. The Film &amp; Video reel shows a genuine compilation — four distinct wartime films on one reel, correctly separated.</p></div>
+
+  <div class="callout bad"><strong>Finding: separator residue is being emitted as programmes.</strong>
+    <span data-p="noncontent.n"></span> of the <span data-p="noncontent.of_programmes"></span> proposed programmes (<span data-p="noncontent.pct" data-f="pct1"></span>) contain no programme content — colour bars, blank screen, a grey frame. Median duration <span data-p="noncontent.median_seconds"></span> second. The detector is not at fault: it found the bars correctly. The problem is that when two separators sit close together, the sliver <i>between</i> them is emitted as a clip and then dutifully described. On the long Channel M tape, a separator at 52:21 is followed by a 1-second clip and then another separator at 52:32.
+    <br><br>Because the clip prompt asks for <code>types</code> unconditionally, the model assigns a genre to colour bars: <span id="nc-types">—</span>. Nothing in the output marks these rows as non-content, so they would flow straight into any downstream index.
+    <br><br><b>The fix might not need the model.</b> Dropping or flagging clips below about five seconds that are bounded by separators on both sides removes <span data-p="noncontent.bounded_by_separators"></span> of the <span data-p="noncontent.n"></span> immediately; a <code>non-content</code> value in <code>types</code> would catch the rest and keep them auditable rather than silently deleted.</div>
+</section>
+
+<!-- ───────────────────────── 6 ───────────────────────── -->
+<section id="s6">
+  <div class="kicker">6 · Results: description and inner segments</div>
+  <h2>Descriptions come back complete; titles, years and credits mostly do not</h2>
+  <div class="grid2">
+    <div class="chartcard"><h4>Machine fields with a value</h4><div class="sub">Share of proposed programmes, by batch</div>
+      <div class="cb tall"><canvas id="c-fields"></canvas></div>
+      <p class="cap">Summary, synopsis, keywords, colour, types and fiction come back for every programme — the model will always write prose. Title, year and credits only appear when something on screen states them. Note the contrast with section 1: on Channel M these are the <i>only</i> values that exist for any of these fields.</p></div>
+    <div class="chartcard"><h4>Inner segments per programme</h4><div class="sub">Count of segment items</div>
+      <div class="cb tall"><canvas id="c-segs"></canvas></div>
+      <p class="cap"><span data-p="segments.total_items"></span> segment items in total; <span data-p="segments.programmes_without"></span> programmes came back with none, which maps closely onto the non-content clips. Timecode style is inconsistent — <span id="seg-styles">—</span> — and needs normalising before the segments can be used for navigation.</p></div>
+  </div>
+  <div class="callout"><strong>One confabulation in ten files, and it is legible.</strong> A Film &amp; Video amateur reel titled in the catalogue as a trip to Knaresborough and Brimham Rocks — inland Yorkshire — came back placed in "Cornwall", with invented sea stacks and coastline in the synopsis. The model appears to have read "rocks" as coastal. It is wrong in a way an archivist spots instantly, and in a way the catalogue would have prevented if the pipeline had been given it.</div>
+</section>
+
+<!-- ───────────────────────── 7 ───────────────────────── -->
+<section id="s7">
+  <div class="kicker">7 · Vocabularies</div>
+  <h2>The machine's terms and NWFA's terms do not currently touch</h2>
+  <p class="lede">NWFA already runs a three-part controlled vocabulary, and nothing in the current prompt points at it, so the output arrives as a parallel description.</p>
+
+  <div class="grid2">
+    <div class="chartcard"><h4>Machine <code>types</code></h4><div class="sub">From the prompt's fixed list of 17; counts across proposed programmes</div>
+      <div class="cb short"><canvas id="c-mtypes"></canvas></div></div>
+    <div class="chartcard"><h4>NWFA <code>category</code></h4><div class="sub">Nine terms, multi-valued, across the 200 Film &amp; Video records</div>
+      <div class="cb short"><canvas id="c-ncats"></canvas></div></div>
+  </div>
+
+  <p>The machine list is about <b>form</b> (documentary, promotional, animation); NWFA's <code>category</code> is about <b>subject</b> (Wartime, Industry and occupations); and NWFA's provenance axis — Professional or Amateur, then a sub-category — is about <b>how and why the film was made</b>.</p>
+
+  <h3>A crosswalk to agree</h3>
+  <p>Proposal, for discussion rather than adoption. The right-hand column is what the prompt would have to ask for.</p>
+  <div class="tw"><table><thead><tr><th>NWFA axis</th><th>Terms</th><th>Currently</th><th>What the prompt would need</th></tr></thead><tbody>
+    <tr><td>Subject<br><code>category</code></td><td>9 terms: Sport and leisure, Wartime, Culture and traditions, Industry and occupations, Travel and transportation, Landscape and buildings, Health/Welfare/Education, Home and family, No idea</td><td>Not asked for</td><td>Replace free <code>keywords</code> with a forced choice from these nine, multi-valued, plus free keywords alongside</td></tr>
+    <tr><td>Provenance<br><code>Professional</code></td><td>Professional / Amateur</td><td>Partly inferrable from <code>types</code> (<i>amateur</i>, <i>home movie</i>) but not asked for directly</td><td>A dedicated binary field; strong visual signal, should be reliable</td></tr>
+    <tr><td>Professional sub-category</td><td>Factual Record, Local Cinema Topicals, Promotional/Advertising, Cinema Newsreel, Educational/Training, Scientific, Fiction</td><td>Partly overlapping with <code>types</code></td><td>Conditional on Professional; these are closer to the machine list and should map well</td></tr>
+    <tr><td>Amateur sub-category</td><td>Special Interest, Home Movies, Fiction, Educational/Training</td><td>Partly overlapping</td><td>Conditional on Amateur</td></tr>
+    <tr><td>Form<br>(no NWFA equivalent)</td><td>The 17-term machine list</td><td>Asked for, returned for every programme</td><td>Keep? Is it useful for NWFA? Can it be included in a FileMaker DB field?</td></tr>
+  </tbody></table></div>
+
+</section>
+
+<!-- ───────────────────────── 8 ───────────────────────── -->
+<section id="s8">
+  <div class="kicker">8 · Data quality</div>
+  <h3>The duration question</h3>
+  <div class="chartcard"><h4>Catalogue running time against delivered file duration</h4><div class="sub">Sampled Film &amp; Video films</div>
+    <div class="tw"><table id="t-dur"><thead><tr>
+      <th class="nw">File</th><th class="nw">Gauge</th><th class="nw">Sound</th><th class="nw">Catalogue</th><th class="nw">File</th><th class="nw">File ÷ catalogue</th>
+    </tr></thead><tbody></tbody></table></div>
+    <p class="cap">The catalogue's own footage-to-runtime relation implies different projection speeds for different gauges — <span id="q-fps">—</span> — which is consistent with silent material timed at sound speed but transferred speed-corrected. If that is the explanation, the rule is knowable and the check becomes automatic. Duration is otherwise the cheapest consistency check available at 400-scale.</p></div>
+</section>
+
+<!-- ───────────────────────── 9 ───────────────────────── -->
+<section id="s9">
+  <div class="kicker">9 · Human truth</div>
+  <h2>NWFA human annotation task <span class="sbadge" id="b-s9">pending</span></h2>
+  <p class="lede">Human annotation is the scarce resource in this project. The two batches need opposite things.</p>
+
+  <div class="tw"><table><thead><tr><th>Field</th><th class="nw">Asked of</th><th>Why</th></tr></thead><tbody id="t-fields"></tbody></table></div>
+
+  <div id="ht-pending" class="pending"><b>Nothing returned yet.</b> This section fills in automatically once the validation sample comes back: agreement per field, boundary placement against the proposed programmes, and the label-match verdicts aggregated across the batch. Expected: <span data-h="expected"></span> videos.</div>
+  <div id="ht-results" style="display:none"></div>
+</section>
+
+<!-- ───────────────────────── 10 ───────────────────────── -->
+<section id="s10">
+  <div class="kicker">10 · Findings</div>
+  <h2>What we now know, what we could know with more development, and what needs a human first</h2>
+  <div class="three">
+    <div class="col k"><h3>What we know</h3><ul>
+      <li>Machine description can be compared against the Channel M labels without depending on the barcode, so the mismatch is measurable rather than merely known.</li>
+      <li>Separator detection is working. <span data-p="totals.separators"></span> separators across <span data-p="totals.files"></span> files, median <span data-p="separators.seconds.median"></span>s, and tape leader is being found where you would expect it.</li>
+      <li>Coverage is high — median <span data-p="coverage.median" data-f="pct1"></span> of each file is accounted for by proposed programmes.</li>
+      <li>Film &amp; Video files mostly resolve to one programme, and the one compilation reel in the sample was correctly split into four.</li>
+      <li>Prose fields are always returned; evidential fields — title, year, credits — are returned only when stated on screen.</li>
+    </ul></div>
+    <div class="col c"><h3>What we could know</h3><ul>
+      <li>Whether the barcode error has a shape. Testable across all <span data-n="collections.0.file_count"></span> Channel M files, and if it does, labels could be re-paired rather than just corrected.</li>
+      <li>Whether machine output can be filed. Re-pointing the prompt at NWFA's <code>category</code>, Professional/Amateur and sub-category vocabularies is a prompt change, not a model change.</li>
+      <li>Whether the duration discrepancy is a knowable transfer-speed rule, which would turn it into an automatic check.</li>
+      <li>Whether the music content — early TV performances by named bands — supports performer identification, which is a different task with different risks.</li>
+    </ul></div>
+    <div class="col h"><h3>What needs a human first</h3><ul>
+      <li><b>What counts as a programme in rushes.</b> Story or take. Nothing downstream can be settled before this.</li>
+      <li><b>The label-match verdicts.</b> Only an archivist can assign them, and they are the headline measurement.</li>
+      <li><b>Which vocabularies the machine should target</b>, and whether machine terms sit in the same FileMaker fields as human ones or alongside them.</li>
+      <li><b>The transfer-speed rule</b> behind the duration disagreement.</li>
+      <li><b>The tolerance for confabulation</b>, which sets how aggressively the prompt can be pushed.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ───────────────────────── 11 ───────────────────────── -->
+<section id="s11">
+  <div class="kicker">11 · For discussion</div>
+  <h2>Six questions</h2>
+  <div class="topics">
+    <div class="topic"><h4>What is a programme in a rushes tape?</h4>
+      <p>Most of Channel M is rushes, and the machine is already showing us the problem: one sampled tape is a reporter re-recording the same piece-to-camera repeatedly, described by the pipeline as a comic sketch about exactly that. It is not wrong about what it sees.</p>
+      <p class="why">Is the unit NWFA wants the <i>story</i>, with all takes collapsed, or the <i>take</i>, separated — which is what an editor reusing footage would want?</p>
+      <p class="dec">Decision: the unit of outer segmentation, before scale-up.</p></div>
+
+    <div class="topic"><h4>Is the barcode error systematic or random?</h4>
+      <p>If the printing error is an offset — labels shifted by one, or one crate's labels transposed with another's — machine descriptions across all 200 files could let us re-pair labels to files rather than correcting them one at a time.</p>
+      <p class="why">Five tapes is too small to tell. Does the error have a shape Nick already knows about? The batch has two crates, which is the obvious first thing to test.</p>
+      <p class="dec">Decision: whether re-pairing is in scope for the 400-run.</p></div>
+
+    <div class="topic"><h4>Which vocabularies should the machine target?</h4>
+      <p>NWFA has three: <code>category</code> (nine subject terms), the Professional/Amateur split with its sub-categories, and free-text index terms at <span data-n="fv.index_terms_count.median"></span> terms per record. The current prompt points at none of them.</p>
+      <p class="why">We can target one or two well, not all three at once. And in FileMaker, do machine terms share fields with human ones or sit alongside them?</p>
+      <p class="dec">Decision: the target vocabulary and the field layout for ingest.</p></div>
+
+    <div class="topic"><h4>What should the validation sample cover?</h4>
+      <p>The two batches need opposite things. For Film &amp; Video, year, colour, sound and title are already catalogued; asking again spends the budget on nothing. For Channel M the catalogue is empty and one tick-box per tape produces the project's headline metric.</p>
+      <p class="why">Proposal: label-match, programme count and timecodes for Channel M; programme count, timecodes and a verdict on the machine text for Film &amp; Video. How many tapes is that in practice?</p>
+      <p class="dec">Decision: the annotation template and its size.</p></div>
+
+    <div class="topic"><h4>Catalogue running time or file duration?</h4>
+      <p><span data-p="duration_check.disagreeing"></span> of <span data-p="duration_check.checked"></span> sampled films disagree, by factors up to <span id="q-maxratio">—</span>. The catalogue's footage-to-runtime relation implies different projection speeds by gauge, consistent with silent material timed at sound speed but transferred speed-corrected.</p>
+      <p class="why">Nick will likely settle this in a sentence. It matters because duration is otherwise the cheapest automatic consistency check at 400-scale.</p>
+      <p class="dec">Decision: which value is authoritative, and the conversion rule.</p></div>
+
+    <div class="topic"><h4>What does a usable output look like on your side?</h4>
+      <p>What form does this need to take to be ingestible — a FileMaker import, a spreadsheet, something in the ISSA Inspector? And what would NWFA want to be able to show internally in November?</p>
+      <p class="why">This shapes what gets built between now and the workshop, so it is worth the time even if it runs long.</p>
+      <p class="dec">Decision: the deliverable format for the workshop.</p></div>
+  </div>
+
+  <h3>Other questions</h3>
+  <ul class="qs">
+    <li><b>The music sessions.</b> Eleven of 200 labels are music content, and the collection holds early TV performances by named bands. Performer identification is high value and genuinely different from segmentation — also a rights question. Worth knowing if it interests NWFA before deciding it is out of scope.</li>
+    <li><b>The other 1,489 tapes.</b> We have 200 of the 1,689 digitised under Heritage 2022. Was there a sampling logic, and does NWFA want the method applied to the rest?</li>
+  </ul>
+</section>
+
+<footer>
+  <div>Sources: <a href="https://github.com/kingsdigitallab/issa/tree/main/workshops/ws2">workshop code</a> · <a href="https://github.com/kingsdigitallab/issa/blob/main/workshops/ws2/make_ws2_data.py">make_ws2_data.py</a> · <a href="https://github.com/kingsdigitallab/issa/blob/main/workshops/ws2/collections.json">pipeline configuration</a>. Companion page: <a href="../ws1/issa_ws1.html">Workshop 1 — NLS</a>.</div>
+  <div>Data files: <code>nwfa_metadata_data.json</code> (catalogue aggregates), <code>issa_ws2_predictions.json</code> (pipeline aggregates, run <span data-p="run"></span>, stage <span data-p="stage"></span>), <code>issa_ws2_humantruth.json</code> (validation sample). Generated <span data-p="generated_at"></span>.</div>
+  <div id="prov-note"></div>
+</footer>
+<div id="tip"></div>
+
+<script>
+/* ───────────────────────── setup ───────────────────────── */
+const C = { c:'#2a78d6', cd:'#1c5cab', cl:'#bcd6f2', f:'#eb6834', fd:'#c4501f', fl:'#f7d0bb',
+            ink:'#1a1a19', muted:'#898781', grid:'#e1e0d9', warn:'#fab219', unk:'#e5e5e2', bad:'#c0392b' };
+const COLL = { archive:{ name:'NWFA (whole archive)', base:'#55534e', dark:'#3a3935', light:'#d9d8d3' },
+               channelm:{ name:'Channel M', base:C.c, dark:C.cd, light:C.cl },
+               fv:{ name:'Film & Video', base:C.f, dark:C.fd, light:C.fl } };
+/* Chart.js comes from a CDN. If it is blocked, everything else on the page -- the
+   numbers, tables, hierarchy bands and timelines -- must still render. */
+const HAS_CHART = typeof Chart !== 'undefined';
+if (HAS_CHART) {
+  Chart.defaults.font.family = "'Helvetica Neue', Arial, sans-serif";
+  Chart.defaults.font.size = 12; Chart.defaults.color = '#6b6a66'; Chart.defaults.animation = false;
+  Chart.defaults.maintainAspectRatio = false;
+
+  Chart.register({
+    id: 'valueLabels',
+    afterDatasetsDraw(chart, args, opt) {
+      if (!opt || !opt.mode) return;
+      const ctx = chart.ctx, horiz = chart.options.indexAxis === 'y', fmt = opt.fmt || (v => String(v));
+      ctx.save(); ctx.font = '11px Helvetica Neue, Arial, sans-serif'; ctx.fillStyle = '#1a1a19'; ctx.textBaseline = 'middle';
+      chart.data.datasets.forEach((ds, di) => chart.getDatasetMeta(di).data.forEach((bar, i) => {
+        const v = ds.data[i]; if (v == null || (v === 0 && !opt.zero)) return;
+        if (horiz) { ctx.textAlign = 'left'; ctx.fillText(fmt(v), bar.x + 4, bar.y); }
+        else { ctx.textAlign = 'center'; ctx.fillText(fmt(v), bar.x, bar.y - 8); }
+      }));
+      ctx.restore();
+    }
+  });
+}
+
+const FMT = {
+  int: v => Number(v).toLocaleString('en-GB'),
+  raw: v => String(v),                               // years, ids — no thousands separator
+  pct0: v => Math.round(v) + '%', pct1: v => Number(v).toFixed(1) + '%',
+  one: v => Number(v).toFixed(1)
+};
+/* x axis capped above 100 to leave room for value labels, without drawing >100 ticks */
+const PCT_TICKS = { stepSize: 20, callback: v => v <= 100 ? v + '%' : '' };
+const get = (o, p) => p == null ? undefined : p.split('.').reduce((a, k) => a == null ? a : a[k], o);
+let N = null, P = null, H = null;
+
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const mmss = s => { s = Math.round(s); const h = Math.floor(s/3600), m = Math.floor(s%3600/60), x = s%60;
+  return (h ? h + ':' + String(m).padStart(2,'0') : String(m)) + ':' + String(x).padStart(2,'0'); };
+const pairs = o => Object.entries(o || {});
+const joinCounts = o => pairs(o).map(([k, v]) => `${v} ${k}`).join(', ');
+
+function bindAll() {
+  document.querySelectorAll('[data-n],[data-p],[data-h]').forEach(el => {
+    const src = el.dataset.p !== undefined ? P : el.dataset.h !== undefined ? H : N;
+    const path = el.dataset.p ?? el.dataset.h ?? el.dataset.n;
+    const v = get(src, path);
+    if (v == null) return;
+    el.textContent = el.dataset.f ? FMT[el.dataset.f](v) : (typeof v === 'number' ? FMT.int(v) : v);
+  });
+
+  /* stage badge */
+  const sb = document.getElementById('stagebadge');
+  const label = { 'first-pass':'First pass', 'validated':'With human truth', 'full':'Full batch' }[P.stage] || P.stage;
+  sb.textContent = `${label} · ${P.scale.files} of ${P.scale.of}`;
+  sb.className = 'stage ' + (P.stage === 'full' ? 'full' : P.stage === 'validated' ? 'validated' : '');
+  const n2 = P.label_match.files;
+  document.getElementById('b-s2').textContent =
+    n2 >= get(N, 'collections.0.file_count') ? `all ${n2} tapes` : `sample of ${n2}`;
+  const hb = document.getElementById('b-s9');
+  hb.textContent = H.returned ? `${H.returned} of ${H.expected} returned` : 'pending';
+  hb.className = 'sbadge' + (H.returned >= H.expected ? ' done' : '');
+
+  /* catalogue detail that needs assembling */
+  document.getElementById('cm-format').textContent = joinCounts(N.channelm.tape_format);
+  document.getElementById('cm-crates').textContent =
+    pairs(N.channelm.crates).map(([k, v]) => `${k} with ${v} tapes`).join(', ');
+  const dates = N.channelm.digitisation_dates;
+  document.getElementById('cm-lastdate').textContent = dates[dates.length - 1];
+  document.getElementById('fv-mix').textContent =
+    `${get(N,'fv.prof_am.Amateur')} amateur / ${get(N,'fv.prof_am.Professional')} professional · ` +
+    `${get(N,'fv.sound.silent')} silent · ${pairs(N.fv.gauge).slice(0,3).map(([k,v])=>`${v} ${k}`).join(', ')}`;
+  const longest = Math.max(...P.coverage.per_file.filter(f => f.collection === 'channelm').map(f => f.span_seconds));
+  document.getElementById('cm-longest').textContent = Math.round(longest / 60);
+
+  /* non-content spurious types */
+  document.getElementById('nc-types').textContent =
+    pairs(P.noncontent.spurious_types).map(([k, v]) => `${k} (${v})`).join(', ');
+
+  /* segment timecode styles */
+  const styles = pairs(P.segments.timecode_styles).map(([k, v]) => `${v} ${k}`).join(', ');
+  document.getElementById('seg-styles').textContent = styles;
+
+  /* duration ratios */
+  const ratios = P.duration_check.items.map(d => d.ratio);
+  document.getElementById('q-maxratio').textContent = Math.max(...ratios).toFixed(2) + '×';
+  document.getElementById('q-fps').textContent =
+    pairs(N.fv.implied_projection_fps).map(([k, v]) => `${k} ${v.median_fps} fps`).join(', ');
+
+  /* provenance note */
+  document.getElementById('prov-note').textContent = P.contains_model_text
+    ? `This run includes short model-written content gists for the ${P.scale.files} sampled videos, because section 2 cannot be made without them. Everything else on this page is aggregate counts.`
+    : 'Aggregates only — no model-written text about individual films.';
+}
+
+/* ───────────────────────── tooltip ───────────────────────── */
+const tip = document.getElementById('tip');
+const showTip = (e, h) => { tip.innerHTML = h; tip.classList.add('on'); moveTip(e); };
+const moveTip = e => { let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + 300 > innerWidth) x = e.clientX - 314; if (y + 90 > innerHeight) y = e.clientY - 104;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px'; };
+const hideTip = () => tip.classList.remove('on');
+const hatch = (a, b) => `repeating-linear-gradient(45deg, ${a}, ${a} 4px, ${b} 4px, ${b} 8px)`;
+function hoverable(el, html) {
+  el.addEventListener('mouseenter', e => showTip(e, html));
+  el.addEventListener('mousemove', moveTip);
+  el.addEventListener('mouseleave', hideTip);
+  return el;
+}
+
+/* ───────────────────────── hierarchy bands ───────────────────────── */
+function renderHierarchy() {
+  const host = document.getElementById('hier');
+  host.innerHTML = '';
+  const stateFill = (coll, state) => {
+    const k = COLL[coll];
+    if (state === 'verified') return k.base;
+    if (state === 'assumed') return hatch(k.base, k.light);
+    if (state === 'check') return C.warn;
+    return null;                       // unknown
+  };
+  N.hierarchy.levels.forEach(lvl => {
+    const row = document.createElement('div'); row.className = 'band-row';
+    const lab = document.createElement('div'); lab.className = 'band-label'; lab.textContent = lvl.level;
+    row.appendChild(lab);
+    const track = document.createElement('div'); track.className = 'band-track';
+    lvl.bands.forEach(b => {
+      const wrap = document.createElement('div'); wrap.className = 'band-seg';
+      wrap.style.flex = `0 0 ${b.share}%`;
+      const fill = document.createElement('div');
+      const bg = stateFill(b.collection, b.state);
+      fill.className = 'fill' + (bg === null ? ' unk' : b.state === 'check' ? ' warn'
+                                 : b.state === 'assumed' ? ' assumed' : '');
+      if (bg) fill.style.background = bg;
+      fill.style.flex = '1 1 auto';
+      fill.textContent = b.label;
+      hoverable(fill, `<b>${esc(lvl.level)} · ${esc(COLL[b.collection].name)}</b><br>${esc(b.label)}<br><i>${esc(b.state)}</i><br>${esc(lvl.note)}`);
+      wrap.appendChild(fill); track.appendChild(wrap);
+    });
+    row.appendChild(track); host.appendChild(row);
+  });
+
+  /* working sample row */
+  const row = document.createElement('div'); row.className = 'band-row';
+  const lab = document.createElement('div'); lab.className = 'band-label'; lab.textContent = 'Working sample';
+  row.appendChild(lab);
+  const track = document.createElement('div'); track.className = 'band-track sample-track';
+  ['channelm', 'fv'].forEach(coll => {
+    const wrap = document.createElement('div'); wrap.className = 'band-seg'; wrap.style.flex = '0 0 50%';
+    const grp = document.createElement('div'); grp.className = 'sample-group';
+    N.hierarchy.sample.items.filter(i => i.collection === coll).forEach(i => {
+      const d = document.createElement('div'); d.className = 'sdot';
+      const k = COLL[coll];
+      d.style.background = i.annotated ? k.base : hatch(k.base, k.light);
+      hoverable(d, `<b>${esc(i.id)}</b><br>${esc(k.name)}<br>${i.annotated ? 'annotated by hand' : 'not yet annotated'}`);
+      grp.appendChild(d);
+    });
+    wrap.appendChild(grp); track.appendChild(wrap);
+  });
+  row.appendChild(track); host.appendChild(row);
+}
+
+/* ───────────────────────── timelines ───────────────────────── */
+function drawTimeline(elId, ex, title) {
+  const host = document.getElementById(elId);
+  if (!host || !ex) return;
+  const W = 1000, padL = 8, padR = 8, trackY = 34, trackH = 30, axisY = trackY + trackH + 6;
+  const inner = W - padL - padR, span = ex.span_seconds || 1;
+  const x = s => padL + (s / span) * inner;
+  const k = COLL[ex.collectionKey];
+  const parts = [];
+
+  parts.push(`<text x="${padL}" y="14" font-size="12.5" font-weight="700" fill="${C.ink}">${esc(title)}</text>`);
+  parts.push(`<text x="${W - padR}" y="14" font-size="11" fill="${C.muted}" text-anchor="end">${esc(ex.file)} · ${mmss(span)} · ${ex.clips.length} proposed, ${ex.separators.length} separators</text>`);
+  parts.push(`<rect x="${padL}" y="${trackY}" width="${inner}" height="${trackH}" fill="#f2f1ec" rx="2"/>`);
+
+  ex.separators.forEach(s => {
+    const w = Math.max(1.2, (s.seconds / span) * inner);
+    parts.push(`<rect class="hv" data-tip="${esc(`<b>Separator</b><br>${mmss(s.at)} → ${mmss(s.at + s.seconds)}<br>${s.seconds}s${s.leading ? ' · leading (tape head)' : ''}`)}" x="${x(s.at)}" y="${trackY}" width="${w}" height="${trackH}" fill="${C.warn}"/>`);
+  });
+  ex.clips.forEach(c => {
+    /* non-content clips are often 1s; give them a floor so the finding is visible */
+    const w = Math.max(c.noncontent ? 3.5 : 1.2, (c.seconds / span) * inner);
+    const fill = c.noncontent ? 'url(#nc)' : k.base;
+    parts.push(`<rect class="hv" data-tip="${esc(`<b>${c.noncontent ? 'Suspected non-content' : 'Proposed programme ' + c.prog}</b><br>${mmss(c.start)} → ${mmss(c.start + c.seconds)}<br>${c.seconds < 60 ? c.seconds + 's' : mmss(c.seconds)}`)}" x="${x(c.start)}" y="${trackY}" width="${w}" height="${trackH}" fill="${fill}" stroke="#fff" stroke-width="0.6"/>`);
+  });
+
+  const nTicks = 6;
+  for (let i = 0; i <= nTicks; i++) {
+    const t = span * i / nTicks;
+    parts.push(`<text x="${x(t)}" y="${axisY + 9}" font-size="10" fill="${C.muted}" text-anchor="${i === 0 ? 'start' : i === nTicks ? 'end' : 'middle'}">${mmss(t)}</text>`);
+    parts.push(`<line x1="${x(t)}" y1="${axisY - 3}" x2="${x(t)}" y2="${axisY}" stroke="${C.grid}"/>`);
+  }
+
+  host.innerHTML = `<svg class="tl" viewBox="0 0 ${W} ${axisY + 14}" role="img" aria-label="${esc(title)}">
+    <defs><pattern id="nc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)">
+      <rect width="7" height="7" fill="${k.light}"/><line x1="0" y1="0" x2="0" y2="7" stroke="${C.bad}" stroke-width="2.4"/>
+    </pattern></defs>${parts.join('')}</svg>`;
+  host.querySelectorAll('.hv').forEach(el => hoverable(el, el.dataset.tip));
+}
+
+/* ───────────────────────── tables ───────────────────────── */
+function verdictFor(item) {
+  if (item.verdict) return item.verdict;
+  return null;
+}
+/* Beyond this many rows a per-item table stops being readable and the page
+   switches to counts. Keeps the same HTML working from 10 files to 400. */
+const ROW_CAP = 12;
+const moreNote = (shown, total, what) => total > shown
+  ? `<p class="cap">Showing ${shown} of ${total} ${what}. The full set is in <code>issa_ws2_predictions.json</code>.</p>` : '';
+
+function renderTables() {
+  /* 2 — label vs content */
+  const items = P.label_match.items;
+  const counts = { match: 0, adjacent: 0, mismatch: 0, unassigned: 0 };
+  items.forEach(it => { const v = verdictFor(it); counts[v && v in counts ? v : 'unassigned']++; });
+  const assigned = items.length - counts.unassigned;
+
+  /* at scale the summary is the point, not the rows */
+  document.getElementById('lm-summary').innerHTML = (items.length > ROW_CAP || assigned)
+    ? `<div class="tiles" style="grid-template-columns:repeat(4,1fr);margin:.2rem 0 1rem">
+        <div class="tile"><div class="v">${items.length}</div><div class="l">tapes compared</div></div>
+        <div class="tile"><div class="v" style="color:var(--outer)">${counts.match || '—'}</div><div class="l">label matches content</div></div>
+        <div class="tile"><div class="v" style="color:#b07d08">${counts.adjacent || '—'}</div><div class="l">topically adjacent</div></div>
+        <div class="tile alert"><div class="v">${counts.mismatch || '—'}</div><div class="l">label does not match</div></div>
+       </div>` : '';
+
+  const shown = items.length > ROW_CAP
+    ? items.filter(verdictFor).slice(0, ROW_CAP)       // once verdicts exist, show those
+    : items;
+  const body = (shown.length ? shown : items.slice(0, ROW_CAP)).map(it => {
+    const v = verdictFor(it);
+    const cls = v === 'match' ? 'v-match' : v === 'adjacent' ? 'v-near' : v === 'mismatch' ? 'v-miss' : '';
+    return `<tr><td class="nw mono">${esc(it.file)}</td><td>${esc(it.label)}</td>
+      <td>${it.machine_gist ? esc(it.machine_gist) : '<span style="color:#898781">not exported at this scale</span>'}</td>
+      <td class="nw ${cls}">${v ? esc(v) : '<span style="color:#898781;font-weight:400">awaiting NWFA</span>'}</td></tr>`;
+  }).join('');
+  document.querySelector('#t-labels tbody').innerHTML = body;
+
+  document.getElementById('cap-labels').innerHTML = assigned
+    ? `${assigned} of ${items.length} verdicts assigned` +
+      moreNote(Math.min(shown.length || ROW_CAP, items.length), items.length, 'tapes')
+    : `Verdicts are left blank deliberately. Reading these ${items.length} rows together is the quickest way to see the problem. The pipeline never saw the label column.`;
+
+  /* 8 — duration check */
+  const db = document.querySelector('#t-dur tbody');
+  db.innerHTML = P.duration_check.items.slice(0, ROW_CAP).map(d => {
+    const off = Math.abs(d.ratio - 1) > 0.05;
+    return `<tr><td class="nw mono">${esc(d.file)}</td><td class="nw">${esc(d.gauge)}</td><td class="nw">${esc(d.sound)}</td>
+      <td class="nw">${mmss(d.catalogue_seconds)}</td><td class="nw">${mmss(d.file_seconds)}</td>
+      <td class="nw ${off ? 'v-miss' : 'v-match'}">${d.ratio.toFixed(2)}×</td></tr>`;
+  }).join('');
+  db.closest('.tw').insertAdjacentHTML('afterend',
+    moreNote(Math.min(ROW_CAP, P.duration_check.items.length), P.duration_check.items.length, 'films'));
+
+  /* 9 — proposed human-truth fields */
+  const fb = document.getElementById('t-fields');
+  fb.innerHTML = H.proposed_fields.map(f =>
+    `<tr><td class="mono">${esc(f.field)}</td>
+     <td class="nw">${f.collections.map(c => COLL[c].name).join(' + ')}</td>
+     <td style="font-weight:400">${esc(f.why)}</td></tr>`).join('');
+
+  /* 9 — results, when they exist */
+  if (H.returned > 0) {
+    document.getElementById('ht-pending').style.display = 'none';
+    const r = document.getElementById('ht-results');
+    r.style.display = 'block';
+    r.innerHTML = `<div class="callout good"><strong>${H.returned} of ${H.expected} returned.</strong>
+      Agreement analysis renders here from <code>issa_ws2_humantruth.json</code>.</div>`;
+  }
+}
+
+/* ───────────────────────── charts ───────────────────────── */
+const axisX = (title, max) => ({ title: { display: !!title, text: title }, grid: { color: C.grid },
+  border: { display: false }, max, ticks: { padding: 2 } });
+
+function renderCharts() {
+  if (!HAS_CHART) {
+    document.querySelectorAll('.cb').forEach(el => {
+      el.style.height = 'auto';
+      el.innerHTML = '<div class="pending" style="margin:0">Chart library unavailable — '
+        + 'this page loads Chart.js from a CDN. The figures below the charts still carry the numbers.</div>';
+    });
+    return;
+  }
+  /* 1 — catalogue completeness */
+  new Chart(document.getElementById('c-complete'), {
+    type: 'bar',
+    data: { labels: N.completeness.map(r => r.field),
+      datasets: [
+        { label: 'Channel M', data: N.completeness.map(r => r.channelm), backgroundColor: C.c },
+        { label: 'Film & Video', data: N.completeness.map(r => r.fv), backgroundColor: C.f }] },
+    options: { indexAxis: 'y',
+      scales: { x: { ...axisX('% of 200 records with a value', 108), ticks: PCT_TICKS },
+                y: { grid: { display: false }, border: { display: false } } },
+      plugins: { legend: { position: 'top', labels: { boxWidth: 12 } },
+        valueLabels: { mode: 'each', zero: true, fmt: v => v + '%' },
+        tooltip: { callbacks: { afterLabel: ctx => {
+          const r = N.completeness[ctx.dataIndex];
+          return ctx.datasetIndex === 0 ? `column: ${r.cm_column || 'none'}` : `column: ${r.fv_column || 'none'}`;
+        } } } } }
+  });
+
+  /* 5 — programmes per file */
+  const ppLabels = [...new Set([...P.programmes_per_file.channelm.labels, ...P.programmes_per_file.fv.labels])]
+    .sort((a, b) => a - b);
+  const ppData = coll => ppLabels.map(l => {
+    const i = P.programmes_per_file[coll].labels.indexOf(l);
+    return i < 0 ? 0 : P.programmes_per_file[coll].counts[i];
+  });
+  new Chart(document.getElementById('c-clips'), {
+    type: 'bar',
+    data: { labels: ppLabels,
+      datasets: [{ label: 'Channel M', data: ppData('channelm'), backgroundColor: C.c },
+                 { label: 'Film & Video', data: ppData('fv'), backgroundColor: C.f }] },
+    options: { scales: { x: { title: { display: true, text: 'programmes proposed in the file' }, grid: { display: false }, border: { display: false }, stacked: true },
+                         y: { title: { display: true, text: 'files' }, grid: { color: C.grid }, border: { display: false }, stacked: true, ticks: { precision: 0 } } },
+      plugins: { legend: { position: 'top', labels: { boxWidth: 12 } } } }
+  });
+
+  /* 5 — separator durations */
+  new Chart(document.getElementById('c-sepdur'), {
+    type: 'bar',
+    data: { labels: P.separators.hist.labels,
+      datasets: [{ label: 'separators', data: P.separators.hist.counts, backgroundColor: C.warn }] },
+    options: { scales: { x: { title: { display: true, text: 'seconds' }, grid: { display: false }, border: { display: false } },
+                         y: { title: { display: true, text: 'count' }, grid: { color: C.grid }, border: { display: false }, ticks: { precision: 0 } } },
+      plugins: { legend: { display: false }, valueLabels: { mode: 'each' } } }
+  });
+
+  /* 5 — coverage: per-file bars while they fit, otherwise a distribution */
+  const cov = [...P.coverage.per_file].sort((a, b) => a.coverage - b.coverage);
+  if (cov.length > 25) {
+    document.getElementById('c-cov').closest('.chartcard').querySelector('.sub').textContent =
+      `Distribution across ${cov.length} files; the remainder is separator material`;
+    new Chart(document.getElementById('c-cov'), {
+      type: 'bar',
+      data: { labels: P.coverage.hist.labels.map(l => l + '%'),
+        datasets: [{ data: P.coverage.hist.counts, backgroundColor: C.c }] },
+      options: { scales: { x: { title: { display: true, text: '% of file inside a proposed programme' }, grid: { display: false }, border: { display: false } },
+                           y: { title: { display: true, text: 'files' }, grid: { color: C.grid }, border: { display: false }, ticks: { precision: 0 } } },
+        plugins: { legend: { display: false }, valueLabels: { mode: 'each' } } }
+    });
+  } else {
+    new Chart(document.getElementById('c-cov'), {
+      type: 'bar',
+      data: { labels: cov.map(f => f.file),
+        datasets: [{ label: '% covered', data: cov.map(f => +(f.coverage * 100).toFixed(1)),
+          backgroundColor: cov.map(f => COLL[f.collection].base) }] },
+      options: { indexAxis: 'y',
+        scales: { x: { ...axisX('% of file inside a proposed programme', 108), min: 80, ticks: { stepSize: 5, callback: v => v <= 100 ? v + '%' : '' } },
+                  y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 10 } } } },
+        plugins: { legend: { display: false }, valueLabels: { mode: 'each', fmt: v => v + '%' },
+          tooltip: { callbacks: { afterLabel: ctx => {
+            const f = cov[ctx.dataIndex];
+            return `${COLL[f.collection].name} · ${mmss(f.span_seconds)} · ${f.clips} proposed · ${f.separators} separators`;
+          } } } } }
+    });
+  }
+
+  /* 6 — machine field completeness */
+  new Chart(document.getElementById('c-fields'), {
+    type: 'bar',
+    data: { labels: P.completeness.map(r => r.field),
+      datasets: [{ label: 'Channel M', data: P.completeness.map(r => r.channelm), backgroundColor: C.c },
+                 { label: 'Film & Video', data: P.completeness.map(r => r.fv), backgroundColor: C.f }] },
+    options: { indexAxis: 'y',
+      scales: { x: { ...axisX('% of proposed programmes', 108), ticks: PCT_TICKS },
+                y: { grid: { display: false }, border: { display: false } } },
+      plugins: { legend: { position: 'top', labels: { boxWidth: 12 } },
+        valueLabels: { mode: 'each', zero: true, fmt: v => Math.round(v) + '%' } } }
+  });
+
+  /* 6 — segments per programme */
+  new Chart(document.getElementById('c-segs'), {
+    type: 'bar',
+    data: { labels: P.segments.channelm.hist.labels,
+      datasets: [{ label: 'Channel M', data: P.segments.channelm.hist.counts, backgroundColor: C.c },
+                 { label: 'Film & Video', data: P.segments.fv.hist.counts, backgroundColor: C.f }] },
+    options: { scales: { x: { title: { display: true, text: 'segment items in the programme' }, grid: { display: false }, border: { display: false }, stacked: true },
+                         y: { title: { display: true, text: 'programmes' }, grid: { color: C.grid }, border: { display: false }, stacked: true, ticks: { precision: 0 } } },
+      plugins: { legend: { position: 'top', labels: { boxWidth: 12 } } } }
+  });
+
+  /* 7 — machine types */
+  new Chart(document.getElementById('c-mtypes'), {
+    type: 'bar',
+    data: { labels: P.vocab.machine_types.map(t => t.label),
+      datasets: [{ data: P.vocab.machine_types.map(t => t.n), backgroundColor: C.cd }] },
+    options: { indexAxis: 'y',
+      scales: { x: axisX('programmes'), y: { grid: { display: false }, border: { display: false } } },
+      plugins: { legend: { display: false }, valueLabels: { mode: 'each' } } }
+  });
+
+  /* 7 — NWFA categories */
+  new Chart(document.getElementById('c-ncats'), {
+    type: 'bar',
+    data: { labels: P.vocab.nwfa_category_terms.map(t => t.label),
+      datasets: [{ data: P.vocab.nwfa_category_terms.map(t => t.n), backgroundColor: C.fd }] },
+    options: { indexAxis: 'y',
+      scales: { x: axisX('records'), y: { grid: { display: false }, border: { display: false } } },
+      plugins: { legend: { display: false }, valueLabels: { mode: 'each' } } }
+  });
+}
+
+/* ───────────────────────── init ───────────────────────── */
+Promise.all(['nwfa_metadata_data.json', 'issa_ws2_predictions.json', 'issa_ws2_humantruth.json']
+    .map(u => fetch(u).then(r => { if (!r.ok) throw new Error(r.url + ' → HTTP ' + r.status); return r.json(); })))
+  .then(([n, p, h]) => {
+    N = n; P = p; H = h;
+    bindAll(); renderHierarchy(); renderTables(); renderCharts();
+    ['channelm', 'fv'].forEach(coll => {
+      const ex = P.examples[coll];
+      if (!ex) return;
+      drawTimeline(coll === 'channelm' ? 'tl-cm' : 'tl-fv',
+        { ...ex, collectionKey: coll },
+        `${COLL[coll].name} — most structured file in the sample`);
+    });
+  })
+  .catch(e => {
+    const el = document.getElementById('err');
+    el.style.display = 'block';
+    el.textContent = '⚠ Could not load the data files — ' + e.message +
+      '. Serve this page from a web server (e.g. python -m http.server) or view it on GitHub Pages.';
+  });
+</script>
+</body>
+</html>

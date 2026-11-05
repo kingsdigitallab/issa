@@ -1,0 +1,1175 @@
+{
+ "generated_at": "2026-10-21T19:56",
+ "run": "v1",
+ "stage": "first-pass",
+ "contains_model_text": true,
+ "scale": {
+  "files": 10,
+  "of": 400,
+  "by_collection": {
+   "channelm": 5,
+   "fv": 5
+  }
+ },
+ "totals": {
+  "files": 10,
+  "programmes": 29,
+  "segment_items": 106,
+  "separators": 24,
+  "by_collection": {
+   "channelm": {
+    "files": 5,
+    "programmes": 21
+   },
+   "fv": {
+    "files": 5,
+    "programmes": 8
+   }
+  }
+ },
+ "programmes_per_file": {
+  "channelm": {
+   "labels": [
+    "1",
+    "2",
+    "3",
+    "13"
+   ],
+   "counts": [
+    1,
+    2,
+    1,
+    1
+   ],
+   "n": 5,
+   "min": 1.0,
+   "median": 2.0,
+   "mean": 4.2,
+   "max": 13.0
+  },
+  "fv": {
+   "labels": [
+    "1",
+    "4"
+   ],
+   "counts": [
+    4,
+    1
+   ],
+   "n": 5,
+   "min": 1.0,
+   "median": 1.0,
+   "mean": 1.6,
+   "max": 4.0
+  }
+ },
+ "duration": {
+  "channelm": {
+   "n": 21,
+   "min": 0.0,
+   "median": 0.3,
+   "mean": 6.3,
+   "max": 39.0,
+   "hist": {
+    "labels": [
+     "0–1",
+     "1–2",
+     "2–5",
+     "5–10",
+     "10–20",
+     "20–30",
+     "30–45",
+     "45–60",
+     "60+"
+    ],
+    "counts": [
+     12,
+     1,
+     0,
+     2,
+     4,
+     1,
+     1,
+     0,
+     0
+    ]
+   },
+   "under_10_s": 6,
+   "over_30_min": 1
+  },
+  "fv": {
+   "n": 8,
+   "min": 0.2,
+   "median": 1.8,
+   "mean": 4.1,
+   "max": 12.3,
+   "hist": {
+    "labels": [
+     "0–1",
+     "1–2",
+     "2–5",
+     "5–10",
+     "10–20",
+     "20–30",
+     "30–45",
+     "45–60",
+     "60+"
+    ],
+    "counts": [
+     4,
+     0,
+     2,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "under_10_s": 0,
+   "over_30_min": 0
+  }
+ },
+ "separators": {
+  "n": 24,
+  "leading": 5,
+  "files_with_any": 7,
+  "by_collection": {
+   "channelm": 20,
+   "fv": 4
+  },
+  "seconds": {
+   "n": 24,
+   "min": 2.0,
+   "median": 26.0,
+   "mean": 29.4,
+   "max": 92.0
+  },
+  "hist": {
+   "labels": [
+    "0–5",
+    "5–10",
+    "10–20",
+    "20–30",
+    "30–45",
+    "45–60",
+    "60–90",
+    "90+"
+   ],
+   "counts": [
+    2,
+    5,
+    4,
+    3,
+    4,
+    1,
+    4,
+    1
+   ]
+  },
+  "derived_from": "gaps between consecutive clips in the predictions file",
+  "items": [
+   {
+    "file": "NWFA 57",
+    "collection": "fv",
+    "at": 58,
+    "seconds": 7,
+    "leading": false
+   },
+   {
+    "file": "NWFA 57",
+    "collection": "fv",
+    "at": 92,
+    "seconds": 4,
+    "leading": false
+   },
+   {
+    "file": "NWFA 57",
+    "collection": "fv",
+    "at": 111,
+    "seconds": 5,
+    "leading": false
+   },
+   {
+    "file": "NWFA 58",
+    "collection": "fv",
+    "at": 0,
+    "seconds": 2,
+    "leading": true
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 0,
+    "seconds": 7,
+    "leading": true
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 825,
+    "seconds": 71,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 1639,
+    "seconds": 92,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 2412,
+    "seconds": 35,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 3141,
+    "seconds": 10,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 3152,
+    "seconds": 67,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 3288,
+    "seconds": 28,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 3333,
+    "seconds": 31,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 3380,
+    "seconds": 69,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 3466,
+    "seconds": 6,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 3485,
+    "seconds": 14,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 3520,
+    "seconds": 64,
+    "leading": false
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "at": 3597,
+    "seconds": 45,
+    "leading": false
+   },
+   {
+    "file": "N_6967905",
+    "collection": "channelm",
+    "at": 9,
+    "seconds": 9,
+    "leading": false
+   },
+   {
+    "file": "N_6975894",
+    "collection": "channelm",
+    "at": 0,
+    "seconds": 12,
+    "leading": true
+   },
+   {
+    "file": "N_6975894",
+    "collection": "channelm",
+    "at": 13,
+    "seconds": 27,
+    "leading": false
+   },
+   {
+    "file": "N_6975915",
+    "collection": "channelm",
+    "at": 0,
+    "seconds": 10,
+    "leading": true
+   },
+   {
+    "file": "N_6975915",
+    "collection": "channelm",
+    "at": 11,
+    "seconds": 30,
+    "leading": false
+   },
+   {
+    "file": "N_6975915",
+    "collection": "channelm",
+    "at": 1588,
+    "seconds": 25,
+    "leading": false
+   },
+   {
+    "file": "N_6977195",
+    "collection": "channelm",
+    "at": 0,
+    "seconds": 35,
+    "leading": true
+   }
+  ]
+ },
+ "coverage": {
+  "n": 10,
+  "min": 85.2,
+  "median": 97.3,
+  "mean": 95.3,
+  "max": 100.0,
+  "hist": {
+   "labels": [
+    "80–85",
+    "85–90",
+    "90–95",
+    "95–99",
+    "99–100",
+    "100+"
+   ],
+   "counts": [
+    0,
+    2,
+    2,
+    2,
+    1,
+    3
+   ]
+  },
+  "files_below_95pct": 4,
+  "per_file": [
+   {
+    "file": "NWFA 143",
+    "collection": "fv",
+    "span_seconds": 263,
+    "covered_seconds": 263,
+    "coverage": 1.0,
+    "clips": 1,
+    "separators": 0,
+    "leading_separator": 0
+   },
+   {
+    "file": "NWFA 4220",
+    "collection": "fv",
+    "span_seconds": 678,
+    "covered_seconds": 678,
+    "coverage": 1.0,
+    "clips": 1,
+    "separators": 0,
+    "leading_separator": 0
+   },
+   {
+    "file": "NWFA 473",
+    "collection": "fv",
+    "span_seconds": 736,
+    "covered_seconds": 736,
+    "coverage": 1.0,
+    "clips": 1,
+    "separators": 0,
+    "leading_separator": 0
+   },
+   {
+    "file": "NWFA 57",
+    "collection": "fv",
+    "span_seconds": 147,
+    "covered_seconds": 131,
+    "coverage": 0.891,
+    "clips": 4,
+    "separators": 3,
+    "leading_separator": 0
+   },
+   {
+    "file": "NWFA 58",
+    "collection": "fv",
+    "span_seconds": 154,
+    "covered_seconds": 152,
+    "coverage": 0.987,
+    "clips": 1,
+    "separators": 1,
+    "leading_separator": 2
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "span_seconds": 3643,
+    "covered_seconds": 3104,
+    "coverage": 0.852,
+    "clips": 13,
+    "separators": 13,
+    "leading_separator": 7
+   },
+   {
+    "file": "N_6967905",
+    "collection": "channelm",
+    "span_seconds": 2356,
+    "covered_seconds": 2347,
+    "coverage": 0.996,
+    "clips": 2,
+    "separators": 1,
+    "leading_separator": 0
+   },
+   {
+    "file": "N_6975894",
+    "collection": "channelm",
+    "span_seconds": 408,
+    "covered_seconds": 369,
+    "coverage": 0.904,
+    "clips": 2,
+    "separators": 2,
+    "leading_separator": 12
+   },
+   {
+    "file": "N_6975915",
+    "collection": "channelm",
+    "span_seconds": 1614,
+    "covered_seconds": 1549,
+    "coverage": 0.96,
+    "clips": 3,
+    "separators": 3,
+    "leading_separator": 10
+   },
+   {
+    "file": "N_6977195",
+    "collection": "channelm",
+    "span_seconds": 583,
+    "covered_seconds": 548,
+    "coverage": 0.94,
+    "clips": 1,
+    "separators": 1,
+    "leading_separator": 35
+   }
+  ]
+ },
+ "noncontent": {
+  "n": 6,
+  "of_programmes": 29,
+  "pct": 20.7,
+  "median_seconds": 1.0,
+  "bounded_by_separators": 3,
+  "spurious_types": {
+   "scientific": 2,
+   "documentary": 2,
+   "instructional": 1,
+   "amateur": 1,
+   "home movie": 1
+  },
+  "items": [
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "prog": "6.5",
+    "start": 3151,
+    "seconds": 1,
+    "types": "instructional",
+    "bounded_by_separators": true,
+    "gist": "A brief transmission consisting of a blank black screen that resolves into a full-screen panel of vertical colour bars."
+   },
+   {
+    "file": "N_6966411",
+    "collection": "channelm",
+    "prog": "6.13",
+    "start": 3642,
+    "seconds": 1,
+    "types": "scientific",
+    "bounded_by_separators": false,
+    "gist": "A static screen of vertical coloured stripes arranged like a television test-card pattern."
+   },
+   {
+    "file": "N_6967905",
+    "collection": "channelm",
+    "prog": "7",
+    "start": 0,
+    "seconds": 9,
+    "types": "scientific",
+    "bounded_by_separators": false,
+    "gist": "The clip consists of a blank grey screen followed by vertical colour reference bars, i.e. a television test signal rather than programme content."
+   },
+   {
+    "file": "N_6975894",
+    "collection": "channelm",
+    "prog": "8",
+    "start": 12,
+    "seconds": 1,
+    "types": "amateur; home movie",
+    "bounded_by_separators": true,
+    "gist": "A very short, low-quality clip of a dark interior that ends by cutting straight to a television colour-bar test pattern."
+   },
+   {
+    "file": "N_6975915",
+    "collection": "channelm",
+    "prog": "9",
+    "start": 10,
+    "seconds": 1,
+    "types": "documentary",
+    "bounded_by_separators": true,
+    "gist": "The programme displays no identifiable imagery, consisting solely of a uniform grey screen bordered by black bars."
+   },
+   {
+    "file": "N_6975915",
+    "collection": "channelm",
+    "prog": "9.3",
+    "start": 1613,
+    "seconds": 1,
+    "types": "documentary",
+    "bounded_by_separators": false,
+    "gist": "The programme displays no identifiable imagery, consisting solely of a uniform grey screen bordered by black bars."
+   }
+  ]
+ },
+ "completeness": [
+  {
+   "field": "title",
+   "channelm": 47.6,
+   "fv": 62.5
+  },
+  {
+   "field": "year",
+   "channelm": 19.0,
+   "fv": 25.0
+  },
+  {
+   "field": "place",
+   "channelm": 71.4,
+   "fv": 87.5
+  },
+  {
+   "field": "colour",
+   "channelm": 100.0,
+   "fv": 100.0
+  },
+  {
+   "field": "types",
+   "channelm": 100.0,
+   "fv": 100.0
+  },
+  {
+   "field": "fiction",
+   "channelm": 100.0,
+   "fv": 100.0
+  },
+  {
+   "field": "summary",
+   "channelm": 100.0,
+   "fv": 100.0
+  },
+  {
+   "field": "synopsis",
+   "channelm": 100.0,
+   "fv": 100.0
+  },
+  {
+   "field": "segments",
+   "channelm": 76.2,
+   "fv": 100.0
+  },
+  {
+   "field": "credits",
+   "channelm": 19.0,
+   "fv": 25.0
+  },
+  {
+   "field": "keywords",
+   "channelm": 100.0,
+   "fv": 100.0
+  }
+ ],
+ "vocab": {
+  "machine_types": [
+   {
+    "label": "promotional",
+    "n": 16
+   },
+   {
+    "label": "documentary",
+    "n": 8
+   },
+   {
+    "label": "tv news",
+    "n": 6
+   },
+   {
+    "label": "instructional",
+    "n": 4
+   },
+   {
+    "label": "animation",
+    "n": 2
+   },
+   {
+    "label": "comedy",
+    "n": 2
+   },
+   {
+    "label": "scientific",
+    "n": 2
+   },
+   {
+    "label": "sponsored",
+    "n": 1
+   },
+   {
+    "label": "educational",
+    "n": 1
+   },
+   {
+    "label": "amateur",
+    "n": 1
+   },
+   {
+    "label": "home movie",
+    "n": 1
+   }
+  ],
+  "machine_places": [
+   {
+    "label": "Manchester",
+    "n": 12
+   },
+   {
+    "label": "England",
+    "n": 6
+   },
+   {
+    "label": "United Kingdom",
+    "n": 4
+   },
+   {
+    "label": "Urmston",
+    "n": 1
+   },
+   {
+    "label": "Cornwall",
+    "n": 1
+   },
+   {
+    "label": "China",
+    "n": 1
+   },
+   {
+    "label": "British coast",
+    "n": 1
+   },
+   {
+    "label": "Salford",
+    "n": 1
+   },
+   {
+    "label": "Devon",
+    "n": 1
+   },
+   {
+    "label": "Paris",
+    "n": 1
+   },
+   {
+    "label": "New York",
+    "n": 1
+   },
+   {
+    "label": "Bolton, Greater Manchester, England",
+    "n": 1
+   }
+  ],
+  "nwfa_category_terms": [
+   {
+    "label": "Sport and leisure",
+    "n": 77
+   },
+   {
+    "label": "Wartime",
+    "n": 54
+   },
+   {
+    "label": "Culture and traditions",
+    "n": 53
+   },
+   {
+    "label": "Industry and occupations",
+    "n": 39
+   },
+   {
+    "label": "Travel and transportation",
+    "n": 39
+   },
+   {
+    "label": "Landscape and buildings",
+    "n": 36
+   },
+   {
+    "label": "Health, Welfare and Education",
+    "n": 29
+   },
+   {
+    "label": "Home and family",
+    "n": 28
+   },
+   {
+    "label": "No idea",
+    "n": 2
+   }
+  ],
+  "keyword_overlap": [
+   {
+    "file": "NWFA 143",
+    "catalogue_tokens": 20,
+    "machine_terms": 10,
+    "machine_tokens": 18,
+    "shared_tokens": 1,
+    "shared_terms_strict": 1
+   },
+   {
+    "file": "NWFA 4220",
+    "catalogue_tokens": 37,
+    "machine_terms": 13,
+    "machine_tokens": 16,
+    "shared_tokens": 2,
+    "shared_terms_strict": 1
+   },
+   {
+    "file": "NWFA 473",
+    "catalogue_tokens": 5,
+    "machine_terms": 10,
+    "machine_tokens": 19,
+    "shared_tokens": 1,
+    "shared_terms_strict": 0
+   },
+   {
+    "file": "NWFA 57",
+    "catalogue_tokens": 17,
+    "machine_terms": 10,
+    "machine_tokens": 13,
+    "shared_tokens": 1,
+    "shared_terms_strict": 0
+   },
+   {
+    "file": "NWFA 58",
+    "catalogue_tokens": 8,
+    "machine_terms": 10,
+    "machine_tokens": 10,
+    "shared_tokens": 1,
+    "shared_terms_strict": 0
+   }
+  ],
+  "keyword_overlap_totals": {
+   "catalogue_tokens": 87,
+   "machine_tokens": 76,
+   "shared_tokens": 6
+  }
+ },
+ "segments": {
+  "total_items": 106,
+  "programmes_without": 5,
+  "unparseable_items": 0,
+  "timecode_styles": {
+   "MM:SS": 15,
+   "HH:MM:SS": 9,
+   "none": 5
+  },
+  "channelm": {
+   "n": 21,
+   "min": 0.0,
+   "median": 2.0,
+   "mean": 3.3,
+   "max": 16.0,
+   "hist": {
+    "labels": [
+     "0–1",
+     "1–2",
+     "2–4",
+     "4–6",
+     "6–8",
+     "8–12",
+     "12–16",
+     "16+"
+    ],
+    "counts": [
+     5,
+     3,
+     6,
+     3,
+     2,
+     1,
+     0,
+     1
+    ]
+   }
+  },
+  "fv": {
+   "n": 8,
+   "min": 1.0,
+   "median": 3.5,
+   "mean": 4.6,
+   "max": 14.0,
+   "hist": {
+    "labels": [
+     "0–1",
+     "1–2",
+     "2–4",
+     "4–6",
+     "6–8",
+     "8–12",
+     "12–16",
+     "16+"
+    ],
+    "counts": [
+     0,
+     2,
+     2,
+     2,
+     1,
+     0,
+     1,
+     0
+    ]
+   }
+  }
+ },
+ "label_match": {
+  "files": 5,
+  "verdicts_assigned": 0,
+  "note": "Verdicts are set by hand after a human has compared label and content; left null until NWFA confirms.",
+  "items": [
+   {
+    "file": "N_6966411",
+    "label": "4 Manchester with Liam Frost",
+    "verdict": null,
+    "programmes": 13,
+    "machine_gist": "A Channel Four Manchester music showcase in which host Gerry McLaughlin presents three full music videos framed by deadpan studio chat and a surreal running-gag street montage."
+   },
+   {
+    "file": "N_6967905",
+    "label": "Dr Hartopp resign call to P.A.T. June 2005",
+    "verdict": null,
+    "programmes": 2,
+    "machine_gist": "A Channel M reporter canvases Bolton city centre to test claims that all local NHS dental practices have closed their patient lists, then visits a dentist's surgery to learn why."
+   },
+   {
+    "file": "N_6975894",
+    "label": "Wind Farm Vote Paper",
+    "verdict": null,
+    "programmes": 2,
+    "machine_gist": "A local television news street-report gauging public reaction to the proposed idea of letting 16-year-olds vote in general elections."
+   },
+   {
+    "file": "N_6975915",
+    "label": "School Dinners 25/5",
+    "verdict": null,
+    "programmes": 3,
+    "machine_gist": "A television news report on a woman whose withdrawn eBay advert for her car was cloned by fraudsters offering it far below its value, leading to warnings for anyone buying or selling online."
+   },
+   {
+    "file": "N_6977195",
+    "label": "Online Death Notices 6/2/07",
+    "verdict": null,
+    "programmes": 1,
+    "machine_gist": "A comic sketch in which a flustered regional television reporter endlessly re-runs his live political report on the absence of Conservative councillors in Greater Manchester."
+   }
+  ]
+ },
+ "duration_check": {
+  "items": [
+   {
+    "file": "NWFA 143",
+    "gauge": "35mm N",
+    "sound": "silent",
+    "catalogue_seconds": 168,
+    "file_seconds": 263,
+    "ratio": 1.57
+   },
+   {
+    "file": "NWFA 4220",
+    "gauge": "16mm",
+    "sound": "silent",
+    "catalogue_seconds": 585,
+    "file_seconds": 678,
+    "ratio": 1.16
+   },
+   {
+    "file": "NWFA 473",
+    "gauge": "16mm",
+    "sound": "silent",
+    "catalogue_seconds": 491,
+    "file_seconds": 736,
+    "ratio": 1.5
+   },
+   {
+    "file": "NWFA 57",
+    "gauge": "35mm N",
+    "sound": "sound",
+    "catalogue_seconds": 133,
+    "file_seconds": 147,
+    "ratio": 1.11
+   },
+   {
+    "file": "NWFA 58",
+    "gauge": "35mm N",
+    "sound": "silent",
+    "catalogue_seconds": 157,
+    "file_seconds": 154,
+    "ratio": 0.98
+   }
+  ],
+  "disagreeing": 4,
+  "checked": 5
+ },
+ "examples": {
+  "channelm": {
+   "file": "N_6966411",
+   "span_seconds": 3643,
+   "clips": [
+    {
+     "start": 7,
+     "seconds": 818,
+     "prog": "6",
+     "noncontent": false
+    },
+    {
+     "start": 896,
+     "seconds": 743,
+     "prog": "6.2",
+     "noncontent": false
+    },
+    {
+     "start": 1731,
+     "seconds": 681,
+     "prog": "6.3",
+     "noncontent": false
+    },
+    {
+     "start": 2447,
+     "seconds": 694,
+     "prog": "6.4",
+     "noncontent": false
+    },
+    {
+     "start": 3151,
+     "seconds": 1,
+     "prog": "6.5",
+     "noncontent": true
+    },
+    {
+     "start": 3219,
+     "seconds": 69,
+     "prog": "6.6",
+     "noncontent": false
+    },
+    {
+     "start": 3316,
+     "seconds": 17,
+     "prog": "6.7",
+     "noncontent": false
+    },
+    {
+     "start": 3364,
+     "seconds": 16,
+     "prog": "6.8",
+     "noncontent": false
+    },
+    {
+     "start": 3449,
+     "seconds": 17,
+     "prog": "6.9",
+     "noncontent": false
+    },
+    {
+     "start": 3472,
+     "seconds": 13,
+     "prog": "6.10",
+     "noncontent": false
+    },
+    {
+     "start": 3499,
+     "seconds": 21,
+     "prog": "6.11",
+     "noncontent": false
+    },
+    {
+     "start": 3584,
+     "seconds": 13,
+     "prog": "6.12",
+     "noncontent": false
+    },
+    {
+     "start": 3642,
+     "seconds": 1,
+     "prog": "6.13",
+     "noncontent": true
+    }
+   ],
+   "separators": [
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 0,
+     "seconds": 7,
+     "leading": true
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 825,
+     "seconds": 71,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 1639,
+     "seconds": 92,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 2412,
+     "seconds": 35,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 3141,
+     "seconds": 10,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 3152,
+     "seconds": 67,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 3288,
+     "seconds": 28,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 3333,
+     "seconds": 31,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 3380,
+     "seconds": 69,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 3466,
+     "seconds": 6,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 3485,
+     "seconds": 14,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 3520,
+     "seconds": 64,
+     "leading": false
+    },
+    {
+     "file": "N_6966411",
+     "collection": "channelm",
+     "at": 3597,
+     "seconds": 45,
+     "leading": false
+    }
+   ]
+  },
+  "fv": {
+   "file": "NWFA 57",
+   "span_seconds": 147,
+   "clips": [
+    {
+     "start": 0,
+     "seconds": 58,
+     "prog": "4",
+     "noncontent": false
+    },
+    {
+     "start": 65,
+     "seconds": 27,
+     "prog": "4.2",
+     "noncontent": false
+    },
+    {
+     "start": 96,
+     "seconds": 15,
+     "prog": "4.3",
+     "noncontent": false
+    },
+    {
+     "start": 116,
+     "seconds": 31,
+     "prog": "4.4",
+     "noncontent": false
+    }
+   ],
+   "separators": [
+    {
+     "file": "NWFA 57",
+     "collection": "fv",
+     "at": 58,
+     "seconds": 7,
+     "leading": false
+    },
+    {
+     "file": "NWFA 57",
+     "collection": "fv",
+     "at": 92,
+     "seconds": 4,
+     "leading": false
+    },
+    {
+     "file": "NWFA 57",
+     "collection": "fv",
+     "at": 111,
+     "seconds": 5,
+     "leading": false
+    }
+   ]
+  }
+ }
+}

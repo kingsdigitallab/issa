@@ -1,0 +1,539 @@
+{
+ "generated_at": "2026-10-21T19:56",
+ "totals": {
+  "files": 400,
+  "channelm": 200,
+  "fv": 200
+ },
+ "collections": [
+  {
+   "id": "channelm",
+   "name": "Channel M",
+   "long_name": "Channel M (Heritage 2022)",
+   "file_count": 200,
+   "blurb": "The entire news and music output of Channel M, an early Manchester local TV station that closed in 2012. Some complete news programmes, but mostly rushes tapes and raw footage. 1,689 tapes were digitised under Heritage 2022, around 35% of the collection.",
+   "caveat": "A printing error on the barcodes means the label information in the metadata does not match up with the file content.",
+   "columns_total": 77,
+   "columns_populated": 17,
+   "columns_empty": 60
+  },
+  {
+   "id": "fv",
+   "name": "Film & Video",
+   "long_name": "Film & Video main catalogue",
+   "file_count": 200,
+   "blurb": "A deliberately broad range from NWFA's main film and video collection: professional and amateur, b/w and colour, sound and silent, from film, video and born-digital originals. Full catalogue metadata from NWFA's FileMaker Pro database.",
+   "caveat": null,
+   "columns_total": 97,
+   "columns_populated": 87,
+   "columns_empty": 10
+  }
+ ],
+ "completeness": [
+  {
+   "field": "title",
+   "channelm": 0.0,
+   "fv": 100.0,
+   "cm_column": "Title",
+   "fv_column": "title"
+  },
+  {
+   "field": "year",
+   "channelm": 0.0,
+   "fv": 100.0,
+   "cm_column": "Date",
+   "fv_column": "dates"
+  },
+  {
+   "field": "synopsis",
+   "channelm": 0.0,
+   "fv": 100.0,
+   "cm_column": "Synopsis",
+   "fv_column": "synopsis"
+  },
+  {
+   "field": "keywords",
+   "channelm": 0.0,
+   "fv": 100.0,
+   "cm_column": "Subject",
+   "fv_column": "index_terms"
+  },
+  {
+   "field": "genre",
+   "channelm": 0.0,
+   "fv": 99.5,
+   "cm_column": "Genre",
+   "fv_column": "category"
+  },
+  {
+   "field": "place",
+   "channelm": 0.0,
+   "fv": 100.0,
+   "cm_column": "Production Country",
+   "fv_column": "ContentCounty"
+  },
+  {
+   "field": "colour",
+   "channelm": 0.0,
+   "fv": 99.5,
+   "cm_column": "Colour",
+   "fv_column": "colour"
+  },
+  {
+   "field": "sound",
+   "channelm": 0.0,
+   "fv": 99.5,
+   "cm_column": "Sound",
+   "fv_column": "sound"
+  },
+  {
+   "field": "duration",
+   "channelm": 0.0,
+   "fv": 100.0,
+   "cm_column": "Tape duration (mins)",
+   "fv_column": "running_time_mns"
+  },
+  {
+   "field": "credits",
+   "channelm": 0.0,
+   "fv": 100.0,
+   "cm_column": "Director",
+   "fv_column": "producer"
+  }
+ ],
+ "channelm": {
+  "rows": 200,
+  "columns_total": 77,
+  "columns_populated": 17,
+  "columns_empty": 60,
+  "populated_columns": [
+   "Supplier Name",
+   "Archive",
+   "Collection Name",
+   "Collection Description",
+   "Crate barcode",
+   "Videotape identifier / barcode (if available)",
+   "Tape format",
+   "LP/SP",
+   "Output Filename",
+   "Label transcription",
+   "Digitisation Date",
+   "Aspera Upload Date",
+   "Digitised",
+   "Ingest into DPI date",
+   "30 days window end",
+   "File name",
+   "Process closed (sign-off on deliverable)"
+  ],
+  "descriptive_columns_checked": 17,
+  "descriptive_columns_empty": 17,
+  "tape_format": {
+   "Mini DV": 183,
+   "DVCAM": 17
+  },
+  "crates": {
+   "0008S45": 183,
+   "0008S4H": 17
+  },
+  "digitisation_dates": [
+   "2022-05-06",
+   "2022-05-09",
+   "2022-05-10",
+   "2022-05-11",
+   "2022-05-12",
+   "2022-05-13",
+   "2022-05-16",
+   "2022-05-17",
+   "2022-05-18",
+   "2022-05-19",
+   "2022-05-24",
+   "2022-05-31"
+  ],
+  "label": {
+   "present": 200,
+   "words": {
+    "n": 200,
+    "min": 1.0,
+    "median": 4.0,
+    "mean": 4.5,
+    "max": 25.0
+   },
+   "with_date_fragment": 109,
+   "distinct": 196
+  }
+ },
+ "fv": {
+  "rows": 200,
+  "columns_total": 97,
+  "columns_populated": 87,
+  "columns_full": 20,
+  "columns_empty": 10,
+  "colour": {
+   "b/w": 110,
+   "colour": 73,
+   "b/w & colour": 16
+  },
+  "sound": {
+   "silent": 155,
+   "sound": 38,
+   "mute": 4,
+   "sound (sep)": 2
+  },
+  "gauge": {
+   "16mm": 98,
+   "35mm N": 48,
+   "spr8mm": 15,
+   "std8mm": 14,
+   "9.5mm": 10,
+   "35mm S": 8,
+   "VHS": 2,
+   "S-VHS": 1,
+   ".m4v": 1,
+   ".mp4": 1,
+   ".MTS": 1,
+   ".mov": 1
+  },
+  "prof_am": {
+   "Amateur": 116,
+   "Professional": 83
+  },
+  "category_terms": [
+   {
+    "label": "Sport and leisure",
+    "n": 77
+   },
+   {
+    "label": "Wartime",
+    "n": 54
+   },
+   {
+    "label": "Culture and traditions",
+    "n": 53
+   },
+   {
+    "label": "Industry and occupations",
+    "n": 39
+   },
+   {
+    "label": "Travel and transportation",
+    "n": 39
+   },
+   {
+    "label": "Landscape and buildings",
+    "n": 36
+   },
+   {
+    "label": "Health, Welfare and Education",
+    "n": 29
+   },
+   {
+    "label": "Home and family",
+    "n": 28
+   },
+   {
+    "label": "No idea",
+    "n": 2
+   }
+  ],
+  "prof_categories": [
+   {
+    "label": "Factual Record",
+    "n": 55
+   },
+   {
+    "label": "Local Cinema Topicals",
+    "n": 27
+   },
+   {
+    "label": "Promotional/Advertising",
+    "n": 21
+   },
+   {
+    "label": "Cinema Newsreel",
+    "n": 7
+   },
+   {
+    "label": "Scientific",
+    "n": 2
+   },
+   {
+    "label": "Educational/Training",
+    "n": 2
+   },
+   {
+    "label": "Fiction",
+    "n": 1
+   }
+  ],
+  "am_categories": [
+   {
+    "label": "Special Interest",
+    "n": 92
+   },
+   {
+    "label": "Home Movies",
+    "n": 32
+   },
+   {
+    "label": "Fiction",
+    "n": 4
+   },
+   {
+    "label": "Educational/Training",
+    "n": 2
+   }
+  ],
+  "content_county_top": [
+   {
+    "label": "Lancashire",
+    "n": 33
+   },
+   {
+    "label": "Greater Manchester Mc",
+    "n": 17
+   },
+   {
+    "label": "Merseyside Li",
+    "n": 15
+   },
+   {
+    "label": "Greater Manchester Ta",
+    "n": 14
+   },
+   {
+    "label": "Cheshire",
+    "n": 11
+   },
+   {
+    "label": "Greater Manchester Bo",
+    "n": 11
+   },
+   {
+    "label": "elsewhere",
+    "n": 11
+   },
+   {
+    "label": "Greater Manchester Bu",
+    "n": 10
+   },
+   {
+    "label": "Cumbria",
+    "n": 10
+   },
+   {
+    "label": "Greater Manchester Tr",
+    "n": 5
+   }
+  ],
+  "decades": {
+   "1910": 24,
+   "1920": 34,
+   "1930": 33,
+   "1940": 30,
+   "1950": 21,
+   "1960": 22,
+   "1970": 24,
+   "1980": 6,
+   "1990": 2,
+   "2010": 3,
+   "2020": 1
+  },
+  "years": {
+   "min": 1910,
+   "max": 2020
+  },
+  "runtime_minutes": {
+   "n": 200,
+   "min": 0.8,
+   "median": 10.1,
+   "mean": 13.1,
+   "max": 84.2
+  },
+  "runtime_hours_total": 43.7,
+  "runtime_over_30min": 14,
+  "runtime_under_5min": 49,
+  "synopsis_words": {
+   "n": 200,
+   "min": 14.0,
+   "median": 65.0,
+   "mean": 66.2,
+   "max": 186.0
+  },
+  "index_terms_count": {
+   "n": 200,
+   "min": 3.0,
+   "median": 31.0,
+   "mean": 39.6,
+   "max": 299.0
+  },
+  "implied_projection_fps": {
+   "16mm": {
+    "n": 98,
+    "median_fps": 18.5
+   },
+   "35mm N": {
+    "n": 47,
+    "median_fps": 25.0
+   },
+   "35mm S": {
+    "n": 8,
+    "median_fps": 20.3
+   },
+   "9.5mm": {
+    "n": 10,
+    "median_fps": 20.0
+   },
+   "spr8mm": {
+    "n": 15,
+    "median_fps": 18.0
+   },
+   "std8mm": {
+    "n": 14,
+    "median_fps": 18.3
+   }
+  }
+ },
+ "hierarchy": {
+  "levels": [
+   {
+    "level": "Archive",
+    "note": "NWFA",
+    "bands": [
+     {
+      "collection": "archive",
+      "share": 100,
+      "state": "verified",
+      "label": "NWFA"
+     }
+    ]
+   },
+   {
+    "level": "Collection",
+    "note": "2 batches of 200",
+    "bands": [
+     {
+      "collection": "channelm",
+      "share": 50,
+      "state": "verified",
+      "label": "Channel M"
+     },
+     {
+      "collection": "fv",
+      "share": 50,
+      "state": "verified",
+      "label": "Film & Video"
+     }
+    ]
+   },
+   {
+    "level": "Video file",
+    "note": "400 delivered files",
+    "bands": [
+     {
+      "collection": "channelm",
+      "share": 50,
+      "state": "verified",
+      "label": "200 files"
+     },
+     {
+      "collection": "fv",
+      "share": 50,
+      "state": "verified",
+      "label": "200 files"
+     }
+    ]
+   },
+   {
+    "level": "Programme",
+    "note": "what the catalogue says is in each file",
+    "bands": [
+     {
+      "collection": "channelm",
+      "share": 50,
+      "state": "check",
+      "label": "label only, unreliable"
+     },
+     {
+      "collection": "fv",
+      "share": 50,
+      "state": "assumed",
+      "label": "assumed 1 film = 1 programme"
+     }
+    ]
+   },
+   {
+    "level": "Segment",
+    "note": "structure inside a programme",
+    "bands": [
+     {
+      "collection": "channelm",
+      "share": 50,
+      "state": "unknown",
+      "label": "none"
+     },
+     {
+      "collection": "fv",
+      "share": 50,
+      "state": "assumed",
+      "label": "prose synopsis, no timecodes"
+     }
+    ]
+   }
+  ],
+  "sample": {
+   "n": 10,
+   "items": [
+    {
+     "id": "N_6966411",
+     "collection": "channelm",
+     "annotated": false
+    },
+    {
+     "id": "N_6967905",
+     "collection": "channelm",
+     "annotated": false
+    },
+    {
+     "id": "N_6975894",
+     "collection": "channelm",
+     "annotated": false
+    },
+    {
+     "id": "N_6975915",
+     "collection": "channelm",
+     "annotated": false
+    },
+    {
+     "id": "N_6977195",
+     "collection": "channelm",
+     "annotated": false
+    },
+    {
+     "id": "NWFA 143",
+     "collection": "fv",
+     "annotated": false
+    },
+    {
+     "id": "NWFA 4220",
+     "collection": "fv",
+     "annotated": false
+    },
+    {
+     "id": "NWFA 473",
+     "collection": "fv",
+     "annotated": false
+    },
+    {
+     "id": "NWFA 57",
+     "collection": "fv",
+     "annotated": false
+    },
+    {
+     "id": "NWFA 58",
+     "collection": "fv",
+     "annotated": false
+    }
+   ]
+  }
+ }
+}
