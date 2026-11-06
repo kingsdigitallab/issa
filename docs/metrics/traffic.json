@@ -336,6 +336,10 @@
       "2026-11-04": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-11-05": {
+        "count": 0,
+        "uniques": 0
       }
     },
     "referrers": {
@@ -1295,6 +1299,23 @@
           "referrer": "linkedin.com",
           "uniques": 2
         }
+      ],
+      "2026-11-06": [
+        {
+          "count": 42,
+          "referrer": "aocr.org",
+          "uniques": 42
+        },
+        {
+          "count": 4,
+          "referrer": "avindh.org",
+          "uniques": 3
+        },
+        {
+          "count": 2,
+          "referrer": "linkedin.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1633,6 +1654,10 @@
       "2026-11-04": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-11-05": {
+        "count": 10,
+        "uniques": 10
       }
     }
   },
@@ -1708,6 +1733,9 @@
     },
     "2026-11-03": {
       "visitors": 4
+    },
+    "2026-11-06": {
+      "visitors": 10
     }
   },
   "issa": {
@@ -2047,6 +2075,10 @@
       "2026-11-04": {
         "count": 15,
         "uniques": 7
+      },
+      "2026-11-05": {
+        "count": 5,
+        "uniques": 5
       }
     },
     "referrers": {
@@ -3699,6 +3731,33 @@
           "referrer": "movingpixel.net",
           "uniques": 1
         }
+      ],
+      "2026-11-06": [
+        {
+          "count": 5,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "movingpixel.net",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "aocr.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -4037,6 +4096,10 @@
       "2026-11-04": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-11-05": {
+        "count": 19,
+        "uniques": 6
       }
     }
   }
