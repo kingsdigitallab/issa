@@ -348,6 +348,10 @@
       "2026-11-07": {
         "count": 2,
         "uniques": 2
+      },
+      "2026-11-08": {
+        "count": 1,
+        "uniques": 1
       }
     },
     "referrers": {
@@ -1363,6 +1367,23 @@
           "referrer": "github.com",
           "uniques": 1
         }
+      ],
+      "2026-11-09": [
+        {
+          "count": 21,
+          "referrer": "aocr.org",
+          "uniques": 21
+        },
+        {
+          "count": 3,
+          "referrer": "avindh.org",
+          "uniques": 3
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1713,6 +1734,10 @@
       "2026-11-07": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-11-08": {
+        "count": 1,
+        "uniques": 1
       }
     }
   },
@@ -2142,6 +2167,10 @@
       "2026-11-07": {
         "count": 6,
         "uniques": 6
+      },
+      "2026-11-08": {
+        "count": 11,
+        "uniques": 7
       }
     },
     "referrers": {
@@ -3890,6 +3919,43 @@
           "referrer": "kdl.kcl.ac.uk",
           "uniques": 1
         }
+      ],
+      "2026-11-09": [
+        {
+          "count": 6,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 2
+        },
+        {
+          "count": 4,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "movingpixel.net",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "aocr.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -4239,6 +4305,10 @@
       },
       "2026-11-07": {
         "count": 7,
+        "uniques": 1
+      },
+      "2026-11-08": {
+        "count": 2,
         "uniques": 1
       }
     }
