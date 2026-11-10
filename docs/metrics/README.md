@@ -5,7 +5,6 @@ activity data for `kingsdigitallab/issa` and `kingsdigitallab/framesense`,
 used for BFI reporting.
 
 ## What runs, and when
-
 `.github/workflows/metrics.yml` runs `scripts/collect_metrics.py` daily
 at 06:00 UTC (and on manual `workflow_dispatch`). It calls the GitHub
 Traffic API (`/traffic/views`, `/traffic/clones`,
@@ -15,16 +14,13 @@ commit message ends `[skip ci]` so it doesn't retrigger other workflows,
 and the job doesn't fail when there's nothing new to commit.
 
 ### Why daily
-
 GitHub's Traffic API only retains a rolling **14-day window** — data
 older than that is silently dropped from the API response, not archived
 anywhere. Running daily leaves a wide safety margin against a missed run
 (a workflow outage, a paused schedule) still causing permanent data
-loss. `traffic.json` is the durable, append-only record; the API itself
-is not.
+loss. `traffic.json` is the durable, append-only record that is used for reporting to funder.
 
 ## Authentication
-
 The collector calls the API with `Authorization: token $METRICS_PAT`,
 where `METRICS_PAT` is a **classic PAT with `repo` scope**, stored as an
 Actions secret on this repository. The Traffic API requires push access
@@ -41,11 +37,10 @@ The same secret is reused by the workflow to check out and push commits
 attributed to whichever account owns the PAT.
 
 ## GoatCounter (optional)
-
 If `GOATCOUNTER_API` and `GOATCOUNTER_TOKEN` are both set as Actions
 secrets, the collector also snapshots an all-time cumulative visitor
 count from your GoatCounter site into `traffic.json`, keyed by run date.
-If either is unset, this step is skipped cleanly and the reporter prints
+If either is unset, this step is skipped and the reporter prints
 `—` for "Dashboard visitors" with a note that it isn't configured.
 
 **To enable it, you need two things from GoatCounter:**
@@ -62,7 +57,6 @@ Add both as **repository secrets** (Settings → Secrets and variables →
 Actions → New repository secret) with those exact names.
 
 ### How the number is derived
-
 GoatCounter's `/api/v0/stats/total` endpoint returns a visitor count for
 an arbitrary date range — by default just the last 7 days, which isn't
 useful for an all-time figure. The collector explicitly requests the
@@ -78,9 +72,8 @@ net increase over the period, not a sum of snapshots (summing cumulative
 totals would wildly overcount).
 
 ## Running the reporter
-
 `scripts/report_metrics.py` produces a paste-ready Markdown table for a
-given date range. It doesn't run automatically — run it manually
+given date range. It doesn't run automatically — we run it manually
 whenever a report is due:
 
 ```bash
@@ -101,7 +94,7 @@ commits, and reads `traffic.json` for view/unique/referrer/GoatCounter
 figures — it doesn't call any API itself, so no token is needed to run
 it. If `traffic.json` has no data covering the requested window, the
 affected cells print `collection begins this period` instead of a
-number, rather than silently showing a misleading zero.
+number, rather than showing a misleading zero.
 
 Note: summed page views are exact (GitHub's daily counts sum cleanly),
 but summed unique visitors are **unique-per-day, summed** — not
