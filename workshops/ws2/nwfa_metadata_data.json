@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-21T19:56",
+ "generated_at": "2026-11-10T10:52",
  "totals": {
   "files": 400,
   "channelm": 200,
@@ -481,59 +481,61 @@
    }
   ],
   "sample": {
-   "n": 10,
+   "n": 398,
+   "annotated": 10,
    "items": [
     {
      "id": "N_6966411",
      "collection": "channelm",
-     "annotated": false
+     "annotated": true
     },
     {
      "id": "N_6967905",
      "collection": "channelm",
-     "annotated": false
+     "annotated": true
     },
     {
      "id": "N_6975894",
      "collection": "channelm",
-     "annotated": false
+     "annotated": true
     },
     {
      "id": "N_6975915",
      "collection": "channelm",
-     "annotated": false
+     "annotated": true
     },
     {
      "id": "N_6977195",
      "collection": "channelm",
-     "annotated": false
+     "annotated": true
     },
     {
      "id": "NWFA 143",
      "collection": "fv",
-     "annotated": false
+     "annotated": true
     },
     {
      "id": "NWFA 4220",
      "collection": "fv",
-     "annotated": false
+     "annotated": true
     },
     {
      "id": "NWFA 473",
      "collection": "fv",
-     "annotated": false
+     "annotated": true
     },
     {
      "id": "NWFA 57",
      "collection": "fv",
-     "annotated": false
+     "annotated": true
     },
     {
      "id": "NWFA 58",
      "collection": "fv",
-     "annotated": false
+     "annotated": true
     }
-   ]
+   ],
+   "collapsed": true
   }
  }
 }

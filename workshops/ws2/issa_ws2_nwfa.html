@@ -80,6 +80,7 @@
   td.nw, th.nw { white-space:nowrap; }
   .tw { overflow-x:auto; }
   .v-match { color:var(--outer); font-weight:700; } .v-near { color:#b07d08; font-weight:700; } .v-miss { color:var(--bad); font-weight:700; }
+  .v-mixed { color:var(--inner); font-weight:700; }   /* no majority: contested, needs a human */
   .mono { font:.84rem ui-monospace,SFMono-Regular,Menlo,monospace; }
 
   .controls { display:flex; gap:1rem; flex-wrap:wrap; align-items:center; margin:.6rem 0 1rem; padding:.7rem 1rem; background:var(--soft); border:1px solid var(--line); border-radius:4px; font:.85rem var(--sans); }
@@ -96,6 +97,8 @@
   .fill.assumed { text-shadow:0 1px 2px rgba(0,0,0,.65), 0 0 3px rgba(0,0,0,.45); }
   .sample-group { display:flex; flex-wrap:wrap; align-content:center; gap:4px; padding:6px 8px; background:#fafaf9; border:1px dashed #d8d7d2; border-radius:3px; height:100%; }
   .sdot { width:15px; height:15px; border-radius:3px; flex-shrink:0; cursor:default; }
+  .band-label.multi { flex-direction:column; justify-content:center; }
+  .band-label .sample-note { font-size:.64rem; color:var(--faint); text-transform:none; letter-spacing:0; margin-top:2px; }
   #tip { position:fixed; z-index:1000; pointer-events:none; background:#111; color:#fff; font:.78rem/1.4 var(--sans); padding:.5rem .7rem; border-radius:4px; max-width:290px; opacity:0; transition:opacity .1s; } #tip.on { opacity:1; }
 
   .ladder { display:grid; grid-template-columns:230px 1fr 1fr; grid-template-rows:repeat(5,46px); gap:6px 14px; margin:1rem 0 1.2rem; font:.85rem var(--sans); }
@@ -185,13 +188,7 @@
     </div>
   </div>
 
-  <div class="callout warn"><strong>The asymmetry is also a processing cost.</strong> Film &amp; Video is <span data-n="fv.runtime_hours_total"></span> hours of material, median <span data-n="fv.runtime_minutes.median"></span> minutes per item. Channel M carries no durations in its metadata at all, but the tapes are Mini DV and DVCAM and the sampled ones run to <span id="cm-longest">—</span> minutes, so the batch is plausibly <b>three to four times the hours of Film &amp; Video</b> with none of the reference metadata. That shapes both the compute budget and where human attention is worth spending.</div>
-
-  <h3>How much descriptive metadata is there?</h3>
-  <div class="chartcard"><h4>Share of each batch's 200 records with a value</h4>
-    <div class="sub">Comparable descriptive fields, mapped onto each catalogue's own column names</div>
-    <div class="cb tall"><canvas id="c-complete"></canvas></div>
-    <p class="cap">Every descriptive field in the Channel M export is empty for all 200 records — the columns exist in the Heritage 2022 template but were never filled, because this material was never catalogued. Film &amp; Video is complete or near-complete on all ten.</p></div>
+  <div class="callout warn"><strong>The asymmetry is also a processing cost.</strong> The delivered Film &amp; Video files measure <span id="fv-hours">—</span> hours in total, against <span data-n="fv.runtime_hours_total"></span> hours in the catalogue. Channel M carries no durations in its metadata at all — but its delivered files measure <span id="cm-hours">—</span> hours, <span id="cm-ratio">—</span> the Film &amp; Video total, with none of the reference metadata. That shapes both the compute budget and where human attention is worth spending.</div>
 
   <h3>Hierarchical organisation</h3>
   <p>Mapping onto the design of <a href="https://github.com/kingsdigitallab/framesense">FrameSense</a>, we organise the collections hierarchically: archive → collection → video file → programme → segment. The bands below show what the catalogue establishes on its own at each level, before any processing.</p>
@@ -204,7 +201,7 @@
     <span><i class="sw" style="background:var(--warn)"></i>⚠ Needs human check</span>
     <span><i class="sw unk"></i>Not yet determined</span></div>
   <div class="chartcard"><div id="hier"></div>
-    <p class="cap" style="margin-bottom:0">Band width = share of the 400 records. The working sample row shows one square per sampled video (solid = annotated by hand, hatched = not yet). Hover for detail. Note that below <i>video file</i> the catalogue stops being able to help: Channel M has a label it cannot vouch for, and Film &amp; Video has a prose synopsis with no timecodes in it.</p></div>
+    <p class="cap" style="margin-bottom:0">Band width = share of the 400 records. The working sample row shows one square per video in the run (solid = annotated by hand, hatched = not yet); at full scale it shows only the annotated ones and says how many they are. Hover for detail. Note that below <i>video file</i> the catalogue stops being able to help: Channel M has a label it cannot vouch for, and Film &amp; Video has a prose synopsis with no timecodes in it.</p></div>
 </section>
 
 <!-- ───────────────────────── 2 ───────────────────────── -->
@@ -215,19 +212,30 @@
 
   <p>The label is the only content description these 200 files have. If it cannot be trusted, the files are effectively unreachable: you cannot search them, select them for a compilation, or answer an enquiry about them. Before any of the segmentation work matters, this is the practical problem.</p>
 
-  <p>A description generated from the pictures and sound does not depend on the barcode at all, so comparing it against the label gives a per-tape verdict — and across <span data-n="collections.0.file_count"></span> tapes, a measurement.</p>
+  <p>A description generated from the pictures and sound does not depend on the barcode at all. That is what makes the label testable: score each tape's description against the archive's own label pool, and the fit — or its absence — is a per-tape result that adds up to a measurement across the batch.</p>
 
-  <div class="chartcard"><h4>Label against machine description</h4>
-    <div class="sub">Label transcription from the Heritage 2022 metadata; description from the pipeline, which never saw the label</div>
-    <div id="lm-summary"></div>
-    <div class="tw"><table id="t-labels"><thead><tr>
-      <th class="nw">File</th><th>Label says</th><th>Pipeline says the content is</th><th class="nw">Verdict</th>
+  <h3>How the match is scored</h3>
+  <p>For each processed Channel M tape, the pipeline's description of it — written from the pictures and sound; the pipeline never saw the label — is embedded together with the archive's full H22 label list (around 3,000 labels, not just this batch's 200) using a sentence-embedding model (<code>all-MiniLM-L6-v2</code>). The five nearest labels are kept, and two numbers come out per tape: how similar the best candidate is (<code>%match1</code>), and how far it clears the runner-up (<code>simDif</code>). The spreadsheet colours each row from those two:</p>
+  <ul class="qs">
+    <li><b class="v-match">Green</b> — best candidate above 60% similar with more than 10 points on the runner-up: a confident, unambiguous label for the tape.</li>
+    <li><b class="v-near">Yellow</b> — best candidate above 50%, or more than 5 points on the runner-up: a plausible label, but an ambiguous one.</li>
+    <li><b class="v-miss">Blank</b> — no candidate clears the bar: the pool offers nothing the description fits.</li>
+  </ul>
+
+  <div class="chartcard"><h4>The tapes, scored</h4>
+    <div class="sub">Best candidate from the H22 label pool per tape, with the two scores; the tapes NWFA has judged are shown with their verdict</div>
+    <div class="tiles" style="grid-template-columns:repeat(3,1fr);margin:.2rem 0 1rem">
+      <div class="tile"><div class="v" style="color:var(--outer)"><span data-p="label_pool.classes.green"></span></div><div class="l">green — confident, unambiguous label</div></div>
+      <div class="tile"><div class="v" style="color:#b07d08"><span data-p="label_pool.classes.yellow"></span></div><div class="l">yellow — plausible, ambiguous</div></div>
+      <div class="tile alert"><div class="v"><span data-p="label_pool.classes.blank"></span></div><div class="l">blank — no candidate clears the bar</div></div>
+    </div>
+    <div class="tw"><table id="t-lp"><thead><tr>
+      <th class="nw">File</th><th>Best candidate label</th><th class="nw">Similarity</th><th class="nw">Margin</th><th class="nw">Scored</th><th class="nw">NWFA verdict</th>
     </tr></thead><tbody></tbody></table></div>
-    <p class="cap" id="cap-labels">—</p></div>
+    <p class="cap" id="cap-lp">—</p></div>
 
-  <div class="callout good"><b>"AI recovers an access layer that a printing error took away"</b>, where the alternative is 200 mislabelled tapes. The verdicts in that table are cheap for an archivist to assign (one judgement per tape, no timecoding), and they scale to a number that can be reported.</div>
-
-  <div class="callout q">If the printing error has a <i>shape</i> — labels offset by one, or two crates transposed — then machine descriptions across all <span data-n="collections.0.file_count"></span> files could let us <b>re-pair</b> labels to files rather than just flagging the mismatches. That would be a far better outcome than correcting them one at a time, and it is only testable at scale. The two crates in this batch (<span id="cm-crates">—</span>) are an obvious thing to check first.</div>
+  <p><b>The five tapes NWFA has judged independently check the heuristic.</b> None of the four whose labels do not match the content — all five annotators said <i>no</i> on each — scores green: two find no candidate at all, and two top out on a pool of near-identical "Channel M News" labels, tied with zero margin. The contested tape does score green: its best candidate is a <i>4&nbsp;Manchester</i> label — the same programme its own spine label names, just not that exact one.</p>
+  <p>Because the candidates come from the whole H22 label list rather than this batch's 200 labels, a confident match can point at a label that is currently sitting on a different tape. That is the re-pairing opportunity: instead of correcting <span data-n="collections.0.file_count"></span> labels one at a time, the machine descriptions could be used to match labels to files across the batch.</p>
 </section>
 
 <!-- ───────────────────────── 3 ───────────────────────── -->
@@ -275,9 +283,9 @@
     <div class="parrow">→</div>
     <div class="pstep"><b>Cut on separators</b><small>file split into clips</small></div>
     <div class="parrow">→</div>
-    <div class="pstep gpu"><b>Describe each clip</b><small>VLM answers the metadata questions per clip</small></div>
+    <div class="pstep gpu"><b>Describe each clip, twice</b><small>pass 1 (<code>misc3</code>): the description fields · pass 2 (<code>secondpass1</code>): programme flag, bands, environment</small></div>
     <div class="parrow">→</div>
-    <div class="pstep"><b>One row per programme</b><small>11 fields + segment list</small></div>
+    <div class="pstep"><b>One row per programme</b><small>13 fields + segment list</small></div>
   </div>
 
   <h3>Model</h3>
@@ -287,29 +295,40 @@
     <tr><td class="nw">Hosting</td><td>KCL CREATE HPC cluster — archive video never leaves KCL infrastructure</td></tr>
     <tr><td class="nw">Settings</td><td class="mono">seed 1234 · reasoning_effort xhigh · video_tokens 64k · max_tokens 30k · max_fps 1 (clips) / 2 (separators)</td></tr>
     <tr><td class="nw">Transcription</td><td class="mono">nvidia/canary-1b-v2</td></tr>
-    <tr><td class="nw">Prompt</td><td class="mono">misc3</td></tr>
+    <tr><td class="nw">Prompt</td><td class="mono">misc3 (pass 1) · secondpass1 (pass 2)</td></tr>
   </tbody></table></div>
 
-  <details><summary>The clip prompt, verbatim (<code>misc3</code>)</summary>
+  <details><summary>The clip prompt, pass 1, verbatim (<code>misc3</code>)</summary>
     <pre>The attached video is a single programme from a very diverse collection at a national screen archive.
-It may contain raw unedited rushes or content that went on air.
-Focus on the programme's actual content and disregard any non-programme material at the start
-(such as colour bars, blank frames, or other incidental visuals).
+Sometimes a professional programme can contain raw unedited rushes with outtakes or retakes.
 Returns a json dictionary with the following keys:
 * year (the year the programme was made, only if specified and certain),
-* title (the title of the programme, if specified),
-* place (regions and main specific identifiable place names where this was filmed, if certain),
+* title (the title of the programme, only if specified and certain),
+* places (unique toponyms where the programme takes place; only if certain and mentioned on a sign or in subtitles),
 * segments (list of main chapters or major segments, for each a `title` and a `starting` timecode),
 * summary (one very concise sentence summarising the content of the programme),
-* synopsis (short paragraph summarising the content of the programme),
+* synopsis (short paragraph summarising the content of the programme; don't mention possible visual transitions at the start),
 * colour (either: black-and-white or colour or sepia or colour-and-black-and-white),
-* fiction (yes if definitively fiction, no otherwise),
-* types (one or more values from tv news, amateur, educational, sponsored, advertising, animation,
-  documentary, promotional, fiction, drama, tv sports, instructional, religion, comedy, horror,
-  home movie, scientific),
+* category (one or more values from: Travel and transportation; Home and family; Sport and leisure;
+  Landscape and buildings; Industry and occupations; Wartime; Culture and traditions;
+  Health, Welfare and Education; No idea),
+* category2 (one or more values from: Cinema Newsreel; Local Cinema Topicals; Promotional/Advertising;
+  Educational/Training; Scientific; Factual Record; Fiction; Home Movies; Special Interest; Amateur),
 * keywords (10 key topical or thematic tags for this programme; avoid overly specific tags like
   place names, people or objects),
 * credits (if specified; use a dictionary with keys for roles and name(s) for values).</pre></details>
+
+  <details><summary>The clip prompt, pass 2, verbatim (<code>secondpass1</code>)</summary>
+    <pre>The attached video is a single programme from a very diverse collection at a national screen archive.
+Sometimes a professional programme can contain raw unedited rushes with outtakes or retakes.
+Returns a valid JSON dictionary with the following keys:
+* programme ('true' if this is an actual programme with meaningful content that can be broadcast;
+  'false' if this is mostly visual markers like blank screen, color bars, white noise),
+* bands (a list of music bands featuring in this programme, for each one its `name` and a list of
+  `activities` such as 'music video', 'studio performance', 'concert performance', 'interview', 'other';
+  [] if no band in the programme),
+* environment (in two words maximum, the primary type of environment the programme takes place in,
+  such as `forest`, `street`, `studio`, `school`)</pre></details>
 
   <details><summary>The separator prompt, verbatim (<code>sep1</code>)</summary>
     <pre>List every full-screen separator between distinct programmes. A visual separator usually looks like
@@ -320,8 +339,10 @@ this. Return an empty list if the input doesn't contain any definite separator. 
 a programme like ending credits or chapter titles should not be reported as programme separators but
 may help finding/confirming nearby separators.</pre></details>
 
-  <p>Fields targeted per programme:</p>
-  <div class="chips"><span class="chip">title</span><span class="chip">year</span><span class="chip">place</span><span class="chip">colour</span><span class="chip">types</span><span class="chip">fiction</span><span class="chip">summary</span><span class="chip">synopsis</span><span class="chip">segments</span><span class="chip">credits</span><span class="chip">keywords</span></div>
+  <p>Fields targeted per programme. Pass 1 (<code>misc3</code>):</p>
+  <div class="chips"><span class="chip">title</span><span class="chip">year</span><span class="chip">place</span><span class="chip">colour</span><span class="chip">types</span><span class="chip">summary</span><span class="chip">synopsis</span><span class="chip">segments</span><span class="chip">credits</span><span class="chip">keywords</span></div>
+  <p style="margin-top:.5rem">Pass 2 (<code>secondpass1</code>):</p>
+  <div class="chips"><span class="chip">programme</span><span class="chip">bands</span><span class="chip">environment</span></div>
 </section>
 
 <!-- ───────────────────────── 5 ───────────────────────── -->
@@ -333,7 +354,7 @@ may help finding/confirming nearby separators.</pre></details>
   <div class="grid2">
     <div class="chartcard"><h4>Programmes proposed per file</h4><div class="sub">By batch</div>
       <div class="cb short"><canvas id="c-clips"></canvas></div>
-      <p class="cap">Film &amp; Video files mostly resolve to a single programme, as the catalogue assumption predicts — with one exception, a compilation reel of wartime government films that correctly came back as four. Channel M is where the structure is: median <span data-p="programmes_per_file.channelm.median"></span>, but one 60-minute tape fragmented into <span data-p="programmes_per_file.channelm.max"></span>.</p></div>
+      <p class="cap">Film &amp; Video files mostly resolve to a single programme — 182 of 198 — as the catalogue assumption predicts; the 16 that don't are compilation reels, correctly split into two to sixteen programmes. Channel M is where the structure lives: over a third of the tapes hold more than one programme, and the most complex — a Channel 4 Manchester music magazine — fragments into <span data-p="programmes_per_file.channelm.max"></span>.</p></div>
     <div class="chartcard"><h4>Detected separator duration</h4><div class="sub">Seconds, all files</div>
       <div class="cb short"><canvas id="c-sepdur"></canvas></div>
       <p class="cap">Median <span data-p="separators.seconds.median"></span>s, range <span data-p="separators.seconds.min"></span>–<span data-p="separators.seconds.max"></span>s. <span data-p="separators.leading"></span> of <span data-p="totals.files"></span> files open with a separator, which is what you would expect from tape leader.</p></div>
@@ -346,12 +367,12 @@ may help finding/confirming nearby separators.</pre></details>
   <h3>Two files in full</h3>
   <p>Proposed programmes in colour, detected separators in amber, suspected non-content clips hatched. These are the most structured file in each batch.</p>
   <div class="chartcard"><div id="tl-cm"></div><div id="tl-fv" style="margin-top:1.4rem"></div>
-    <p class="cap" style="margin-bottom:0">Hover any block for its timecode. The Channel M tape shows the characteristic shape of this collection: four long programmes at the head, then a tail of short idents and trailers separated by bars. The Film &amp; Video reel shows a genuine compilation — four distinct wartime films on one reel, correctly separated.</p></div>
+    <p class="cap" style="margin-bottom:0">Hover any block for its timecode. The Channel M tape (<span data-p="examples.channelm.file"></span>) shows the characteristic shape of this collection: a short lead-in, four long programmes — the body of a Channel 4 Manchester music magazine — then a tail of short idents and promos in which three non-content slivers sit. The Film &amp; Video reel (<span data-p="examples.fv.file"></span>) is a genuine compilation: sixteen short items on one reel, each cleanly separated.</p></div>
 
   <div class="callout bad"><strong>Finding: separator residue is being emitted as programmes.</strong>
-    <span data-p="noncontent.n"></span> of the <span data-p="noncontent.of_programmes"></span> proposed programmes (<span data-p="noncontent.pct" data-f="pct1"></span>) contain no programme content — colour bars, blank screen, a grey frame. Median duration <span data-p="noncontent.median_seconds"></span> second. The detector is not at fault: it found the bars correctly. The problem is that when two separators sit close together, the sliver <i>between</i> them is emitted as a clip and then dutifully described. On the long Channel M tape, a separator at 52:21 is followed by a 1-second clip and then another separator at 52:32.
-    <br><br>Because the clip prompt asks for <code>types</code> unconditionally, the model assigns a genre to colour bars: <span id="nc-types">—</span>. Nothing in the output marks these rows as non-content, so they would flow straight into any downstream index.
-    <br><br><b>The fix might not need the model.</b> Dropping or flagging clips below about five seconds that are bounded by separators on both sides removes <span data-p="noncontent.bounded_by_separators"></span> of the <span data-p="noncontent.n"></span> immediately; a <code>non-content</code> value in <code>types</code> would catch the rest and keep them auditable rather than silently deleted.</div>
+    <span data-p="noncontent.n"></span> of the <span data-p="noncontent.of_programmes"></span> proposed programmes (<span data-p="noncontent.pct" data-f="pct1"></span>) contain no programme content — colour bars, blank screen, a grey frame. Median duration <span data-p="noncontent.median_seconds" data-f="one"></span> seconds. The detector is not at fault: it found the bars correctly. The problem is that when two separators sit close together, the sliver <i>between</i> them is emitted as a clip and then dutifully described — the most complex tape, the Channel 4 Manchester magazine, carries three such slivers, five to six seconds each, each sitting between two detected separators.
+    <br><br>The second pass's <code>programme</code> flag now marks most of these itself: <span data-p="noncontent.model_flag.false"></span> programmes are flagged <code>false</code> — <span data-p="noncontent.model_flag.overlap_with_heuristic"></span> of them inside the heuristic's list, <span data-p="noncontent.model_flag.beyond_heuristic"></span> beyond it (plus <span data-p="noncontent.model_flag.nodata"></span> with no second-pass data). The flag is the primary signal; the duration rule remains a cheap safety net, since short clips bounded by separators on both sides — <span data-p="noncontent.bounded_by_separators"></span> of the <span data-p="noncontent.n"></span> here — can be dropped immediately even without the model.
+    <br><br>Because the clip prompt asks for <code>types</code> unconditionally, the model still assigns a genre to colour bars: <span id="nc-types">—</span>. Flagging rather than deleting keeps those rows auditable instead of silently disappearing from the index.</div>
 </section>
 
 <!-- ───────────────────────── 6 ───────────────────────── -->
@@ -361,37 +382,42 @@ may help finding/confirming nearby separators.</pre></details>
   <div class="grid2">
     <div class="chartcard"><h4>Machine fields with a value</h4><div class="sub">Share of proposed programmes, by batch</div>
       <div class="cb tall"><canvas id="c-fields"></canvas></div>
-      <p class="cap">Summary, synopsis, keywords, colour, types and fiction come back for every programme — the model will always write prose. Title, year and credits only appear when something on screen states them. Note the contrast with section 1: on Channel M these are the <i>only</i> values that exist for any of these fields.</p></div>
+      <p class="cap">Summary, synopsis, keywords, colour, types and environment come back for essentially every programme — the model will always write prose (environment names the setting in two words or fewer). Title, year and credits only appear when something on screen states them, and bands only when a band is in the picture. Note the contrast with section 1: on Channel M these are the <i>only</i> values that exist for any of these fields.</p></div>
     <div class="chartcard"><h4>Inner segments per programme</h4><div class="sub">Count of segment items</div>
       <div class="cb tall"><canvas id="c-segs"></canvas></div>
       <p class="cap"><span data-p="segments.total_items"></span> segment items in total; <span data-p="segments.programmes_without"></span> programmes came back with none, which maps closely onto the non-content clips. Timecode style is inconsistent — <span id="seg-styles">—</span> — and needs normalising before the segments can be used for navigation.</p></div>
   </div>
-  <div class="callout"><strong>One confabulation in ten files, and it is legible.</strong> A Film &amp; Video amateur reel titled in the catalogue as a trip to Knaresborough and Brimham Rocks — inland Yorkshire — came back placed in "Cornwall", with invented sea stacks and coastline in the synopsis. The model appears to have read "rocks" as coastal. It is wrong in a way an archivist spots instantly, and in a way the catalogue would have prevented if the pipeline had been given it.</div>
+  <div class="callout"><strong>One confabulation in the ten-file working sample — legible, and fixed by the prompt.</strong> A Film &amp; Video amateur reel, titled in the catalogue "Playing bridge at the Calf's Head Hotel; trip to Knaresborough and Brimham Rocks" — both inland (Worston, Lancashire; the Yorkshire Dales) — came back in the first run placed in "Cornwall": the catalogue's Brimham Rocks boulders had become "the dramatic wind-carved stacks and boulders of the Calf's Head coastline". The model appears to have mapped the hotel's sign onto the famous Cornish headland of the same name. It is wrong in a way an archivist spots instantly, and in a way the catalogue would have prevented if the pipeline had been given it. The re-pointed <code>places</code> prompt — a toponym only if certain, and seen on a sign or in subtitles — has removed it since: in the full run the same footage comes back as "Calf's Head", environment "outdoor countryside", with no coastline.</div>
 </section>
 
 <!-- ───────────────────────── 7 ───────────────────────── -->
 <section id="s7">
   <div class="kicker">7 · Vocabularies</div>
-  <h2>The machine's terms and NWFA's terms do not currently touch</h2>
-  <p class="lede">NWFA already runs a three-part controlled vocabulary, and nothing in the current prompt points at it, so the output arrives as a parallel description.</p>
+  <h2>The machine now works in NWFA's own vocabulary</h2>
+  <p class="lede">For the full run the prompt asks directly for NWFA's two controlled lists — the nine-term <code>category</code> and the ten-term <code>category2</code> — so the output arrives in the archive's own language rather than as a parallel description. The question has changed from "do the two vocabularies touch?" to "how well does the machine's use of them line up with the catalogue's?"</p>
 
   <div class="grid2">
-    <div class="chartcard"><h4>Machine <code>types</code></h4><div class="sub">From the prompt's fixed list of 17; counts across proposed programmes</div>
-      <div class="cb short"><canvas id="c-mtypes"></canvas></div></div>
+    <div class="chartcard"><h4>Machine <code>types</code></h4><div class="sub">NWFA's two lists, as asked by the prompt — across all <span data-p="totals.programmes"></span> proposed programmes</div>
+      <div class="cb short"><canvas id="c-mtypes"></canvas></div>
+      <p class="cap">One field, two axes: <code>category</code> (subject) and <code>category2</code> (provenance — how and why the film was made). Eighteen of the nineteen terms came back; <i>Scientific</i> never did.</p></div>
     <div class="chartcard"><h4>NWFA <code>category</code></h4><div class="sub">Nine terms, multi-valued, across the 200 Film &amp; Video records</div>
-      <div class="cb short"><canvas id="c-ncats"></canvas></div></div>
+      <div class="cb short"><canvas id="c-ncats"></canvas></div>
+      <p class="cap">Channel M was never catalogued, so its <span data-p="totals.by_collection.channelm.programmes"></span> programmes have no catalogue terms to agree with — the machine's terms are all they have.</p></div>
   </div>
 
-  <p>The machine list is about <b>form</b> (documentary, promotional, animation); NWFA's <code>category</code> is about <b>subject</b> (Wartime, Industry and occupations); and NWFA's provenance axis — Professional or Amateur, then a sub-category — is about <b>how and why the film was made</b>.</p>
+  <div class="callout good"><strong>Subject: <span data-p="vocab.category_agreement.subject.shared_any"></span> of <span data-p="vocab.category_agreement.subject.files_compared"></span> films agree.</strong>
+    On <span data-p="vocab.category_agreement.subject.pct_shared_any" data-f="pct1"></span> of the Film &amp; Video files that carry a catalogue <code>category</code>, the machine's terms overlap it — most often on <i>Sport and leisure</i>, <i>Culture and traditions</i> and <i>Travel</i>. Term for term the two agree exactly on <span data-p="vocab.category_agreement.subject.exact_match"></span> of the <span data-p="vocab.category_agreement.subject.files_compared"></span>; on <span data-p="vocab.category_agreement.subject.covers_catalogue"></span> the machine covers everything the catalogue says, usually with additions — it is generous, not precise. The lopsided term is <i>Culture and traditions</i>, added by the machine on 39 files against 7 the other way round.</div>
 
-  <h3>A crosswalk to agree</h3>
-  <p>Proposal, for discussion rather than adoption. The right-hand column is what the prompt would have to ask for.</p>
-  <div class="tw"><table><thead><tr><th>NWFA axis</th><th>Terms</th><th>Currently</th><th>What the prompt would need</th></tr></thead><tbody>
-    <tr><td>Subject<br><code>category</code></td><td>9 terms: Sport and leisure, Wartime, Culture and traditions, Industry and occupations, Travel and transportation, Landscape and buildings, Health/Welfare/Education, Home and family, No idea</td><td>Not asked for</td><td>Replace free <code>keywords</code> with a forced choice from these nine, multi-valued, plus free keywords alongside</td></tr>
-    <tr><td>Provenance<br><code>Professional</code></td><td>Professional / Amateur</td><td>Partly inferrable from <code>types</code> (<i>amateur</i>, <i>home movie</i>) but not asked for directly</td><td>A dedicated binary field; strong visual signal, should be reliable</td></tr>
-    <tr><td>Professional sub-category</td><td>Factual Record, Local Cinema Topicals, Promotional/Advertising, Cinema Newsreel, Educational/Training, Scientific, Fiction</td><td>Partly overlapping with <code>types</code></td><td>Conditional on Professional; these are closer to the machine list and should map well</td></tr>
-    <tr><td>Amateur sub-category</td><td>Special Interest, Home Movies, Fiction, Educational/Training</td><td>Partly overlapping</td><td>Conditional on Amateur</td></tr>
-    <tr><td>Form<br>(no NWFA equivalent)</td><td>The 17-term machine list</td><td>Asked for, returned for every programme</td><td>Keep? Is it useful for NWFA? Can it be included in a FileMaker DB field?</td></tr>
+  <h3>Provenance: same concept, different labels</h3>
+  <p>The second list — <code>category2</code>, the Professional and Amateur sub-categories — is where the mapping gets harder: on raw labels only <span data-p="vocab.category_agreement.provenance.shared_any_raw"></span> of <span data-p="vocab.category_agreement.provenance.files_compared"></span> films share a sub-category with the catalogue. Part of the gap is a naming difference: the catalogue files its amateur material under <i>Special Interest</i> (<span data-p="vocab.category_agreement.provenance.catalogue_special_interest"></span> films) where the machine says <i>Amateur</i> or <i>Home Movies</i> (<span data-p="vocab.category_agreement.provenance.machine_amateur_home_movies"></span> films), and reading those labels as the same term lifts the overlap to <span data-p="vocab.category_agreement.provenance.shared_any_aliased"></span>. The rest is genuine disagreement about which film gets which sub-category — both sides reach for <i>Factual Record</i> and <i>Local Cinema Topicals</i> a great deal, on different films.</p>
+
+  <h3>Where the mapping stands</h3>
+  <p>What the full-run prompt now asks for, and how each NWFA axis performed against the catalogue.</p>
+  <div class="tw"><table><thead><tr><th>NWFA axis</th><th>Terms</th><th>What the prompt now asks for</th><th>How it performed</th></tr></thead><tbody>
+    <tr><td>Subject<br><code>category</code></td><td>9 terms: Sport and leisure, Wartime, Culture and traditions, Industry and occupations, Travel and transportation, Landscape and buildings, Health/Welfare/Education, Home and family, No idea</td><td>Asked for directly, multi-valued (pass 1)</td><td><span data-p="vocab.category_agreement.subject.shared_any"></span> of <span data-p="vocab.category_agreement.subject.files_compared"></span> films share ≥1 term; exact on <span data-p="vocab.category_agreement.subject.exact_match"></span>; the machine is generous — it covers all catalogue terms on <span data-p="vocab.category_agreement.subject.covers_catalogue"></span></td></tr>
+    <tr><td>Provenance<br><code>category2</code></td><td>10 terms: Factual Record, Local Cinema Topicals, Promotional/Advertising, Cinema Newsreel, Educational/Training, Scientific, Fiction, Home Movies, Special Interest, Amateur</td><td>Asked for directly (pass 1)</td><td><span data-p="vocab.category_agreement.provenance.shared_any_raw"></span> of <span data-p="vocab.category_agreement.provenance.files_compared"></span> on raw labels; <span data-p="vocab.category_agreement.provenance.shared_any_aliased"></span> once <i>Special Interest</i> is read as <i>Amateur</i>/<i>Home Movies</i></td></tr>
+    <tr><td>Professional / Amateur<br>(catalogue binary)</td><td>Professional / Amateur</td><td>Not asked as a binary — signalled by <code>category2</code> (<i>Amateur</i>, <i>Home Movies</i>)</td><td>Could be made an explicit field if NWFA wants it; the visual signal is strong</td></tr>
+    <tr><td>Form<br>(no NWFA equivalent)</td><td>The old 17-term machine list (documentary, promotional, animation…)</td><td>Dropped in this run — <code>types</code> is now NWFA's two lists</td><td>The free <code>keywords</code> (10 tags) still carry form and detail</td></tr>
   </tbody></table></div>
 
 </section>
@@ -425,20 +451,19 @@ may help finding/confirming nearby separators.</pre></details>
   <h2>What we now know, what we could know with more development, and what needs a human first</h2>
   <div class="three">
     <div class="col k"><h3>What we know</h3><ul>
-      <li>Machine description can be compared against the Channel M labels without depending on the barcode, so the mismatch is measurable rather than merely known.</li>
+      <li>Machine description can be compared against the Channel M labels without depending on the barcode, so the mismatch is measurable.</li>
       <li>Separator detection is working. <span data-p="totals.separators"></span> separators across <span data-p="totals.files"></span> files, median <span data-p="separators.seconds.median"></span>s, and tape leader is being found where you would expect it.</li>
       <li>Coverage is high — median <span data-p="coverage.median" data-f="pct1"></span> of each file is accounted for by proposed programmes.</li>
       <li>Film &amp; Video files mostly resolve to one programme, and the one compilation reel in the sample was correctly split into four.</li>
       <li>Prose fields are always returned; evidential fields — title, year, credits — are returned only when stated on screen.</li>
     </ul></div>
     <div class="col c"><h3>What we could know</h3><ul>
-      <li>Whether the barcode error has a shape. Testable across all <span data-n="collections.0.file_count"></span> Channel M files, and if it does, labels could be re-paired rather than just corrected.</li>
       <li>Whether machine output can be filed. Re-pointing the prompt at NWFA's <code>category</code>, Professional/Amateur and sub-category vocabularies is a prompt change, not a model change.</li>
       <li>Whether the duration discrepancy is a knowable transfer-speed rule, which would turn it into an automatic check.</li>
       <li>Whether the music content — early TV performances by named bands — supports performer identification, which is a different task with different risks.</li>
     </ul></div>
     <div class="col h"><h3>What needs a human first</h3><ul>
-      <li><b>What counts as a programme in rushes.</b> Story or take. Nothing downstream can be settled before this.</li>
+      <li><b>What counts as a programme in rushes.</b></li>
       <li><b>The label-match verdicts.</b> Only an archivist can assign them, and they are the headline measurement.</li>
       <li><b>Which vocabularies the machine should target</b>, and whether machine terms sit in the same FileMaker fields as human ones or alongside them.</li>
       <li><b>The transfer-speed rule</b> behind the duration disagreement.</li>
@@ -450,7 +475,7 @@ may help finding/confirming nearby separators.</pre></details>
 <!-- ───────────────────────── 11 ───────────────────────── -->
 <section id="s11">
   <div class="kicker">11 · For discussion</div>
-  <h2>Six questions</h2>
+  <h2>Six questions for the workshop.</h2>
   <div class="topics">
     <div class="topic"><h4>What is a programme in a rushes tape?</h4>
       <p>Most of Channel M is rushes, and the machine is already showing us the problem: one sampled tape is a reporter re-recording the same piece-to-camera repeatedly, described by the pipeline as a comic sketch about exactly that. It is not wrong about what it sees.</p>
@@ -485,8 +510,8 @@ may help finding/confirming nearby separators.</pre></details>
 
   <h3>Other questions</h3>
   <ul class="qs">
-    <li><b>The music sessions.</b> Eleven of 200 labels are music content, and the collection holds early TV performances by named bands. Performer identification is high value and genuinely different from segmentation — also a rights question. Worth knowing if it interests NWFA before deciding it is out of scope.</li>
-    <li><b>The other 1,489 tapes.</b> We have 200 of the 1,689 digitised under Heritage 2022. Was there a sampling logic, and does NWFA want the method applied to the rest?</li>
+    <li><b>The music sessions.</b> Eleven of 200 labels are music content, and the collection holds early TV performances by named bands. Performer identification is high value and genuinely different from segmentation — also a rights question. The second pass already returns it as structured data: named bands on 77 of the 590 programmes, 132 different names, each with what it is doing — concert, studio performance, interview, music video.</li>
+    <li><b>The other 1,489 tapes.</b> We have 200 of the 1,689 digitised under Heritage 2022. Does NWFA want the method applied to the rest?</li>
   </ul>
 </section>
 
@@ -559,24 +584,28 @@ function bindAll() {
   const label = { 'first-pass':'First pass', 'validated':'With human truth', 'full':'Full batch' }[P.stage] || P.stage;
   sb.textContent = `${label} · ${P.scale.files} of ${P.scale.of}`;
   sb.className = 'stage ' + (P.stage === 'full' ? 'full' : P.stage === 'validated' ? 'validated' : '');
-  const n2 = P.label_match.files;
-  document.getElementById('b-s2').textContent =
-    n2 >= get(N, 'collections.0.file_count') ? `all ${n2} tapes` : `sample of ${n2}`;
+  /* badge: how many tapes have been scored against the label pool */
+  document.getElementById('b-s2').textContent = P.label_pool
+    ? `${P.label_pool.files} of ${P.label_match.files} scored`
+    : `${P.label_match.verdicts_assigned || 0} of ${P.label_match.files} verdicted`;
   const hb = document.getElementById('b-s9');
   hb.textContent = H.returned ? `${H.returned} of ${H.expected} returned` : 'pending';
   hb.className = 'sbadge' + (H.returned >= H.expected ? ' done' : '');
 
   /* catalogue detail that needs assembling */
   document.getElementById('cm-format').textContent = joinCounts(N.channelm.tape_format);
-  document.getElementById('cm-crates').textContent =
-    pairs(N.channelm.crates).map(([k, v]) => `${k} with ${v} tapes`).join(', ');
   const dates = N.channelm.digitisation_dates;
   document.getElementById('cm-lastdate').textContent = dates[dates.length - 1];
   document.getElementById('fv-mix').textContent =
     `${get(N,'fv.prof_am.Amateur')} amateur / ${get(N,'fv.prof_am.Professional')} professional · ` +
     `${get(N,'fv.sound.silent')} silent · ${pairs(N.fv.gauge).slice(0,3).map(([k,v])=>`${v} ${k}`).join(', ')}`;
-  const longest = Math.max(...P.coverage.per_file.filter(f => f.collection === 'channelm').map(f => f.span_seconds));
-  document.getElementById('cm-longest').textContent = Math.round(longest / 60);
+  /* measured durations, summed per collection from the pipeline's own read of
+     each file (the Channel M metadata carries no durations at all) */
+  const dur = { channelm: 0, fv: 0 };
+  P.coverage.per_file.forEach(f => dur[f.collection] += f.span_seconds);
+  document.getElementById('cm-hours').textContent = (dur.channelm / 3600).toFixed(1);
+  document.getElementById('fv-hours').textContent = (dur.fv / 3600).toFixed(1);
+  document.getElementById('cm-ratio').textContent = (dur.channelm / dur.fv).toFixed(1) + '×';
 
   /* non-content spurious types */
   document.getElementById('nc-types').textContent =
@@ -645,9 +674,18 @@ function renderHierarchy() {
     row.appendChild(track); host.appendChild(row);
   });
 
-  /* working sample row */
+  /* working sample row — above ~40 files the JSON carries only the annotated
+     dots, and the label says how many of the run they represent */
+  const s = N.hierarchy.sample;
   const row = document.createElement('div'); row.className = 'band-row';
   const lab = document.createElement('div'); lab.className = 'band-label'; lab.textContent = 'Working sample';
+  if (s.collapsed) {
+    lab.classList.add('multi');
+    const note = document.createElement('div');
+    note.className = 'sample-note';
+    note.textContent = `showing ${s.annotated} of ${s.n}`;
+    lab.appendChild(note);
+  }
   row.appendChild(lab);
   const track = document.createElement('div'); track.className = 'band-track sample-track';
   ['channelm', 'fv'].forEach(coll => {
@@ -705,10 +743,6 @@ function drawTimeline(elId, ex, title) {
 }
 
 /* ───────────────────────── tables ───────────────────────── */
-function verdictFor(item) {
-  if (item.verdict) return item.verdict;
-  return null;
-}
 /* Beyond this many rows a per-item table stops being readable and the page
    switches to counts. Keeps the same HTML working from 10 files to 400. */
 const ROW_CAP = 12;
@@ -716,37 +750,31 @@ const moreNote = (shown, total, what) => total > shown
   ? `<p class="cap">Showing ${shown} of ${total} ${what}. The full set is in <code>issa_ws2_predictions.json</code>.</p>` : '';
 
 function renderTables() {
-  /* 2 — label vs content */
-  const items = P.label_match.items;
-  const counts = { match: 0, adjacent: 0, mismatch: 0, unassigned: 0 };
-  items.forEach(it => { const v = verdictFor(it); counts[v && v in counts ? v : 'unassigned']++; });
-  const assigned = items.length - counts.unassigned;
-
-  /* at scale the summary is the point, not the rows */
-  document.getElementById('lm-summary').innerHTML = (items.length > ROW_CAP || assigned)
-    ? `<div class="tiles" style="grid-template-columns:repeat(4,1fr);margin:.2rem 0 1rem">
-        <div class="tile"><div class="v">${items.length}</div><div class="l">tapes compared</div></div>
-        <div class="tile"><div class="v" style="color:var(--outer)">${counts.match || '—'}</div><div class="l">label matches content</div></div>
-        <div class="tile"><div class="v" style="color:#b07d08">${counts.adjacent || '—'}</div><div class="l">topically adjacent</div></div>
-        <div class="tile alert"><div class="v">${counts.mismatch || '—'}</div><div class="l">label does not match</div></div>
-       </div>` : '';
-
-  const shown = items.length > ROW_CAP
-    ? items.filter(verdictFor).slice(0, ROW_CAP)       // once verdicts exist, show those
-    : items;
-  const body = (shown.length ? shown : items.slice(0, ROW_CAP)).map(it => {
-    const v = verdictFor(it);
-    const cls = v === 'match' ? 'v-match' : v === 'adjacent' ? 'v-near' : v === 'mismatch' ? 'v-miss' : '';
-    return `<tr><td class="nw mono">${esc(it.file)}</td><td>${esc(it.label)}</td>
-      <td>${it.machine_gist ? esc(it.machine_gist) : '<span style="color:#898781">not exported at this scale</span>'}</td>
-      <td class="nw ${cls}">${v ? esc(v) : '<span style="color:#898781;font-weight:400">awaiting NWFA</span>'}</td></tr>`;
-  }).join('');
-  document.querySelector('#t-labels tbody').innerHTML = body;
-
-  document.getElementById('cap-labels').innerHTML = assigned
-    ? `${assigned} of ${items.length} verdicts assigned` +
-      moreNote(Math.min(shown.length || ROW_CAP, items.length), items.length, 'tapes')
-    : `Verdicts are left blank deliberately. Reading these ${items.length} rows together is the quickest way to see the problem. The pipeline never saw the label column.`;
+  /* 2 — label pool search, shown against the tapes NWFA has judged */
+  const lp = P.label_pool;
+  if (lp) {
+    const verdicts = {};
+    P.label_match.items.forEach(it => { verdicts[it.file] = it; });
+    const clsCls = { green: 'v-match', yellow: 'v-near', blank: 'v-miss' };
+    const vCls = { match: 'v-match', adjacent: 'v-near', mismatch: 'v-miss', mixed: 'v-mixed' };
+    const rows = Object.entries(lp.tapes).map(([fk, t]) => {
+      const it = verdicts[fk] || {};
+      const spread = it.verdict_spread
+        ? `<div style="font-weight:400;font-size:.76rem;color:var(--muted)">${esc(it.verdict_spread)}</div>` : '';
+      const verdict = it.verdict
+        ? `<span class="${vCls[it.verdict] || ''}">${esc(it.verdict)}</span>${spread}`
+        : '<span style="color:#898781;font-weight:400">awaiting NWFA</span>';
+      return `<tr><td class="nw mono">${esc(fk)}</td>
+        <td>${esc(t.top)}</td>
+        <td class="nw">${(t.pct * 100).toFixed(1)}%</td>
+        <td class="nw">${(t.margin * 100).toFixed(1)} pts</td>
+        <td class="nw ${clsCls[t.class]}">${t.class}</td>
+        <td class="nw">${verdict}</td></tr>`;
+    }).join('');
+    document.querySelector('#t-lp tbody').innerHTML = rows;
+    document.getElementById('cap-lp').textContent =
+      `Of the ${lp.files} scored tapes, these ${Object.keys(lp.tapes).length} carry an NWFA verdict; the rest await the archivist pass.`;
+  }
 
   /* 8 — duration check */
   const db = document.querySelector('#t-dur tbody');
@@ -767,13 +795,57 @@ function renderTables() {
      <td style="font-weight:400">${esc(f.why)}</td></tr>`).join('');
 
   /* 9 — results, when they exist */
-  if (H.returned > 0) {
-    document.getElementById('ht-pending').style.display = 'none';
-    const r = document.getElementById('ht-results');
-    r.style.display = 'block';
-    r.innerHTML = `<div class="callout good"><strong>${H.returned} of ${H.expected} returned.</strong>
-      Agreement analysis renders here from <code>issa_ws2_humantruth.json</code>.</div>`;
-  }
+  if (H.returned > 0) renderHumanTruth();
+}
+
+/* ───────────────────────── human truth (section 9) ───────────────────────── */
+function renderHumanTruth() {
+  document.getElementById('ht-pending').style.display = 'none';
+  const r = document.getElementById('ht-results');
+  r.style.display = 'block';
+
+  const nb = H.agreement.nb_progs || {};
+  const b = H.boundaries || {};
+  const tapes = H.items.filter(i => i.collection === 'channelm' && i.label_match);
+  const mism = tapes.filter(i => i.label_match === 'mismatch').length;
+  const mixed = tapes.filter(i => i.label_match === 'mixed').length;
+
+  const rows = H.items.map(i => {
+    const nbstr = (i.nb_progs && i.nb_progs.length) ? i.nb_progs.join(' · ') : '—';
+    let lab;
+    if (i.collection === 'channelm' && i.label_match) {
+      const cls = { match: 'v-match', adjacent: 'v-near', mismatch: 'v-miss', mixed: 'v-mixed' }[i.label_match] || '';
+      lab = `<span class="${cls}">${i.label_match}</span>` +
+        (i.label_spread ? `<div style="font-weight:400;font-size:.76rem;color:var(--muted)">${esc(i.label_spread)}</div>` : '');
+    } else {
+      lab = '<span style="color:var(--faint);font-weight:400">n/a (Film &amp; Video)</span>';
+    }
+    return `<tr>
+      <td class="nw mono">${esc(i.prefix)}</td>
+      <td class="nw">${COLL[i.collection].name}</td>
+      <td class="nw">${i.annotators}</td>
+      <td>${esc(nbstr)} <span style="color:var(--muted)">→</span> <b>${i.pipeline_progs != null ? i.pipeline_progs : '—'}</b></td>
+      <td class="nw">${i.boundaries ? i.boundaries.within_10s + '/' + i.boundaries.n : '—'}</td>
+      <td class="nw">${lab}</td></tr>`;
+  }).join('');
+
+  r.innerHTML = `
+    <div class="callout good"><strong>${H.returned} of ${H.expected} sample videos returned by ${H.n_annotators} annotators.</strong>
+      Each annotator independently described the same ten videos. Below, those human annotations are compared against each other (agreement on programme counts) and against the pipeline (programme counts and boundary placement). The label-match verdicts also fill section&nbsp;2.</div>
+
+    <div class="tiles">
+      <div class="tile"><div class="v">${nb.unanimous != null ? nb.unanimous : '—'}<span style="font-size:1.1rem;color:var(--muted)">/${nb.videos != null ? nb.videos : '—'}</span></div><div class="l">videos where every annotator agrees on how many programmes</div></div>
+      <div class="tile"><div class="v">${b.pct_within_10s != null ? b.pct_within_10s + '%' : '—'}</div><div class="l">human boundaries within 10s of the pipeline's proposed position</div></div>
+      <div class="tile alert"><div class="v">${mism}<span style="font-size:1.1rem;color:var(--muted)">/${tapes.length}</span></div><div class="l">tapes whose label does not match the content${mixed ? ` (${mixed} more contested)` : ''}</div></div>
+      <div class="tile"><div class="v">${H.n_annotators}</div><div class="l">annotators, all on the same ten videos</div></div>
+    </div>
+
+    <div class="tw"><table><thead><tr>
+      <th class="nw">File</th><th class="nw">Batch</th><th class="nw">Annotators</th>
+      <th>Programmes — annotators → pipeline</th><th class="nw">Boundaries ≤10s</th><th class="nw">Label ↔ content</th>
+    </tr></thead><tbody>${rows}</tbody></table></div>
+
+    <p class="cap">Each human programme boundary — a start time, and an end time (a blank end is read as “to end of file”) — is compared with the nearest of the pipeline's proposed boundaries for the same video. ${b.within_10s} of ${b.n_human} land within 10 seconds (median offset ${b.median_abs_offset_s}s). The misses — ${b.beyond_30s} boundaries more than 30s off — are scattered across the sample, with the contested rushes tape <b>N_6966411</b> the single largest contributor: the pipeline proposes 11 short segments, and the annotators count 13–14, or one, on two of the tapes. Programme counts agree on ${nb.unanimous} of ${nb.videos} videos; the two other splits are NWFA&nbsp;57 (a compilation) and NWFA&nbsp;473.</p>`;
 }
 
 /* ───────────────────────── charts ───────────────────────── */
@@ -789,24 +861,6 @@ function renderCharts() {
     });
     return;
   }
-  /* 1 — catalogue completeness */
-  new Chart(document.getElementById('c-complete'), {
-    type: 'bar',
-    data: { labels: N.completeness.map(r => r.field),
-      datasets: [
-        { label: 'Channel M', data: N.completeness.map(r => r.channelm), backgroundColor: C.c },
-        { label: 'Film & Video', data: N.completeness.map(r => r.fv), backgroundColor: C.f }] },
-    options: { indexAxis: 'y',
-      scales: { x: { ...axisX('% of 200 records with a value', 108), ticks: PCT_TICKS },
-                y: { grid: { display: false }, border: { display: false } } },
-      plugins: { legend: { position: 'top', labels: { boxWidth: 12 } },
-        valueLabels: { mode: 'each', zero: true, fmt: v => v + '%' },
-        tooltip: { callbacks: { afterLabel: ctx => {
-          const r = N.completeness[ctx.dataIndex];
-          return ctx.datasetIndex === 0 ? `column: ${r.cm_column || 'none'}` : `column: ${r.fv_column || 'none'}`;
-        } } } } }
-  });
-
   /* 5 — programmes per file */
   const ppLabels = [...new Set([...P.programmes_per_file.channelm.labels, ...P.programmes_per_file.fv.labels])]
     .sort((a, b) => a - b);

@@ -13,20 +13,28 @@ Usage
     python make_ws2_data.py \
         --channelm   "Channel M ISSA.xlsx" \
         --fvcat      "ISSA FV Cat data.xlsx" \
-        --predictions "predictions-10.v1.xlsx" \
+        --predictions "predictions-400.v4.xlsx" \
+        --annotations "NWFA_annotation_<NAME>.xlsx" ... \
         --out        .
 
 Optional
 --------
-    --humantruth kdl_sample10_annotated.xlsx   # NWFA validation sample
+    --annotations NWFA_annotation_*.xlsx      # returned annotator workbooks
+    --labelmatch matched_labels_200.xlsx      # label-pool search per Channel M
+                                              # tape (drives section 2)
+    --humantruth kdl_sample10_annotated.xlsx  # flat sent-sample sheet (scaffold)
     --stage      first-pass | validated | full # default: inferred from scale
-    --run        v1                            # default: from predictions name
+    --run        v4                            # default: from predictions name
 
 Outputs
 -------
     nwfa_metadata_data.json     catalogue aggregates (both collections)
     issa_ws2_predictions.json   pipeline aggregates for this run
-    issa_ws2_humantruth.json    validation comparison (scaffold until call 2)
+    issa_ws2_humantruth.json    the returned annotation workbooks: per-field
+                                answers, agreement, boundary placement against
+                                the pipeline's proposed programmes, and the
+                                label-match verdicts (which also fill section 2
+                                of the page)
 
 Provenance note: `issa_ws2_predictions.json` carries short model-written
 content gists for the sampled videos only, because section 2 of the page (the
@@ -45,6 +53,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
+import openpyxl
 import pandas as pd
 
 # --------------------------------------------------------------------------
@@ -108,9 +117,13 @@ FIELD_CROSSWALK = [
     ("credits",    "Director",         "producer"),
 ]
 
-# Prediction fields whose completeness the page reports.
+# Prediction fields whose completeness the page reports. Runs target a subset
+# of these: v1-era runs have `fiction` but not the second-pass fields, v3/v4
+# target the NWFA vocabularies (`category`/`category2`, aliased to `types`) and
+# add `bands`/`environment`. The list is filtered by what the run actually has.
 PRED_FIELDS = ["title", "year", "place", "colour", "types", "fiction",
-               "summary", "synopsis", "segments", "credits", "keywords"]
+               "summary", "synopsis", "segments", "credits", "keywords",
+               "bands", "environment"]
 
 # Clips at or below this many seconds that sit between two detected separators
 # are almost certainly separator residue rather than programmes.
@@ -137,12 +150,18 @@ def read_sheet(path: str | Path) -> pd.DataFrame:
     return tidy_columns(pd.read_excel(path, dtype=str))
 
 
+PLACEHOLDERS = ["", "/", "-", "nan", "none", "nodata"]
+
+
 def filled(series: pd.Series) -> int:
-    """Count values that are present and not an empty / placeholder string."""
+    """Count values that are present and not an empty / placeholder string.
+
+    The v4 run emits the literal sentinel `NODATA` for fields the model
+    declined to answer, so it counts as empty, not filled."""
     if series is None:
         return 0
     s = series.dropna().astype(str).str.strip()
-    return int((~s.isin(["", "/", "-", "nan", "None"])).sum())
+    return int((~s.str.lower().isin(PLACEHOLDERS)).sum())
 
 
 def pct(n: int, total: int) -> float:
@@ -313,7 +332,9 @@ def fv_aggregates(fv: pd.DataFrame) -> dict:
     }
 
 
-def build_metadata_json(cm: pd.DataFrame, fv: pd.DataFrame, sample_ids: dict) -> dict:
+def build_metadata_json(cm: pd.DataFrame, fv: pd.DataFrame, sample_ids: dict,
+                        annotated_ids: set[str] | None = None) -> dict:
+    annotated_ids = annotated_ids or set()
     completeness = []
     for key, cm_col, fv_col in FIELD_CROSSWALK:
         completeness.append({
@@ -334,6 +355,24 @@ def build_metadata_json(cm: pd.DataFrame, fv: pd.DataFrame, sample_ids: dict) ->
         meta["columns_populated"] = agg["columns_populated"]
         meta["columns_empty"] = agg["columns_empty"]
         collections.append(meta)
+
+    # Working-sample row: one dot per file in this run, solid if a human has
+    # annotated it. Above ~40 files a per-dot row stops being readable, so it
+    # collapses to the annotated dots plus a flag.
+    sample_items = ([{"id": i, "collection": CM, "annotated": i in annotated_ids}
+                     for i in sample_ids.get(CM, [])]
+                    + [{"id": i, "collection": FV, "annotated": i in annotated_ids}
+                       for i in sample_ids.get(FV, [])])
+    sample = {
+        "n": len(sample_items),
+        "annotated": sum(1 for i in sample_items if i["annotated"]),
+        "items": sample_items,
+    }
+    if len(sample_items) > 40:
+        sample["collapsed"] = True
+        sample["items"] = [i for i in sample_items if i["annotated"]]
+    else:
+        sample["collapsed"] = False
 
     # Hierarchy bands: what each catalogue establishes on its own, at each level.
     # value = share of the 400 files; state = verified / assumed / check / unknown
@@ -357,11 +396,7 @@ def build_metadata_json(cm: pd.DataFrame, fv: pd.DataFrame, sample_ids: dict) ->
                        {"collection": FV, "share": 50, "state": "assumed",
                         "label": "prose synopsis, no timecodes"}]},
         ],
-        "sample": {
-            "n": sum(len(v) for v in sample_ids.values()),
-            "items": ([{"id": i, "collection": CM, "annotated": False} for i in sample_ids.get(CM, [])]
-                      + [{"id": i, "collection": FV, "annotated": False} for i in sample_ids.get(FV, [])]),
-        },
+        "sample": sample,
     }
 
     return {
@@ -402,6 +437,45 @@ def file_key(prefix: str) -> str:
     return m.group(1) if m else p
 
 
+def label_pool_aggregates(path: str | Path, label_verdicts: dict) -> dict:
+    """The label-pool search, one row per processed Channel M tape.
+
+    Each tape's machine description (a summary the VLM produced from the
+    pictures and sound, without ever seeing the label) is embedded with the
+    archive's full H22 label list -- not just this batch's 200 labels -- using
+    all-MiniLM-L6-v2, and the five nearest labels are kept. Per tape two
+    numbers come out: the similarity of the best candidate (`%match1`) and the
+    margin over the runner-up (`simDif`). The spreadsheet colours the rows
+    from those two, and the page reproduces the same rules:
+
+        green   %match1 > 0.6 and simDif > 0.1   confident, unambiguous
+        yellow  %match1 > 0.5 or  simDif > 0.05  plausible but ambiguous
+        blank   otherwise                        no candidate clears the bar
+    """
+    df = read_sheet(path)
+    classes: Counter = Counter()
+    pcts: list[float] = []
+    tapes: dict[str, dict] = {}
+    for _, r in df.iterrows():
+        if pd.isna(r.get("fileForSummary")):
+            continue
+        b, c = float(r["%match1"]), float(r["simDif"])
+        if b > 0.6 and c > 0.1:
+            k = "green"
+        elif b > 0.5 or c > 0.05:
+            k = "yellow"
+        else:
+            k = "blank"
+        classes[k] += 1
+        pcts.append(b)
+        fk = file_key(r["fileForSummary"])
+        if fk in label_verdicts:
+            tapes[fk] = {"class": k, "pct": round(b, 3), "margin": round(c, 3),
+                         "top": str(r["match1"]).strip()}
+    return {"files": len(pcts), "classes": dict(classes),
+            "pct_match": describe(pcts), "tapes": tapes}
+
+
 def looks_noncontent(row, duration: int, bounded_by_separators: bool) -> bool:
     text = f"{row.get('summary','')} {row.get('synopsis','')}".lower()
     phrase_hit = any(p in text for p in NONCONTENT_PHRASES)
@@ -410,9 +484,31 @@ def looks_noncontent(row, duration: int, bounded_by_separators: bool) -> bool:
     return duration <= 2 and phrase_hit
 
 
+def _merge_types(a, b) -> list:
+    """v3/v4 dropped the `types` list in favour of the NWFA vocabularies
+    `category` (subject) and `category2` (provenance); recombine them into the
+    page's `types` field, dropping the NODATA sentinel."""
+    out = []
+    for x, y in zip(a, b):
+        vals = [str(v).strip() for v in (x, y)
+                if pd.notna(v) and str(v).strip().lower() != "nodata"]
+        out.append("; ".join(vals) if vals else None)
+    return out
+
+
 def build_predictions_json(pred: pd.DataFrame, cm: pd.DataFrame, fv: pd.DataFrame,
-                           run: str, stage: str | None, include_gists: bool) -> dict:
+                           run: str, stage: str | None, include_gists: bool,
+                           label_verdicts: dict | None = None,
+                           label_pool: dict | None = None) -> dict:
     pred = pred.copy()
+    # Column aliases so the same aggregate code works across run versions.
+    if "places" in pred.columns and "place" not in pred.columns:
+        pred["place"] = pred["places"]
+    if "types" not in pred.columns and "category" in pred.columns:
+        c2 = pred["category2"] if "category2" in pred.columns else pd.Series("", index=pred.index)
+        pred["types"] = _merge_types(pred["category"], c2)
+    if "vid.prog" not in pred.columns and "progIndex" in pred.columns:
+        pred["vid.prog"] = pred["progIndex"]
     pred["fkey"] = pred["DODfilenameprefix"].map(file_key)
     pred["collection"] = pred["DODfilenameprefix"].map(classify_collection)
     pred[["start", "dur"]] = pred["kdl_prog"].apply(
@@ -426,6 +522,7 @@ def build_predictions_json(pred: pd.DataFrame, cm: pd.DataFrame, fv: pd.DataFram
 
     # ---- per-file structure, separators derived from the gaps between clips
     files, separators, noncontent = [], [], []
+    noncontent_idx: set[int] = set()
     for fkey, g in pred.groupby("fkey", sort=True):
         g = g.sort_values("start")
         coll = g["collection"].iloc[0]
@@ -449,6 +546,7 @@ def build_predictions_json(pred: pd.DataFrame, cm: pd.DataFrame, fv: pd.DataFram
         for _, r in g.iterrows():
             bounded = r["start"] in sep_edges and r["end"] in sep_edges
             if looks_noncontent(r, int(r["dur"]), bounded):
+                noncontent_idx.add(r.name)
                 item = {"file": fkey, "collection": coll, "prog": str(r["vid.prog"]),
                         "start": int(r["start"]), "seconds": int(r["dur"]),
                         "types": r.get("types"), "bounded_by_separators": bool(bounded)}
@@ -514,6 +612,21 @@ def build_predictions_json(pred: pd.DataFrame, cm: pd.DataFrame, fv: pd.DataFram
     }
 
     # ---- non-content clips
+    # The second-pass prompt (v4) asks the model for an explicit
+    # `programme: true/false` flag per clip, so it now reports its own
+    # non-content calls; compare them against the heuristic above.
+    model_flag = {}
+    if "programme" in pred.columns:
+        flag = pred["programme"].fillna("").str.strip().str.lower()
+        false_idx = set(pred.index[flag == "false"])
+        nodata_idx = set(pred.index[flag == "nodata"])
+        model_flag = {
+            "false": int(len(false_idx)),
+            "nodata": int(len(nodata_idx)),
+            "overlap_with_heuristic": int(len(false_idx & noncontent_idx)),
+            "beyond_heuristic": int(len(false_idx - noncontent_idx)),
+        }
+
     noncontent_block = {
         "n": len(noncontent),
         "of_programmes": int(len(pred)),
@@ -523,16 +636,19 @@ def build_predictions_json(pred: pd.DataFrame, cm: pd.DataFrame, fv: pd.DataFram
         "spurious_types": dict(Counter(
             t.strip() for x in noncontent for t in str(x["types"]).split(";") if t.strip()
         ).most_common()),
+        "model_flag": model_flag,
         "items": noncontent,
     }
 
-    # ---- field completeness of the machine output
+    # ---- field completeness of the machine output (fields this run actually
+    # produced — v1-era runs have no second-pass fields, v4 has no `fiction`)
+    fields = [f for f in PRED_FIELDS if f in pred.columns]
     completeness = []
-    for field in PRED_FIELDS:
+    for field in fields:
         row = {"field": field}
         for coll in (CM, FV):
             sub = pred[pred["collection"] == coll]
-            row[coll] = pct(filled(sub[field]) if field in sub else 0, len(sub))
+            row[coll] = pct(filled(sub[field]), len(sub))
         completeness.append(row)
 
     # ---- vocabularies
@@ -567,6 +683,72 @@ def build_predictions_json(pred: pd.DataFrame, cm: pd.DataFrame, fv: pd.DataFram
             "shared_terms_strict": strict,
         })
 
+    # ---- category agreement (FV only): the machine's v4 category/category2
+    # against the catalogue's own category and Prof/Am sub-category lists.
+    # Channel M was never catalogued, so there is nothing to compare it with.
+    cat_agree = None
+    if "category" in pred.columns and "category" in fv.columns:
+        m_cat: dict[str, set] = {}
+        m_cat2: dict[str, set] = {}
+        for _, r in pred[pred["collection"] == FV].iterrows():
+            vals = set()
+            if pd.notna(r["category"]):
+                vals = {t.strip() for t in str(r["category"]).split(";")
+                        if t.strip().lower() != "nodata"}
+            m_cat.setdefault(r["fkey"], set()).update(vals)
+            if "category2" in pred.columns and pd.notna(r["category2"]):
+                m_cat2.setdefault(r["fkey"], set()).update(
+                    t.strip() for t in str(r["category2"]).split(";")
+                    if t.strip().lower() != "nodata")
+        SI_EQ = {"Amateur", "Home Movies"}  # the machine's labels for what the
+        # catalogue files under 'Special Interest'
+        compared = shared = exact = covers = 0
+        shared_terms: Counter = Counter()
+        prov = prov_raw = prov_ali = 0
+        for _, h in fv.iterrows():
+            fk = file_key(f"NWFA {str(h.get('accession number', '')).strip()}")
+            if fk not in m_cat:
+                continue
+            c_cat = set(split_terms(h.get("category")))
+            if c_cat:
+                compared += 1
+                both = c_cat & m_cat[fk]
+                if both:
+                    shared += 1
+                    shared_terms.update(both)
+                if c_cat <= m_cat[fk]:
+                    covers += 1
+                if c_cat == m_cat[fk]:
+                    exact += 1
+            c_sub = (set(split_terms(h.get("ProfCategories")))
+                     | set(split_terms(h.get("AmCategories"))))
+            if c_sub:
+                prov += 1
+                mm = m_cat2.get(fk, set())
+                if c_sub & mm:
+                    prov_raw += 1
+                aliased = ({t if t != "Special Interest" else a
+                            for t in c_sub for a in ({t} if t != "Special Interest" else SI_EQ)})
+                if aliased & mm:
+                    prov_ali += 1
+        prov_si = sum(1 for v in fv.get("AmCategories", pd.Series(dtype=str))
+                      if "Special Interest" in split_terms(v))
+        prov_am = sum(1 for s in m_cat2.values() if s & SI_EQ)
+        cat_agree = {
+            "subject": {"files_compared": compared, "shared_any": shared,
+                        "pct_shared_any": pct(shared, compared),
+                        "exact_match": exact, "covers_catalogue": covers,
+                        "shared_terms": counter_to_sorted(shared_terms)},
+            "provenance": {"files_compared": prov, "shared_any_raw": prov_raw,
+                           "pct_shared_any_raw": pct(prov_raw, prov),
+                           "shared_any_aliased": prov_ali,
+                           "pct_shared_any_aliased": pct(prov_ali, prov),
+                           "catalogue_special_interest": prov_si,
+                           "machine_amateur_home_movies": prov_am,
+                           "alias": ("catalogue 'Special Interest' read as the "
+                                     "machine's 'Amateur' / 'Home Movies'")},
+        }
+
     vocab_block = {
         "machine_types": counter_to_sorted(machine_types),
         "machine_places": counter_to_sorted(machine_places, 12),
@@ -577,6 +759,7 @@ def build_predictions_json(pred: pd.DataFrame, cm: pd.DataFrame, fv: pd.DataFram
             "machine_tokens": sum(o["machine_tokens"] for o in overlap),
             "shared_tokens": sum(o["shared_tokens"] for o in overlap),
         },
+        "category_agreement": cat_agree,
     }
 
     # ---- inner segments
@@ -610,21 +793,30 @@ def build_predictions_json(pred: pd.DataFrame, cm: pd.DataFrame, fv: pd.DataFram
         for _, r in cm.iterrows():
             labels[str(r["File name"]).split("_01of01")[0]] = r["Label transcription"]
 
+    label_verdicts = label_verdicts or {}
     label_items = []
     for fkey, g in pred[pred["collection"] == CM].groupby("fkey"):
         content = g[g["dur"] > NONCONTENT_MAX_SECONDS].sort_values("dur", ascending=False)
         gist = str(content.iloc[0]["summary"]) if len(content) else ""
-        item = {"file": fkey, "label": labels.get(fkey), "verdict": None,
+        item = {"file": fkey, "label": labels.get(fkey),
+                "verdict": label_verdicts.get(fkey, {}).get("verdict"),
                 "programmes": int(len(g))}
+        if label_verdicts.get(fkey, {}).get("spread"):
+            item["verdict_spread"] = label_verdicts[fkey]["spread"]
         if include_gists:
             item["machine_gist"] = gist[:220]
         label_items.append(item)
 
+    n_assigned = sum(1 for i in label_items if i["verdict"])
     label_block = {
         "files": len(label_items),
-        "verdicts_assigned": 0,
-        "note": ("Verdicts are set by hand after a human has compared label and "
-                 "content; left null until NWFA confirms."),
+        "verdicts_assigned": n_assigned,
+        "note": (
+            "One verdict per tape from the NWFA annotators (majority; 'mixed' where "
+            "they split); the rest await an archivist pass at scale."
+            if n_assigned else
+            "Verdicts are set by hand after a human has compared label and "
+            "content; left null until NWFA confirms."),
         "items": label_items,
     }
 
@@ -702,32 +894,317 @@ def build_predictions_json(pred: pd.DataFrame, cm: pd.DataFrame, fv: pd.DataFram
         "vocab": vocab_block,
         "segments": segments_block,
         "label_match": label_block,
+        "label_pool": label_pool,
         "duration_check": duration_check_block,
         "examples": examples,
     }
 
 
 # --------------------------------------------------------------------------
-# human-truth scaffold
+# human truth — the returned NWFA annotation workbooks
 # --------------------------------------------------------------------------
 
 HUMANTRUTH_FIELDS = [
-    {"field": "label_matches_content", "collections": [CM],
-     "why": "The only field that addresses the barcode error. One verdict per tape."},
+    {"field": "label_match", "collections": [CM],
+     "why": "The only field that addresses the barcode error. Yes / partly / no, one verdict per tape."},
     {"field": "nb_progs", "collections": [CM, FV],
      "why": "No source holds this. The core outer-segmentation reference."},
     {"field": "prog_timecodes", "collections": [CM, FV],
      "why": "No source holds this. Lets us score boundary placement, not just counts."},
-    {"field": "machine_text_verdict", "collections": [CM, FV],
-     "why": "Accept / amend / reject on the machine summary, with a reason."},
     {"field": "year", "collections": [CM],
      "why": "Catalogued for Film & Video already; only needed for Channel M."},
     {"field": "colour", "collections": [CM], "why": "As above."},
     {"field": "sound", "collections": [CM], "why": "As above."},
+    {"field": "notes", "collections": [CM, FV],
+     "why": "Anything odd — where the sample talks back."},
 ]
 
+REF_RE = re.compile(r"^(N_\d+|NWFA\s+\d+)\s*$")
+TC_RE = re.compile(r"^\s*(?:(\d{1,3}):)?(\d{1,2}):(\d{2})\s*$")
+LABEL_MAP = {"yes": "match", "partly": "adjacent", "no": "mismatch"}
 
-def build_humantruth_json(path: str | Path | None, pred: pd.DataFrame) -> dict:
+
+def parse_tc(v):
+    """'HH:MM:SS' (or 'MM:SS') -> seconds; blank or unrecognised -> None."""
+    if v is None:
+        return None
+    m = TC_RE.match(str(v))
+    if not m:
+        return None
+    return int(m.group(1) or 0) * 3600 + int(m.group(2)) * 60 + int(m.group(3))
+
+
+def _cell(row, i):
+    if i is None or i >= len(row) or row[i] is None:
+        return None
+    s = str(row[i]).strip()
+    return s or None
+
+
+def load_annotator_workbook(path: str | Path) -> dict:
+    """Parse one returned NWFA annotation workbook (template format).
+
+    - The Videos sheet holds one row per video; the header sits on row 3 and
+      the annotator's name on C1. Rows whose reference is not a video id (the
+      template's instructional note) are skipped.
+    - The Programmes sheet is pre-printed with six blank rows per video; a row
+      counts as answered only if it carries a start time or a description. An
+      end time left blank means "to end of file".
+    - 'n/a — Film & Video' under label match is pre-printed by the template,
+      not an answer, so it is read as None.
+    """
+    wb = openpyxl.load_workbook(path)
+    vs = wb["Videos"]
+    name = _cell([c.value for c in vs[1]], 2)
+    hdr = {str(c.value).strip(): c.column - 1 for c in vs[3] if c.value}
+    videos = {}
+    for row in vs.iter_rows(min_row=4, values_only=True):
+        ref = _cell(row, hdr.get("reference"))
+        if not ref or not REF_RE.match(ref):
+            continue
+        rec = {
+            "batch": _cell(row, hdr.get("batch")) or "",
+            "nb_progs": None,
+            "label_match": None,
+            "year": _cell(row, hdr.get("year")),
+            "colour": _cell(row, hdr.get("colour")),
+            "sound": _cell(row, hdr.get("sound")),
+            "notes": _cell(row, hdr.get("notes / anything odd")),
+        }
+        nb = _cell(row, hdr.get("HOW MANY PROGRAMMES?"))
+        if nb:
+            try:
+                rec["nb_progs"] = int(nb)
+            except ValueError:
+                pass
+        lm = _cell(row, hdr.get("does the label match the content?"))
+        if lm and not lm.lower().startswith("n/a"):
+            rec["label_match"] = lm
+        videos[ref] = rec
+
+    ps = wb["Programmes"]
+    phdr = {str(c.value).strip(): c.column - 1 for c in ps[3] if c.value}
+    programmes: dict[str, list[dict]] = {}
+    for row in ps.iter_rows(min_row=4, values_only=True):
+        ref = _cell(row, phdr.get("reference"))
+        if not ref or not REF_RE.match(ref):
+            continue
+        start = parse_tc(row[phdr["starts (HH:MM:SS)"]])
+        what = _cell(row, phdr.get("what is it? (one line)"))
+        if start is None and not what:
+            continue                      # pre-printed blank row
+        end = parse_tc(row[phdr["ends (HH:MM:SS)"]])
+        programmes.setdefault(ref, []).append(
+            {"start": start, "end": end, "text": what or ""})
+    return {"name": name or Path(path).stem, "videos": videos, "programmes": programmes}
+
+
+def _vote(values: list[str]) -> tuple[str | None, str]:
+    """Majority of a list of verdicts; no strict majority is 'mixed'.
+    Returns (verdict, spread)."""
+    if not values:
+        return None, ""
+    counts = Counter(values)
+    spread = " · ".join(f"{n} {k}" for k, n in counts.most_common())
+    value, top = counts.most_common(1)[0]
+    if top * 2 > len(values):
+        return value, spread
+    return "mixed", spread
+
+
+def label_verdicts_from(annotators: list[dict]) -> dict[str, dict]:
+    """Per Channel M tape: the annotators' label-match verdict, mapped onto the
+    page's vocabulary (match / adjacent / mismatch / mixed)."""
+    out = {}
+    for ref in {ref for a in annotators for ref in a["videos"]}:
+        votes = [a["videos"][ref]["label_match"] for a in annotators
+                 if a["videos"].get(ref, {}).get("label_match")]
+        verdict, spread = _vote(votes)
+        if not verdict:
+            continue
+        out[ref] = {"verdict": "mixed" if verdict == "mixed" else LABEL_MAP[verdict],
+                    "spread": spread}
+    return out
+
+
+def build_humantruth_json(annotators: list[dict], pred: pd.DataFrame) -> dict:
+    """Aggregate the returned workbooks: per-field answers, inter-annotator
+    agreement, and boundary placement of the human programmes against the
+    pipeline's proposed programmes for the same videos."""
+    block = {
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M"),
+        "status": "pending",
+        "proposed_fields": HUMANTRUTH_FIELDS,
+        "expected": 0,
+        "returned": 0,
+        "n_annotators": len(annotators),
+        "annotators": [],
+        "fields_returned": [],
+        "label_match": {},
+        "agreement": {},
+        "boundaries": {},
+        "items": [],
+    }
+    if not annotators:
+        return block
+
+    refs = sorted({ref for a in annotators for ref in a["videos"]}
+                  | {ref for a in annotators for ref in a["programmes"]})
+
+    # pipeline boundaries, only for the videos in the annotated sample: the
+    # prediction file covers the whole batch, but we compare against the sample
+    pipe: dict[str, dict] = {}
+    pred_fkey = pred["DODfilenameprefix"].map(file_key)
+    for ref in refs:
+        g = pred[pred_fkey == ref]
+        if g.empty:
+            continue
+        bounds = []
+        for _, r in g.iterrows():
+            s, d = parse_kdl_prog(r["kdl_prog"])
+            bounds += [s, s + d]
+        pipe[ref] = {"bounds": sorted(set(bounds)), "n_progs": int(len(g))}
+    items, all_dists = [], []
+    sums = {"nb": 0, "prog_rows": 0, "label": 0, "year": 0, "colour": 0,
+            "sound": 0, "notes": 0}
+    label_votes: dict[str, list[str]] = {}
+    agree = {"nb": [], "label": [], "year": [], "colour": [], "sound": []}
+
+    for ref in refs:
+        is_h22 = ref.startswith("N_")
+        p = pipe.get(ref, {"bounds": [], "n_progs": None})
+        file_end = max(p["bounds"]) if p["bounds"] else None
+        responders, nbs, years, colours, sounds = [], [], [], [], []
+        human_bounds, notes = [], 0
+        for a in annotators:
+            rec = a["videos"].get(ref)
+            progs = a["programmes"].get(ref, [])
+            answered_video = bool(rec and (
+                rec["nb_progs"] is not None or rec["notes"] or
+                (is_h22 and (rec["year"] or rec["colour"] or rec["sound"]
+                             or rec["label_match"]))))
+            if not (answered_video or progs):
+                continue
+            responders.append(a["name"])
+            if rec:
+                if rec["nb_progs"] is not None:
+                    nbs.append(rec["nb_progs"]); sums["nb"] += 1
+                if rec["notes"]:
+                    notes += 1; sums["notes"] += 1
+                if is_h22:
+                    if rec["label_match"]:
+                        label_votes.setdefault(ref, []).append(rec["label_match"])
+                        sums["label"] += 1
+                    if rec["year"]:
+                        years.append(rec["year"].lower()); sums["year"] += 1
+                    if rec["colour"]:
+                        colours.append(rec["colour"].lower()); sums["colour"] += 1
+                    if rec["sound"]:
+                        sounds.append(rec["sound"].lower()); sums["sound"] += 1
+            for pr in progs:
+                sums["prog_rows"] += 1
+                if pr["start"] is not None:
+                    human_bounds.append(pr["start"])
+                if pr["end"] is not None:
+                    human_bounds.append(pr["end"])
+                elif file_end is not None:
+                    human_bounds.append(file_end)   # left blank: to end of file
+
+        dists = [min(abs(hb - b) for b in p["bounds"]) for hb in human_bounds] \
+            if p["bounds"] else []
+        all_dists += dists
+
+        item = {
+            "prefix": ref,
+            "collection": CM if is_h22 else FV,
+            "batch": next((a["videos"][ref]["batch"] for a in annotators
+                           if ref in a["videos"] and a["videos"][ref]["batch"]), ""),
+            "annotators": len(responders),
+            "nb_progs": nbs,
+            "pipeline_progs": p["n_progs"],
+            "boundaries": {"n": len(human_bounds),
+                           "within_10s": sum(1 for d in dists if d <= 10)},
+            "notes": notes,
+        }
+        if is_h22:
+            verdict, spread = _vote(label_votes.get(ref, []))
+            item["label_match"] = "mixed" if verdict == "mixed" else LABEL_MAP[verdict]
+            item["label_spread"] = spread
+        if nbs:
+            agree["nb"].append({"ref": ref, "counts": nbs,
+                                "unanimous": len(set(nbs)) == 1})
+        if is_h22 and label_votes.get(ref):
+            agree["label"].append({"ref": ref,
+                                   "unanimous": len(set(label_votes[ref])) == 1})
+        for field, vals in (("year", years), ("colour", colours), ("sound", sounds)):
+            if len(vals) >= 2:
+                agree[field].append({"ref": ref, "unanimous": len(set(vals)) == 1})
+        items.append(item)
+
+    returned = sum(1 for i in items if i["annotators"])
+    block["expected"] = len(refs)
+    block["returned"] = returned
+    block["status"] = "complete" if returned == len(refs) and returned else (
+        "partial" if returned else "pending")
+    block["annotators"] = [
+        {"name": a["name"], "videos": sum(
+            1 for ref in refs
+            if (a["videos"].get(ref) and any(
+                (a["videos"][ref][k] for k in ("nb_progs", "notes", "year",
+                                               "colour", "sound", "label_match"))))
+                or a["programmes"].get(ref))}
+        for a in annotators]
+    # each annotator's workbook carries every sample video, so the maximum
+    # answerable is (sample size) x (annotators) for the two-collection fields
+    # and (Channel M tapes) x (annotators) for the H22-only ones
+    n_ann = len(annotators)
+    n_h22 = sum(1 for ref in refs if ref.startswith("N_"))
+    block["fields_returned"] = [
+        {"field": "nb_progs", "collections": [CM, FV],
+         "of": len(refs) * n_ann, "answered": sums["nb"]},
+        {"field": "prog_timecodes", "collections": [CM, FV], "answered": sums["prog_rows"]},
+        {"field": "label_match", "collections": [CM],
+         "of": n_h22 * n_ann, "answered": sums["label"]},
+        {"field": "year", "collections": [CM],
+         "of": n_h22 * n_ann, "answered": sums["year"]},
+        {"field": "colour", "collections": [CM],
+         "of": n_h22 * n_ann, "answered": sums["colour"]},
+        {"field": "sound", "collections": [CM],
+         "of": n_h22 * n_ann, "answered": sums["sound"]},
+        {"field": "notes", "collections": [CM, FV],
+         "of": len(refs) * n_ann, "answered": sums["notes"]},
+    ]
+    block["label_match"] = dict(Counter(LABEL_MAP[v] for vs in label_votes.values() for v in vs))
+    block["agreement"] = {
+        "nb_progs": {"videos": len(agree["nb"]),
+                     "unanimous": sum(1 for a in agree["nb"] if a["unanimous"]),
+                     "split": [a for a in agree["nb"] if not a["unanimous"]]},
+        "label_match": {"tapes": len(agree["label"]),
+                        "unanimous": sum(1 for a in agree["label"] if a["unanimous"])},
+        **{f: {"videos": len(agree[f]), "unanimous": sum(1 for a in agree[f] if a["unanimous"])}
+           for f in ("year", "colour", "sound")},
+    }
+    if all_dists:
+        d = pd.Series(all_dists)
+        block["boundaries"] = {
+            "n_human": int(len(all_dists)),
+            "n_pipeline": int(sum(len(pipe[ref]["bounds"]) for ref in refs
+                                  if ref in pipe)),
+            "within_5s": int((d <= 5).sum()),
+            "within_10s": int((d <= 10).sum()),
+            "within_30s": int((d <= 30).sum()),
+            "beyond_30s": int((d > 30).sum()),
+            "pct_within_10s": round(100.0 * (d <= 10).sum() / len(d), 1),
+            "median_abs_offset_s": round(float(d.median()), 1),
+            "mean_abs_offset_s": round(float(d.mean()), 1),
+        }
+    block["items"] = items
+    return block
+
+
+def build_humantruth_sent_sample(path: str | Path | None, pred: pd.DataFrame) -> dict:
+    """The pre-workshop scaffold: count answers in the flat sent-sample sheet
+    (kept for early stages; the returned workbooks use build_humantruth_json)."""
     block = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M"),
         "status": "pending",
@@ -771,7 +1248,12 @@ def main() -> None:
     ap.add_argument("--fvcat", required=True, help="ISSA FV Cat data.xlsx")
     ap.add_argument("--predictions", required=True,
                     help="pipeline predictions, one row per proposed programme (.xlsx or .csv)")
-    ap.add_argument("--humantruth", default=None, help="NWFA validation sample (.xlsx)")
+    ap.add_argument("--annotations", nargs="*", default=[],
+                    help="returned NWFA annotation workbooks (NWFA_annotation_<NAME>.xlsx)")
+    ap.add_argument("--humantruth", default=None,
+                    help="flat NWFA sent-sample sheet (.xlsx); used only when no --annotations")
+    ap.add_argument("--labelmatch", default=None,
+                    help="label-pool search per Channel M tape (matched_labels_*.xlsx)")
     ap.add_argument("--out", default=".", help="output directory")
     ap.add_argument("--run", default=None, help="run label, e.g. v1 (default: from filename)")
     ap.add_argument("--stage", default=None,
@@ -797,9 +1279,33 @@ def main() -> None:
     for p in pred["DODfilenameprefix"].map(file_key).unique():
         sample_ids[classify_collection(p)].append(p)
 
-    meta = build_metadata_json(cm, fv, sample_ids)
-    preds = build_predictions_json(pred, cm, fv, run, args.stage, not args.no_gists)
-    human = build_humantruth_json(args.humantruth, pred)
+    # the returned annotator workbooks; the untouched template is skipped if it
+    # is passed in, and annotators are ordered by name for stable output
+    annotators = []
+    for path in args.annotations:
+        p = Path(path)
+        if "TEMPLATE" in p.name.upper():
+            print(f"warning: skipping template workbook {p.name}")
+            continue
+        annotators.append(load_annotator_workbook(p))
+    annotators.sort(key=lambda a: a["name"])
+
+    label_verdicts = label_verdicts_from(annotators) if annotators else {}
+    annotated_ids = set()
+    for a in annotators:
+        for ref, rec in a["videos"].items():
+            if (rec["nb_progs"] is not None or rec["notes"] or rec["label_match"]
+                    or rec["year"] or rec["colour"] or rec["sound"]):
+                annotated_ids.add(ref)
+        annotated_ids.update(a["programmes"].keys())
+
+    label_pool = (label_pool_aggregates(args.labelmatch, label_verdicts)
+                  if args.labelmatch else None)
+    meta = build_metadata_json(cm, fv, sample_ids, annotated_ids)
+    preds = build_predictions_json(pred, cm, fv, run, args.stage, not args.no_gists,
+                                   label_verdicts, label_pool)
+    human = (build_humantruth_json(annotators, pred) if annotators
+             else build_humantruth_sent_sample(args.humantruth, pred))
 
     for name, payload in (("nwfa_metadata_data.json", meta),
                           ("issa_ws2_predictions.json", preds),
@@ -808,11 +1314,14 @@ def main() -> None:
         target.write_text(json.dumps(payload, indent=1, ensure_ascii=False), encoding="utf-8")
         print(f"wrote {target}  ({target.stat().st_size:,} bytes)")
 
+    ht = (f"  human-truth={human['returned']}/{human['expected']} videos "
+          f"({human['n_annotators']} annotators)"
+          if human.get("n_annotators") else "")
     print(f"\nstage={preds['stage']}  run={preds['run']}  "
           f"files={preds['scale']['files']}/400  "
           f"programmes={preds['totals']['programmes']}  "
           f"separators={preds['totals']['separators']}  "
-          f"non-content={preds['noncontent']['n']} ({preds['noncontent']['pct']}%)")
+          f"non-content={preds['noncontent']['n']} ({preds['noncontent']['pct']}%){ht}")
 
 
 if __name__ == "__main__":

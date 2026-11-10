@@ -2,7 +2,7 @@
 """Convert the WS2 NWFA sample into paratext review records (one per video).
 
 Inputs, all already in the repo / handed over by NWFA — nothing is generated:
-  - predictions-10.v3.xlsx          pipeline output (programmes + inner segments)
+  - predictions-400.v4.xlsx         pipeline output (programmes + inner segments; supersedes predictions-10.v3)
   - NWFA_annotation_TEMPLATE_v0.1   catalogue facts for the 10 videos (Videos sheet)
   - NWFA_annotation_<NAME>.xlsx     zero or more completed annotator copies
   - semantic-matched-labels-10.docx Geoffroy's label matching (optional; partial)
@@ -84,10 +84,21 @@ def parse_inner_segments(raw: str) -> list[tuple[int, str]]:
     """'00:00: A; 04:24: B' -> [(0, 'A'), (264, 'B')]. Two components are MM:SS,
     three are HH:MM:SS — both occur in the same file. Relative to the programme."""
     out = []
-    for a, b, c, text in SEG_ITEM_RE.findall(raw or ""):
+    for a, b, c, text in SEG_ITEM_RE.findall(_clean(raw) or ""):
         secs = int(a) * 3600 + int(b) * 60 + int(c) if c else int(a) * 60 + int(b)
         out.append((secs, text.strip().rstrip(".")))
     return out
+
+
+def _year(v) -> str | None:
+    """'2007.0' / 2007 / '2007' -> '2007'; blanks and NODATA -> None."""
+    s = _clean(v)
+    if not s:
+        return None
+    try:
+        return str(int(float(s)))
+    except ValueError:
+        return s
 
 
 def load_predictions(path: Path) -> dict[str, list[dict]]:
@@ -101,13 +112,15 @@ def load_predictions(path: Path) -> dict[str, list[dict]]:
         start = h * 3600 + mi * 60 + s
         by_ref.setdefault(ref_of(r.DODfilenameprefix), []).append({
             "kdl_prog": r.kdl_prog, "start": start, "end": start + dur,
-            "title": None if pd.isna(r.title) else str(r.title),
-            "year": None if pd.isna(r.year) else str(int(r.year)) if isinstance(r.year, float) else str(r.year),
+            "title": _clean(r.title),
+            "year": _year(r.year),
             "colour": None if pd.isna(r.colour) else str(r.colour),
             "types": [str(c) for c in (r.category, r.category2) if pd.notna(c)],
             "summary": "" if pd.isna(r.summary) else str(r.summary),
             "synopsis": _clean(r.synopsis), "places": _clean(r.places), "credits": _clean(r.credits),
-            "keywords": _clean(r.keywords), "fiction": _clean(r.fiction),
+            "keywords": _clean(r.keywords), "fiction": _clean(getattr(r, "fiction", None)),
+            "bands": _clean(getattr(r, "bands", None)),
+            "environment": _clean(getattr(r, "environment", None)),
             "category": _clean(r.category), "category2": _clean(r.category2),
             "segments": [(start + t, text) for t, text in parse_inner_segments(r.segments)],
         })
@@ -117,7 +130,11 @@ def load_predictions(path: Path) -> dict[str, list[dict]]:
 # -- catalogue facts + annotators -------------------------------------------
 
 def _clean(v) -> str | None:
-    return None if v is None or (isinstance(v, float) and pd.isna(v)) or str(v).strip() == "" else str(v).strip()
+    """None for blanks and the pipeline's NODATA sentinel, else the stripped string."""
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return None
+    s = str(v).strip()
+    return None if s == "" or s.upper() == "NODATA" else s
 
 
 def load_catalogue(template: Path) -> dict[str, dict]:
@@ -219,15 +236,19 @@ def _median(xs):
     return xs[len(xs) // 2]
 
 
-def cluster_programmes(annotators: list[dict], ref: str, tol: int = TOL) -> list[dict]:
+def cluster_programmes(annotators: list[dict], ref: str, tol: int = TOL,
+                       file_end: float | None = None) -> list[dict]:
     """Programmes two annotators 'agree' on have both boundaries within `tol` s.
-    Returns [{start, end, text, support, n, members}] ordered by start."""
+    Returns [{start, end, text, support, n, members}] ordered by start.
+    A programme left without an end is read as "to end of file" when file_end is given."""
     n = len(annotators)
     clusters: list[dict] = []
     for ai, a in enumerate(annotators):
         for p in a["programmes"].get(ref, []):
             if p["end"] is None:
-                continue
+                if file_end is None:
+                    continue
+                p = {**p, "end": file_end}
             for c in clusters:
                 if (ai not in c["by"] and abs(p["start"] - _median(c["s"])) <= tol
                         and abs(p["end"] - _median(c["e"])) <= tol):
@@ -405,6 +426,8 @@ def comparison(ref: str, cat: dict, fv: dict, progs: list[dict], matches: dict) 
         {"label": "Summary", "right": per_prog("summary")},
         {"label": "Credits", "right": per_prog("credits")},
         {"label": "Fiction", "right": _join(p["fiction"] for p in progs)},
+        {"label": "Bands", "right": per_prog("bands")},
+        {"label": "Environment", "right": per_prog("environment")},
     ]
     if is_h22:
         extras.insert(0, {"label": "Title (predicted)", "right": pred["title"]})
@@ -439,13 +462,15 @@ def build_record(ref: str, cat: dict, progs: list[dict], annotators: list[dict],
                  matches: dict, video: Path | None, fv: dict | None = None) -> dict:
     fv = fv or {}
     n = len(annotators)
-    c_progs, c_segs = cluster_programmes(annotators, ref), cluster_segments(annotators, ref)
     dur = video_duration(video) if video else None
+    # a programme left without an end time is read as "to end of file"
+    file_end = dur or max([p["end"] for p in progs] + [p["end"] for a in annotators for p in a["programmes"].get(ref, [])
+                                                       if p["end"] is not None] or [0])
+    c_progs, c_segs = cluster_programmes(annotators, ref, file_end=file_end), cluster_segments(annotators, ref)
     seg_items = [{"start": s, "text": t} for p in progs for s, t in p["segments"]]
     prog_items = [{"start": p["start"], "end": p["end"], "text": f"P{i} · {p['summary'][:140]}"}
                   for i, p in enumerate(progs, 1)]
-    all_ends = [p["end"] for p in progs] + [c["end"] for c in c_progs]
-    end = dur or max(all_ends or [0])
+    end = file_end
     tracks = []
     if n:
         tracks.append(track("human:Annotators · programmes" + (" (consensus)" if n > 1 else ""), [
@@ -460,8 +485,9 @@ def build_record(ref: str, cat: dict, progs: list[dict], annotators: list[dict],
         for a in annotators:
             ap = a["programmes"].get(ref, [])
             tracks.append(track(f"ann:{a['name']} · programmes", [
-                {"start": p["start"], "end": p["end"], "text": f"P{p['no'] or i} · {p['text']}"}
-                for i, p in enumerate(ap, 1) if p["end"] is not None]))
+                {"start": p["start"], "end": p["end"] if p["end"] is not None else end,
+                 "text": f"P{p['no'] or i} · {p['text']}"}
+                for i, p in enumerate(ap, 1)]))
             tracks.append(track(f"ann:{a['name']} · segments", [
                 {"start": s, "text": t} for p in ap for s, t in p["segments"]]))
     media = {"src": str(video) if video else f"missing/{ref}.mp4", "start": 0, "end": end,
@@ -497,7 +523,7 @@ def build_record(ref: str, cat: dict, progs: list[dict], annotators: list[dict],
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--predictions", type=Path, default=META / "predictions-10.v3.xlsx")
+    ap.add_argument("--predictions", type=Path, default=META / "predictions-400.v4.xlsx")
     ap.add_argument("--template", type=Path, default=META / "NWFA_annotation_TEMPLATE_v0.1.xlsx")
     ap.add_argument("--fv-catalogue", type=Path, default=FV_CAT)
     ap.add_argument("--annotations", type=Path, nargs="*",

@@ -83,6 +83,16 @@ def test_consensus_marks_agreed_and_contested(two_annotators):
     assert c.kind_of(1, 1) == ""
 
 
+def test_missing_end_runs_to_end_of_file():
+    # Will's NWFA-58 row: start given, end left blank -> read as "to end of file"
+    ann = [{"name": "A", "answers": {}, "programmes": {
+        "R": [{"no": "1", "start": 0, "end": None, "text": "", "segments": []}]}}]
+    progs = c.cluster_programmes(ann, "R", file_end=300)
+    assert [(p["start"], p["end"]) for p in progs] == [(0, 300)]
+    # without file_end the row is still dropped, as before
+    assert c.cluster_programmes(ann, "R") == []
+
+
 def test_identical_annotators_fully_agree(tmp_path):
     a, b = tmp_path / "NWFA_annotation_A.xlsx", tmp_path / "NWFA_annotation_B.xlsx"
     make_annotator(a, "Ann", 9); make_annotator(b, "Ben", 9)
@@ -113,6 +123,17 @@ def test_label_matches_join_on_reference_and_prog():
     m = c.load_label_matches(c.LABELS_DOCX)
     entry = m[("N_6975915", "00.00.41-1547")]
     assert entry["ranked"] and entry["true"]
+
+
+def test_predictions_v4_maps_new_columns_and_nodata():
+    preds = c.load_predictions(c.META / "predictions-400.v4.xlsx")
+    progs = preds["N_6966411"]
+    assert len(progs) == 11
+    assert any(p["bands"] for p in progs)
+    assert all(p["environment"] for p in progs)
+    # the v4 NODATA sentinel must never leak through as a display value
+    for p in progs:
+        assert all(v != "NODATA" for v in p.values() if isinstance(v, str))
 
 
 def test_synopsis_is_neutral_text():
