@@ -8,6 +8,9 @@ from pathlib import Path
 import re
 import json
 
+CSV_MAX_ROWS = 0
+CSV_MAX_MATCHES = 5
+CSV_PATH = 'catalogue/matched_labels_200.csv'
 EMBEDDINGS_FILE_NAME = 'embeds.json'
 # all-MiniLM-L6-v2 (23M, 384d, CPU-friendly)
 # BAAI/bge-small-en-v1.5 (33M, 384d, CPU-friendly)
@@ -18,7 +21,7 @@ EMBEDDINGS_FILE_NAME = 'embeds.json'
 # Qwen/Qwen3-Embedding-0.6B
 # google/embeddinggemma-2
 
-# MODEL_NAME = "all-MiniLM-L6-v2"
+MODEL_NAME = "all-MiniLM-L6-v2"
 # MODEL_NAME = "NovaSearch/stella_en_400M_v5" # needs xformers
 # MODEL_NAME = "BAAI/bge-small-en-v1.5" # not as good as all-MiniLM-L6-v2
 # MODEL_NAME = "BAAI/bge-m3" # need 4+GB VRAM
@@ -94,8 +97,16 @@ class SemanticMatcher:
 
         batches_path = Path('./batches')
         for file_path in batches_path.rglob('clip_answers.json'):
+            if not(any(part.startswith("N_") for part in file_path.parts[:-1])):
+                continue
+            if not(any(part.endswith("-prog") for part in file_path.parts[:-1])):
+                continue
             data = json.loads(file_path.read_text())
-            summary = data.get('data', {}).get('misc3', {}).get('answer', {}).get('summary', {})
+            answer = data.get('data', {}).get('misc3', {}).get('answer', {})
+            if not isinstance(answer, dict): 
+                print(f'WARN: {file_path} has no answer')
+                continue
+            summary = answer.get('summary', {})
 
             if summary:
                 entries.append({
@@ -104,6 +115,9 @@ class SemanticMatcher:
                     'id': str(file_path.parent),
                     'year': data.get('data', {}).get('misc3', {}).get('answer', {}).get('year', {}),
                 })
+            else:
+                print(f'WARN: {file_path} has no summary')
+
 
         self.embed_entries(entries)
         self.write_entries(entries)
@@ -170,6 +184,8 @@ class SemanticMatcher:
 
         correct_filenames_label = self.read_ground_truth()
 
+        rows = []
+
         last_file = ''
         stats = {
             'files': 0,
@@ -177,13 +193,18 @@ class SemanticMatcher:
             'match-10': 0
         }
         has_confirmed_match = False
-        for entry in entries:
+        entry_idx = 0
+        for entry in sorted(entries, key=lambda e: e['id']):
             if entry['type'] != 'desc':
                 continue
 
+            entry_idx += 1
+            if CSV_MAX_ROWS and entry_idx >= CSV_MAX_ROWS:
+                break
+
             # batches/N_6970744_01of01_Johnny Marr/00.00.33-166-full-sub-prog -> N_6970744_01of01
             filename = '_'.join(entry['id'].split('/')[1].split('_')[:3])
-            correct_label = correct_filenames_label[filename]
+            correct_label = correct_filenames_label.get(filename, 'NOT-IN-REPLAY')
             sep = '-'
             if last_file != filename:
                 sep = '='
@@ -196,6 +217,13 @@ class SemanticMatcher:
 
             # Cosine similarity (equivalent to dot product when normalised)
             scores = labels_embeds @ np.array(entry['embed'], dtype=np.float32)
+
+            row = {
+                'fileForSummary': entry['id'].split('/')[1], 
+                'simMax': 0.0,
+                'simDif': 0.0,
+                'match1': '',
+            }
 
             # Top 5
             top5_idx = np.argsort(scores)[::-1][:10]
@@ -210,10 +238,31 @@ class SemanticMatcher:
                         if rank == 1:
                             stats['match-1'] += 1
                 print(f"  {status} {rank}. {scores[i]*100:.1f}% similar to '{labels[i]['to_embed']}' (misattributed to {labels[i]['id']})")
+
+                if rank <= CSV_MAX_MATCHES:
+                    row[f'match{rank}'] = labels[i]['to_embed']
+
+            row['simMax'] = scores[top5_idx[0]]
+            row['simDif'] = row['simMax'] - scores[top5_idx[1]]
+            row['summary'] = entry['to_embed'],
+
+            if last_file != filename:
+                rows.append(row)
+            else:
+                # only replace if simMax is higher
+                if row['simMax'] > rows[-1]['simMax']:
+                    rows[-1] = row
             
             last_file = filename
 
         print(f'\n{stats["files"]} files; {stats["match-10"]} confirmed top-10 matches; {stats["match-1"]} confirmed top-1 matches; model: {MODEL_NAME}')
+
+        # to csv
+        with open(CSV_PATH, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=rows[0].keys())
+            writer.writeheader()
+            for row in rows:
+                writer.writerow(row)
 
     def normalise_label(self, label):
         ret = re.sub(r'\W', '', label).lower()
