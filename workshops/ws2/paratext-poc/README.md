@@ -6,7 +6,7 @@ interface for ISSA's outer + inner segmentation, inpsired by how Mike Saunders (
 showed for the card-index and video-review work at ISSA WS1.
 
 **Branch, not main.** This lives on `feat--ws2-paratext-poc` until it's had a
-look from Geoffroy (and ideally Mike, once we can see his actual NLS
+look from KDL RSE (and ideally Mike, once we can see his actual NLS
 deployment — `paratext-nls` / `mikegsaunders/paratext-space` are both
 private). Nothing has been merged yet.
 
@@ -85,13 +85,14 @@ A second project, `issa-ws2`, serves the 10 NWFA sample videos for the workshop 
 NLS work above is unchanged.
 
 ```bash
-python3 convert_ws2.py > records_ws2.jsonl          # system python: needs pandas + openpyxl
+cd workshops/ws2/paratext-poc
+.venv/bin/python convert_ws2.py > records_ws2.jsonl
 uv run paratext package records_ws2.jsonl -p issa-ws2 --out review/issa-ws2-r1 --round 1 --fresh
 uv run python serve_ws2.py --no-open                # patched UI, see ui/README.md
 ```
 
 - Inputs: `predictions-10.v3.xlsx`, the annotation template (catalogue facts), `ISSA FV Cat data.xlsx`,
-  Geoffroy's `semantic-matched-labels-10.docx`, and the compressed `NWFA_videos_sample/*.pocket.mp4`.
+  `semantic-matched-labels-10.docx`, and the compressed `NWFA_videos_sample/*.pocket.mp4`.
 - **Annotators:** put each returned `NWFA_annotation_<NAME>.xlsx` in `data/output/NWFA_metadata/` and re-run.
   Two or more annotators give consensus tracks (programme boundaries within ±10 s count as agreed,
   `TOL` in `convert_ws2.py`) plus a folded per-annotator breakdown.
@@ -100,7 +101,7 @@ uv run python serve_ws2.py --no-open                # patched UI, see ui/README.
   free text of different kinds, so they get status `text`: no symbol, and the UI highlights the words
   that appear on both sides (`overlapHtml` in `ui/static/app.js`).
 - **Separators** are derived from gaps between pipeline programmes (see `../README.md`).
-- Label matching is only available for the Channel M tapes Geoffroy ran; others show "—".
+- Label matching is only available for the Channel M tapes KDL ran; others show "—".
 
 ## Reproducing the WS2 review on another machine
 
@@ -110,7 +111,7 @@ so it does not matter where RDS is mounted, only that these files are copied the
 | Copy to | Files |
 |---|---|
 | `data/output/NWFA_metadata/` | `predictions-10.v3.xlsx`, `NWFA_annotation_TEMPLATE_v0.1.xlsx`, `ISSA FV Cat data.xlsx`, and each returned `NWFA_annotation_<NAME>.xlsx` |
-| `data/output/` | `semantic-matched-labels-10.docx` (Geoffroy's label matches) |
+| `data/output/` | `semantic-matched-labels-10.docx` (KDL label matches) |
 | `data/output/NWFA_videos_sample/` | the ten `*.pocket.mp4` compressed videos |
 
 Also needed: `ffprobe` on the PATH (video durations), `uv`, and system `python3` with `pandas` and `openpyxl`
@@ -128,7 +129,7 @@ for the converter. The packaged data (`records_ws2.jsonl`, `review/issa-ws2-r1/`
 
 **Before the workshop (5 Nov)**
 - Delete `review/issa-ws2-r9` (dummy annotators) and regenerate `issa-ws2-r1` with the real annotators.
-- Check the `judge()` heuristics with Geoffroy (year within catalogued years, colour b/w normalisation, place/title similarity).
+- Check the `judge()` heuristics with KDL (year within catalogued years, colour b/w normalisation, place/title similarity).
 
 **Later (not for the workshop)**
 - Hosted private showcase with archive/collection selectors and compressed proxies; decide whether to upstream `ui/` changes to NLS if they want them.
