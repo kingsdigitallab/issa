@@ -1,0 +1,103 @@
+{
+  "contract_version": 1,
+  "schema": "issa-segments",
+  "schema_version": "v1",
+  "title": "ISSA segmentation — model vs. NLS catalogue",
+  "id_label": "Video / clip",
+  "layout": "stacked",
+  "panels": [
+    {
+      "source": "ground_truth",
+      "title": "NLS catalogue record",
+      "fields": [
+        {
+          "key": "title",
+          "label": "Title",
+          "type": "string"
+        },
+        {
+          "key": "year",
+          "label": "Year",
+          "type": "string"
+        },
+        {
+          "key": "colour",
+          "label": "Colour",
+          "type": "string"
+        },
+        {
+          "key": "types",
+          "label": "Types",
+          "type": "list"
+        }
+      ]
+    },
+    {
+      "source": "model_output",
+      "title": "Pipeline output (FrameSense + Qwen3.8-27B)",
+      "fields": [
+        {
+          "key": "title",
+          "label": "Title",
+          "type": "string"
+        },
+        {
+          "key": "year",
+          "label": "Year",
+          "type": "string"
+        },
+        {
+          "key": "colour",
+          "label": "Colour",
+          "type": "string"
+        },
+        {
+          "key": "types",
+          "label": "Types",
+          "type": "list"
+        },
+        {
+          "key": "summary",
+          "label": "Summary",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "scoring": {
+    "verdicts": [
+      {
+        "value": "good_enough",
+        "label": "Good enough",
+        "hotkey": "1",
+        "notes": false,
+        "negative": false,
+        "warning": false
+      },
+      {
+        "value": "needs_tweaks",
+        "label": "Needs tweaks",
+        "hotkey": "2",
+        "notes": true,
+        "negative": false,
+        "warning": true
+      },
+      {
+        "value": "not_accurate",
+        "label": "Not accurate",
+        "hotkey": "3",
+        "notes": true,
+        "negative": true,
+        "warning": false
+      }
+    ],
+    "notes": {
+      "label": "Notes",
+      "placeholder": "Describe what's wrong or what should change…"
+    }
+  },
+  "table_label": {
+    "source": "ground_truth",
+    "key": "title"
+  }
+}

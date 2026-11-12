@@ -1,0 +1,408 @@
+{
+ "generated_at": "2026-11-10T10:52",
+ "status": "complete",
+ "proposed_fields": [
+  {
+   "field": "label_match",
+   "collections": [
+    "channelm"
+   ],
+   "why": "The only field that addresses the barcode error. Yes / partly / no, one verdict per tape."
+  },
+  {
+   "field": "nb_progs",
+   "collections": [
+    "channelm",
+    "fv"
+   ],
+   "why": "No source holds this. The core outer-segmentation reference."
+  },
+  {
+   "field": "prog_timecodes",
+   "collections": [
+    "channelm",
+    "fv"
+   ],
+   "why": "No source holds this. Lets us score boundary placement, not just counts."
+  },
+  {
+   "field": "year",
+   "collections": [
+    "channelm"
+   ],
+   "why": "Catalogued for Film & Video already; only needed for Channel M."
+  },
+  {
+   "field": "colour",
+   "collections": [
+    "channelm"
+   ],
+   "why": "As above."
+  },
+  {
+   "field": "sound",
+   "collections": [
+    "channelm"
+   ],
+   "why": "As above."
+  },
+  {
+   "field": "notes",
+   "collections": [
+    "channelm",
+    "fv"
+   ],
+   "why": "Anything odd — where the sample talks back."
+  }
+ ],
+ "expected": 10,
+ "returned": 10,
+ "n_annotators": 5,
+ "annotators": [
+  {
+   "name": "Mia Turgoose",
+   "videos": 10
+  },
+  {
+   "name": "Nick Gladden",
+   "videos": 10
+  },
+  {
+   "name": "Nicole Peeters",
+   "videos": 10
+  },
+  {
+   "name": "Una Phillips",
+   "videos": 10
+  },
+  {
+   "name": "Will Crumpton",
+   "videos": 10
+  }
+ ],
+ "fields_returned": [
+  {
+   "field": "nb_progs",
+   "collections": [
+    "channelm",
+    "fv"
+   ],
+   "of": 50,
+   "answered": 42
+  },
+  {
+   "field": "prog_timecodes",
+   "collections": [
+    "channelm",
+    "fv"
+   ],
+   "answered": 109
+  },
+  {
+   "field": "label_match",
+   "collections": [
+    "channelm"
+   ],
+   "of": 25,
+   "answered": 25
+  },
+  {
+   "field": "year",
+   "collections": [
+    "channelm"
+   ],
+   "of": 25,
+   "answered": 23
+  },
+  {
+   "field": "colour",
+   "collections": [
+    "channelm"
+   ],
+   "of": 25,
+   "answered": 25
+  },
+  {
+   "field": "sound",
+   "collections": [
+    "channelm"
+   ],
+   "of": 25,
+   "answered": 25
+  },
+  {
+   "field": "notes",
+   "collections": [
+    "channelm",
+    "fv"
+   ],
+   "of": 50,
+   "answered": 24
+  }
+ ],
+ "label_match": {
+  "adjacent": 2,
+  "match": 2,
+  "mismatch": 21
+ },
+ "agreement": {
+  "nb_progs": {
+   "videos": 10,
+   "unanimous": 7,
+   "split": [
+    {
+     "ref": "NWFA 473",
+     "counts": [
+      2,
+      2,
+      1,
+      1
+     ],
+     "unanimous": false
+    },
+    {
+     "ref": "NWFA 57",
+     "counts": [
+      4,
+      4,
+      5,
+      2
+     ],
+     "unanimous": false
+    },
+    {
+     "ref": "N_6966411",
+     "counts": [
+      13,
+      1,
+      14,
+      14,
+      1
+     ],
+     "unanimous": false
+    }
+   ]
+  },
+  "label_match": {
+   "tapes": 5,
+   "unanimous": 4
+  },
+  "year": {
+   "videos": 5,
+   "unanimous": 2
+  },
+  "colour": {
+   "videos": 5,
+   "unanimous": 5
+  },
+  "sound": {
+   "videos": 5,
+   "unanimous": 5
+  }
+ },
+ "boundaries": {
+  "n_human": 218,
+  "n_pipeline": 46,
+  "within_5s": 164,
+  "within_10s": 172,
+  "within_30s": 190,
+  "beyond_30s": 28,
+  "pct_within_10s": 78.9,
+  "median_abs_offset_s": 1.0,
+  "mean_abs_offset_s": 425.5
+ },
+ "items": [
+  {
+   "prefix": "NWFA 143",
+   "collection": "fv",
+   "batch": "FV",
+   "annotators": 4,
+   "nb_progs": [
+    1,
+    1,
+    1
+   ],
+   "pipeline_progs": 1,
+   "boundaries": {
+    "n": 10,
+    "within_10s": 10
+   },
+   "notes": 1
+  },
+  {
+   "prefix": "NWFA 4220",
+   "collection": "fv",
+   "batch": "FV",
+   "annotators": 4,
+   "nb_progs": [
+    1,
+    1,
+    1
+   ],
+   "pipeline_progs": 1,
+   "boundaries": {
+    "n": 8,
+    "within_10s": 7
+   },
+   "notes": 0
+  },
+  {
+   "prefix": "NWFA 473",
+   "collection": "fv",
+   "batch": "FV",
+   "annotators": 4,
+   "nb_progs": [
+    2,
+    2,
+    1,
+    1
+   ],
+   "pipeline_progs": 1,
+   "boundaries": {
+    "n": 12,
+    "within_10s": 7
+   },
+   "notes": 2
+  },
+  {
+   "prefix": "NWFA 57",
+   "collection": "fv",
+   "batch": "FV",
+   "annotators": 4,
+   "nb_progs": [
+    4,
+    4,
+    5,
+    2
+   ],
+   "pipeline_progs": 4,
+   "boundaries": {
+    "n": 32,
+    "within_10s": 30
+   },
+   "notes": 2
+  },
+  {
+   "prefix": "NWFA 58",
+   "collection": "fv",
+   "batch": "FV",
+   "annotators": 4,
+   "nb_progs": [
+    1,
+    1,
+    1
+   ],
+   "pipeline_progs": 1,
+   "boundaries": {
+    "n": 8,
+    "within_10s": 8
+   },
+   "notes": 2
+  },
+  {
+   "prefix": "N_6966411",
+   "collection": "channelm",
+   "batch": "H22",
+   "annotators": 5,
+   "nb_progs": [
+    13,
+    1,
+    14,
+    14,
+    1
+   ],
+   "pipeline_progs": 11,
+   "boundaries": {
+    "n": 96,
+    "within_10s": 75
+   },
+   "notes": 5,
+   "label_match": "mixed",
+   "label_spread": "2 partly · 2 yes · 1 no"
+  },
+  {
+   "prefix": "N_6967905",
+   "collection": "channelm",
+   "batch": "H22",
+   "annotators": 5,
+   "nb_progs": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "pipeline_progs": 1,
+   "boundaries": {
+    "n": 16,
+    "within_10s": 10
+   },
+   "notes": 2,
+   "label_match": "mismatch",
+   "label_spread": "5 no"
+  },
+  {
+   "prefix": "N_6975894",
+   "collection": "channelm",
+   "batch": "H22",
+   "annotators": 5,
+   "nb_progs": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "pipeline_progs": 1,
+   "boundaries": {
+    "n": 12,
+    "within_10s": 8
+   },
+   "notes": 4,
+   "label_match": "mismatch",
+   "label_spread": "5 no"
+  },
+  {
+   "prefix": "N_6975915",
+   "collection": "channelm",
+   "batch": "H22",
+   "annotators": 5,
+   "nb_progs": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "pipeline_progs": 1,
+   "boundaries": {
+    "n": 14,
+    "within_10s": 10
+   },
+   "notes": 2,
+   "label_match": "mismatch",
+   "label_spread": "5 no"
+  },
+  {
+   "prefix": "N_6977195",
+   "collection": "channelm",
+   "batch": "H22",
+   "annotators": 5,
+   "nb_progs": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "pipeline_progs": 1,
+   "boundaries": {
+    "n": 10,
+    "within_10s": 7
+   },
+   "notes": 4,
+   "label_match": "mismatch",
+   "label_spread": "5 no"
+  }
+ ]
+}
