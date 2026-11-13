@@ -1,4 +1,4 @@
-This is a technical document for the processing of AIMS workshop 2 with the [North West Film Archive](https://www.mmu.ac.uk/north-west-film-archive) (NWFA) on 5 November 2026. This document was created using [ARC-AI Hub](https://docs.er.kcl.ac.uk/CREATE/ai_hub/) via [OpenCode](https://opencode.ai/) and reviewed by [Daniel Chávez Heras](https://movingpixel.net/).
+This is a technical document for the processing of AIMS workshop 2 with the [North West Film Archive](https://www.mmu.ac.uk/north-west-film-archive) (NWFA) on 5 November 2026. This document was drafted with [OpenCode](https://opencode.ai/) (Qwen3.8-27B, served through [ARC AI Hub](https://docs.er.kcl.ac.uk/CREATE/ai_hub/)) and reviewed by [Daniel Chávez Heras](https://movingpixel.net/).
 
 For a high-level view of the data that was processed, see
 [this interactive data audit page](https://kingsdigitallab.github.io/issa/workshops/ws2/issa_ws2_nwfa.html). This page was built on the same pattern as [WS1 / NLS](../ws1/README.md): a generator script produces aggregate JSON, a single static page reads it. The page is **not** edited between runs. To update the page, the generators need to be manually re-run.

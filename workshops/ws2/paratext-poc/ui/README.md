@@ -1,4 +1,4 @@
-<!-- File created by AI Assistant Claude (Sonnet 5.5), prompted by chavezheras -->
+<!-- Written by chavezheras, drafted with Claude (Sonnet 5.5) -->
 # Patched review UI
 
 `static/` is a copy of `paratext/review/static/` (from the pinned `video-review` branch).

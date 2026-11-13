@@ -1,4 +1,4 @@
-File created by AI Assistant OpenCode (ARC Apex), prompted by chavezheras
+<!-- Written by chavezheras, drafted with OpenCode (GLM-5.3, served through ARC: https://docs.er.kcl.ac.uk/CREATE/ai_hub/) -->
 <!-- Security review written by opencode:e-research/arc:apex, 12 Nov 2026, on request:
      audited every file the feat--ws2-paratext-poc branch adds over main and recorded the findings. -->
 
