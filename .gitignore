@@ -207,3 +207,14 @@ tmp
 assets
 batches
 framesense
+
+# Personal working files — never commit (2026-11-13, after accidental push of 244a43d)
+ISSA_files/
+docs/BFI Reports/
+docs/submissions/
+docs/ws2/
+docs/2027-submission-plan.md
+.continue/
+workshops/ws2/ISSA_NWFA_WS2_planning_v0.3.docx
+workshops/ws2/channel_M_singletape.jpg
+workshops/ws1/kdl-metadata-385.v2(predictions-385.csv
