@@ -1,3 +1,4 @@
+# File created by AI Assistant Claude (Sonnet 5.5), prompted by chavezheras
 from paratext.projects import audit_project
 
 from issa_ws2 import PROJECT

@@ -1,3 +1,4 @@
+# File created by AI Assistant Claude (Sonnet 5), prompted by chavezheras
 """Guard: issa-segments's prompt and view stay in step with its schema.
 
 `audit_project` checks that every field the view shows exists in the schema, and

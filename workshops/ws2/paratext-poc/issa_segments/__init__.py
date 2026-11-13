@@ -1,3 +1,4 @@
+# File created by AI Assistant Claude (Sonnet 5), prompted by chavezheras
 """issa_segments — review-only PoC project.
 
 No live extraction is configured for this PoC: records come from the ISSA

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# File created by AI Assistant Claude (Sonnet 5.5), prompted by chavezheras
 """Convert the WS2 NWFA sample into paratext review records (one per video).
 
 Inputs, all already in the repo / handed over by NWFA — nothing is generated:

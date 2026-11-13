@@ -1,3 +1,4 @@
+# File created by AI Assistant Claude (Sonnet 5.5), prompted by chavezheras
 """convert_ws2: parsers + the annotator reader, against a fixture built from the
 real NWFA template (invented answers — never shipped, only used in tmp_path)."""
 

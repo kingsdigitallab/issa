@@ -1,3 +1,4 @@
+// File created by AI Assistant Claude (Sonnet 5.5), prompted by chavezheras
 // paratext review UI. The pipeline emits a per-dataset
 // view.json contract (GET /api/view) describing how to display and review a
 // dataset: panels of fields (label + type), layout, scoring verdicts, and an

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# File created by AI Assistant Claude (Sonnet 5.5), prompted by chavezheras
 """Run `paratext review` with our patched front end (ui/static/) instead of the
 packaged one. app.js is an ES module, so it can't be extended from outside;
 ui/static/ is a copy of paratext's review/static with our changes (see

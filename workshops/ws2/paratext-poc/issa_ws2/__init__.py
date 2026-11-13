@@ -1,3 +1,4 @@
+# File created by AI Assistant Claude (Sonnet 5.5), prompted by chavezheras
 """issa_ws2 — WS2 deep-dive review project (NWFA, 10 sample videos).
 
 Records come from ../convert_ws2.py; package with:

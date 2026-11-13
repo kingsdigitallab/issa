@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# File created by AI Assistant Claude (Sonnet 5.5), prompted by chavezheras
 """Generate the aggregate JSON files that drive the WS2 (NWFA) explainer page.
 
 Inputs are the two NWFA catalogue exports plus whatever pipeline prediction

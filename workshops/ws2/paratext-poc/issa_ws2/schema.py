@@ -1,3 +1,4 @@
+# File created by AI Assistant Claude (Sonnet 5.5), prompted by chavezheras
 """Output schema for issa_ws2: one record per NWFA video (WS2 deep dive).
 
 Review-only, like issa_segments: describes the shape of what the pipeline

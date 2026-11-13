@@ -1,3 +1,4 @@
+# File created by AI Assistant Claude (Sonnet 5), prompted by chavezheras
 """Output schema for issa_segments.
 
 Review-only PoC: this schema describes the *shape* of what the ISSA pipeline

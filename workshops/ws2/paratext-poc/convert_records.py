@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# File created by AI Assistant Claude (Sonnet 5), prompted by chavezheras
 """Convert two real examples (one Grampian, one non-Grampian) from the ISSA
 pipeline's predictions + NLS catalogue ground truth into paratext's
 "reviewing metadata you already have" JSONL shape (see

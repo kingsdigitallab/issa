@@ -1,3 +1,4 @@
+<!-- File created by AI Assistant Claude (Sonnet 5), prompted by chavezheras -->
 # Paratext PoC — inspection & correction interface
 
 A proof of concept for using [Paratext](https://github.com/nls-lst/paratext)
