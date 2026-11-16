@@ -1510,6 +1510,23 @@
           "referrer": "github.com",
           "uniques": 1
         }
+      ],
+      "2026-11-16": [
+        {
+          "count": 10,
+          "referrer": "aocr.org",
+          "uniques": 10
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -4348,6 +4365,48 @@
         }
       ],
       "2026-11-15": [
+        {
+          "count": 7,
+          "referrer": "github.com",
+          "uniques": 3
+        },
+        {
+          "count": 6,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 2
+        },
+        {
+          "count": 3,
+          "referrer": "kcl.ac.uk",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "movingpixel.net",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "aocr.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        }
+      ],
+      "2026-11-16": [
         {
           "count": 7,
           "referrer": "github.com",
