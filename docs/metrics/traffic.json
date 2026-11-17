@@ -376,6 +376,14 @@
       "2026-11-14": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-11-15": {
+        "count": 6,
+        "uniques": 3
+      },
+      "2026-11-16": {
+        "count": 0,
+        "uniques": 0
       }
     },
     "referrers": {
@@ -1527,6 +1535,23 @@
           "referrer": "github.com",
           "uniques": 1
         }
+      ],
+      "2026-11-17": [
+        {
+          "count": 10,
+          "referrer": "aocr.org",
+          "uniques": 10
+        },
+        {
+          "count": 2,
+          "referrer": "avindh.org",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1905,6 +1930,14 @@
       "2026-11-14": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-11-15": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-11-16": {
+        "count": 10,
+        "uniques": 2
       }
     }
   },
@@ -2368,6 +2401,14 @@
       "2026-11-14": {
         "count": 17,
         "uniques": 11
+      },
+      "2026-11-15": {
+        "count": 13,
+        "uniques": 8
+      },
+      "2026-11-16": {
+        "count": 14,
+        "uniques": 9
       }
     },
     "referrers": {
@@ -4447,6 +4488,48 @@
           "referrer": "kdl.kcl.ac.uk",
           "uniques": 1
         }
+      ],
+      "2026-11-17": [
+        {
+          "count": 7,
+          "referrer": "github.com",
+          "uniques": 3
+        },
+        {
+          "count": 6,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 2
+        },
+        {
+          "count": 3,
+          "referrer": "kcl.ac.uk",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "aocr.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "movingpixel.net",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -4825,6 +4908,14 @@
       "2026-11-14": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-11-15": {
+        "count": 0,
+        "uniques": 0
+      },
+      "2026-11-16": {
+        "count": 14,
+        "uniques": 5
       }
     }
   }
