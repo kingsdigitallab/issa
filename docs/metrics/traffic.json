@@ -384,6 +384,10 @@
       "2026-11-16": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-11-17": {
+        "count": 3,
+        "uniques": 3
       }
     },
     "referrers": {
@@ -1552,6 +1556,23 @@
           "referrer": "github.com",
           "uniques": 1
         }
+      ],
+      "2026-11-18": [
+        {
+          "count": 10,
+          "referrer": "aocr.org",
+          "uniques": 10
+        },
+        {
+          "count": 2,
+          "referrer": "avindh.org",
+          "uniques": 2
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1938,6 +1959,10 @@
       "2026-11-16": {
         "count": 10,
         "uniques": 2
+      },
+      "2026-11-17": {
+        "count": 1,
+        "uniques": 1
       }
     }
   },
@@ -2022,6 +2047,9 @@
     },
     "2026-11-13": {
       "visitors": 11
+    },
+    "2026-11-18": {
+      "visitors": 12
     }
   },
   "issa": {
@@ -2409,6 +2437,10 @@
       "2026-11-16": {
         "count": 14,
         "uniques": 9
+      },
+      "2026-11-17": {
+        "count": 4,
+        "uniques": 4
       }
     },
     "referrers": {
@@ -4530,6 +4562,53 @@
           "referrer": "movingpixel.net",
           "uniques": 1
         }
+      ],
+      "2026-11-18": [
+        {
+          "count": 7,
+          "referrer": "github.com",
+          "uniques": 3
+        },
+        {
+          "count": 6,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 2
+        },
+        {
+          "count": 3,
+          "referrer": "Google",
+          "uniques": 3
+        },
+        {
+          "count": 3,
+          "referrer": "kcl.ac.uk",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "aocr.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "com.linkedin.android",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "movingpixel.net",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -4916,6 +4995,10 @@
       "2026-11-16": {
         "count": 14,
         "uniques": 5
+      },
+      "2026-11-17": {
+        "count": 34,
+        "uniques": 6
       }
     }
   }
