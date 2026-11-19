@@ -388,6 +388,10 @@
       "2026-11-17": {
         "count": 3,
         "uniques": 3
+      },
+      "2026-11-18": {
+        "count": 1,
+        "uniques": 1
       }
     },
     "referrers": {
@@ -1573,6 +1577,23 @@
           "referrer": "github.com",
           "uniques": 1
         }
+      ],
+      "2026-11-19": [
+        {
+          "count": 10,
+          "referrer": "aocr.org",
+          "uniques": 10
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -1961,6 +1982,10 @@
         "uniques": 2
       },
       "2026-11-17": {
+        "count": 1,
+        "uniques": 1
+      },
+      "2026-11-18": {
         "count": 1,
         "uniques": 1
       }
@@ -2441,6 +2466,10 @@
       "2026-11-17": {
         "count": 4,
         "uniques": 4
+      },
+      "2026-11-18": {
+        "count": 12,
+        "uniques": 9
       }
     },
     "referrers": {
@@ -4609,6 +4638,58 @@
           "referrer": "movingpixel.net",
           "uniques": 1
         }
+      ],
+      "2026-11-19": [
+        {
+          "count": 7,
+          "referrer": "github.com",
+          "uniques": 3
+        },
+        {
+          "count": 6,
+          "referrer": "kingsdigitallab.github.io",
+          "uniques": 2
+        },
+        {
+          "count": 3,
+          "referrer": "Google",
+          "uniques": 3
+        },
+        {
+          "count": 3,
+          "referrer": "kcl.ac.uk",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "linkedin.com",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "ukc-word-edit.officeapps.live.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "aocr.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "com.linkedin.android",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -4999,6 +5080,10 @@
       "2026-11-17": {
         "count": 34,
         "uniques": 6
+      },
+      "2026-11-18": {
+        "count": 34,
+        "uniques": 11
       }
     }
   }
