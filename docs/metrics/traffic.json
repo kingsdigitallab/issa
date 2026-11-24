@@ -408,6 +408,10 @@
       "2026-11-22": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-11-23": {
+        "count": 0,
+        "uniques": 0
       }
     },
     "referrers": {
@@ -1688,6 +1692,28 @@
           "referrer": "teams.public.onecdn.static.microsoft",
           "uniques": 1
         }
+      ],
+      "2026-11-24": [
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -2098,6 +2124,10 @@
       "2026-11-22": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-11-23": {
+        "count": 0,
+        "uniques": 0
       }
     }
   },
@@ -2190,6 +2220,9 @@
       "visitors": 12
     },
     "2026-11-22": {
+      "visitors": 12
+    },
+    "2026-11-24": {
       "visitors": 12
     }
   },
@@ -2602,6 +2635,10 @@
       "2026-11-22": {
         "count": 7,
         "uniques": 5
+      },
+      "2026-11-23": {
+        "count": 21,
+        "uniques": 13
       }
     },
     "referrers": {
@@ -4980,6 +5017,43 @@
           "referrer": "movingpixel.net",
           "uniques": 1
         }
+      ],
+      "2026-11-24": [
+        {
+          "count": 5,
+          "referrer": "Google",
+          "uniques": 3
+        },
+        {
+          "count": 4,
+          "referrer": "linkedin.com",
+          "uniques": 4
+        },
+        {
+          "count": 3,
+          "referrer": "kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 2,
+          "referrer": "github.com",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "ukc-word-edit.officeapps.live.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "com.linkedin.android",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "movingpixel.net",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -5390,6 +5464,10 @@
       "2026-11-22": {
         "count": 0,
         "uniques": 0
+      },
+      "2026-11-23": {
+        "count": 19,
+        "uniques": 5
       }
     }
   }
