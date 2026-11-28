@@ -424,6 +424,10 @@
       "2026-11-26": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-11-27": {
+        "count": 2,
+        "uniques": 1
       }
     },
     "referrers": {
@@ -1792,6 +1796,28 @@
           "referrer": "teams.public.onecdn.static.microsoft",
           "uniques": 1
         }
+      ],
+      "2026-11-28": [
+        {
+          "count": 2,
+          "referrer": "Google",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "avindh.org",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "github.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "teams.public.onecdn.static.microsoft",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -2218,6 +2244,10 @@
       "2026-11-26": {
         "count": 1,
         "uniques": 1
+      },
+      "2026-11-27": {
+        "count": 4,
+        "uniques": 2
       }
     }
   },
@@ -2316,6 +2346,9 @@
       "visitors": 12
     },
     "2026-11-26": {
+      "visitors": 12
+    },
+    "2026-11-28": {
       "visitors": 12
     }
   },
@@ -2744,6 +2777,10 @@
       "2026-11-26": {
         "count": 5,
         "uniques": 5
+      },
+      "2026-11-27": {
+        "count": 5,
+        "uniques": 3
       }
     },
     "referrers": {
@@ -5270,6 +5307,43 @@
           "referrer": "movingpixel.net",
           "uniques": 1
         }
+      ],
+      "2026-11-28": [
+        {
+          "count": 6,
+          "referrer": "Google",
+          "uniques": 4
+        },
+        {
+          "count": 4,
+          "referrer": "linkedin.com",
+          "uniques": 4
+        },
+        {
+          "count": 2,
+          "referrer": "movingpixel.net",
+          "uniques": 2
+        },
+        {
+          "count": 2,
+          "referrer": "ukc-word-edit.officeapps.live.com",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "com.linkedin.android",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kcl.ac.uk",
+          "uniques": 1
+        },
+        {
+          "count": 1,
+          "referrer": "kdl.kcl.ac.uk",
+          "uniques": 1
+        }
       ]
     },
     "views": {
@@ -5695,6 +5769,10 @@
       },
       "2026-11-26": {
         "count": 6,
+        "uniques": 2
+      },
+      "2026-11-27": {
+        "count": 7,
         "uniques": 2
       }
     }
